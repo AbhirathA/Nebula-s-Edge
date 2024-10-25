@@ -12,22 +12,22 @@ import com.google.firebase.FirebaseOptions;
 import java.io.FileInputStream;
 import java.io.IOException;
 
-public final class Firebase
+public final class ServerFirebase
 {
-    private Firebase() throws IOException
+    private ServerFirebase() throws IOException
     {
         initializeFirebase();
     }
 
     private static class Holder
     {
-        private static final Firebase INSTANCE;
+        private static final ServerFirebase INSTANCE;
 
         static
         {
             try
             {
-                INSTANCE = new Firebase();
+                INSTANCE = new ServerFirebase();
             }
             catch(IOException e)
             {
@@ -47,7 +47,7 @@ public final class Firebase
         FirebaseApp.initializeApp(options);
     }
 
-    public static Firebase getInstance()
+    public static ServerFirebase getInstance()
     {
         return Holder.INSTANCE;
     }
@@ -58,10 +58,5 @@ public final class Firebase
                 .setEmail(email)
                 .setPassword(password);
         FirebaseAuth.getInstance().createUser(request);
-    }
-
-    public static void main(String [] args) throws FirebaseAuthException
-    {
-        getInstance().createUser("hello@gamil.com", "hello12351!!!");
     }
 }
