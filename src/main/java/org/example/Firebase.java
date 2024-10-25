@@ -12,11 +12,28 @@ import com.google.firebase.FirebaseOptions;
 import java.io.FileInputStream;
 import java.io.IOException;
 
-public final class FirebaseInitializer
+public final class Firebase
 {
-    public FirebaseInitializer() throws IOException
+    private Firebase() throws IOException
     {
         initializeFirebase();
+    }
+
+    private static class Holder
+    {
+        private static final Firebase INSTANCE;
+
+        static
+        {
+            try
+            {
+                INSTANCE = new Firebase();
+            }
+            catch(IOException e)
+            {
+                throw new ExceptionInInitializerError("Failed to set up the server: " + e.getMessage());
+            }
+        }
     }
 
     private void initializeFirebase() throws IOException
@@ -30,6 +47,11 @@ public final class FirebaseInitializer
         FirebaseApp.initializeApp(options);
     }
 
+    public static Firebase getInstance()
+    {
+        return Holder.INSTANCE;
+    }
+
     public void createUser(String email, String password) throws FirebaseAuthException
     {
         UserRecord.CreateRequest request = new UserRecord.CreateRequest()
@@ -38,9 +60,8 @@ public final class FirebaseInitializer
         FirebaseAuth.getInstance().createUser(request);
     }
 
-    public static void main(String [] args) throws IOException, FirebaseAuthException
+    public static void main(String [] args) throws FirebaseAuthException
     {
-        FirebaseInitializer initializer = new FirebaseInitializer();
-        initializer.createUser("hello@gamil.com", "hello12351!!!");
+        getInstance().createUser("hello@gamil.com", "hello12351!!!");
     }
 }
