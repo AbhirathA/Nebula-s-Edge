@@ -12,6 +12,14 @@ Vector AABB::getLowerBound() {
     return lowerBound;
 }
 
+void AABB::setUpperBound(const Vector &v) {
+    upperBound = v;
+}
+
+void AABB::setLowerBound(const Vector &v) {
+    lowerBound = v;
+}
+
 double AABB::SA() {
     Vector s = upperBound - lowerBound;
     return 2.0*(s[0]*s[1]+s[1]*s[2]+s[2]*s[0]);

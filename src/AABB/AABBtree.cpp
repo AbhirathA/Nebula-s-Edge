@@ -64,10 +64,10 @@ AABBnode* AABBtree::BestSibling(AABBnode* leaf) {
 }
 
 
-void AABBtree::insert(AABB box, int obj) {
+void AABBtree::insert(AABB box, AABB* objBox) {
     auto leaf = new AABBnode();
     leaf->box = box;
-    leaf->objIndex = obj;
+    leaf->objBox = objBox;
     leaf->isLeaf = true;
     if(root==nullptr) {
         root = leaf;
@@ -102,7 +102,7 @@ void AABBtree::insert(AABB box, int obj) {
     }
 }
 
-AABBnode* AABBtree::find(AABB box, int obj) {
+AABBnode* AABBtree::find(AABB box, AABB* objBox) {
     if(root == nullptr) {
         return nullptr;
     }
@@ -116,21 +116,23 @@ AABBnode* AABBtree::find(AABB box, int obj) {
             return nullptr;
         }
     }
-    if(p->objIndex == obj) return p;
+    if(p->objBox == objBox) return p;
     return nullptr;
 }
 
-void AABBtree::remove(AABB box, int obj) {
-    AABBnode* p = find(box, obj);
+void AABBtree::removeLeaf(AABBnode* node) {
+    AABBnode* p = node;
     if(p == nullptr) {
         return;
     }
+    if(!p->isLeaf) return;
     AABBnode* q = p->parent;
-    if(q==nullptr) {
+    if(q==nullptr) {    //root node to be deleted
         root = nullptr;
         delete p;
         return;
     }
+    //make the child as nullptr
     if(q->child1 == p) {
         q->child1 = nullptr;
     }
@@ -138,25 +140,75 @@ void AABBtree::remove(AABB box, int obj) {
         q->child2 = nullptr;
     }
     delete p;
-    if(q->child2 == nullptr && q->child1 == nullptr) {
-       return remove(q->box, q->objIndex);
-    }
     while(q != nullptr) {
+        AABBnode* t = q->parent;
         if(q->child1==nullptr && q->child2!=nullptr) {
-            q->box = q->child2->box;
-            q->objIndex = q->child2->objIndex;
-            remove(q->child2->box, q->child2->objIndex);
+            q->parent ? (q->parent->child1 == q ? (q->parent->child1 = q->child2):(q->parent->child2 = q->child2)) : (root = q->child2);
+            delete q;
+            q = t;
         }
         else if(q->child2==nullptr && q->child1!=nullptr) {
-            q->box = q->child1->box;
-            q->objIndex = q->child1->objIndex;
-            remove(q->child1->box, q->child1->objIndex);
+            q->parent ? (q->parent->child1 == q ? (q->parent->child1 = q->child1):(q->parent->child2 = q->child1)) : (root = q->child1);
+            delete q;
+            q = t;
         }
-        else if(q->child2!=nullptr && q->child1!=nullptr) q->box = q->child2->box.Union(q->child1->box);
-        q = q->parent;
+        else if(q->child2!=nullptr && q->child1!=nullptr) {
+            q->box = q->child1->box.Union(q->child2->box);
+            q = t;
+        }
+        else {
+            q->parent ? (q->parent->child1 == q? (q->parent->child1=nullptr):(q->parent->child2 = nullptr)) : (root = nullptr);
+            delete q;
+            q = t;
+        }
     }
-    return;
 }
+
+
+void AABBtree::Update() {
+    if(root==nullptr) return;
+    if(root->isLeaf) {
+        root->updateAABB();
+        return;
+    }
+    std::vector<AABBnode*> invalidNodes;
+    collectInvalidNodes(root, invalidNodes);
+    if(invalidNodes.empty()) return;
+    for(auto node: invalidNodes) {
+        AABBnode* parent = node->parent;
+        AABBnode* sibling = node->Sibling();
+
+        sibling->parent = parent->parent;
+        if(sibling->parent == nullptr) {
+            root = sibling;
+        }
+        else {
+            if(sibling->parent->child1 == parent) {
+                sibling->parent->child1 = sibling;
+            }
+            else {
+                sibling->parent->child2 = sibling;
+            }
+        }
+        delete parent;
+        node->updateAABB();
+        insert(node->box, node->objBox);
+    }
+}
+
+ void AABBtree::collectInvalidNodes(AABBnode* node, std::vector<AABBnode*>&invalidNodes) {
+    if(node->isLeaf) {
+        if(!node->box.Contains(*(node->objBox))) {
+            invalidNodes.push_back(node);
+        }
+    }
+    else {
+        collectInvalidNodes(node->child1, invalidNodes);
+        collectInvalidNodes(node->child2, invalidNodes);
+    }
+}
+
+
 
 AABBtree::~AABBtree() {
     if(root == nullptr) {

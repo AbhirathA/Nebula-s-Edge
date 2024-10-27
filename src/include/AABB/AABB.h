@@ -7,6 +7,8 @@ public:
     AABB();
     Vector getLowerBound();
     Vector getUpperBound();
+    void setLowerBound(const Vector &v);
+    void setUpperBound(const Vector &v);
     double SA();
     AABB Union(AABB &other);
     bool Contains(AABB &other);
