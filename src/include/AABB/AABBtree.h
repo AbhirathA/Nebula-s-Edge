@@ -1,6 +1,7 @@
 //
 // Created by ibrahim on 21/10/24.
 //
+#pragma once
 #include "AABB.h"
 
 
@@ -19,12 +20,6 @@ public:
         child1 = nullptr;
         child2 = nullptr;
         isLeaf = true;
-    }
-    ~AABBnode() {
-        delete parent;
-        delete child1;
-        delete child2;
-        delete objBox;
     }
 
     void updateAABB() {
@@ -53,7 +48,7 @@ private:
 public:
     AABBtree();
     ~AABBtree();
-    void insert(AABB box, AABB* objBox);
+    int insert(AABB box, AABB* objBox);
     void removeLeaf(AABBnode*);
     void Update();
     AABBnode* find(AABB box, AABB* objBox);

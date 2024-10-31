@@ -46,6 +46,17 @@ bool AABB::Contains(AABB &other) {
     return false;
 }
 
+AABB AABB::fatBox(double t) {
+    Vector lb = {lowerBound[0] - t, lowerBound[1] - t, lowerBound[2]};
+    Vector ub = {upperBound[0] + t, upperBound[1] + t, upperBound[2]};
+    return AABB(lb, ub);
+}
+
+void AABB::advance(const Vector &v) {
+    lowerBound = lowerBound + v;
+    upperBound = upperBound + v;
+}
+
 
 
 

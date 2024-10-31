@@ -64,16 +64,17 @@ AABBnode* AABBtree::BestSibling(AABBnode* leaf) {
 }
 
 
-void AABBtree::insert(AABB box, AABB* objBox) {
+int AABBtree::insert(AABB box, AABB* objBox) {
     auto leaf = new AABBnode();
     leaf->box = box;
     leaf->objBox = objBox;
+    leaf->bound = 0.1;
     leaf->isLeaf = true;
     if(root==nullptr) {
         root = leaf;
-        return;
+        return 0;
     }
-    AABBnode* bestSibling = BestSiblingIndex(leaf);
+    AABBnode* bestSibling = BestSibling(leaf);
     AABBnode* oldParent = bestSibling->parent;
     auto newParent = new AABBnode();
     newParent->box = box.Union(bestSibling->box);
@@ -100,6 +101,7 @@ void AABBtree::insert(AABB box, AABB* objBox) {
         p->box = p->child2->box.Union(p->child1->box);
         p = p->parent;
     }
+    return 0;
 }
 
 AABBnode* AABBtree::find(AABB box, AABB* objBox) {
@@ -110,7 +112,6 @@ AABBnode* AABBtree::find(AABB box, AABB* objBox) {
     while(!p->isLeaf) {
         if(p->box.Contains(box)) {
             p = (p->child1->box.Contains(box))?p->child1:p->child2;
-
         }
         else {
             return nullptr;
@@ -224,7 +225,7 @@ AABBtree::~AABBtree() {
         Q.pop();
         if(p->child1 != nullptr) Q.push(p->child1);
         if(p->child2 != nullptr) Q.push(p->child2);
-        if(p != nullptr) delete p;
+        delete p;
     }
 }
 
