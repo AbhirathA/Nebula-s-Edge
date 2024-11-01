@@ -28,5 +28,5 @@ int main(){
     // p1->advance({1,1,0});
     // aabb.Update();
     std::vector<std::pair<int,int>> colliderpairs = aabb.colliderPairs();
-    std::cout<<"done"<<std::endl;
+    std::cout<<"AABBtree successfully collised"<<std::endl;
 }
