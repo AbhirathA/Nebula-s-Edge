@@ -16,15 +16,17 @@ int main(){
     auto f5 = p5->fatBox(0.1);
     auto f6 = p6->fatBox(0.1);
     auto f7 = p7->fatBox(0.1);
-    int x = aabb.insert(f1, p1);
-    aabb.insert(f2, p2);
-    aabb.insert(f3, p3);
-    aabb.insert(f4, p4);
-    aabb.insert(f5, p5);
-    aabb.insert(f6, p6);
-    aabb.insert(f7, p7);
+    int x = aabb.insert(f1, p1, 1);
+    aabb.insert(f2, p2, 2);
+    aabb.insert(f3, p3, 3);
+    aabb.insert(f4, p4, 4);
+    aabb.insert(f5, p5, 5);
+    aabb.insert(f6, p6, 6);
+    aabb.insert(f7, p7, 7);
     // AABBnode* n = aabb.find(f1, p1);
     // aabb.removeLeaf(n);
-    p1->advance({1,1,0});
-    aabb.Update();
+    // p1->advance({1,1,0});
+    // aabb.Update();
+    std::vector<std::pair<int,int>> colliderpairs = aabb.colliderPairs();
+    std::cout<<"done"<<std::endl;
 }

@@ -14,5 +14,6 @@ public:
     double SA();
     AABB Union(AABB &other);
     bool Contains(AABB &other);
+    bool collides(AABB &other);
     AABB fatBox(double t);
 };

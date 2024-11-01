@@ -64,12 +64,13 @@ AABBnode* AABBtree::BestSibling(AABBnode* leaf) {
 }
 
 
-int AABBtree::insert(AABB box, AABB* objBox) {
+int AABBtree::insert(AABB box, AABB* objBox, int id) {
     auto leaf = new AABBnode();
     leaf->box = box;
     leaf->objBox = objBox;
     leaf->bound = 0.1;
     leaf->isLeaf = true;
+    leaf->id = id;
     if(root==nullptr) {
         root = leaf;
         return 0;
@@ -104,7 +105,7 @@ int AABBtree::insert(AABB box, AABB* objBox) {
     return 0;
 }
 
-AABBnode* AABBtree::find(AABB box, AABB* objBox) {
+AABBnode* AABBtree::find(AABB box, AABB* objBox, int id) {
     if(root == nullptr) {
         return nullptr;
     }
@@ -121,7 +122,7 @@ AABBnode* AABBtree::find(AABB box, AABB* objBox) {
     return nullptr;
 }
 
-void AABBtree::removeLeaf(AABBnode* node) {
+void AABBtree::removeLeaf(AABBnode* node, int id) {
     AABBnode* p = node;
     if(p == nullptr) {
         return;
@@ -193,7 +194,7 @@ void AABBtree::Update() {
         }
         delete parent;
         node->updateAABB();
-        insert(node->box, node->objBox);
+        insert(node->box, node->objBox, node->id);
     }
 }
 
@@ -228,4 +229,63 @@ AABBtree::~AABBtree() {
         delete p;
     }
 }
+
+std::vector<std::pair<int, int>> &AABBtree::colliderPairs() {
+    clearCollisionChecks();
+    std::vector<std::pair<int, int>> *vp = new std::vector<std::pair<int, int>>(0);
+    if(root == nullptr) return *vp;
+    collisionCheck(root, *vp);
+    return *vp;
+}
+
+void AABBtree::collisionCheck(AABBnode *st, std::vector<std::pair<int, int>> &v) {
+    if(st->collisionsChecked || st == nullptr||st->isLeaf) return;
+    st->collisionsChecked = true;
+    collisionCheck(st->child1, st->child2, v);
+}
+
+void AABBtree::collisionCheck(AABBnode *st1, AABBnode *st2, std::vector<std::pair<int, int>> &v) {
+    if(st1 == nullptr || st2==nullptr) return;
+    if(st1->isLeaf) {
+        if(st2->isLeaf) {
+            if(st1->box.collides(st2->box)) {
+                v.emplace_back(st1->id, st2->id);
+                return;
+            }
+        }
+        else {
+            if(st2->child1->box.collides(st1->box)) collisionCheck(st2->child1, st1, v);
+            if(st2->child2->box.collides(st1->box)) collisionCheck(st2->child2, st1, v);
+        }
+    }
+    else{
+        if(st2->isLeaf) {
+            if(st1->child1->box.collides(st2->box)) collisionCheck(st1->child1, st2, v);
+            if(st1->child2->box.collides(st2->box)) collisionCheck(st1->child2, st2, v);
+        }
+        else {
+            if(st1->child1->box.collides(st2->child1->box)) collisionCheck(st1->child1, st2->child1, v);
+            if(st1->child2->box.collides(st2->child2->box)) collisionCheck(st1->child2, st2->child2, v);
+            if(st2->child2->box.collides(st1->child1->box)) collisionCheck(st2->child2, st1->child1, v);
+            if(st2->child1->box.collides(st1->child2->box)) collisionCheck(st2->child1, st1->child2, v);
+        }
+    }
+    collisionCheck(st1, v);
+    collisionCheck(st2, v);
+}
+
+void AABBtree::clearCollisionChecks() {
+    if(root == nullptr) return;
+    std::queue<AABBnode*> Q;
+    Q.push(root);
+    while(!Q.empty()) {
+        auto p = Q.front();
+        Q.pop();
+        if(p->child1 != nullptr) Q.push(p->child1);
+        if(p->child2 != nullptr) Q.push(p->child2);
+        if (p) p->collisionsChecked = false;
+    }
+}
+
+
 
