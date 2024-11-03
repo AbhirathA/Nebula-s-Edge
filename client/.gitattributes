@@ -1,0 +1,8 @@
+* text=auto eol=lf
+*.bat text=auto eol=crlf
+*.md text eol=lf
+*.txt text eol=lf
+*.ini text eol=lf
+*.json text eol=lf
+Makefile text eol=lf
+*.sh text eol=lf
