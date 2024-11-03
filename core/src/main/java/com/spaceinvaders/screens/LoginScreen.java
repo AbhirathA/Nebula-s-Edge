@@ -60,20 +60,17 @@ public class LoginScreen implements Screen {
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
                 String id = idField.getText();
                 String password = passwordField.getText();
-                try
-                {
+                try {
                     String token = ClientFirebase.signIn(id, password);
                 }
-                catch(AuthenticationException e)
-                {
+                catch(AuthenticationException e) {
                     System.out.println("Incorrect username or password");
                 }
-                catch(IOException e)
-                {
-                    System.out.println("Could not connect to the server. Are u connected to the internet?");
+                catch(IOException e) {
+                    System.out.println("Could not connect to the server. Are you connected to the internet?");
                 }
-                catch(Exception e)
-                {
+                catch(Exception e) {
+                    //@TODO: Convert to logging
                     System.err.println(e.getMessage());
                     System.exit(1);
                 }
