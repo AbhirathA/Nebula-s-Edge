@@ -26,13 +26,12 @@ public class ClientFirebase
      * @return A String representing the ID token returned by Firebase upon
      *         successful authentication. This token can be used to securely
      *         access Firebase services.
-     * @throws URISyntaxException    If the URI for Firebase's REST API is incorrectly formatted.
-     * @throws IOException           If an error occurs during the connection
-     *                               or if the response indicates authentication failure.
-     *                               The error message contains the Firebase error details.
-     * @throws IllegalStateException If an error occurs while parsing the JSON response.
+     * @throws URISyntaxException      If the URI for Firebase's REST API is incorrectly formatted.
+     * @throws IOException             If an error occurs during the connection.
+     * @throws AuthenticationException If the response indicates authentication failure.
+     * @throws IllegalStateException   If an error occurs while parsing the JSON response.
      */
-    public static String signIn(String email, String password) throws URISyntaxException, IOException, IllegalStateException
+    public static String signIn(String email, String password) throws URISyntaxException, IOException, AuthenticationException, IllegalStateException
     {
         //connects with the firebase server
         URI uri = new URI("https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=" + PUBLIC_FIREBASE_API_KEY);
@@ -77,7 +76,7 @@ public class ClientFirebase
                 {
                     errorResponse.append(scanner.nextLine());
                 }
-                throw new IOException("Error signing in: " + errorResponse);
+                throw new AuthenticationException("Error signing in: " + errorResponse);
             }
         }
     }

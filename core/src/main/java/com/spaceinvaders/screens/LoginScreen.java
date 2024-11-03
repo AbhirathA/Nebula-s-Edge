@@ -11,10 +11,14 @@ import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.spaceinvaders.SpaceInvadersGame;
+import com.spaceinvaders.backend.firebase.AuthenticationException;
+import com.spaceinvaders.backend.firebase.ClientFirebase;
 import com.spaceinvaders.background.PlanetsBackground;
 import com.spaceinvaders.background.StarsBackground;
 import com.spaceinvaders.utils.ButtonUtils;
 import com.spaceinvaders.utils.TextFieldUtils;
+
+import java.io.IOException;
 
 public class LoginScreen implements Screen {
     private final SpaceInvadersGame game;
@@ -56,7 +60,23 @@ public class LoginScreen implements Screen {
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
                 String id = idField.getText();
                 String password = passwordField.getText();
-                System.out.println(id + ' ' + password);
+                try
+                {
+                    String token = ClientFirebase.signIn(id, password);
+                }
+                catch(AuthenticationException e)
+                {
+                    System.out.println("Incorrect username or password");
+                }
+                catch(IOException e)
+                {
+                    System.out.println("Could not connect to the server. Are u connected to the internet?");
+                }
+                catch(Exception e)
+                {
+                    System.err.println(e.getMessage());
+                    System.exit(1);
+                }
                 return true;
             }
         });
