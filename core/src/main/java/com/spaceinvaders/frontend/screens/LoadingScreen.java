@@ -1,9 +1,9 @@
-package com.spaceinvaders.screens;
+package com.spaceinvaders.frontend.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.utils.ScreenUtils;
-import com.spaceinvaders.SpaceInvadersGame;
+import com.spaceinvaders.frontend.SpaceInvadersGame;
 
 public class LoadingScreen implements Screen {
     private final SpaceInvadersGame game;

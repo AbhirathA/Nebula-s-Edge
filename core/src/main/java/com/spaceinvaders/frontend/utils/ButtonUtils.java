@@ -1,4 +1,4 @@
-package com.spaceinvaders.utils;
+package com.spaceinvaders.frontend.utils;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
@@ -12,7 +12,7 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageTextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
-import com.spaceinvaders.SpaceInvadersGame;
+import com.spaceinvaders.frontend.SpaceInvadersGame;
 
 public class ButtonUtils {
     public static ImageTextButton createScreenNavigationButton(SpaceInvadersGame game, String buttonText, String upImagePath, String downImagePath, float width, float height, float x, float y, Screen targetScreen) {

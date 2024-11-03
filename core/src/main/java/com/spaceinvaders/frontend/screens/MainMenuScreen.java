@@ -1,4 +1,4 @@
-package com.spaceinvaders.screens;
+package com.spaceinvaders.frontend.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
@@ -10,10 +10,10 @@ import com.badlogic.gdx.scenes.scene2d.ui.ImageTextButton;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import com.spaceinvaders.SpaceInvadersGame;
-import com.spaceinvaders.background.PlanetsBackground;
-import com.spaceinvaders.background.StarsBackground;
-import com.spaceinvaders.utils.ButtonUtils;
+import com.spaceinvaders.frontend.SpaceInvadersGame;
+import com.spaceinvaders.frontend.background.PlanetsBackground;
+import com.spaceinvaders.frontend.background.StarsBackground;
+import com.spaceinvaders.frontend.utils.ButtonUtils;
 
 public class MainMenuScreen implements Screen {
     private final SpaceInvadersGame game;

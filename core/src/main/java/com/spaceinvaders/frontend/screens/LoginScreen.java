@@ -1,4 +1,4 @@
-package com.spaceinvaders.screens;
+package com.spaceinvaders.frontend.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
@@ -10,13 +10,13 @@ import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import com.spaceinvaders.SpaceInvadersGame;
+import com.spaceinvaders.frontend.SpaceInvadersGame;
 import com.spaceinvaders.backend.firebase.AuthenticationException;
 import com.spaceinvaders.backend.firebase.ClientFirebase;
-import com.spaceinvaders.background.PlanetsBackground;
-import com.spaceinvaders.background.StarsBackground;
-import com.spaceinvaders.utils.ButtonUtils;
-import com.spaceinvaders.utils.TextFieldUtils;
+import com.spaceinvaders.frontend.background.PlanetsBackground;
+import com.spaceinvaders.frontend.background.StarsBackground;
+import com.spaceinvaders.frontend.utils.ButtonUtils;
+import com.spaceinvaders.frontend.utils.TextFieldUtils;
 
 import java.io.IOException;
 

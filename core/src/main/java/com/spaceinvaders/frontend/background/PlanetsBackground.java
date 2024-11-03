@@ -1,9 +1,9 @@
-package com.spaceinvaders.background;
+package com.spaceinvaders.frontend.background;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.Disposable;
-import com.spaceinvaders.utils.MyAssetManager;
+import com.spaceinvaders.frontend.utils.MyAssetManager;
 
 public class PlanetsBackground implements Disposable {
     private final Texture[] planetTextures;

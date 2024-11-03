@@ -1,4 +1,4 @@
-package com.spaceinvaders.utils;
+package com.spaceinvaders.frontend.utils;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;

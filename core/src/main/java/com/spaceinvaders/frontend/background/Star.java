@@ -1,4 +1,4 @@
-package com.spaceinvaders.background;
+package com.spaceinvaders.frontend.background;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;

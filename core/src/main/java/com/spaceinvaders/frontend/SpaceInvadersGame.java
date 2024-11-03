@@ -1,11 +1,11 @@
-package com.spaceinvaders;
+package com.spaceinvaders.frontend;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.spaceinvaders.screens.LoadingScreen;
-import com.spaceinvaders.utils.MyAssetManager;
+import com.spaceinvaders.frontend.screens.LoadingScreen;
+import com.spaceinvaders.frontend.utils.MyAssetManager;
 
 public class SpaceInvadersGame extends Game {
     public SpriteBatch batch;
