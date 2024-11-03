@@ -30,12 +30,12 @@ public class TextFieldUtils {
         textField.setPosition(x, y);
         textField.setAlignment(Align.center);
 
-        textField.setTextFieldFilter(new TextField.TextFieldFilter() {
-            @Override
-            public boolean acceptChar(TextField textField, char c) {
-                return textField.getText().length() < 15; // Limit to maxChars characters
-            }
-        });
+//        textField.setTextFieldFilter(new TextField.TextFieldFilter() {
+//            @Override
+//            public boolean acceptChar(TextField textField, char c) {
+//                return textField.getText().length() < 15; // Limit to maxChars characters
+//            }
+//        });
 
         return textField;
     }
@@ -61,12 +61,12 @@ public class TextFieldUtils {
         textField.setPasswordMode(true);
         textField.setPasswordCharacter('*');
 
-        textField.setTextFieldFilter(new TextField.TextFieldFilter() {
-            @Override
-            public boolean acceptChar(TextField textField, char c) {
-                return textField.getText().length() < 15; // Limit to maxChars characters
-            }
-        });
+//        textField.setTextFieldFilter(new TextField.TextFieldFilter() {
+//            @Override
+//            public boolean acceptChar(TextField textField, char c) {
+//                return textField.getText().length() < 15; // Limit to maxChars characters
+//            }
+//        });
 
         return textField;
     }

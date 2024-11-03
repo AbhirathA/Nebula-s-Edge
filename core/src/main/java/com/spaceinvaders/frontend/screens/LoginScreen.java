@@ -16,6 +16,7 @@ import com.spaceinvaders.backend.firebase.ClientFirebase;
 import com.spaceinvaders.frontend.background.PlanetsBackground;
 import com.spaceinvaders.frontend.background.StarsBackground;
 import com.spaceinvaders.frontend.utils.ButtonUtils;
+import com.spaceinvaders.frontend.utils.LabelUtils;
 import com.spaceinvaders.frontend.utils.TextFieldUtils;
 
 import java.io.IOException;
@@ -35,6 +36,9 @@ public class LoginScreen implements Screen {
     private final PlanetsBackground planetsBackground;
 
     private final Texture title;
+
+    private final Label errorMessage = LabelUtils.createLabel("Incorrect username or password", 0, 0);
+    boolean isErrorDisplayed;
 
     public LoginScreen(SpaceInvadersGame game) {
         this.game = game;
@@ -62,9 +66,18 @@ public class LoginScreen implements Screen {
                 String password = passwordField.getText();
                 try {
                     String token = ClientFirebase.signIn(id, password);
+
+                    if (isErrorDisplayed) {
+                        stage.getActors().removeValue(errorMessage, true);
+                        isErrorDisplayed = false;
+                    }
                 }
                 catch(AuthenticationException e) {
                     System.out.println("Incorrect username or password");
+                    if (!isErrorDisplayed) {
+                        stage.addActor(errorMessage);
+                        isErrorDisplayed = true;
+                    }
                 }
                 catch(IOException e) {
                     System.out.println("Could not connect to the server. Are you connected to the internet?");
