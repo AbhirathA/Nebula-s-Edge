@@ -4,196 +4,143 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ed598eda-462a-4fa5-a345-0bb43f98042b" name="Changes" comment="Changed exception handling LoginScreen">
-      <change afterPath="$PROJECT_DIR$/client/.gradle/8.10.2/executionHistory/executionHistory.lock" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/.gradle/8.10.2/fileHashes/fileHashes.lock" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/.gradle/file-system.probe" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.editorconfig" beforeDir="false" afterPath="$PROJECT_DIR$/client/.editorconfig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitattributes" beforeDir="false" afterPath="$PROJECT_DIR$/client/.gitattributes" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/client/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/8.10.2/checksums/checksums.lock" beforeDir="false" afterPath="$PROJECT_DIR$/client/.gradle/8.10.2/checksums/checksums.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/8.10.2/checksums/md5-checksums.bin" beforeDir="false" afterPath="$PROJECT_DIR$/client/.gradle/8.10.2/checksums/md5-checksums.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/8.10.2/checksums/sha1-checksums.bin" beforeDir="false" afterPath="$PROJECT_DIR$/client/.gradle/8.10.2/checksums/sha1-checksums.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/8.10.2/dependencies-accessors/gc.properties" beforeDir="false" afterPath="$PROJECT_DIR$/client/.gradle/8.10.2/dependencies-accessors/gc.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/8.10.2/executionHistory/executionHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/client/.gradle/8.10.2/executionHistory/executionHistory.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/8.10.2/executionHistory/executionHistory.lock" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/8.10.2/fileChanges/last-build.bin" beforeDir="false" afterPath="$PROJECT_DIR$/client/.gradle/8.10.2/fileChanges/last-build.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/8.10.2/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/client/.gradle/8.10.2/fileHashes/fileHashes.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/8.10.2/fileHashes/fileHashes.lock" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/8.10.2/fileHashes/resourceHashesCache.bin" beforeDir="false" afterPath="$PROJECT_DIR$/client/.gradle/8.10.2/fileHashes/resourceHashesCache.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/8.10.2/gc.properties" beforeDir="false" afterPath="$PROJECT_DIR$/client/.gradle/8.10.2/gc.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/cache.properties" beforeDir="false" afterPath="$PROJECT_DIR$/client/.gradle/buildOutputCleanup/cache.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/outputFiles.bin" beforeDir="false" afterPath="$PROJECT_DIR$/client/.gradle/buildOutputCleanup/outputFiles.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/file-system.probe" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/vcs-1/gc.properties" beforeDir="false" afterPath="$PROJECT_DIR$/client/.gradle/vcs-1/gc.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/client/.idea/compiler.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/client/.idea/gradle.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/jarRepositories.xml" beforeDir="false" afterPath="$PROJECT_DIR$/client/.idea/jarRepositories.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/client/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/client/.idea/vcs.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/client/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/client/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/.gitkeep" beforeDir="false" afterPath="$PROJECT_DIR$/client/assets/.gitkeep" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/assets.txt" beforeDir="false" afterPath="$PROJECT_DIR$/client/assets/assets.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/fonts/minecraft.fnt" beforeDir="false" afterPath="$PROJECT_DIR$/client/assets/fonts/minecraft.fnt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/fonts/minecraft.png" beforeDir="false" afterPath="$PROJECT_DIR$/client/assets/fonts/minecraft.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/textures/Planet1.png" beforeDir="false" afterPath="$PROJECT_DIR$/client/assets/textures/Planet1.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/textures/Planet10.png" beforeDir="false" afterPath="$PROJECT_DIR$/client/assets/textures/Planet10.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/textures/Planet11.png" beforeDir="false" afterPath="$PROJECT_DIR$/client/assets/textures/Planet11.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/textures/Planet12.png" beforeDir="false" afterPath="$PROJECT_DIR$/client/assets/textures/Planet12.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/textures/Planet13.png" beforeDir="false" afterPath="$PROJECT_DIR$/client/assets/textures/Planet13.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/textures/Planet14.png" beforeDir="false" afterPath="$PROJECT_DIR$/client/assets/textures/Planet14.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/textures/Planet2.png" beforeDir="false" afterPath="$PROJECT_DIR$/client/assets/textures/Planet2.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/textures/Planet3.png" beforeDir="false" afterPath="$PROJECT_DIR$/client/assets/textures/Planet3.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/textures/Planet4.png" beforeDir="false" afterPath="$PROJECT_DIR$/client/assets/textures/Planet4.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/textures/Planet5.png" beforeDir="false" afterPath="$PROJECT_DIR$/client/assets/textures/Planet5.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/textures/Planet6.png" beforeDir="false" afterPath="$PROJECT_DIR$/client/assets/textures/Planet6.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/textures/Planet7.png" beforeDir="false" afterPath="$PROJECT_DIR$/client/assets/textures/Planet7.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/textures/Planet8.png" beforeDir="false" afterPath="$PROJECT_DIR$/client/assets/textures/Planet8.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/textures/Planet9.png" beforeDir="false" afterPath="$PROJECT_DIR$/client/assets/textures/Planet9.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/textures/button.png" beforeDir="false" afterPath="$PROJECT_DIR$/client/assets/textures/button.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/textures/cursor.png" beforeDir="false" afterPath="$PROJECT_DIR$/client/assets/textures/cursor.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/textures/multiplayer.png" beforeDir="false" afterPath="$PROJECT_DIR$/client/assets/textures/multiplayer.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/textures/options.png" beforeDir="false" afterPath="$PROJECT_DIR$/client/assets/textures/options.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/textures/outline.png" beforeDir="false" afterPath="$PROJECT_DIR$/client/assets/textures/outline.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/textures/selection.png" beforeDir="false" afterPath="$PROJECT_DIR$/client/assets/textures/selection.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/textures/singleplayer.png" beforeDir="false" afterPath="$PROJECT_DIR$/client/assets/textures/singleplayer.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/textures/title.png" beforeDir="false" afterPath="$PROJECT_DIR$/client/assets/textures/title.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/client/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/client/core/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/build/classes/java/main/com/spaceinvaders/backend/firebase/AuthenticationException.class" beforeDir="false" afterPath="$PROJECT_DIR$/client/core/build/classes/java/main/com/spaceinvaders/backend/firebase/AuthenticationException.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/build/classes/java/main/com/spaceinvaders/backend/firebase/ClientFirebase.class" beforeDir="false" afterPath="$PROJECT_DIR$/client/core/build/classes/java/main/com/spaceinvaders/backend/firebase/ClientFirebase.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/build/classes/java/main/com/spaceinvaders/frontend/SpaceInvadersGame.class" beforeDir="false" afterPath="$PROJECT_DIR$/client/core/build/classes/java/main/com/spaceinvaders/frontend/SpaceInvadersGame.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/build/classes/java/main/com/spaceinvaders/frontend/background/PlanetsBackground.class" beforeDir="false" afterPath="$PROJECT_DIR$/client/core/build/classes/java/main/com/spaceinvaders/frontend/background/PlanetsBackground.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/build/classes/java/main/com/spaceinvaders/frontend/background/Star.class" beforeDir="false" afterPath="$PROJECT_DIR$/client/core/build/classes/java/main/com/spaceinvaders/frontend/background/Star.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/build/classes/java/main/com/spaceinvaders/frontend/background/StarsBackground.class" beforeDir="false" afterPath="$PROJECT_DIR$/client/core/build/classes/java/main/com/spaceinvaders/frontend/background/StarsBackground.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/build/classes/java/main/com/spaceinvaders/frontend/screens/LoadingScreen.class" beforeDir="false" afterPath="$PROJECT_DIR$/client/core/build/classes/java/main/com/spaceinvaders/frontend/screens/LoadingScreen.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/build/classes/java/main/com/spaceinvaders/frontend/screens/LoginScreen$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/client/core/build/classes/java/main/com/spaceinvaders/frontend/screens/LoginScreen$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/build/classes/java/main/com/spaceinvaders/frontend/screens/LoginScreen.class" beforeDir="false" afterPath="$PROJECT_DIR$/client/core/build/classes/java/main/com/spaceinvaders/frontend/screens/LoginScreen.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/build/classes/java/main/com/spaceinvaders/frontend/screens/MainMenuScreen.class" beforeDir="false" afterPath="$PROJECT_DIR$/client/core/build/classes/java/main/com/spaceinvaders/frontend/screens/MainMenuScreen.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/build/classes/java/main/com/spaceinvaders/frontend/utils/ButtonUtils$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/client/core/build/classes/java/main/com/spaceinvaders/frontend/utils/ButtonUtils$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/build/classes/java/main/com/spaceinvaders/frontend/utils/ButtonUtils$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/client/core/build/classes/java/main/com/spaceinvaders/frontend/utils/ButtonUtils$2.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/build/classes/java/main/com/spaceinvaders/frontend/utils/ButtonUtils.class" beforeDir="false" afterPath="$PROJECT_DIR$/client/core/build/classes/java/main/com/spaceinvaders/frontend/utils/ButtonUtils.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/build/classes/java/main/com/spaceinvaders/frontend/utils/LabelUtils.class" beforeDir="false" afterPath="$PROJECT_DIR$/client/core/build/classes/java/main/com/spaceinvaders/frontend/utils/LabelUtils.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/build/classes/java/main/com/spaceinvaders/frontend/utils/MyAssetManager.class" beforeDir="false" afterPath="$PROJECT_DIR$/client/core/build/classes/java/main/com/spaceinvaders/frontend/utils/MyAssetManager.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/build/classes/java/main/com/spaceinvaders/frontend/utils/TextFieldUtils.class" beforeDir="false" afterPath="$PROJECT_DIR$/client/core/build/classes/java/main/com/spaceinvaders/frontend/utils/TextFieldUtils.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/build/libs/core-$projectVersion.jar" beforeDir="false" afterPath="$PROJECT_DIR$/client/core/build/libs/core-$projectVersion.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/build/tmp/compileJava/previous-compilation-data.bin" beforeDir="false" afterPath="$PROJECT_DIR$/client/core/build/tmp/compileJava/previous-compilation-data.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/build/tmp/jar/MANIFEST.MF" beforeDir="false" afterPath="$PROJECT_DIR$/client/core/build/tmp/jar/MANIFEST.MF" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/main/java/com/spaceinvaders/backend/firebase/AuthenticationException.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/core/src/main/java/com/spaceinvaders/backend/firebase/AuthenticationException.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/main/java/com/spaceinvaders/backend/firebase/ClientFirebase.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/core/src/main/java/com/spaceinvaders/backend/firebase/ClientFirebase.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/main/java/com/spaceinvaders/frontend/SpaceInvadersGame.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/core/src/main/java/com/spaceinvaders/frontend/SpaceInvadersGame.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/main/java/com/spaceinvaders/frontend/background/PlanetsBackground.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/core/src/main/java/com/spaceinvaders/frontend/background/PlanetsBackground.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/main/java/com/spaceinvaders/frontend/background/Star.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/core/src/main/java/com/spaceinvaders/frontend/background/Star.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/main/java/com/spaceinvaders/frontend/background/StarsBackground.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/core/src/main/java/com/spaceinvaders/frontend/background/StarsBackground.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/main/java/com/spaceinvaders/frontend/screens/LoadingScreen.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/core/src/main/java/com/spaceinvaders/frontend/screens/LoadingScreen.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/main/java/com/spaceinvaders/frontend/screens/LoginScreen.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/core/src/main/java/com/spaceinvaders/frontend/screens/LoginScreen.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/main/java/com/spaceinvaders/frontend/screens/MainMenuScreen.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/core/src/main/java/com/spaceinvaders/frontend/screens/MainMenuScreen.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/main/java/com/spaceinvaders/frontend/utils/ButtonUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/core/src/main/java/com/spaceinvaders/frontend/utils/ButtonUtils.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/main/java/com/spaceinvaders/frontend/utils/LabelUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/core/src/main/java/com/spaceinvaders/frontend/utils/LabelUtils.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/main/java/com/spaceinvaders/frontend/utils/MyAssetManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/core/src/main/java/com/spaceinvaders/frontend/utils/MyAssetManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/main/java/com/spaceinvaders/frontend/utils/TextFieldUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/core/src/main/java/com/spaceinvaders/frontend/utils/TextFieldUtils.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gradle.properties" beforeDir="false" afterPath="$PROJECT_DIR$/client/gradle.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.jar" beforeDir="false" afterPath="$PROJECT_DIR$/client/gradle/wrapper/gradle-wrapper.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.properties" beforeDir="false" afterPath="$PROJECT_DIR$/client/gradle/wrapper/gradle-wrapper.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gradlew" beforeDir="false" afterPath="$PROJECT_DIR$/client/gradlew" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gradlew.bat" beforeDir="false" afterPath="$PROJECT_DIR$/client/gradlew.bat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lwjgl3/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/client/lwjgl3/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lwjgl3/build/classes/java/main/com/spaceinvaders/lwjgl3/Lwjgl3Launcher.class" beforeDir="false" afterPath="$PROJECT_DIR$/client/lwjgl3/build/classes/java/main/com/spaceinvaders/lwjgl3/Lwjgl3Launcher.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lwjgl3/build/classes/java/main/com/spaceinvaders/lwjgl3/StartupHelper.class" beforeDir="false" afterPath="$PROJECT_DIR$/client/lwjgl3/build/classes/java/main/com/spaceinvaders/lwjgl3/StartupHelper.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lwjgl3/build/resources/main/.gitkeep" beforeDir="false" afterPath="$PROJECT_DIR$/client/lwjgl3/build/resources/main/.gitkeep" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lwjgl3/build/resources/main/assets.txt" beforeDir="false" afterPath="$PROJECT_DIR$/client/lwjgl3/build/resources/main/assets.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lwjgl3/build/resources/main/fonts/minecraft.fnt" beforeDir="false" afterPath="$PROJECT_DIR$/client/lwjgl3/build/resources/main/fonts/minecraft.fnt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lwjgl3/build/resources/main/fonts/minecraft.png" beforeDir="false" afterPath="$PROJECT_DIR$/client/lwjgl3/build/resources/main/fonts/minecraft.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lwjgl3/build/resources/main/libgdx128.png" beforeDir="false" afterPath="$PROJECT_DIR$/client/lwjgl3/build/resources/main/libgdx128.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lwjgl3/build/resources/main/libgdx16.png" beforeDir="false" afterPath="$PROJECT_DIR$/client/lwjgl3/build/resources/main/libgdx16.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lwjgl3/build/resources/main/libgdx32.png" beforeDir="false" afterPath="$PROJECT_DIR$/client/lwjgl3/build/resources/main/libgdx32.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lwjgl3/build/resources/main/libgdx64.png" beforeDir="false" afterPath="$PROJECT_DIR$/client/lwjgl3/build/resources/main/libgdx64.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lwjgl3/build/resources/main/textures/Planet1.png" beforeDir="false" afterPath="$PROJECT_DIR$/client/lwjgl3/build/resources/main/textures/Planet1.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lwjgl3/build/resources/main/textures/Planet10.png" beforeDir="false" afterPath="$PROJECT_DIR$/client/lwjgl3/build/resources/main/textures/Planet10.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lwjgl3/build/resources/main/textures/Planet11.png" beforeDir="false" afterPath="$PROJECT_DIR$/client/lwjgl3/build/resources/main/textures/Planet11.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lwjgl3/build/resources/main/textures/Planet12.png" beforeDir="false" afterPath="$PROJECT_DIR$/client/lwjgl3/build/resources/main/textures/Planet12.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lwjgl3/build/resources/main/textures/Planet13.png" beforeDir="false" afterPath="$PROJECT_DIR$/client/lwjgl3/build/resources/main/textures/Planet13.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lwjgl3/build/resources/main/textures/Planet14.png" beforeDir="false" afterPath="$PROJECT_DIR$/client/lwjgl3/build/resources/main/textures/Planet14.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lwjgl3/build/resources/main/textures/Planet2.png" beforeDir="false" afterPath="$PROJECT_DIR$/client/lwjgl3/build/resources/main/textures/Planet2.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lwjgl3/build/resources/main/textures/Planet3.png" beforeDir="false" afterPath="$PROJECT_DIR$/client/lwjgl3/build/resources/main/textures/Planet3.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lwjgl3/build/resources/main/textures/Planet4.png" beforeDir="false" afterPath="$PROJECT_DIR$/client/lwjgl3/build/resources/main/textures/Planet4.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lwjgl3/build/resources/main/textures/Planet5.png" beforeDir="false" afterPath="$PROJECT_DIR$/client/lwjgl3/build/resources/main/textures/Planet5.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lwjgl3/build/resources/main/textures/Planet6.png" beforeDir="false" afterPath="$PROJECT_DIR$/client/lwjgl3/build/resources/main/textures/Planet6.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lwjgl3/build/resources/main/textures/Planet7.png" beforeDir="false" afterPath="$PROJECT_DIR$/client/lwjgl3/build/resources/main/textures/Planet7.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lwjgl3/build/resources/main/textures/Planet8.png" beforeDir="false" afterPath="$PROJECT_DIR$/client/lwjgl3/build/resources/main/textures/Planet8.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lwjgl3/build/resources/main/textures/Planet9.png" beforeDir="false" afterPath="$PROJECT_DIR$/client/lwjgl3/build/resources/main/textures/Planet9.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lwjgl3/build/resources/main/textures/button.png" beforeDir="false" afterPath="$PROJECT_DIR$/client/lwjgl3/build/resources/main/textures/button.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lwjgl3/build/resources/main/textures/cursor.png" beforeDir="false" afterPath="$PROJECT_DIR$/client/lwjgl3/build/resources/main/textures/cursor.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lwjgl3/build/resources/main/textures/multiplayer.png" beforeDir="false" afterPath="$PROJECT_DIR$/client/lwjgl3/build/resources/main/textures/multiplayer.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lwjgl3/build/resources/main/textures/options.png" beforeDir="false" afterPath="$PROJECT_DIR$/client/lwjgl3/build/resources/main/textures/options.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lwjgl3/build/resources/main/textures/outline.png" beforeDir="false" afterPath="$PROJECT_DIR$/client/lwjgl3/build/resources/main/textures/outline.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lwjgl3/build/resources/main/textures/selection.png" beforeDir="false" afterPath="$PROJECT_DIR$/client/lwjgl3/build/resources/main/textures/selection.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lwjgl3/build/resources/main/textures/singleplayer.png" beforeDir="false" afterPath="$PROJECT_DIR$/client/lwjgl3/build/resources/main/textures/singleplayer.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lwjgl3/build/resources/main/textures/title.png" beforeDir="false" afterPath="$PROJECT_DIR$/client/lwjgl3/build/resources/main/textures/title.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lwjgl3/build/tmp/compileJava/previous-compilation-data.bin" beforeDir="false" afterPath="$PROJECT_DIR$/client/lwjgl3/build/tmp/compileJava/previous-compilation-data.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lwjgl3/icons/logo.icns" beforeDir="false" afterPath="$PROJECT_DIR$/client/lwjgl3/icons/logo.icns" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lwjgl3/icons/logo.ico" beforeDir="false" afterPath="$PROJECT_DIR$/client/lwjgl3/icons/logo.ico" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lwjgl3/icons/logo.png" beforeDir="false" afterPath="$PROJECT_DIR$/client/lwjgl3/icons/logo.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lwjgl3/nativeimage.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/client/lwjgl3/nativeimage.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lwjgl3/src/main/java/com/spaceinvaders/lwjgl3/Lwjgl3Launcher.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/lwjgl3/src/main/java/com/spaceinvaders/lwjgl3/Lwjgl3Launcher.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lwjgl3/src/main/java/com/spaceinvaders/lwjgl3/StartupHelper.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/lwjgl3/src/main/java/com/spaceinvaders/lwjgl3/StartupHelper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lwjgl3/src/main/resources/libgdx128.png" beforeDir="false" afterPath="$PROJECT_DIR$/client/lwjgl3/src/main/resources/libgdx128.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lwjgl3/src/main/resources/libgdx16.png" beforeDir="false" afterPath="$PROJECT_DIR$/client/lwjgl3/src/main/resources/libgdx16.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lwjgl3/src/main/resources/libgdx32.png" beforeDir="false" afterPath="$PROJECT_DIR$/client/lwjgl3/src/main/resources/libgdx32.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lwjgl3/src/main/resources/libgdx64.png" beforeDir="false" afterPath="$PROJECT_DIR$/client/lwjgl3/src/main/resources/libgdx64.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/settings.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/client/settings.gradle" afterDir="false" />
+    <list default="true" id="3e2de221-4e84-4467-bb48-92efcd413ad4" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.editorconfig" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitattributes" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/8.10.2/checksums/checksums.lock" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/8.10.2/checksums/md5-checksums.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/8.10.2/checksums/sha1-checksums.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/8.10.2/dependencies-accessors/gc.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/8.10.2/executionHistory/executionHistory.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/8.10.2/fileChanges/last-build.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/8.10.2/fileHashes/fileHashes.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/8.10.2/fileHashes/resourceHashesCache.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/8.10.2/gc.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/cache.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/outputFiles.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/vcs-1/gc.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/jarRepositories.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/.gitkeep" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/assets.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/fonts/minecraft.fnt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/fonts/minecraft.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/textures/Planet1.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/textures/Planet10.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/textures/Planet11.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/textures/Planet12.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/textures/Planet13.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/textures/Planet14.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/textures/Planet2.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/textures/Planet3.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/textures/Planet4.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/textures/Planet5.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/textures/Planet6.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/textures/Planet7.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/textures/Planet8.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/textures/Planet9.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/textures/button.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/textures/cursor.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/textures/multiplayer.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/textures/options.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/textures/outline.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/textures/selection.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/textures/singleplayer.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/textures/title.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/build.gradle" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/build/classes/java/main/com/spaceinvaders/backend/firebase/AuthenticationException.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/build/classes/java/main/com/spaceinvaders/backend/firebase/ClientFirebase.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/build/classes/java/main/com/spaceinvaders/frontend/SpaceInvadersGame.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/build/classes/java/main/com/spaceinvaders/frontend/background/PlanetsBackground.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/build/classes/java/main/com/spaceinvaders/frontend/background/Star.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/build/classes/java/main/com/spaceinvaders/frontend/background/StarsBackground.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/build/classes/java/main/com/spaceinvaders/frontend/screens/LoadingScreen.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/build/classes/java/main/com/spaceinvaders/frontend/screens/LoginScreen$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/build/classes/java/main/com/spaceinvaders/frontend/screens/LoginScreen.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/build/classes/java/main/com/spaceinvaders/frontend/screens/MainMenuScreen.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/build/classes/java/main/com/spaceinvaders/frontend/utils/ButtonUtils$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/build/classes/java/main/com/spaceinvaders/frontend/utils/ButtonUtils$2.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/build/classes/java/main/com/spaceinvaders/frontend/utils/ButtonUtils.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/build/classes/java/main/com/spaceinvaders/frontend/utils/LabelUtils.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/build/classes/java/main/com/spaceinvaders/frontend/utils/MyAssetManager.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/build/classes/java/main/com/spaceinvaders/frontend/utils/TextFieldUtils.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/build/libs/core-$projectVersion.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/build/tmp/compileJava/previous-compilation-data.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/build/tmp/jar/MANIFEST.MF" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/src/main/java/com/spaceinvaders/backend/firebase/AuthenticationException.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/src/main/java/com/spaceinvaders/backend/firebase/ClientFirebase.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/src/main/java/com/spaceinvaders/frontend/SpaceInvadersGame.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/src/main/java/com/spaceinvaders/frontend/background/PlanetsBackground.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/src/main/java/com/spaceinvaders/frontend/background/Star.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/src/main/java/com/spaceinvaders/frontend/background/StarsBackground.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/src/main/java/com/spaceinvaders/frontend/screens/LoadingScreen.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/src/main/java/com/spaceinvaders/frontend/screens/LoginScreen.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/src/main/java/com/spaceinvaders/frontend/screens/MainMenuScreen.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/src/main/java/com/spaceinvaders/frontend/utils/ButtonUtils.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/src/main/java/com/spaceinvaders/frontend/utils/LabelUtils.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/src/main/java/com/spaceinvaders/frontend/utils/MyAssetManager.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/src/main/java/com/spaceinvaders/frontend/utils/TextFieldUtils.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gradle.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gradlew" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gradlew.bat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lwjgl3/build.gradle" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lwjgl3/build/classes/java/main/com/spaceinvaders/lwjgl3/Lwjgl3Launcher.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lwjgl3/build/classes/java/main/com/spaceinvaders/lwjgl3/StartupHelper.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lwjgl3/build/resources/main/.gitkeep" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lwjgl3/build/resources/main/assets.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lwjgl3/build/resources/main/fonts/minecraft.fnt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lwjgl3/build/resources/main/fonts/minecraft.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lwjgl3/build/resources/main/libgdx128.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lwjgl3/build/resources/main/libgdx16.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lwjgl3/build/resources/main/libgdx32.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lwjgl3/build/resources/main/libgdx64.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lwjgl3/build/resources/main/textures/Planet1.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lwjgl3/build/resources/main/textures/Planet10.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lwjgl3/build/resources/main/textures/Planet11.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lwjgl3/build/resources/main/textures/Planet12.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lwjgl3/build/resources/main/textures/Planet13.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lwjgl3/build/resources/main/textures/Planet14.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lwjgl3/build/resources/main/textures/Planet2.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lwjgl3/build/resources/main/textures/Planet3.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lwjgl3/build/resources/main/textures/Planet4.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lwjgl3/build/resources/main/textures/Planet5.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lwjgl3/build/resources/main/textures/Planet6.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lwjgl3/build/resources/main/textures/Planet7.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lwjgl3/build/resources/main/textures/Planet8.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lwjgl3/build/resources/main/textures/Planet9.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lwjgl3/build/resources/main/textures/button.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lwjgl3/build/resources/main/textures/cursor.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lwjgl3/build/resources/main/textures/multiplayer.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lwjgl3/build/resources/main/textures/options.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lwjgl3/build/resources/main/textures/outline.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lwjgl3/build/resources/main/textures/selection.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lwjgl3/build/resources/main/textures/singleplayer.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lwjgl3/build/resources/main/textures/title.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lwjgl3/build/tmp/compileJava/previous-compilation-data.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lwjgl3/icons/logo.icns" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lwjgl3/icons/logo.ico" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lwjgl3/icons/logo.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lwjgl3/nativeimage.gradle" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lwjgl3/src/main/java/com/spaceinvaders/lwjgl3/Lwjgl3Launcher.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lwjgl3/src/main/java/com/spaceinvaders/lwjgl3/StartupHelper.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lwjgl3/src/main/resources/libgdx128.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lwjgl3/src/main/resources/libgdx16.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lwjgl3/src/main/resources/libgdx32.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lwjgl3/src/main/resources/libgdx64.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/settings.gradle" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
-  </component>
-  <component name="ExternalProjectsData">
-    <projectState path="$PROJECT_DIR$">
-      <ProjectState />
-    </projectState>
-  </component>
-  <component name="ExternalProjectsManager">
-    <system id="GRADLE">
-      <state>
-        <task path="$PROJECT_DIR$">
-          <activation />
-        </task>
-        <projects_view>
-          <tree_state>
-            <expand>
-              <path>
-                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
-                <item name="Nebula-s-Edge" type="f1a62948:ProjectNode" />
-              </path>
-              <path>
-                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
-                <item name="Nebula-s-Edge" type="f1a62948:ProjectNode" />
-                <item name="Tasks" type="e4a08cd1:TasksNode" />
-              </path>
-              <path>
-                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
-                <item name="Nebula-s-Edge" type="f1a62948:ProjectNode" />
-                <item name="Tasks" type="e4a08cd1:TasksNode" />
-                <item name="application" type="c8890929:TasksNode$1" />
-              </path>
-            </expand>
-            <select />
-          </tree_state>
-        </projects_view>
-      </state>
-    </system>
-  </component>
-  <component name="FileTemplateManagerImpl">
-    <option name="RECENT_TEMPLATES">
-      <list>
-        <option value="Exception" />
-        <option value="Class" />
-      </list>
-    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -210,97 +157,25 @@
     &quot;accountId&quot;: &quot;01e6c2d9-520c-46b3-b76d-7d27b9084049&quot;
   }
 }</component>
-  <component name="ProblemsViewState">
-    <option name="selectedTabId" value="CurrentFile" />
-  </component>
   <component name="ProjectColorInfo">{
   &quot;customColor&quot;: &quot;&quot;,
   &quot;associatedIndex&quot;: 7
 }</component>
-  <component name="ProjectId" id="2oKI9BlkttEnGPACWyCFbzNFt2U" />
-  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectId" id="2oKg9E0h2Nzdj75ObGb1o3lcorU" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
-    "Gradle.Build Nebula-s-Edge.executor": "Run",
-    "Gradle.Nebula-s-Edge [run].executor": "Run",
-    "Gradle.SpaceInvaders:lwjgl3 [:lwjgl3:com.spaceinvaders.lwjgl3.Lwjgl3Launcher.main()].executor": "Run",
-    "JUnit.Whole project.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "git-widget-placeholder": "main",
-    "ignore.virus.scanning.warn.message": "true",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/ARYAN/Desktop/Java/Nebula-s-Edge/client",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
+    "last_opened_file_path": "C:/Users/ARYAN/Desktop/Java/NebulaEdge",
     "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "reference.settingsdialog.project.gradle",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
-  <component name="RecentsManager">
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="C:\Users\ARYAN\Desktop\Java\Nebula-s-Edge\client" />
-    </key>
-  </component>
-  <component name="RunManager" selected="JUnit.Whole project">
-    <configuration name="Nebula-s-Edge [run]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
-      <ExternalSystemSettings>
-        <option name="executionName" />
-        <option name="externalProjectPath" value="$PROJECT_DIR$" />
-        <option name="externalSystemIdString" value="GRADLE" />
-        <option name="scriptParameters" />
-        <option name="taskDescriptions">
-          <list />
-        </option>
-        <option name="taskNames">
-          <list>
-            <option value="run" />
-          </list>
-        </option>
-        <option name="vmOptions" />
-      </ExternalSystemSettings>
-      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
-      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
-      <DebugAllEnabled>false</DebugAllEnabled>
-      <RunAsTest>false</RunAsTest>
-      <method v="2" />
-    </configuration>
-    <configuration name="Whole project" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <option name="PACKAGE_NAME" value="" />
-      <option name="TEST_OBJECT" value="package" />
-      <option name="TEST_SEARCH_SCOPE">
-        <value defaultName="wholeProject" />
-      </option>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration default="true" type="JetRunConfigurationType">
-      <module name="Nebula-s-Edge" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration default="true" type="KotlinStandaloneScriptRunConfigurationType">
-      <module name="Nebula-s-Edge" />
-      <option name="filePath" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <recent_temporary>
-      <list>
-        <item itemvalue="JUnit.Whole project" />
-        <item itemvalue="Gradle.Nebula-s-Edge [run]" />
-      </list>
-    </recent_temporary>
-  </component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
@@ -312,48 +187,17 @@
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="ed598eda-462a-4fa5-a345-0bb43f98042b" name="Changes" comment="" />
-      <created>1730611687900</created>
+      <changelist id="3e2de221-4e84-4467-bb48-92efcd413ad4" name="Changes" comment="" />
+      <created>1730623529257</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1730611687900</updated>
-      <workItem from="1730611689883" duration="3651000" />
-      <workItem from="1730622692407" duration="82000" />
+      <updated>1730623529257</updated>
+      <workItem from="1730623531566" duration="36000" />
+      <workItem from="1730623616038" duration="3000" />
     </task>
-    <task id="LOCAL-00001" summary="Initial Commit (Merged Firebase and Frontend)">
-      <option name="closed" value="true" />
-      <created>1730613239855</created>
-      <option name="number" value="00001" />
-      <option name="presentableId" value="LOCAL-00001" />
-      <option name="project" value="LOCAL" />
-      <updated>1730613239855</updated>
-    </task>
-    <task id="LOCAL-00002" summary="Updated Client Firebase Authentication">
-      <option name="closed" value="true" />
-      <created>1730614964919</created>
-      <option name="number" value="00002" />
-      <option name="presentableId" value="LOCAL-00002" />
-      <option name="project" value="LOCAL" />
-      <updated>1730614964919</updated>
-    </task>
-    <task id="LOCAL-00003" summary="Changed exception handling LoginScreen">
-      <option name="closed" value="true" />
-      <created>1730615187839</created>
-      <option name="number" value="00003" />
-      <option name="presentableId" value="LOCAL-00003" />
-      <option name="project" value="LOCAL" />
-      <updated>1730615187839</updated>
-    </task>
-    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
-  </component>
-  <component name="VcsManagerConfiguration">
-    <MESSAGE value="Initial Commit (Merged Firebase and Frontend)" />
-    <MESSAGE value="Updated Client Firebase Authentication" />
-    <MESSAGE value="Changed exception handling LoginScreen" />
-    <option name="LAST_COMMIT_MESSAGE" value="Changed exception handling LoginScreen" />
   </component>
 </project>
