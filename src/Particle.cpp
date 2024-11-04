@@ -1,31 +1,44 @@
 #include "include/Particle.h"
 
+int Particle::count = 0;
+
 // Constructor with position and velocity
 Particle::Particle(const Vector& position, const Vector& v, double r, double m) {
+    count++;
     this->position = position;
     this->a0 = {0, 0, 0};
     this->a1 = {0, 0, 0};
     this->a2 = {0, 0, 0};
     this->velocity = v;
     this->radius = r;
-    this->collisionRadius = r + (( r > 1) ? 0.001f : 0.001f * r);
+    this->collisionRadius = r;
     this->mass = m;
+    boundingBox = new AABB();
+    boundingBox->setLowerBound({position[0]-radius, position[1]-radius, 0});
+    boundingBox->setUpperBound({position[0]+radius, position[1]+radius, 0});
+    id = count-1;
 }
 
 // Default constructor
 Particle::Particle() {
+    count++;
     position = {0, 0, 0};
-    a0 = {0, 0, 0};
-    a1 = {0, 0, 0};
-    a2 = {0, 0, 0};
     velocity = {0, 0, 0};
     radius = 1.0f;
     collisionRadius = 1.01f;
     mass = 1.0f;
+    a0 = {0, 0, 0};
+    a1 = {0, 0, 0};
+    a2 = {0, 0, 0};
+    id = count-1;
+    boundingBox = new AABB();
+    boundingBox->setLowerBound({position[0]-radius, position[1]-radius, 0});
+    boundingBox->setUpperBound({position[0]+radius, position[1]+radius, 0});
 }
 
 // Copy constructor
 Particle::Particle(const Particle& p) {
+    count++;
     position = p.position;
     a0 = p.a0;
     a1 = p.a1;
@@ -34,14 +47,21 @@ Particle::Particle(const Particle& p) {
     radius = p.radius;
     collisionRadius = p.collisionRadius;
     mass = p.mass;
+    id = count-1;
+    boundingBox = new AABB();
+    boundingBox->setLowerBound({position[0]-radius, position[1]-radius, 0});
+    boundingBox->setUpperBound({position[0]+radius, position[1]+radius, 0});
 }
 
 // Update particle state
 void Particle::update(float dt, Vector& force) {
     position = position + velocity * dt + (a1 * 4.0 - a0) * (dt * dt) * (1 / 6.0);
+    boundingBox->advance(velocity * dt + (a1 * 4.0 - a0) * (dt * dt) * (1 / 6.0));
+    // std::cout<<position<<std::endl;
+    // std::cout<<boundingBox->getLowerBound()<<std::endl;
     a2 = force*(1/mass);
     velocity = velocity + (a2 * 2.0 + a1 * 5.0 - a0) * (dt / 6.0);
-    std::cout<<velocity[0]<<" "<<velocity[1]<<" "<<velocity[2]<<std::endl;
+    // std::cout<<velocity[0]<<" "<<velocity[1]<<" "<<velocity[2]<<std::endl;
     a0 = a1;
     a1 = a2;
 }
@@ -52,7 +72,9 @@ bool Particle::checkCollision(Particle& p1, Particle& p2, double e) {
     double dist = p2.position.distance(p1.position);
 //    std::cout<<dist<<std::endl;
 //    std::cout<<p1.collisionRadius + p2.collisionRadius<<std::endl;
-    if (dist < p1.collisionRadius + p2.collisionRadius) {
+    //
+    if (dist < p1.collisionRadius + p2.collisionRadius && dist > 0) {
+
         Vector normal = delta.normalize();
         Vector tangent({-normal[1], normal[0], 0});
 
@@ -66,8 +88,15 @@ bool Particle::checkCollision(Particle& p1, Particle& p2, double e) {
         double _v1n(((m1-m2*e)*v1n + m2*(1+e)*v2n)/(m1+m2));
         double _v2n(((m1+m1*e)*v1n + (m2-m1*e)*v2n)/(m1+m2));
 
+        p1.setPosition(p1.position - normal*dist*0.5);
+        p2.setPosition(p2.position + normal*dist*0.5);
+
         p1.velocity = normal*_v1n + tangent*v1t;
         p2.velocity = normal*_v2n  + tangent*v2t;
+
+        p1.setPosition(p1.position + p1.velocity.normalize()*p1.radius*0.5);
+        p2.setPosition(p2.position + p2.velocity.normalize()*p2.radius*0.5);
+
 
         return true;
     }
@@ -111,4 +140,8 @@ bool Particle::checkBoundary(BoundaryDirection direction, double boundary) {
             break;
     }
     return false;
+}
+
+void Particle::setPosition(const Vector &position) {
+    Particle::position = position;
 }

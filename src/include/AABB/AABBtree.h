@@ -28,7 +28,7 @@ public:
 
     void updateAABB() {
         if(isLeaf) {
-            Vector boundV(bound, bound, bound);
+            Vector boundV(bound, bound, 0);
             box.setLowerBound(objBox->getLowerBound() - boundV);
             box.setUpperBound(objBox->getUpperBound() + boundV);
         }
@@ -53,10 +53,12 @@ private:
     void collisionCheck(AABBnode* st1, AABBnode* st2, std::vector<std::pair<int, int>>&);
     void collisionCheck(AABBnode* st, std::vector<std::pair<int,int>>&);
     void  clearCollisionChecks();
+
 public:
     AABBtree();
     ~AABBtree();
     int insert(AABB box, AABB* objBox, int id);
+    void countLeaves(int &c);
     void removeLeaf(AABBnode*, int id);
     void Update();
     AABBnode* find(AABB box, AABB* objBox, int id);

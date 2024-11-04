@@ -248,7 +248,7 @@ void AABBtree::collisionCheck(AABBnode *st1, AABBnode *st2, std::vector<std::pai
     if(st1 == nullptr || st2==nullptr) return;
     if(st1->isLeaf) {
         if(st2->isLeaf) {
-            if(st1->box.collides(st2->box)) {
+            if(st1->objBox->collides(*(st2->objBox))) {
                 v.emplace_back(st1->id, st2->id);
                 return;
             }
@@ -284,6 +284,20 @@ void AABBtree::clearCollisionChecks() {
         if(p->child1 != nullptr) Q.push(p->child1);
         if(p->child2 != nullptr) Q.push(p->child2);
         if (p) p->collisionsChecked = false;
+    }
+}
+
+
+void AABBtree::countLeaves(int &c) {
+    if(root == nullptr) return;
+    std::queue<AABBnode*> Q;
+    Q.push(root);
+    while(!Q.empty()) {
+        auto p = Q.front();
+        Q.pop();
+        if(p->child1 != nullptr) Q.push(p->child1);
+        if(p->child2 != nullptr) Q.push(p->child2);
+        if(p->isLeaf) c++;
     }
 }
 
