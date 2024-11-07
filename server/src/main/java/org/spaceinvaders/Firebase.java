@@ -7,8 +7,8 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthException;
 import com.google.firebase.auth.UserRecord;
 
-import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.FileInputStream;
 
 public final class Firebase
 {
