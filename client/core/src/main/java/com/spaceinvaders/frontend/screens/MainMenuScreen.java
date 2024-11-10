@@ -21,8 +21,12 @@ public class MainMenuScreen implements Screen {
     private final float WORLD_WIDTH = 240;
     private final float WORLD_HEIGHT = 135;
 
+    private final float STAGE_WIDTH = WORLD_WIDTH * 3/2;
+    private final float STAGE_HEIGHT = WORLD_HEIGHT * 3/2;
+
     private final OrthographicCamera camera;
     private final Viewport viewport;
+    private final Viewport stageViewport;
 
     private final Stage stage;
 
@@ -36,30 +40,18 @@ public class MainMenuScreen implements Screen {
 
         camera = new OrthographicCamera();
         viewport = new FitViewport(WORLD_WIDTH, WORLD_HEIGHT, camera);
+        stageViewport = new FitViewport(STAGE_WIDTH, STAGE_HEIGHT);
 
         camera.position.set(WORLD_WIDTH / 2, WORLD_HEIGHT / 2, 0);
         camera.update();
 
-        stage = new Stage(viewport);
-        initializeButtons();
+        stage = new Stage(stageViewport);
+        initializeActors();
 
-        starsBackground = new StarsBackground(WORLD_WIDTH, WORLD_HEIGHT, 50);
+        starsBackground = new StarsBackground(WORLD_WIDTH, WORLD_HEIGHT, 30);
         planetsBackground = new PlanetsBackground(game.assetManager);
 
         title = game.assetManager.get("textures/title.png", Texture.class);
-    }
-
-    private void initializeButtons() {
-        ImageTextButton singlePlayerButton = ButtonUtils.createScreenNavigationButton(
-            game, "SinglePlayer", "textures/button.png", "textures/button.png", 93, 15, 73, 135 - 85, null);
-        ImageTextButton multiPlayerButton = ButtonUtils.createScreenNavigationButton(
-            game, "signup", "textures/button.png", "textures/button.png", 93, 15, 73, 135 - 101, new SignupScreen(game));
-        ImageTextButton optionsButton = ButtonUtils.createScreenNavigationButton(
-            game, "login", "textures/button.png", "textures/button.png", 93, 15, 73, 135 - 117, new LoginScreen(game));
-
-        stage.addActor(singlePlayerButton);
-        stage.addActor(multiPlayerButton);
-        stage.addActor(optionsButton);
     }
 
     @Override
@@ -114,7 +106,15 @@ public class MainMenuScreen implements Screen {
 
     @Override
     public void dispose() {
-        planetsBackground.dispose();
-        title.dispose();
+    }
+
+    private void initializeActors() {
+        ImageTextButton singlePlayerButton = ButtonUtils.createScreenNavigationButton(game, "SinglePlayer", "textures/button.png", "textures/button.png", 95, 15, (STAGE_WIDTH - 95) / 2, 83, null);
+        ImageTextButton multiPlayerButton = ButtonUtils.createScreenNavigationButton(game, "MultiPlayer", "textures/button.png", "textures/button.png", 95, 15, (STAGE_WIDTH - 95) / 2, 66, ScreenState.SIGNUP);
+        ImageTextButton optionsButton = ButtonUtils.createScreenNavigationButton(game, "Options", "textures/button.png", "textures/button.png", 95, 15, (STAGE_WIDTH - 95) / 2, 49, ScreenState.LOGIN);
+
+        stage.addActor(singlePlayerButton);
+        stage.addActor(multiPlayerButton);
+        stage.addActor(optionsButton);
     }
 }

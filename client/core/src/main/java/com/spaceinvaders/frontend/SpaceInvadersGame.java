@@ -4,8 +4,9 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.spaceinvaders.frontend.screens.LoadingScreen;
-import com.spaceinvaders.frontend.utils.MyAssetManager;
+import com.spaceinvaders.frontend.managers.ScreenManager;
+import com.spaceinvaders.frontend.managers.MyAssetManager;
+import com.spaceinvaders.frontend.screens.ScreenState;
 
 public class SpaceInvadersGame extends Game {
     public SpriteBatch batch;
@@ -13,6 +14,7 @@ public class SpaceInvadersGame extends Game {
     public BitmapFont font;
 
     public final MyAssetManager assetManager = new MyAssetManager();
+    public final ScreenManager screenManager = ScreenManager.getInstance(this);
 
     @Override
     public void create() {
@@ -20,11 +22,12 @@ public class SpaceInvadersGame extends Game {
         shapeRenderer = new ShapeRenderer();
         font = new BitmapFont();
 
-        setScreen(new LoadingScreen(this));
+        screenManager.setScreen(ScreenState.LOADING);
     }
 
     @Override
     public void dispose() {
         assetManager.dispose();
+        ScreenManager.getInstance(this).dispose();
     }
 }

@@ -23,7 +23,7 @@ public class LoadingScreen implements Screen {
         ScreenUtils.clear(0, 0, 0, 1);
 
         if(game.assetManager.update()) {
-            game.setScreen(new MainMenuScreen(game));
+            game.screenManager.setScreen(ScreenState.LOGIN);
         }
         else {
             // Get the loading progress percentage

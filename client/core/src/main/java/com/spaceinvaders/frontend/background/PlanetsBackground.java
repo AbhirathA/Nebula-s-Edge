@@ -3,7 +3,7 @@ package com.spaceinvaders.frontend.background;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.Disposable;
-import com.spaceinvaders.frontend.utils.MyAssetManager;
+import com.spaceinvaders.frontend.managers.MyAssetManager;
 
 public class PlanetsBackground implements Disposable {
     private final Texture[] planetTextures;
@@ -48,8 +48,5 @@ public class PlanetsBackground implements Disposable {
 
     @Override
     public void dispose() {
-        for (Texture texture : planetTextures) {
-            texture.dispose();
-        }
     }
 }

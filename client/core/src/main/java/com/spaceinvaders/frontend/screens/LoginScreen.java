@@ -28,8 +28,12 @@ public class LoginScreen implements Screen {
     private final float WORLD_WIDTH = 240;
     private final float WORLD_HEIGHT = 135;
 
+    private final float STAGE_WIDTH = WORLD_WIDTH * 3/2;
+    private final float STAGE_HEIGHT = WORLD_HEIGHT * 3/2;
+
     private final OrthographicCamera camera;
     private final Viewport viewport;
+    private final Viewport stageViewport;
 
     private final Stage stage;
 
@@ -46,11 +50,12 @@ public class LoginScreen implements Screen {
 
         camera = new OrthographicCamera();
         viewport = new FitViewport(WORLD_WIDTH, WORLD_HEIGHT, camera);
+        stageViewport = new FitViewport(STAGE_WIDTH, STAGE_HEIGHT);
 
         camera.position.set(WORLD_WIDTH / 2, WORLD_HEIGHT / 2, 0);
         camera.update();
 
-        stage = new Stage(viewport);
+        stage = new Stage(stageViewport);
 
         initialiseActors();
 
@@ -58,66 +63,6 @@ public class LoginScreen implements Screen {
         planetsBackground = new PlanetsBackground(game.assetManager);
 
         title = game.assetManager.get("textures/title.png", Texture.class);
-    }
-
-    private void initialiseActors() {
-        Label errorMessage = LabelUtils.createLabel("Incorrect username or password", game.assetManager.get("fonts/minecraft.fnt", BitmapFont.class), 0, 0);
-        Label successMessage = LabelUtils.createLabel("Login successful", game.assetManager.get("fonts/minecraft.fnt", BitmapFont.class), 0, 0);
-
-        TextField idField = TextFieldUtils.createTextField("Enter id", game.assetManager, 93, 15, 73, 135 - 85);
-        TextField passwordField = TextFieldUtils.createPasswordField(game.assetManager, 93, 15, 73, 135 - 101);
-
-        ImageTextButton submitButton = ButtonUtils.createButton(
-            game, "Submit", "textures/button.png", "textures/button.png", 93, 15, 73, 135 - 117, null);
-
-        stage.addActor(idField);
-        stage.addActor(passwordField);
-        stage.addActor(submitButton);
-
-        submitButton.addListener(new InputListener() {
-            @Override
-            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                String id = idField.getText();
-                String password = passwordField.getText();
-                try {
-                    String token = ClientFirebase.signIn(id, password);
-
-                    if (isErrorDisplayed) {
-                        stage.getActors().removeValue(errorMessage, true);
-                        isErrorDisplayed = false;
-
-                        if (isLoggedIn) {
-                            stage.getActors().removeValue(successMessage, true);
-                            isLoggedIn = false;
-                        }
-                    }
-                    if (!isLoggedIn) {
-                        stage.addActor(successMessage);
-                        isLoggedIn = true;
-                    }
-                }
-                catch(AuthenticationException e) {
-                    System.out.println("Incorrect username or password");
-                    if (!isErrorDisplayed) {
-                        stage.addActor(errorMessage);
-                        isErrorDisplayed = true;
-
-                        if (isLoggedIn) {
-                            stage.getActors().removeValue(successMessage, true);
-                        }
-                    }
-                }
-                catch(IOException e) {
-                    System.out.println("Could not connect to the server. Are you connected to the internet?");
-                }
-                catch(Exception e) {
-                    //@TODO: Convert to logging
-                    System.err.println(e.getMessage());
-                    System.exit(1);
-                }
-                return true;
-            }
-        });
     }
 
     @Override
@@ -145,6 +90,7 @@ public class LoginScreen implements Screen {
         game.batch.draw(title, 73, 135 - 66, 93, 47);
         game.batch.end();
 
+        stageViewport.apply();
         stage.act(delta);
         stage.draw();
     }
@@ -152,7 +98,7 @@ public class LoginScreen implements Screen {
     @Override
     public void resize(int i, int i1) {
         viewport.update(i, i1);
-        stage.getViewport().update(i, i1, true);
+        stageViewport.update(i, i1);
     }
 
     @Override
@@ -172,7 +118,79 @@ public class LoginScreen implements Screen {
 
     @Override
     public void dispose() {
-        planetsBackground.dispose();
-        title.dispose();
+    }
+
+    private void initialiseActors() {
+        Label errorMessage = LabelUtils.createLabel("Incorrect username or password", game.assetManager.get("fonts/minecraft.fnt", BitmapFont.class), 0, 0);
+        Label successMessage = LabelUtils.createLabel("Login successful", game.assetManager.get("fonts/minecraft.fnt", BitmapFont.class), 0, 0);
+
+        Label enterId = LabelUtils.createLabel("Id:", game.assetManager.get("fonts/minecraft.fnt", BitmapFont.class), (STAGE_WIDTH - 143) / 2f, 86);
+        Label enterPassword = LabelUtils.createLabel("Password:", game.assetManager.get("fonts/minecraft.fnt", BitmapFont.class), (STAGE_WIDTH - 143) / 2f, 70);
+        TextField idField = TextFieldUtils.createTextField("Enter id", game.assetManager, 95, 15, (STAGE_WIDTH - 95) / 2f + 22, 84);
+        TextField passwordField = TextFieldUtils.createPasswordField(game.assetManager, 95, 15, (STAGE_WIDTH - 95) / 2f + 22, 68);
+
+        ImageTextButton submitButton = ButtonUtils.createButton(game, "Submit", "textures/button.png", "textures/button.png", 95, 15, (STAGE_WIDTH - 95) / 2f, 50);
+        ImageTextButton signUpButton = ButtonUtils.createButton(game, "SignUp", "textures/button.png", "textures/button.png", 95, 15, (STAGE_WIDTH - 95) / 2f, 34);
+
+        stage.addActor(enterId);
+        stage.addActor(enterPassword);
+        stage.addActor(idField);
+        stage.addActor(passwordField);
+        stage.addActor(submitButton);
+        stage.addActor(signUpButton);
+
+        signUpButton.addListener(new InputListener() {
+            @Override
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                game.screenManager.setScreen(ScreenState.MAIN_MENU);
+                return true;
+            }
+        });
+
+        submitButton.addListener(new InputListener() {
+            @Override
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                String id = idField.getText();
+                String password = passwordField.getText();
+                try {
+                    String token = ClientFirebase.signIn(id, password);
+
+                    if (isErrorDisplayed) {
+                        stage.getActors().removeValue(errorMessage, true);
+                        isErrorDisplayed = false;
+
+                        if (isLoggedIn) {
+                            stage.getActors().removeValue(successMessage, true);
+                            isLoggedIn = false;
+                        }
+                    }
+                    if (!isLoggedIn) {
+                        stage.addActor(successMessage);
+                        isLoggedIn = true;
+                        game.screenManager.setScreen(ScreenState.MAIN_MENU);
+                    }
+                }
+                catch(AuthenticationException e) {
+                    System.out.println("Incorrect username or password");
+                    if (!isErrorDisplayed) {
+                        stage.addActor(errorMessage);
+                        isErrorDisplayed = true;
+
+                        if (isLoggedIn) {
+                            stage.getActors().removeValue(successMessage, true);
+                        }
+                    }
+                }
+                catch(IOException e) {
+                    System.out.println("Could not connect to the server. Are you connected to the internet?");
+                }
+                catch(Exception e) {
+                    //@TODO: Convert to logging
+                    System.err.println(e.getMessage());
+                    System.exit(1);
+                }
+                return true;
+            }
+        });
     }
 }

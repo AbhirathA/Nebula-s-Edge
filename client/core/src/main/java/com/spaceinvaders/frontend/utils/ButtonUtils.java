@@ -13,9 +13,10 @@ import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageTextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.spaceinvaders.frontend.SpaceInvadersGame;
+import com.spaceinvaders.frontend.screens.ScreenState;
 
 public class ButtonUtils {
-    public static ImageTextButton createScreenNavigationButton(SpaceInvadersGame game, String buttonText, String upImagePath, String downImagePath, float width, float height, float x, float y, Screen targetScreen) {
+    public static ImageTextButton createScreenNavigationButton(SpaceInvadersGame game, String buttonText, String upImagePath, String downImagePath, float width, float height, float x, float y, ScreenState targetScreen) {
         Texture upTexture = game.assetManager.get(upImagePath, Texture.class);
         Texture downTexture = game.assetManager.get(downImagePath, Texture.class);
 
@@ -27,7 +28,7 @@ public class ButtonUtils {
         style.down = downDrawable;
 
         BitmapFont font = game.assetManager.get("fonts/minecraft.fnt", BitmapFont.class);
-        style.font = font;  // Set the BitmapFont for the button text
+        style.font = font;
         style.fontColor = Color.valueOf("4b692f");
 
         ImageTextButton button = new ImageTextButton(buttonText, style);
@@ -43,7 +44,7 @@ public class ButtonUtils {
                     System.out.println("Move to new screen");
                 }
                 else {
-                    game.setScreen(targetScreen);
+                    game.screenManager.setScreen(targetScreen);
                 }
                 return true;
             }
@@ -62,7 +63,7 @@ public class ButtonUtils {
         return button;
     }
 
-    public static ImageTextButton createButton(SpaceInvadersGame game, String buttonText, String upImagePath, String downImagePath, float width, float height, float x, float y, Screen targetScreen) {
+    public static ImageTextButton createButton(SpaceInvadersGame game, String buttonText, String upImagePath, String downImagePath, float width, float height, float x, float y) {
         Texture upTexture = game.assetManager.get(upImagePath, Texture.class);
         Texture downTexture = game.assetManager.get(downImagePath, Texture.class);
 
