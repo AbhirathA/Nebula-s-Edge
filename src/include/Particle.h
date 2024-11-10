@@ -26,6 +26,8 @@ public:
     void setPosition(const Vector& position);
     void update(float dt, Vector& acceleration);
     static bool checkCollision(Particle& p1, Particle& p2, double e);
-    void draw(sf::RenderWindow& window) const;
+    void draw(sf::RenderWindow& window, sf::Color c = sf::Color::Green) const;
     bool checkBoundary(BoundaryDirection direction, double boundary);
+    Particle& operator=(const Particle& p);
+    ~Particle();
 };

@@ -9,7 +9,7 @@ void ParticleSimulator::addParticle(const double x, const double y, const double
     // std::cout<<particle.id<<std::endl;
     particles[particle.id] = particle;
     // std::cout<<particle.id<<std::endl;
-    tree.insert(particle.boundingBox->fatBox(0.1), particle.boundingBox, particle.id);
+    tree.insert(particles[particle.id].boundingBox, particle.id);
     // std::cout<<particle.id<<std::endl;
 }
 
@@ -26,6 +26,10 @@ void ParticleSimulator::update(double dt) {
 void ParticleSimulator::draw() {
     window.clear();
     for (const auto &particle: particles) {
+        if(particle.second.id == 76) {
+            particle.second.draw(window, sf::Color::Red);
+            continue;
+        }
         particle.second.draw(window);
     }
     window.display();
@@ -55,30 +59,49 @@ void ParticleSimulator::collisionPrune() {
 }
 
 void ParticleSimulator::checkCollisions(std::vector<std::pair<int, int> > &colliderPairs) {
-    std::cout<<colliderPairs.size()<<std::endl;
+
+    if(colliderPairs.size() > 0) {
+        std::cout<<colliderPairs.size()<<std::endl;
+    }
+    if((particles[1].position.distance(particles[0].position)) < 100) {
+        std::cout<<"Collision should occur"<<std::endl;
+    }
     for(auto pair : colliderPairs) {
         Particle::checkCollision(particles[pair.first], particles[pair.second], 0.3);
     }
+
 }
 
 
 
 void ParticleSimulator::run() {
     window.setFramerateLimit(50);
+    bool isPaused = false;
     while (window.isOpen()) {
         sf::Event event{};
         while (window.pollEvent(event)) {
             if (event.type == sf::Event::Closed) {
                 window.close();
             }
+            if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::P)
+                isPaused = !isPaused;
         }
-        double dt = 0.02f; // Adjust the time step as per your requirement
-        checkBoundaries();
-        collisionPrune();
-        // checkCollisions();
-        // addParticle(20, 20, 0, 5, 10, 0, 0, 20);
-        std::cout<<"run"<<std::endl;
-        update(dt);
+        static int count = 0;
         draw();
+        if(!isPaused)
+        {
+            count++;
+            if(count<5000 && count%2==0) addParticle(1000, 1000, 0, 5, 100, 0, 0, 20);
+            double dt = 0.02f; // Adjust the time step as per your requirement
+            update(dt);
+            checkBoundaries();
+            collisionPrune();
+            // checkCollisions();
+
+
+            std::cout<<"run"<<std::endl;
+
+        }
+
     }
 }

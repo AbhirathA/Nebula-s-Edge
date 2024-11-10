@@ -11,7 +11,7 @@ Particle::Particle(const Vector& position, const Vector& v, double r, double m) 
     this->a2 = {0, 0, 0};
     this->velocity = v;
     this->radius = r;
-    this->collisionRadius = r;
+    this->collisionRadius = r+0.1f;
     this->mass = m;
     boundingBox = new AABB();
     boundingBox->setLowerBound({position[0]-radius, position[1]-radius, 0});
@@ -21,7 +21,6 @@ Particle::Particle(const Vector& position, const Vector& v, double r, double m) 
 
 // Default constructor
 Particle::Particle() {
-    count++;
     position = {0, 0, 0};
     velocity = {0, 0, 0};
     radius = 1.0f;
@@ -38,7 +37,7 @@ Particle::Particle() {
 
 // Copy constructor
 Particle::Particle(const Particle& p) {
-    count++;
+    // count++;
     position = p.position;
     a0 = p.a0;
     a1 = p.a1;
@@ -88,14 +87,15 @@ bool Particle::checkCollision(Particle& p1, Particle& p2, double e) {
         double _v1n(((m1-m2*e)*v1n + m2*(1+e)*v2n)/(m1+m2));
         double _v2n(((m1+m1*e)*v1n + (m2-m1*e)*v2n)/(m1+m2));
 
-        p1.setPosition(p1.position - normal*dist*0.5);
-        p2.setPosition(p2.position + normal*dist*0.5);
-
+        p1.position = p1.position +  normal*(-1)*((p1.collisionRadius+p2.collisionRadius-dist)/2);
+        p2.position = p2.position + normal*((p1.collisionRadius+p2.collisionRadius-dist)/2);
+        p1.boundingBox->advance(normal*(-1)*((p1.collisionRadius+p2.collisionRadius-dist)/2));
+        p2.boundingBox->advance(normal*((p1.collisionRadius+p2.collisionRadius-dist)/2));
         p1.velocity = normal*_v1n + tangent*v1t;
         p2.velocity = normal*_v2n  + tangent*v2t;
 
-        p1.setPosition(p1.position + p1.velocity.normalize()*p1.radius*0.5);
-        p2.setPosition(p2.position + p2.velocity.normalize()*p2.radius*0.5);
+        // p1.setPosition(p1.position + p1.velocity.normalize()*p1.radius*0.5);
+        // p2.setPosition(p2.position + p2.velocity.normalize()*p2.radius*0.5);
 
 
         return true;
@@ -104,9 +104,9 @@ bool Particle::checkCollision(Particle& p1, Particle& p2, double e) {
 }
 
 // Draw the particle
-void Particle::draw(sf::RenderWindow& window) const {
+void Particle::draw(sf::RenderWindow& window, sf::Color c ) const {
     sf::CircleShape circle(radius);
-    circle.setFillColor(sf::Color::Green);
+    circle.setFillColor(c);
     circle.setPosition(position[0]-radius, position[1]-radius);
     window.draw(circle);
 }
@@ -144,4 +144,25 @@ bool Particle::checkBoundary(BoundaryDirection direction, double boundary) {
 
 void Particle::setPosition(const Vector &position) {
     Particle::position = position;
+}
+
+Particle& Particle::operator=(const Particle& p) {
+    // count++;
+    position = p.position;
+    a0 = p.a0;
+    a1 = p.a1;
+    a2 = p.a2;
+    velocity = p.velocity;
+    radius = p.radius;
+    collisionRadius = p.collisionRadius;
+    mass = p.mass;
+    id = count-1;
+    boundingBox = new AABB();
+    boundingBox->setLowerBound({position[0]-radius, position[1]-radius, 0});
+    boundingBox->setUpperBound({position[0]+radius, position[1]+radius, 0});
+    return *this;
+}
+
+Particle::~Particle() {
+    delete this->boundingBox;
 }

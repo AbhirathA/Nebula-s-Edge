@@ -57,12 +57,12 @@ private:
 public:
     AABBtree();
     ~AABBtree();
-    int insert(AABB box, AABB* objBox, int id);
+    int insert(AABB* objBox, int id);
     void countLeaves(int &c);
     void removeLeaf(AABBnode*, int id);
     void Update();
-    AABBnode* find(AABB box, AABB* objBox, int id);
-    std::vector<std::pair<int,int>>& colliderPairs();
+    AABBnode* find(AABB* objBox, int id);
+    std::vector<std::pair<int,int>> colliderPairs();
 };
 
 

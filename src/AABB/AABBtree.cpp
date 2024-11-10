@@ -64,13 +64,13 @@ AABBnode* AABBtree::BestSibling(AABBnode* leaf) {
 }
 
 
-int AABBtree::insert(AABB box, AABB* objBox, int id) {
+int AABBtree::insert(AABB* objBox, int id) {
     auto leaf = new AABBnode();
-    leaf->box = box;
     leaf->objBox = objBox;
-    leaf->bound = 0.1;
+    leaf->bound = 1.0f;
     leaf->isLeaf = true;
     leaf->id = id;
+    leaf->updateAABB();
     if(root==nullptr) {
         root = leaf;
         return 0;
@@ -78,7 +78,7 @@ int AABBtree::insert(AABB box, AABB* objBox, int id) {
     AABBnode* bestSibling = BestSibling(leaf);
     AABBnode* oldParent = bestSibling->parent;
     auto newParent = new AABBnode();
-    newParent->box = box.Union(bestSibling->box);
+    newParent->box = leaf->box.Union(bestSibling->box);
     newParent->isLeaf = false;
     if(oldParent == nullptr) {
         root = newParent;
@@ -105,20 +105,20 @@ int AABBtree::insert(AABB box, AABB* objBox, int id) {
     return 0;
 }
 
-AABBnode* AABBtree::find(AABB box, AABB* objBox, int id) {
+AABBnode* AABBtree::find(AABB* objBox, int id) {
     if(root == nullptr) {
         return nullptr;
     }
     AABBnode* p = root;
     while(!p->isLeaf) {
-        if(p->box.Contains(box)) {
-            p = (p->child1->box.Contains(box))?p->child1:p->child2;
+        if(p->box.Contains(*objBox)) {
+            p = (p->child1->box.Contains(*objBox))?p->child1:p->child2;
         }
         else {
             return nullptr;
         }
     }
-    if(p->objBox == objBox) return p;
+    if(id == p->id) return p;
     return nullptr;
 }
 
@@ -194,13 +194,14 @@ void AABBtree::Update() {
         }
         delete parent;
         node->updateAABB();
-        insert(node->box, node->objBox, node->id);
+        insert(node->objBox, node->id);
     }
 }
 
  void AABBtree::collectInvalidNodes(AABBnode* node, std::vector<AABBnode*>&invalidNodes) {
     if(node->isLeaf) {
         if(!node->box.Contains(*(node->objBox))) {
+
             invalidNodes.push_back(node);
         }
     }
@@ -230,18 +231,18 @@ AABBtree::~AABBtree() {
     }
 }
 
-std::vector<std::pair<int, int>> &AABBtree::colliderPairs() {
+std::vector<std::pair<int, int>> AABBtree::colliderPairs() {
     clearCollisionChecks();
-    std::vector<std::pair<int, int>> *vp = new std::vector<std::pair<int, int>>(0);
-    if(root == nullptr) return *vp;
-    collisionCheck(root, *vp);
-    return *vp;
+    std::vector<std::pair<int, int>> vp(0);
+    if(root == nullptr) return vp;
+    collisionCheck(root, vp);
+    return vp;
 }
 
 void AABBtree::collisionCheck(AABBnode *st, std::vector<std::pair<int, int>> &v) {
-    if(st->collisionsChecked || st == nullptr||st->isLeaf) return;
-    st->collisionsChecked = true;
+    if( st == nullptr|| st->collisionsChecked ||st->isLeaf) return;
     collisionCheck(st->child1, st->child2, v);
+    st->collisionsChecked = true;
 }
 
 void AABBtree::collisionCheck(AABBnode *st1, AABBnode *st2, std::vector<std::pair<int, int>> &v) {

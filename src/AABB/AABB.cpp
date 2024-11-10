@@ -60,39 +60,10 @@ void AABB::advance(const Vector &v) {
 
 
 bool AABB::collides(AABB &other) {
-    Vector v = other.getUpperBound();
-    Vector s = upperBound;
-    if(v[0] <= s[0] && v[1] <= s[1] && v[2] <= s[2]) {
-        s = lowerBound;
-        if(v[0] >= s[0] && v[1] >= s[1] && v[2] >= s[2]) {
-            return true;
-        }
+    if(this->lowerBound[0]>other.upperBound[0] || this->upperBound[0] < other.lowerBound[0] || this->lowerBound[1] > other.upperBound[1] || this->upperBound[1] < other.lowerBound[1] ) {
+        return false;
     }
-    v = lowerBound;
-    s = other.getLowerBound();
-    if(v[0] <= s[0] && v[1] <= s[1] && v[2] <= s[2]) {
-        v = upperBound;
-        if(v[0] >= s[0] && v[1] >= s[1] && v[2] >= s[2]) {
-            return true;
-        }
-    }
-    v = upperBound;
-    s = other.getUpperBound();
-    if(v[0] <= s[0] && v[1] <= s[1] && v[2] <= s[2]) {
-        s = other.getLowerBound();
-        if(v[0] >= s[0] && v[1] >= s[1] && v[2] >= s[2]) {
-            return true;
-        }
-    }
-    s = lowerBound;
-    v = other.getLowerBound();
-    if(v[0] <= s[0] && v[1] <= s[1] && v[2] <= s[2]) {
-        v = other.getUpperBound();
-        if(v[0] >= s[0] && v[1] >= s[1] && v[2] >= s[2]) {
-            return true;
-        }
-    }
-    return false;
+    return true;
 }
 
 
