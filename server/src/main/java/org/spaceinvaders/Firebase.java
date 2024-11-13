@@ -8,7 +8,7 @@ import com.google.firebase.auth.FirebaseAuthException;
 import com.google.firebase.auth.UserRecord;
 
 import java.io.IOException;
-import java.io.FileInputStream;
+import java.io.InputStream;
 
 public final class Firebase
 {
@@ -36,13 +36,18 @@ public final class Firebase
 
     private void initializeFirebase() throws IOException
     {
-        FileInputStream serviceAccount = new FileInputStream("src/main/resources/serviceAccountKey.json");
+        try (InputStream serviceAccount = getClass().getClassLoader().getResourceAsStream("serviceAccountKey.json"))
+        {
+            if (serviceAccount == null) {
+                throw new IOException("Resource file 'serviceAccountKey.json' not found in resources.");
+            }
 
-        FirebaseOptions options = FirebaseOptions.builder()
-                .setCredentials(GoogleCredentials.fromStream(serviceAccount))
-                .build();
+            FirebaseOptions options = FirebaseOptions.builder()
+                    .setCredentials(GoogleCredentials.fromStream(serviceAccount))
+                    .build();
 
-        FirebaseApp.initializeApp(options);
+            FirebaseApp.initializeApp(options);
+        }
     }
 
     public static Firebase getInstance()
@@ -55,6 +60,15 @@ public final class Firebase
         UserRecord.CreateRequest request = new UserRecord.CreateRequest()
                 .setEmail(email)
                 .setPassword(password);
-        FirebaseAuth.getInstance().createUser(request);
+
+        try
+        {
+            UserRecord userRecord = FirebaseAuth.getInstance().createUser(request);
+            System.out.println("Successfully created new user: " + userRecord.getUid());
+        }
+        catch(Exception e)
+        {
+            System.out.println("Failed to create new user: " + e.getMessage());
+        }
     }
 }

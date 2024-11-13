@@ -2,19 +2,19 @@ package com.spaceinvaders.backend.firebase;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import com.spaceinvaders.util.AuthenticationException;
+import com.spaceinvaders.util.HTTPRequest;
 
 import java.io.IOException;
-import java.io.OutputStream;
-import java.net.HttpURLConnection;
-import java.net.URI;
 import java.net.URISyntaxException;
-import java.net.URL;
-import java.nio.charset.StandardCharsets;
-import java.util.Scanner;
+import java.util.HashMap;
+import java.util.Map;
 
 public class ClientFirebase
 {
     public static final String PUBLIC_FIREBASE_API_KEY = "AIzaSyB5uPRGEMilBLExcfU9w1nKaY0I0Xye7D8";
+    public static final String FIREBASE_SIGN_IN_URL = "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=";
+    public static final String SERVER_SIGN_UP_URL = "http://localhost:8080/signup";
 
     /**
      * Authenticates a user with Firebase using their email and password.
@@ -26,58 +26,46 @@ public class ClientFirebase
      * @return A String representing the ID token returned by Firebase upon
      *         successful authentication. This token can be used to securely
      *         access Firebase services.
-     * @throws URISyntaxException      If the URI for Firebase's REST API is incorrectly formatted.
-     * @throws IOException             If an error occurs during the connection.
      * @throws AuthenticationException If the response indicates authentication failure.
-     * @throws IllegalStateException   If an error occurs while parsing the JSON response.
      */
-    public static String signIn(String email, String password) throws URISyntaxException, IOException, AuthenticationException, IllegalStateException
+    public static String signIn(String email, String password) throws AuthenticationException, IllegalStateException
     {
         //connects with the firebase server
-        URI uri = new URI("https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=" + PUBLIC_FIREBASE_API_KEY);
-        URL url = uri.toURL();
+        String url = FIREBASE_SIGN_IN_URL + PUBLIC_FIREBASE_API_KEY;
 
-        HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-        connection.setRequestMethod("POST");
-        connection.setRequestProperty("Content-Type", "application/json");
-        connection.setDoOutput(true);
+        String payload = String.format("{\"email\":\"%s\",\"password\":\"%s\",\"returnSecureToken\":true}", email, password);
 
-        // Prepares the JSON payload with the user's email and password.
-        String requestBody = String.format("{\"email\":\"%s\",\"password\":\"%s\",\"returnSecureToken\":true}", email, password);
+        Map<String, String> headers = new HashMap<>();
+        headers.put("Content-Type", "application/json");
 
-        // Sends the JSON payload to the Firebase server.
-        try (OutputStream os = connection.getOutputStream())
+        try
         {
-            os.write(requestBody.getBytes(StandardCharsets.UTF_8));
+            return parseIdToken(HTTPRequest.sendRequest(url, payload, "POST", headers));
+        }
+        catch(Exception e)
+        {
+            throw new AuthenticationException("Failed to authenticate the user.");
+        }
+    }
+
+    public static void signUp(String email, String password, String confirmPassword) throws AuthenticationException
+    {
+        if(!password.equals(confirmPassword))
+        {
+            throw new AuthenticationException("Passwords do not match");
         }
 
-        // Reads and processes the response.
-        int responseCode = connection.getResponseCode();
-        if (responseCode == HttpURLConnection.HTTP_OK)
+        try
         {
-            // If authentication is successful, reads the ID token from the response.
-            try (Scanner scanner = new Scanner(connection.getInputStream()))
-            {
-                StringBuilder response = new StringBuilder();
-                while (scanner.hasNextLine())
-                {
-                    response.append(scanner.nextLine());
-                }
-                return parseIdToken(response.toString());
-            }
+            String payload = String.format("{\"email\":\"%s\",\"password\":\"%s\"}", email, password);
+            Map<String, String> headers = new HashMap<>();
+            headers.put("Content-Type", "application/json");
+
+            HTTPRequest.sendRequest(SERVER_SIGN_UP_URL, payload, "POST", headers);
         }
-        else
+        catch(IOException | URISyntaxException e)
         {
-            // If authentication fails, reads the error response.
-            try (Scanner scanner = new Scanner(connection.getErrorStream()))
-            {
-                StringBuilder errorResponse = new StringBuilder();
-                while (scanner.hasNextLine())
-                {
-                    errorResponse.append(scanner.nextLine());
-                }
-                throw new AuthenticationException("Error signing in: " + errorResponse);
-            }
+            throw new AuthenticationException("Failed to authenticate the user.");
         }
     }
 

@@ -12,7 +12,7 @@ import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.spaceinvaders.frontend.SpaceInvadersGame;
-import com.spaceinvaders.backend.firebase.AuthenticationException;
+import com.spaceinvaders.util.AuthenticationException;
 import com.spaceinvaders.backend.firebase.ClientFirebase;
 import com.spaceinvaders.frontend.background.PlanetsBackground;
 import com.spaceinvaders.frontend.background.StarsBackground;
@@ -170,19 +170,20 @@ public class LoginScreen implements Screen {
                         game.screenManager.setScreen(ScreenState.MAIN_MENU);
                     }
                 }
-                catch(AuthenticationException e) {
+                catch(AuthenticationException e)
+                {
+                    //@TODO: Convert to logging
                     System.out.println("Incorrect username or password");
-                    if (!isErrorDisplayed) {
+                    if (!isErrorDisplayed)
+                    {
                         stage.addActor(errorMessage);
                         isErrorDisplayed = true;
 
-                        if (isLoggedIn) {
+                        if (isLoggedIn)
+                        {
                             stage.getActors().removeValue(successMessage, true);
                         }
                     }
-                }
-                catch(IOException e) {
-                    System.out.println("Could not connect to the server. Are you connected to the internet?");
                 }
                 catch(Exception e) {
                     //@TODO: Convert to logging

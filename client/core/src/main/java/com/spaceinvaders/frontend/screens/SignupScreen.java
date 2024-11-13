@@ -12,7 +12,7 @@ import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.spaceinvaders.frontend.SpaceInvadersGame;
-import com.spaceinvaders.backend.firebase.AuthenticationException;
+import com.spaceinvaders.util.AuthenticationException;
 import com.spaceinvaders.backend.firebase.ClientFirebase;
 import com.spaceinvaders.frontend.background.PlanetsBackground;
 import com.spaceinvaders.frontend.background.StarsBackground;
@@ -148,7 +148,7 @@ public class SignupScreen implements Screen {
                 String password = passwordField.getText();
                 String confirm = confirmField.getText();
                 try {
-                    String token = ClientFirebase.signIn(id, password);
+                    ClientFirebase.signUp(id, password, confirm);
 
                     if (isErrorDisplayed) {
                         stage.getActors().removeValue(errorMessage, true);
@@ -162,10 +162,11 @@ public class SignupScreen implements Screen {
                     if (!isLoggedIn) {
                         stage.addActor(successMessage);
                         isLoggedIn = true;
-                        game.screenManager.setScreen(ScreenState.MAIN_MENU);
+                        game.screenManager.setScreen(ScreenState.LOGIN);
                     }
                 }
                 catch(AuthenticationException e) {
+                    //@TODO: Convert to logging
                     System.out.println("Incorrect username or password");
                     if (!isErrorDisplayed) {
                         stage.addActor(errorMessage);
@@ -175,9 +176,6 @@ public class SignupScreen implements Screen {
                             stage.getActors().removeValue(successMessage, true);
                         }
                     }
-                }
-                catch(IOException e) {
-                    System.out.println("Could not connect to the server. Are you connected to the internet?");
                 }
                 catch(Exception e) {
                     //@TODO: Convert to logging
