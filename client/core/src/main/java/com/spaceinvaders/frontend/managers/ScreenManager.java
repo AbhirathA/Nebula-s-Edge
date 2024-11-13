@@ -8,58 +8,59 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class ScreenManager {
-    private static ScreenManager instance;
+    private static ScreenManager instance = null;
     private final SpaceInvadersGame game;
     private final Map<ScreenState, Screen> screens = new HashMap<>();
     private Screen currentScreen;
 
     private ScreenManager(SpaceInvadersGame game) {
         this.game = game;
+        this.currentScreen = null;
     }
 
     public static ScreenManager getInstance(SpaceInvadersGame game) {
-        if(instance == null) {
-            instance = new ScreenManager(game);
+        if(ScreenManager.instance == null) {
+            ScreenManager.instance = new ScreenManager(game);
         }
 
-        return instance;
+        return ScreenManager.instance;
     }
 
     public void setScreen(ScreenState screenState) {
-        if (currentScreen != null) {
-            currentScreen.hide();
+        if (this.currentScreen != null) {
+            this.currentScreen.hide();
         }
 
-        if (!screens.containsKey(screenState)) {
-            screens.put(screenState, createScreen(screenState));
+        if (!this.screens.containsKey(screenState)) {
+            this.screens.put(screenState, createScreen(screenState));
         }
 
-        currentScreen = screens.get(screenState);
-        game.setScreen(currentScreen);
-        currentScreen.show();
+        this.currentScreen = this.screens.get(screenState);
+        this.game.setScreen(this.currentScreen);
+        this.currentScreen.show();
     }
 
     private Screen createScreen(ScreenState screenState) {
         switch (screenState) {
             case LOADING:
-                return new LoadingScreen(game);
+                return new LoadingScreen(this.game);
             case LOGIN:
-                return new LoginScreen(game);
+                return new LoginScreen(this.game);
             case SIGNUP:
-                return new SignupScreen(game);
+                return new SignupScreen(this.game);
             case MAIN_MENU:
-                return new MainMenuScreen(game);
+                return new MainMenuScreen(this.game);
             default:
                 throw new IllegalArgumentException("Unknown screen state: " + screenState);
         }
     }
 
     public Screen getCurrentScreen() {
-        return currentScreen;
+        return this.currentScreen;
     }
 
     public void dispose() {
-        for (Screen screen : screens.values()) {
+        for (Screen screen : this.screens.values()) {
             screen.dispose();
         }
     }
