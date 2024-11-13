@@ -61,14 +61,6 @@ public final class Firebase
                 .setEmail(email)
                 .setPassword(password);
 
-        try
-        {
-            UserRecord userRecord = FirebaseAuth.getInstance().createUser(request);
-            System.out.println("Successfully created new user: " + userRecord.getUid());
-        }
-        catch(Exception e)
-        {
-            System.out.println("Failed to create new user: " + e.getMessage());
-        }
+        FirebaseAuth.getInstance().createUser(request);
     }
 }
