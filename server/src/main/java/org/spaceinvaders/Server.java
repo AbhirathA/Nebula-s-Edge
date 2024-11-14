@@ -8,18 +8,17 @@ import com.sun.net.httpserver.HttpExchange;
 
 import java.io.IOException;
 import java.io.OutputStream;
-import java.net.*;
+import java.net.InetSocketAddress;
 import java.nio.charset.StandardCharsets;
-import java.util.Map;
-import java.util.Scanner;
 
 public class Server
 {
     public static final int BACKLOG_LIMIT = 50;
+    public static final int PORT = 8080;
 
     public static void main(String[] args) throws IOException
     {
-        HttpServer server = HttpServer.create(new InetSocketAddress(8080), BACKLOG_LIMIT);
+        HttpServer server = HttpServer.create(new InetSocketAddress(PORT), BACKLOG_LIMIT);
         server.createContext("/signup", new SignUpHandler());
         server.setExecutor(null);
         server.start();
