@@ -22,19 +22,22 @@ import com.google.firebase.FirebaseOptions;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthException;
 import com.google.firebase.auth.UserRecord;
+import org.spaceinvaders.util.LoggerUtil;
+import org.spaceinvaders.util.NetworkNotFoundException;
 
 import java.io.IOException;
 import java.io.InputStream;
 
 public final class Firebase
 {
-    public static final String SERVICE_ACCOUNT_KEY = "serviceAccountKey.json";
+    public static final String SERVICE_ACCOUNT_KEY = "serviceAccountKey.json";      //The File name of the service account key
 
-    private Firebase() throws IOException
+    private Firebase() throws IOException, NetworkNotFoundException
     {
         initializeFirebase();
     }
 
+    //Holder class so that the Firebase is only initialized once
     private static class Holder
     {
         private static final Firebase INSTANCE;
@@ -45,9 +48,10 @@ public final class Firebase
             {
                 INSTANCE = new Firebase();
             }
-            catch(IOException e)
+            catch(IOException | NetworkNotFoundException e)
             {
-                throw new ExceptionInInitializerError("Failed to set up the server: " + e.getMessage());
+                LoggerUtil.logError(e.getMessage());
+                throw new NetworkNotFoundException("Cannot connect to the network.");
             }
         }
     }
@@ -55,19 +59,27 @@ public final class Firebase
     /**
      * Initializes the firebase database from the service account key provided in the "resources" folder.
      * @throws IOException if the service account key is missing
+     * @throws NetworkNotFoundException if the program cannot connect to the network
      */
-    private void initializeFirebase() throws IOException
+    private void initializeFirebase() throws IOException, NetworkNotFoundException
     {
         try (InputStream serviceAccount = getClass().getClassLoader().getResourceAsStream(SERVICE_ACCOUNT_KEY))
         {
             if (serviceAccount == null)
                 throw new IOException("Resource file 'serviceAccountKey.json' not found in resources.");
 
-            FirebaseOptions options = FirebaseOptions.builder()
-                    .setCredentials(GoogleCredentials.fromStream(serviceAccount))
-                    .build();
+            try
+            {
+                FirebaseOptions options = FirebaseOptions.builder()
+                        .setCredentials(GoogleCredentials.fromStream(serviceAccount))
+                        .build();
 
-            FirebaseApp.initializeApp(options);
+                FirebaseApp.initializeApp(options);
+            }
+            catch(IOException e)
+            {
+                throw new NetworkNotFoundException("Cannot connect to the network.");
+            }
         }
     }
 
