@@ -40,17 +40,32 @@ public class Server
     public static final int BACKLOG_LIMIT = 50;         //The max number of queued incoming connections allowed
     public static final int PORT = 8080;                //The port number of the server
 
-    public static void main(String[] args) throws IOException
+    public static void main(String[] args)
     {
-        HttpServer server = HttpServer.create(new InetSocketAddress(PORT), BACKLOG_LIMIT);
-        server.createContext("/signup", new SignUpHandler());
-        server.setExecutor(null);
-        server.start();
-        LoggerUtil.logInfo("Server started at http://localhost:" + PORT);
+        try
+        {
+            HttpServer server = HttpServer.create(new InetSocketAddress(PORT), BACKLOG_LIMIT);
+            server.createContext("/signup", new SignUpHandler());
+            server.setExecutor(null);
+            server.start();
+            LoggerUtil.logInfo("Server started at http://localhost:" + PORT);
+        }
+        catch(IOException e)
+        {
+            LoggerUtil.logException("Cannot create a localhost server on port " + PORT, e);
+        }
     }
 
+    //handler class for sign up
     private static class SignUpHandler implements HttpHandler
     {
+        /**
+         * Handles a user request to sign up
+         *
+         * @param exchange the exchange containing the request from the
+         *                 client and used to send the response
+         * @throws IOException  if any error occurs in communication with firebase
+         */
         @Override
         public void handle(HttpExchange exchange) throws IOException
         {
@@ -62,51 +77,59 @@ public class Server
                     String requestBody = new String(exchange.getRequestBody().readAllBytes(), StandardCharsets.UTF_8);
                     JsonObject json = JsonParser.parseString(requestBody).getAsJsonObject();
 
+                    //get the payload from the request
                     String email = json.get("email").getAsString();
                     String password = json.get("password").getAsString();
 
+                    //create the user and send code 200
                     Firebase.getInstance().createUser(email, password);
-                    String response = "User Created";
-                    exchange.sendResponseHeaders(200, response.getBytes().length);
-                    try (OutputStream os = exchange.getResponseBody())
-                    {
-                        os.write(response.getBytes());
-                    }
+                    sendHTTPResponse(exchange, 200, "User Created");
                 }
                 catch(JsonSyntaxException e)
                 {
-                    sendErrorResponse(exchange, 400, "Invalid JSON Format");
+                    //JSON Format is invalid
+                    sendHTTPResponse(exchange, 400, "Invalid JSON Format");
                 }
                 catch(NullPointerException e)
                 {
-                    sendErrorResponse(exchange, 400, "Invalid email or password");
+                    //User did not send email or password
+                    sendHTTPResponse(exchange, 400, "Invalid email or password");
                 }
                 catch(NetworkNotFoundException e)
                 {
-                    sendErrorResponse(exchange, 500, "Cannot connect to the network");
+                    //The server is not connected to the internet
+                    sendHTTPResponse(exchange, 500, "Cannot connect to the network");
                 }
                 catch(FirebaseAuthException e)
                 {
+                    //The email is too weak or the password already exists
                     ErrorCode code = e.getErrorCode();
 
-                    if(code.equals(ErrorCode.ALREADY_EXISTS))
-                        sendErrorResponse(exchange, 400, "Email already exists");
+                    if(ErrorCode.ALREADY_EXISTS.equals(code))
+                        sendHTTPResponse(exchange, 400, "Email already exists");
                     else
-                        sendErrorResponse(exchange, 400, "Password is too weak");
+                        sendHTTPResponse(exchange, 400, "Password is too weak");
                 }
                 catch (Exception e)
                 {
-                    sendErrorResponse(exchange, 500, "Failed to sign up user");
+                    sendHTTPResponse(exchange, 500, "Failed to sign up user");
                 }
             }
             else
             {
-                sendErrorResponse(exchange, 500, "Failed to sign up user");
+                sendHTTPResponse(exchange, 500, "Failed to sign up user");
             }
         }
     }
 
-    private static void sendErrorResponse(HttpExchange exchange, int statusCode, String errorMessage) throws IOException
+    /**
+     * Sends an error response to the client
+     * @param exchange          the HTTPExchange between the server and the client
+     * @param statusCode        the status code for the message (ex. 200)
+     * @param errorMessage      the error message to send
+     * @throws IOException      if any error occurs in sending the message
+     */
+    private static void sendHTTPResponse(HttpExchange exchange, int statusCode, String errorMessage) throws IOException
     {
         exchange.sendResponseHeaders(statusCode, errorMessage.length());
         try (OutputStream os = exchange.getResponseBody())

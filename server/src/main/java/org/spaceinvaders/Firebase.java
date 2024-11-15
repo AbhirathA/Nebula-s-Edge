@@ -30,8 +30,12 @@ import java.io.InputStream;
 
 public final class Firebase
 {
-    public static final String SERVICE_ACCOUNT_KEY = "serviceAccountKey.json";      //The File name of the service account key
+    public static final String SERVICE_ACCOUNT_KEY = "serviceAccountKey.json";
 
+    /**
+     * @throws IOException                  If the firebase could not be initialized
+     * @throws NetworkNotFoundException     If there is no network connection
+     */
     private Firebase() throws IOException, NetworkNotFoundException
     {
         initializeFirebase();
