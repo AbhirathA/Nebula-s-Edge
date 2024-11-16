@@ -1,8 +1,12 @@
 plugins {
-    id 'java'
+    id 'application'
 }
 
-group = 'org.example'
+application {
+    mainClass = 'org.spaceinvaders.Server'
+}
+
+group = 'org.spaceinvaders'
 version = '1.0-SNAPSHOT'
 
 repositories {

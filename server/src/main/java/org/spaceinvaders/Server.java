@@ -19,7 +19,6 @@
 
 package org.spaceinvaders;
 
-import com.google.firebase.ErrorCode;
 import com.google.firebase.auth.FirebaseAuthException;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -27,6 +26,7 @@ import com.google.gson.JsonSyntaxException;
 import com.sun.net.httpserver.HttpServer;
 import com.sun.net.httpserver.HttpHandler;
 import com.sun.net.httpserver.HttpExchange;
+import org.spaceinvaders.util.DatabaseAccessException;
 import org.spaceinvaders.util.LoggerUtil;
 import org.spaceinvaders.util.NetworkNotFoundException;
 
@@ -102,13 +102,16 @@ public class Server
                 }
                 catch(FirebaseAuthException e)
                 {
-                    //The email is too weak or the password already exists
-                    ErrorCode code = e.getErrorCode();
-
-                    if(ErrorCode.ALREADY_EXISTS.equals(code))
-                        sendHTTPResponse(exchange, 400, "Email already exists");
-                    else
-                        sendHTTPResponse(exchange, 400, "Password is too weak");
+                    //The email is too weak
+                    sendHTTPResponse(exchange, 400, "Email already exists");
+                }
+                catch(IllegalArgumentException e)
+                {
+                    sendHTTPResponse(exchange, 400, "Password is too weak");
+                }
+                catch(DatabaseAccessException e)
+                {
+                    sendHTTPResponse(exchange, 400, "Could not create user data");
                 }
                 catch (Exception e)
                 {
@@ -126,15 +129,16 @@ public class Server
      * Sends an error response to the client
      * @param exchange          the HTTPExchange between the server and the client
      * @param statusCode        the status code for the message (ex. 200)
-     * @param errorMessage      the error message to send
+     * @param message      the error message to send
      * @throws IOException      if any error occurs in sending the message
      */
-    private static void sendHTTPResponse(HttpExchange exchange, int statusCode, String errorMessage) throws IOException
+    private static void sendHTTPResponse(HttpExchange exchange, int statusCode, String message) throws IOException
     {
-        exchange.sendResponseHeaders(statusCode, errorMessage.length());
+        exchange.sendResponseHeaders(statusCode, message.length());
         try (OutputStream os = exchange.getResponseBody())
         {
-            os.write(errorMessage.getBytes());
+            os.write(message.getBytes());
         }
+        LoggerUtil.logInfo(message);
     }
 }

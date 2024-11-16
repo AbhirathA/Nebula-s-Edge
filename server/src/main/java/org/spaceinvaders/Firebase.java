@@ -17,16 +17,22 @@
 package org.spaceinvaders;
 
 import com.google.auth.oauth2.GoogleCredentials;
+import com.google.cloud.firestore.DocumentReference;
+import com.google.cloud.firestore.Firestore;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthException;
 import com.google.firebase.auth.UserRecord;
+import com.google.firebase.cloud.FirestoreClient;
+import org.spaceinvaders.util.DatabaseAccessException;
 import org.spaceinvaders.util.LoggerUtil;
 import org.spaceinvaders.util.NetworkNotFoundException;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.HashMap;
+import java.util.Map;
 
 public final class Firebase
 {
@@ -101,13 +107,47 @@ public final class Firebase
      * @param email                     the email address of the user
      * @param password                  the password of the user
      * @throws FirebaseAuthException    if the user with the given username already exists (or password is too weak)
+     * @throws DatabaseAccessException if the user's  data could not be created
      */
-    public void createUser(String email, String password) throws FirebaseAuthException
+    public void createUser(String email, String password) throws FirebaseAuthException, DatabaseAccessException
     {
         UserRecord.CreateRequest request = new UserRecord.CreateRequest()
                 .setEmail(email)
                 .setPassword(password);
 
-        FirebaseAuth.getInstance().createUser(request);
+        UserRecord userRecord = FirebaseAuth.getInstance().createUser(request);
+        String userId = userRecord.getUid(); // Get the unique user ID
+
+        addUserData(userId, email);
+    }
+
+    /**
+     * When a new user is created, this function adds the default data for that user.
+     * @param userId                        the unique user id of the user
+     * @param email                         the email address of the user
+     * @throws DatabaseAccessException      if any errors occurred in accessing the database
+     */
+    private void addUserData(String userId, String email) throws DatabaseAccessException
+    {
+        // Add additional user data to Firestore
+        Firestore db = FirestoreClient.getFirestore();
+        Map<String, Object> userData = new HashMap<>();
+        userData.put("email", email);
+        userData.put("level", 1);
+        userData.put("coins", 500);
+
+        // Save the data in the Firestore users collection
+        DocumentReference docRef = db.collection("users").document(userId);
+        try
+        {
+            // Blocks until the write operation is done
+            docRef.set(userData).get();
+            LoggerUtil.logInfo("Created user: " + userId);
+        }
+        catch (Exception e)
+        {
+            LoggerUtil.logException("Error creating user: " + userId, e);
+            throw new DatabaseAccessException("Error creating database for user: " + userId);
+        }
     }
 }
