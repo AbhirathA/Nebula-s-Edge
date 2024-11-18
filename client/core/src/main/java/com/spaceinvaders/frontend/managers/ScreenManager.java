@@ -32,7 +32,7 @@ public class ScreenManager {
         }
 
         if (!this.screens.containsKey(screenState)) {
-            this.screens.put(screenState, createScreen(screenState));
+            this.screens.put(screenState, this.createScreen(screenState));
         }
 
         this.currentScreen = this.screens.get(screenState);

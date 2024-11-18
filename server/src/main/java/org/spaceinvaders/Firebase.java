@@ -61,6 +61,7 @@ public final class Firebase
                 .setEmail(email)
                 .setPassword(password);
 
+        // what if it's unable to create user
         FirebaseAuth.getInstance().createUser(request);
     }
 }

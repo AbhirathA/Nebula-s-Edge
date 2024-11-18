@@ -48,57 +48,57 @@ public class LoginScreen implements Screen {
     public LoginScreen(SpaceInvadersGame game) {
         this.game = game;
 
-        camera = new OrthographicCamera();
-        viewport = new FitViewport(WORLD_WIDTH, WORLD_HEIGHT, camera);
-        stageViewport = new FitViewport(STAGE_WIDTH, STAGE_HEIGHT);
+        this.camera = new OrthographicCamera();
+        this.viewport = new FitViewport(WORLD_WIDTH, WORLD_HEIGHT, this.camera);
+        this.stageViewport = new FitViewport(STAGE_WIDTH, STAGE_HEIGHT);
 
-        camera.position.set(WORLD_WIDTH / 2, WORLD_HEIGHT / 2, 0);
-        camera.update();
+        this.camera.position.set(WORLD_WIDTH / 2, WORLD_HEIGHT / 2, 0);
+        this.camera.update();
 
-        stage = new Stage(stageViewport);
+        this.stage = new Stage(this.stageViewport);
 
-        initialiseActors();
+        this.initialiseActors();
 
-        starsBackground = new StarsBackground(WORLD_WIDTH, WORLD_HEIGHT, 30);
-        planetsBackground = new PlanetsBackground(game.assetManager);
+        this.starsBackground = new StarsBackground(WORLD_WIDTH, WORLD_HEIGHT, 30);
+        this.planetsBackground = new PlanetsBackground(game.assetManager);
 
-        title = game.assetManager.get("textures/title.png", Texture.class);
+        this.title = game.assetManager.get("textures/title.png", Texture.class);
     }
 
     @Override
     public void show() {
-        Gdx.input.setInputProcessor(stage);
+        Gdx.input.setInputProcessor(this.stage);
     }
 
     @Override
     public void render(float delta) {
         ScreenUtils.clear(0, 0, 0,1);
 
-        viewport.apply();
-        camera.update();
+        this.viewport.apply();
+        this.camera.update();
 
-        game.batch.setProjectionMatrix(camera.combined);
-        game.shapeRenderer.setProjectionMatrix(camera.combined);
+        this.game.batch.setProjectionMatrix(this.camera.combined);
+        this.game.shapeRenderer.setProjectionMatrix(this.camera.combined);
 
         Gdx.gl.glEnable(GL20.GL_BLEND);  // Enable blending
         Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
 
-        starsBackground.render(game.shapeRenderer, delta);  // Use delta for time
-        planetsBackground.render(game.batch);
+        this.starsBackground.render(this.game.shapeRenderer, delta);  // Use delta for time
+        this.planetsBackground.render(this.game.batch);
 
-        game.batch.begin();
-        game.batch.draw(title, 73, 135 - 66, 93, 47);
-        game.batch.end();
+        this.game.batch.begin();
+        this.game.batch.draw(title, 73, 135 - 66, 93, 47);
+        this.game.batch.end();
 
-        stageViewport.apply();
-        stage.act(delta);
-        stage.draw();
+        this.stageViewport.apply();
+        this.stage.act(delta);
+        this.stage.draw();
     }
 
     @Override
     public void resize(int i, int i1) {
-        viewport.update(i, i1);
-        stageViewport.update(i, i1);
+        this.viewport.update(i, i1);
+        this.stageViewport.update(i, i1);
     }
 
     @Override
@@ -121,23 +121,23 @@ public class LoginScreen implements Screen {
     }
 
     private void initialiseActors() {
-        Label errorMessage = LabelUtils.createLabel("Incorrect username or password", game.assetManager.get("fonts/minecraft.fnt", BitmapFont.class), 0, 0);
-        Label successMessage = LabelUtils.createLabel("Login successful", game.assetManager.get("fonts/minecraft.fnt", BitmapFont.class), 0, 0);
+        Label errorMessage = LabelUtils.createLabel("Incorrect username or password", this.game.assetManager.get("fonts/minecraft.fnt", BitmapFont.class), 0, 0);
+        Label successMessage = LabelUtils.createLabel("Login successful", this.game.assetManager.get("fonts/minecraft.fnt", BitmapFont.class), 0, 0);
 
-        Label enterId = LabelUtils.createLabel("Id:", game.assetManager.get("fonts/minecraft.fnt", BitmapFont.class), (STAGE_WIDTH - 143) / 2f, 86);
-        Label enterPassword = LabelUtils.createLabel("Password:", game.assetManager.get("fonts/minecraft.fnt", BitmapFont.class), (STAGE_WIDTH - 143) / 2f, 70);
-        TextField idField = TextFieldUtils.createTextField("Enter id", game.assetManager, 95, 15, (STAGE_WIDTH - 95) / 2f + 22, 84);
-        TextField passwordField = TextFieldUtils.createPasswordField(game.assetManager, 95, 15, (STAGE_WIDTH - 95) / 2f + 22, 68);
+        Label enterId = LabelUtils.createLabel("Id:", this.game.assetManager.get("fonts/minecraft.fnt", BitmapFont.class), (STAGE_WIDTH - 143) / 2f, 86);
+        Label enterPassword = LabelUtils.createLabel("Password:", this.game.assetManager.get("fonts/minecraft.fnt", BitmapFont.class), (STAGE_WIDTH - 143) / 2f, 70);
+        TextField idField = TextFieldUtils.createTextField("Enter id", this.game.assetManager, 95, 15, (STAGE_WIDTH - 95) / 2f + 22, 84);
+        TextField passwordField = TextFieldUtils.createPasswordField(this.game.assetManager, 95, 15, (STAGE_WIDTH - 95) / 2f + 22, 68);
 
-        ImageTextButton submitButton = ButtonUtils.createButton(game, "Submit", "textures/button.png", "textures/button.png", 95, 15, (STAGE_WIDTH - 95) / 2f, 50);
-        ImageTextButton signUpButton = ButtonUtils.createButton(game, "SignUp", "textures/button.png", "textures/button.png", 95, 15, (STAGE_WIDTH - 95) / 2f, 34);
+        ImageTextButton submitButton = ButtonUtils.createButton(this.game, "Submit", "textures/button.png", "textures/button.png", 95, 15, (STAGE_WIDTH - 95) / 2f, 50);
+        ImageTextButton signUpButton = ButtonUtils.createButton(this.game, "SignUp", "textures/button.png", "textures/button.png", 95, 15, (STAGE_WIDTH - 95) / 2f, 34);
 
-        stage.addActor(enterId);
-        stage.addActor(enterPassword);
-        stage.addActor(idField);
-        stage.addActor(passwordField);
-        stage.addActor(submitButton);
-        stage.addActor(signUpButton);
+        this.stage.addActor(enterId);
+        this.stage.addActor(enterPassword);
+        this.stage.addActor(idField);
+        this.stage.addActor(passwordField);
+        this.stage.addActor(submitButton);
+        this.stage.addActor(signUpButton);
 
         signUpButton.addListener(new InputListener() {
             @Override

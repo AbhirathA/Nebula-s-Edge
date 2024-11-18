@@ -43,6 +43,7 @@ public class Server
                     String email = json.get("email").getAsString();
                     String password = json.get("password").getAsString();
 
+                    // what if it's unable to create user
                     Firebase.getInstance().createUser(email, password);
                     String response = "User Created";
                     exchange.sendResponseHeaders(200, response.getBytes().length);

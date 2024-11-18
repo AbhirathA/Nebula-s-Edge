@@ -4,7 +4,21 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ed598eda-462a-4fa5-a345-0bb43f98042b" name="Changes" comment="Changed exception handling LoginScreen" />
+    <list default="true" id="ed598eda-462a-4fa5-a345-0bb43f98042b" name="Changes" comment="Changed exception handling LoginScreen">
+      <change afterPath="$PROJECT_DIR$/../server/.idea/.name" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../.idea/gradle.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/src/main/java/com/spaceinvaders/frontend/managers/ScreenManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/com/spaceinvaders/frontend/managers/ScreenManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/src/main/java/com/spaceinvaders/frontend/screens/LoginScreen.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/com/spaceinvaders/frontend/screens/LoginScreen.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../server/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../server/.idea/gradle.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../server/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../server/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../server/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../server/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../server/src/main/java/org/spaceinvaders/Firebase.java" beforeDir="false" afterPath="$PROJECT_DIR$/../server/src/main/java/org/spaceinvaders/Firebase.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../server/src/main/java/org/spaceinvaders/Server.java" beforeDir="false" afterPath="$PROJECT_DIR$/../server/src/main/java/org/spaceinvaders/Server.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -89,17 +103,18 @@
     &quot;Gradle.SpaceInvaders:lwjgl3 [:lwjgl3:com.spaceinvaders.lwjgl3.Lwjgl3Launcher.main()].executor&quot;: &quot;Run&quot;,
     &quot;JUnit.Whole project.executor&quot;: &quot;Run&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
     &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
     &quot;git-widget-placeholder&quot;: &quot;main&quot;,
     &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
     &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/Jayant Sharma/Documents/Nebula-s-Edge/client/build.gradle&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/home/krishna/Projects/Nebula-s-Edge/client/build.gradle&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
     &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
     &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;configurable.group.language&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;project.propVCSSupport.DirectoryMappings&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
 }</component>
@@ -216,6 +231,9 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
+    <ignored-roots>
+      <path value="$PROJECT_DIR$" />
+    </ignored-roots>
     <MESSAGE value="Initial Commit (Merged Firebase and Frontend)" />
     <MESSAGE value="Updated Client Firebase Authentication" />
     <MESSAGE value="Changed exception handling LoginScreen" />
