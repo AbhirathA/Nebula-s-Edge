@@ -126,7 +126,7 @@ public class LoginScreen implements Screen {
         TextField passwordField = TextFieldUtils.createPasswordField(this.game.assetManager, 95, 15, (STAGE_WIDTH - 95) / 2f + 22, 68);
 
         ImageTextButton submitButton = ButtonUtils.createButton(this.game, "Submit", "textures/button.png", "textures/button.png", 95, 15, (STAGE_WIDTH - 95) / 2f, 50);
-        ImageTextButton signUpButton = ButtonUtils.createButton(this.game, "SignUp", "textures/button.png", "textures/button.png", 95, 15, (STAGE_WIDTH - 95) / 2f, 34);
+        ImageTextButton signUpButton = ButtonUtils.createScreenNavigationButton(this.game, "SignUp", "textures/button.png", "textures/button.png", 95, 15, (STAGE_WIDTH - 95) / 2f, 34, ScreenState.SIGNUP);
 
         ImageButton backButton = ButtonUtils.createBackButton(this.game, "textures/back-button.png", "textures/back-button.png", 28, 15, 10, 177, game.screenManager.getRecentScreen());
 
@@ -137,14 +137,6 @@ public class LoginScreen implements Screen {
         this.stage.addActor(submitButton);
         this.stage.addActor(signUpButton);
         this.stage.addActor(backButton);
-
-        signUpButton.addListener(new InputListener() {
-            @Override
-            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                game.screenManager.setScreen(ScreenState.MAIN_MENU);
-                return true;
-            }
-        });
 
         submitButton.addListener(new InputListener() {
             @Override
