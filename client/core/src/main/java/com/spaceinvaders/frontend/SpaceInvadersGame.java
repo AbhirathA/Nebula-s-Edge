@@ -28,7 +28,7 @@ public class SpaceInvadersGame extends Game {
         @Override
         public void onUpdate() {
             SpaceInvadersGame.this.screenManager = new ScreenManager(SpaceInvadersGame.this);
-            SpaceInvadersGame.this.screenManager.setScreen(ScreenState.MAIN_MENU);
+            SpaceInvadersGame.this.screenManager.setScreen(ScreenState.LOGIN_GATEWAY);
         }
 
         @Override

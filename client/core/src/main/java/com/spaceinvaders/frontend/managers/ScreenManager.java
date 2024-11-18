@@ -74,6 +74,8 @@ public class ScreenManager {
                 return new SignupScreen(this.game, WORLD_WIDTH, WORLD_HEIGHT, STAGE_WIDTH, STAGE_HEIGHT, starsBackground, planetsBackground);
             case MAIN_MENU:
                 return new MainMenuScreen(this.game, WORLD_WIDTH, WORLD_HEIGHT, STAGE_WIDTH, STAGE_HEIGHT, starsBackground, planetsBackground);
+            case LOGIN_GATEWAY:
+                return new LoginGatewayScreen(this.game, WORLD_WIDTH, WORLD_HEIGHT, STAGE_WIDTH, STAGE_HEIGHT, starsBackground, planetsBackground);
             default:
                 throw new IllegalArgumentException("Unknown screen state: " + screenState);
         }
