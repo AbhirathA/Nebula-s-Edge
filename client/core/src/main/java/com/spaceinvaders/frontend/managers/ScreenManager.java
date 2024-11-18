@@ -2,6 +2,8 @@ package com.spaceinvaders.frontend.managers;
 
 import com.badlogic.gdx.Screen;
 import com.spaceinvaders.frontend.SpaceInvadersGame;
+import com.spaceinvaders.frontend.background.PlanetsBackground;
+import com.spaceinvaders.frontend.background.StarsBackground;
 import com.spaceinvaders.frontend.screens.*;
 
 import java.util.HashMap;
@@ -12,10 +14,20 @@ public class ScreenManager {
     private final SpaceInvadersGame game;
     private final Map<ScreenState, Screen> screens = new HashMap<>();
     private Screen currentScreen;
+    private StarsBackground starsBackground;
+    private PlanetsBackground planetsBackground;
 
-    private ScreenManager(SpaceInvadersGame game) {
+    private final float WORLD_WIDTH = 240;
+    private final float WORLD_HEIGHT = 135;
+
+    private final float STAGE_WIDTH = WORLD_WIDTH * 3/2;
+    private final float STAGE_HEIGHT = WORLD_HEIGHT * 3/2;
+
+    public ScreenManager(SpaceInvadersGame game) {
         this.game = game;
         this.currentScreen = null;
+        this.starsBackground = new StarsBackground(WORLD_WIDTH, WORLD_HEIGHT, 30);
+        this.planetsBackground = new PlanetsBackground(game.assetManager);
     }
 
     public static ScreenManager getInstance(SpaceInvadersGame game) {
@@ -45,11 +57,11 @@ public class ScreenManager {
             case LOADING:
                 return new LoadingScreen(this.game);
             case LOGIN:
-                return new LoginScreen(this.game);
+                return new LoginScreen(this.game, WORLD_WIDTH, WORLD_HEIGHT, STAGE_WIDTH, STAGE_HEIGHT, starsBackground, planetsBackground);
             case SIGNUP:
-                return new SignupScreen(this.game);
+                return new SignupScreen(this.game, WORLD_WIDTH, WORLD_HEIGHT, STAGE_WIDTH, STAGE_HEIGHT, starsBackground, planetsBackground);
             case MAIN_MENU:
-                return new MainMenuScreen(this.game);
+                return new MainMenuScreen(this.game, WORLD_WIDTH, WORLD_HEIGHT, STAGE_WIDTH, STAGE_HEIGHT, starsBackground, planetsBackground);
             default:
                 throw new IllegalArgumentException("Unknown screen state: " + screenState);
         }

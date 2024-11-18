@@ -25,11 +25,7 @@ import java.io.IOException;
 public class SignupScreen implements Screen {
     private final SpaceInvadersGame game;
 
-    private final float WORLD_WIDTH = 240;
-    private final float WORLD_HEIGHT = 135;
-
-    private final float STAGE_WIDTH = WORLD_WIDTH * 3/2;
-    private final float STAGE_HEIGHT = WORLD_HEIGHT * 3/2;
+    private final float STAGE_WIDTH;
 
     private final OrthographicCamera camera;
     private final Viewport viewport;
@@ -45,7 +41,7 @@ public class SignupScreen implements Screen {
     boolean isErrorDisplayed = false;
     boolean isLoggedIn = false;
 
-    public SignupScreen(SpaceInvadersGame game) {
+    public SignupScreen(SpaceInvadersGame game, float WORLD_WIDTH, float WORLD_HEIGHT, float STAGE_WIDTH, float STAGE_HEIGHT, StarsBackground starsBackground, PlanetsBackground planetsBackground) {
         this.game = game;
 
         camera = new OrthographicCamera();
@@ -56,11 +52,12 @@ public class SignupScreen implements Screen {
         camera.update();
 
         stage = new Stage(stageViewport);
+        this.STAGE_WIDTH = STAGE_WIDTH;
 
         initialiseActors();
 
-        starsBackground = new StarsBackground(WORLD_WIDTH, WORLD_HEIGHT, 30);
-        planetsBackground = new PlanetsBackground(game.assetManager);
+        this.starsBackground = starsBackground;
+        this.planetsBackground = planetsBackground;
 
         title = game.assetManager.get("textures/title.png", Texture.class);
     }

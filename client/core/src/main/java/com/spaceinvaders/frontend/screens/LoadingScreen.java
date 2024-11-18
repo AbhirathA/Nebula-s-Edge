@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.spaceinvaders.frontend.SpaceInvadersGame;
+import com.spaceinvaders.frontend.managers.ScreenManager;
 
 public class LoadingScreen implements Screen {
     private final SpaceInvadersGame game;
@@ -23,7 +24,8 @@ public class LoadingScreen implements Screen {
         ScreenUtils.clear(0, 0, 0, 1);
 
         if(game.assetManager.update()) {
-            game.screenManager.setScreen(ScreenState.LOGIN);
+            this.game.screenManager = new ScreenManager(this.game);
+            this.game.screenManager.setScreen(ScreenState.MAIN_MENU);
         }
         else {
             // Get the loading progress percentage

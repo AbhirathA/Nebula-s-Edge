@@ -18,15 +18,11 @@ import com.spaceinvaders.frontend.utils.ButtonUtils;
 public class MainMenuScreen implements Screen {
     private final SpaceInvadersGame game;
 
-    private final float WORLD_WIDTH = 240;
-    private final float WORLD_HEIGHT = 135;
-
-    private final float STAGE_WIDTH = WORLD_WIDTH * 3/2;
-    private final float STAGE_HEIGHT = WORLD_HEIGHT * 3/2;
-
     private final OrthographicCamera camera;
     private final Viewport viewport;
     private final Viewport stageViewport;
+
+    private final float STAGE_WIDTH;
 
     private final Stage stage;
 
@@ -35,12 +31,14 @@ public class MainMenuScreen implements Screen {
 
     private final Texture title;
 
-    public MainMenuScreen(SpaceInvadersGame game) {
+    public MainMenuScreen(SpaceInvadersGame game, float WORLD_WIDTH, float WORLD_HEIGHT, float STAGE_WIDTH, float STAGE_HEIGHT, StarsBackground starsBackground, PlanetsBackground planetsBackground) {
         this.game = game;
 
         camera = new OrthographicCamera();
         viewport = new FitViewport(WORLD_WIDTH, WORLD_HEIGHT, camera);
         stageViewport = new FitViewport(STAGE_WIDTH, STAGE_HEIGHT);
+
+        this.STAGE_WIDTH = STAGE_WIDTH;
 
         camera.position.set(WORLD_WIDTH / 2, WORLD_HEIGHT / 2, 0);
         camera.update();
@@ -48,8 +46,8 @@ public class MainMenuScreen implements Screen {
         stage = new Stage(stageViewport);
         initializeActors();
 
-        starsBackground = new StarsBackground(WORLD_WIDTH, WORLD_HEIGHT, 30);
-        planetsBackground = new PlanetsBackground(game.assetManager);
+        this.starsBackground = starsBackground;
+        this.planetsBackground = planetsBackground;
 
         title = game.assetManager.get("textures/title.png", Texture.class);
     }
