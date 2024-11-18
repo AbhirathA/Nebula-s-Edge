@@ -28,6 +28,7 @@ public class MyAssetManager {
         assetManager.load("textures/Planet13.png", Texture.class);
         assetManager.load("textures/Planet14.png", Texture.class);
         assetManager.load("textures/button.png", Texture.class);
+        assetManager.load("textures/back-button.png", Texture.class);
         assetManager.load("textures/outline.png", Texture.class);
         assetManager.load("textures/cursor.png", Texture.class);
         assetManager.load("textures/selection.png", Texture.class);
