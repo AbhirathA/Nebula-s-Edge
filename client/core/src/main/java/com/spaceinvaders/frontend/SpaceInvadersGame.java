@@ -49,7 +49,7 @@ public class SpaceInvadersGame extends Game {
 
     @Override
     public void dispose() {
-        assetManager.dispose();
         ScreenManager.getInstance(this).dispose();
+        assetManager.dispose();
     }
 }
