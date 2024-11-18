@@ -30,7 +30,7 @@ public class ScreenManager {
     public ScreenManager(SpaceInvadersGame game) {
         this.game = game;
         this.currentScreen = null;
-        this.starsBackground = new StarsBackground(WORLD_WIDTH, WORLD_HEIGHT, 30);
+        this.starsBackground = new StarsBackground(WORLD_WIDTH, WORLD_HEIGHT, 150);
         this.planetsBackground = new PlanetsBackground(game.assetManager);
         screenStateStack = new Stack<>();
     }

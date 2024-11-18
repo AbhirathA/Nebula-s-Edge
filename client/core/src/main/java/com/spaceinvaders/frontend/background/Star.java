@@ -24,7 +24,7 @@ public class Star implements Disposable {
         this.size = size;
         this.colorIndex = colorIndex;  // Start with the first color
         this.color = COLORS.get(colorIndex);
-        this.timer = MathUtils.random(0, 2);
+        this.timer = MathUtils.random(0f, 2f);
 
         this.dead = false;
     }
