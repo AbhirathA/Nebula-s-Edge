@@ -17,6 +17,10 @@ public class LoadingScreen implements Screen {
         command.execute();
     }
 
+    public void setCommand(Command command) {
+        this.command = command;
+    }
+
     @Override
     public void show() {
     }

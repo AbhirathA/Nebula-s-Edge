@@ -6,10 +6,12 @@ import com.spaceinvaders.frontend.background.PlanetsBackground;
 import com.spaceinvaders.frontend.background.StarsBackground;
 import com.spaceinvaders.frontend.screens.*;
 import com.spaceinvaders.frontend.utils.Command;
+import com.spaceinvaders.util.InvalidScreen;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Stack;
+import java.util.concurrent.ExecutionException;
 
 public class ScreenManager {
     private static ScreenManager instance = null;
@@ -66,6 +68,23 @@ public class ScreenManager {
 
         this.currentScreen = this.screens.get(screenState);
         this.game.setScreen(this.currentScreen);
+        this.currentScreen.show();
+    }
+
+    public void setScreen(ScreenState screenState, Command command) throws InvalidScreen {
+        if (screenState != ScreenState.LOADING) throw new InvalidScreen("Cannot add command to a screen which is not of type loading");
+
+        if (this.currentScreen != null) {
+            this.currentScreen.hide();
+        }
+
+        if (!this.screens.containsKey(ScreenState.LOADING)) {
+            this.screens.put(ScreenState.LOADING, new LoadingScreen(this.game, command));
+        } else {
+            ((LoadingScreen)this.screens.get(ScreenState.LOADING)).setCommand(command);
+        }
+
+        this.game.setScreen(this.screens.get(ScreenState.LOADING));
         this.currentScreen.show();
     }
 
