@@ -8,6 +8,7 @@ import com.spaceinvaders.frontend.managers.ScreenManager;
 import com.spaceinvaders.frontend.managers.MyAssetManager;
 import com.spaceinvaders.frontend.screens.LoadingScreen;
 import com.spaceinvaders.frontend.screens.ScreenState;
+import com.spaceinvaders.frontend.utils.Command;
 
 public class SpaceInvadersGame extends Game {
     public SpriteBatch batch;
@@ -17,6 +18,25 @@ public class SpaceInvadersGame extends Game {
     public MyAssetManager assetManager;
     public ScreenManager screenManager;
 
+    private class CommandClass implements Command {
+
+        @Override
+        public void execute() {
+            SpaceInvadersGame.this.assetManager.loadAssets();
+        }
+
+        @Override
+        public void onUpdate() {
+            SpaceInvadersGame.this.screenManager = new ScreenManager(SpaceInvadersGame.this);
+            SpaceInvadersGame.this.screenManager.setScreen(ScreenState.MAIN_MENU);
+        }
+
+        @Override
+        public boolean update() {
+            return SpaceInvadersGame.this.assetManager.update();
+        }
+    }
+
     @Override
     public void create() {
         batch = new SpriteBatch();
@@ -24,7 +44,7 @@ public class SpaceInvadersGame extends Game {
         font = new BitmapFont();
         assetManager = new MyAssetManager();
 
-        setScreen(new LoadingScreen(this));
+        setScreen(new LoadingScreen(this, new CommandClass()));
     }
 
     @Override

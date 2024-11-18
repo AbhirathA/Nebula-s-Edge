@@ -15,6 +15,7 @@ textures/Planet6.png
 textures/Planet7.png
 textures/Planet8.png
 textures/Planet9.png
+textures/back-button.png
 textures/button.png
 textures/cursor.png
 textures/multiplayer.png

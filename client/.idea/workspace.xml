@@ -5,8 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ed598eda-462a-4fa5-a345-0bb43f98042b" name="Changes" comment="Changed exception handling LoginScreen">
+      <change afterPath="$PROJECT_DIR$/core/src/main/java/com/spaceinvaders/frontend/utils/Command.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/main/java/com/spaceinvaders/frontend/managers/MyAssetManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/com/spaceinvaders/frontend/managers/MyAssetManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/assets.txt" beforeDir="false" afterPath="$PROJECT_DIR$/assets/assets.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/src/main/java/com/spaceinvaders/frontend/SpaceInvadersGame.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/com/spaceinvaders/frontend/SpaceInvadersGame.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/src/main/java/com/spaceinvaders/frontend/managers/ScreenManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/com/spaceinvaders/frontend/managers/ScreenManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/src/main/java/com/spaceinvaders/frontend/screens/LoadingScreen.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/com/spaceinvaders/frontend/screens/LoadingScreen.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -54,6 +58,7 @@
       <list>
         <option value="Exception" />
         <option value="Class" />
+        <option value="Interface" />
       </list>
     </option>
   </component>

@@ -5,6 +5,7 @@ import com.spaceinvaders.frontend.SpaceInvadersGame;
 import com.spaceinvaders.frontend.background.PlanetsBackground;
 import com.spaceinvaders.frontend.background.StarsBackground;
 import com.spaceinvaders.frontend.screens.*;
+import com.spaceinvaders.frontend.utils.Command;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -52,10 +53,21 @@ public class ScreenManager {
         this.currentScreen.show();
     }
 
+    private static class CommandClass implements Command {
+        @Override
+        public void execute() {}
+
+        @Override
+        public void onUpdate() {}
+
+        @Override
+        public boolean update() { return true; }
+    }
+
     private Screen createScreen(ScreenState screenState) {
         switch (screenState) {
             case LOADING:
-                return new LoadingScreen(this.game);
+                return new LoadingScreen(this.game, new CommandClass());
             case LOGIN:
                 return new LoginScreen(this.game, WORLD_WIDTH, WORLD_HEIGHT, STAGE_WIDTH, STAGE_HEIGHT, starsBackground, planetsBackground);
             case SIGNUP:
