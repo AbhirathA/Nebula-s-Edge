@@ -128,12 +128,15 @@ public class LoginScreen implements Screen {
         ImageTextButton submitButton = ButtonUtils.createButton(this.game, "Submit", "textures/button.png", "textures/button.png", 95, 15, (STAGE_WIDTH - 95) / 2f, 50);
         ImageTextButton signUpButton = ButtonUtils.createButton(this.game, "SignUp", "textures/button.png", "textures/button.png", 95, 15, (STAGE_WIDTH - 95) / 2f, 34);
 
+        ImageButton backButton = ButtonUtils.createBackButton(this.game, "textures/back-button.png", "textures/back-button.png", 28, 15, 10, 177, game.screenManager.getRecentScreen());
+
         this.stage.addActor(enterId);
         this.stage.addActor(enterPassword);
         this.stage.addActor(idField);
         this.stage.addActor(passwordField);
         this.stage.addActor(submitButton);
         this.stage.addActor(signUpButton);
+        this.stage.addActor(backButton);
 
         signUpButton.addListener(new InputListener() {
             @Override

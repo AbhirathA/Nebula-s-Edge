@@ -9,26 +9,39 @@ import com.spaceinvaders.frontend.utils.Command;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Stack;
 
 public class ScreenManager {
     private static ScreenManager instance = null;
     private final SpaceInvadersGame game;
     private final Map<ScreenState, Screen> screens = new HashMap<>();
     private Screen currentScreen;
-    private StarsBackground starsBackground;
-    private PlanetsBackground planetsBackground;
+    private final StarsBackground starsBackground;
+    private final PlanetsBackground planetsBackground;
+
+    public final Stack<ScreenState> screenStateStack;
 
     private final float WORLD_WIDTH = 240;
     private final float WORLD_HEIGHT = 135;
 
-    private final float STAGE_WIDTH = WORLD_WIDTH * 3/2;
-    private final float STAGE_HEIGHT = WORLD_HEIGHT * 3/2;
+    private final float STAGE_WIDTH = WORLD_WIDTH * 3/2; // 360
+    private final float STAGE_HEIGHT = WORLD_HEIGHT * 3/2; // 202.5
 
     public ScreenManager(SpaceInvadersGame game) {
         this.game = game;
         this.currentScreen = null;
         this.starsBackground = new StarsBackground(WORLD_WIDTH, WORLD_HEIGHT, 30);
         this.planetsBackground = new PlanetsBackground(game.assetManager);
+        screenStateStack = new Stack<>();
+    }
+
+    public ScreenState getRecentScreen() {
+        if (screenStateStack.empty()) return ScreenState.LOGIN;
+
+        ScreenState currentScreen = screenStateStack.pop();
+        ScreenState recentScreen = screenStateStack.peek();
+        screenStateStack.add(currentScreen);
+        return recentScreen;
     }
 
     public static ScreenManager getInstance(SpaceInvadersGame game) {
@@ -40,6 +53,9 @@ public class ScreenManager {
     }
 
     public void setScreen(ScreenState screenState) {
+        if (screenState != ScreenState.LOADING)
+            screenStateStack.add(screenState);
+
         if (this.currentScreen != null) {
             this.currentScreen.hide();
         }
