@@ -1,6 +1,7 @@
 package com.spaceinvaders.frontend.managers;
 
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.utils.Disposable;
 import com.spaceinvaders.frontend.SpaceInvadersGame;
 import com.spaceinvaders.frontend.background.PlanetsBackground;
 import com.spaceinvaders.frontend.background.StarsBackground;
@@ -12,7 +13,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Stack;
 
-public class ScreenManager {
+public class ScreenManager implements Disposable {
     private static ScreenManager instance = null;
     private final SpaceInvadersGame game;
     private final Map<ScreenState, Screen> screens = new HashMap<>();
@@ -121,6 +122,7 @@ public class ScreenManager {
         return this.currentScreen;
     }
 
+    @Override
     public void dispose() {
         for (Screen screen : this.screens.values()) {
             screen.dispose();

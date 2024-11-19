@@ -113,12 +113,19 @@ public class PauseScreen implements Screen {
         Slider musicSlider = SliderUtils.createSlider(game.assetManager, 150, 20, (STAGE_WIDTH - 150) / 2f, 155);
         Label musicLabel = SliderUtils.getValueLabel(game.assetManager, musicSlider, 150, 20, (STAGE_WIDTH - 150) / 2f, 155);
 
+        musicSlider.setValue(game.musicManager.getVolume() * 100);
+        musicSlider.addListener(event -> {
+            game.musicManager.setVolume(musicSlider.getValue() / 100f);
+            return false;
+        });
+
         Image soundIcon = new Image(game.assetManager.get("textures/sound.png", Texture.class));
         soundIcon.setSize(20, 20);
         soundIcon.setPosition((STAGE_WIDTH - 150) / 2f - 29, 130);
         Slider soundSlider = SliderUtils.createSlider(game.assetManager, 150, 20, (STAGE_WIDTH - 150) / 2f, 130);
         Label soundLabel = SliderUtils.getValueLabel(game.assetManager, soundSlider, 150, 20, (STAGE_WIDTH - 150) / 2f, 130);
 
+        ImageButton backButton = ButtonUtils.createBackButton(this.game, "textures/back-button.png", "textures/back-button.png", 28, 15, 10, 245, game.screenManager.getRecentScreen());
 
         stage.addActor(menuButton);
         stage.addActor(playButton);
@@ -129,5 +136,6 @@ public class PauseScreen implements Screen {
         stage.addActor(soundIcon);
         stage.addActor(soundSlider);
         stage.addActor(soundLabel);
+        stage.addActor(backButton);
     }
 }
