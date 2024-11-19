@@ -12,7 +12,7 @@
  * @since 11/15/2024
  */
 
-package org.spaceinvaders.util;
+package org.spaceinvaders.firebase.util;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,6 +29,7 @@ public class LoggerUtil
      */
     public static void logInfo(String message)
     {
+        System.out.println(message);
         logger.info(message);
     }
 
@@ -38,6 +39,7 @@ public class LoggerUtil
      */
     public static void logWarning(String message)
     {
+        System.out.println(message);
         logger.warn(message);
     }
 
@@ -47,6 +49,7 @@ public class LoggerUtil
      */
     public static void logError(String message)
     {
+        System.out.println(message);
         logger.error(message);
     }
 
@@ -57,6 +60,7 @@ public class LoggerUtil
      */
     public static void logException(String message, Exception e)
     {
+        System.out.println(message);
         logger.error(message, e);
     }
 }

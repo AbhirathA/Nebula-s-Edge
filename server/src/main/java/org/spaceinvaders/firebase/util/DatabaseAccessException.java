@@ -12,7 +12,7 @@
  * @since 11/13/2024
  */
 
-package org.spaceinvaders.util;
+package org.spaceinvaders.firebase.util;
 
 public class DatabaseAccessException extends Exception
 {

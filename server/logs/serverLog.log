@@ -1,12 +1,6 @@
-2024-11-15 19:22:03 [main] INFO  org.spaceinvaders.util.LoggerUtil - Server started at http://localhost:8080
-2024-11-15 19:22:05 [HTTP-Dispatcher] INFO  org.spaceinvaders.util.LoggerUtil - Password is too weak
-2024-11-15 19:23:56 [main] INFO  org.spaceinvaders.util.LoggerUtil - Server started at http://localhost:8080
-2024-11-15 19:24:18 [HTTP-Dispatcher] INFO  org.spaceinvaders.util.LoggerUtil - User Created
-2024-11-16 07:59:40 [main] INFO  org.spaceinvaders.util.LoggerUtil - Server started at http://localhost:8080
-2024-11-16 08:00:45 [HTTP-Dispatcher] INFO  org.spaceinvaders.util.LoggerUtil - Email already exists
-2024-11-16 08:01:12 [HTTP-Dispatcher] INFO  org.spaceinvaders.util.LoggerUtil - Created user: RuNbrDKyCFeQWEVe6xYVMbMulWW2
-2024-11-16 08:01:12 [HTTP-Dispatcher] INFO  org.spaceinvaders.util.LoggerUtil - User Created
-2024-11-16 09:25:13 [main] INFO  org.spaceinvaders.util.LoggerUtil - Server started at http://localhost:8080
-2024-11-16 09:36:36 [main] INFO  org.spaceinvaders.util.LoggerUtil - Server started at http://localhost:8080
-2024-11-16 09:37:14 [HTTP-Dispatcher] INFO  org.spaceinvaders.util.LoggerUtil - Created user: dANE5PhuF4axMz9lXhOQYVcAJ7B2
-2024-11-16 09:37:14 [HTTP-Dispatcher] INFO  org.spaceinvaders.util.LoggerUtil - User Created
+2024-11-18 22:00:59 [main] INFO  org.spaceinvaders.firebase.LoggerUtil - Server started at http://localhost:8080
+2024-11-18 22:01:47 [HTTP-Dispatcher] INFO  org.spaceinvaders.firebase.LoggerUtil - Created user: jIEptDHiXjUR5MktuGUfznqfMOq1
+2024-11-18 22:01:47 [HTTP-Dispatcher] INFO  org.spaceinvaders.firebase.LoggerUtil - User Created
+2024-11-19 10:48:36 [main] INFO  org.spaceinvaders.firebase.util.LoggerUtil - Server started at http://localhost:8080
+2024-11-19 10:59:05 [main] INFO  o.s.firebase.util.LoggerUtil - Server started at http://localhost:8080
+2024-11-19 11:02:19 [main] INFO  o.s.firebase.util.LoggerUtil - Server started at http://localhost:8080

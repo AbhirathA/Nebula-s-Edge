@@ -14,7 +14,7 @@
  * @since 11/13/2024
  */
 
-package org.spaceinvaders;
+package org.spaceinvaders.firebase;
 
 import com.google.auth.oauth2.GoogleCredentials;
 import com.google.cloud.firestore.DocumentReference;
@@ -25,9 +25,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthException;
 import com.google.firebase.auth.UserRecord;
 import com.google.firebase.cloud.FirestoreClient;
-import org.spaceinvaders.util.DatabaseAccessException;
-import org.spaceinvaders.util.LoggerUtil;
-import org.spaceinvaders.util.NetworkNotFoundException;
+import org.spaceinvaders.firebase.util.DatabaseAccessException;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -40,9 +38,9 @@ public final class Firebase
 
     /**
      * @throws IOException                  If the firebase could not be initialized
-     * @throws NetworkNotFoundException     If there is no network connection
+     * @throws org.spaceinvaders.firebase.util.NetworkNotFoundException     If there is no network connection
      */
-    private Firebase() throws IOException, NetworkNotFoundException
+    private Firebase() throws IOException, org.spaceinvaders.firebase.util.NetworkNotFoundException
     {
         initializeFirebase();
     }
@@ -58,10 +56,10 @@ public final class Firebase
             {
                 INSTANCE = new Firebase();
             }
-            catch(IOException | NetworkNotFoundException e)
+            catch(IOException | org.spaceinvaders.firebase.util.NetworkNotFoundException e)
             {
-                LoggerUtil.logError(e.getMessage());
-                throw new NetworkNotFoundException("Cannot connect to the network.");
+                org.spaceinvaders.firebase.util.LoggerUtil.logError(e.getMessage());
+                throw new org.spaceinvaders.firebase.util.NetworkNotFoundException("Cannot connect to the network.");
             }
         }
     }
@@ -69,9 +67,9 @@ public final class Firebase
     /**
      * Initializes the firebase database from the service account key provided in the "resources" folder.
      * @throws IOException if the service account key is missing
-     * @throws NetworkNotFoundException if the program cannot connect to the network
+     * @throws org.spaceinvaders.firebase.util.NetworkNotFoundException if the program cannot connect to the network
      */
-    private void initializeFirebase() throws IOException, NetworkNotFoundException
+    private void initializeFirebase() throws IOException, org.spaceinvaders.firebase.util.NetworkNotFoundException
     {
         try (InputStream serviceAccount = getClass().getClassLoader().getResourceAsStream(SERVICE_ACCOUNT_KEY))
         {
@@ -88,7 +86,7 @@ public final class Firebase
             }
             catch(IOException e)
             {
-                throw new NetworkNotFoundException("Cannot connect to the network.");
+                throw new org.spaceinvaders.firebase.util.NetworkNotFoundException("Cannot connect to the network.");
             }
         }
     }
@@ -142,11 +140,11 @@ public final class Firebase
         {
             // Blocks until the write operation is done
             docRef.set(userData).get();
-            LoggerUtil.logInfo("Created user: " + userId);
+            org.spaceinvaders.firebase.util.LoggerUtil.logInfo("Created user: " + userId);
         }
         catch (Exception e)
         {
-            LoggerUtil.logException("Error creating user: " + userId, e);
+            org.spaceinvaders.firebase.util.LoggerUtil.logException("Error creating user: " + userId, e);
             throw new DatabaseAccessException("Error creating database for user: " + userId);
         }
     }

@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageTextButton;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
@@ -20,7 +21,6 @@ public class MainMenuScreen implements Screen {
 
     private final OrthographicCamera camera;
     private final Viewport viewport;
-    private final Viewport stageViewport;
 
     private final float STAGE_WIDTH;
 
@@ -36,7 +36,7 @@ public class MainMenuScreen implements Screen {
 
         camera = new OrthographicCamera();
         viewport = new FitViewport(WORLD_WIDTH, WORLD_HEIGHT, camera);
-        stageViewport = new FitViewport(STAGE_WIDTH, STAGE_HEIGHT);
+        Viewport stageViewport = new FitViewport(STAGE_WIDTH, STAGE_HEIGHT);
 
         this.STAGE_WIDTH = STAGE_WIDTH;
 
@@ -111,8 +111,11 @@ public class MainMenuScreen implements Screen {
         ImageTextButton multiPlayerButton = ButtonUtils.createScreenNavigationButton(game, "MultiPlayer", "textures/button.png", "textures/button.png", 95, 15, (STAGE_WIDTH - 95) / 2, 66, ScreenState.SIGNUP);
         ImageTextButton optionsButton = ButtonUtils.createScreenNavigationButton(game, "Options", "textures/button.png", "textures/button.png", 95, 15, (STAGE_WIDTH - 95) / 2, 49, ScreenState.LOGIN);
 
+        ImageButton backButton = ButtonUtils.createBackButton(this.game, "textures/back-button.png", "textures/back-button.png", 28, 15, 10, 177, game.screenManager.getRecentScreen());
+
         stage.addActor(singlePlayerButton);
         stage.addActor(multiPlayerButton);
         stage.addActor(optionsButton);
+        stage.addActor(backButton);
     }
 }
