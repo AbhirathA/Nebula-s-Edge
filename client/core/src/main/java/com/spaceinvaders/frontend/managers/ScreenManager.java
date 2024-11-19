@@ -11,7 +11,6 @@ import com.spaceinvaders.util.InvalidScreen;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Stack;
-import java.util.concurrent.ExecutionException;
 
 public class ScreenManager {
     private static ScreenManager instance = null;
@@ -26,8 +25,8 @@ public class ScreenManager {
     private final float WORLD_WIDTH = 240;
     private final float WORLD_HEIGHT = 135;
 
-    private final float STAGE_WIDTH = WORLD_WIDTH * 3/2; // 360
-    private final float STAGE_HEIGHT = WORLD_HEIGHT * 3/2; // 202.5
+    private final float STAGE_WIDTH = WORLD_WIDTH * 2; // 360
+    private final float STAGE_HEIGHT = WORLD_HEIGHT * 2; // 202.5
 
     public ScreenManager(SpaceInvadersGame game) {
         this.game = game;

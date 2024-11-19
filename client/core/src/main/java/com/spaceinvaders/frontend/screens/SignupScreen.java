@@ -85,7 +85,7 @@ public class SignupScreen implements Screen {
         planetsBackground.render(game.batch);
 
         game.batch.begin();
-        game.batch.draw(title, 73, 135 - 66, 93, 47);
+        game.batch.draw(title, 73, 61, 93, 47);
         game.batch.end();
 
         stageViewport.apply();
@@ -129,35 +129,35 @@ public class SignupScreen implements Screen {
                 minecraftFont, 0, 0);
 
         Label enterId = LabelUtils.createLabel("Id:", minecraftFont,
-                (STAGE_WIDTH - 143) / 2f, 86);
+                (STAGE_WIDTH - 143) / 2f, 101);
 
         Label enterPassword = LabelUtils.createLabel("Password:",
-                minecraftFont, (STAGE_WIDTH - 143) / 2f, 70);
+                minecraftFont, (STAGE_WIDTH - 143) / 2f, 85);
 
         Label confirmPassword = LabelUtils.createLabel("Confirm:",
-                minecraftFont, (STAGE_WIDTH - 143) / 2f, 53);
+                minecraftFont, (STAGE_WIDTH - 143) / 2f, 68);
 
         TextField idField = TextFieldUtils.createTextField("", game.assetManager, 95, 15, (STAGE_WIDTH - 95) / 2f + 22,
-                84);
+                99);
         idField.setMessageText("Enter id");
         // Placeholder text will look gray without the following line
         idField.getStyle().messageFontColor = idField.getStyle().fontColor;
 
         TextField passwordField = TextFieldUtils.createPasswordField(game.assetManager, 95, 15,
-                (STAGE_WIDTH - 95) / 2f + 22, 68);
+                (STAGE_WIDTH - 95) / 2f + 22, 83);
         passwordField.setMessageText("Enter password");
         passwordField.getStyle().messageFontColor = passwordField.getStyle().fontColor;
 
         TextField confirmField = TextFieldUtils.createPasswordField(game.assetManager, 95, 15,
-                (STAGE_WIDTH - 95) / 2f + 22, 51);
+                (STAGE_WIDTH - 95) / 2f + 22, 66);
         confirmField.setMessageText("Confirm password");
         confirmField.getStyle().messageFontColor = confirmField.getStyle().fontColor;
 
         ImageTextButton submitButton = ButtonUtils.createButton(game, "Submit", "textures/button.png",
-                "textures/button.png", 95, 15, (STAGE_WIDTH - 95) / 2f, 34);
+                "textures/button.png", 95, 15, (STAGE_WIDTH - 95) / 2f, 49);
 
         ImageButton backButton = ButtonUtils.createBackButton(this.game, "textures/back-button.png",
-                "textures/back-button.png", 28, 15, 10, 177, game.screenManager.getRecentScreen());
+                "textures/back-button.png", 28, 15, 10, 245, game.screenManager.getRecentScreen());
 
         stage.addActor(enterId);
         stage.addActor(enterPassword);

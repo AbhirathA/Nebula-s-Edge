@@ -74,7 +74,7 @@ public class LoginGatewayScreen implements Screen {
         planetsBackground.render(game.batch);
 
         game.batch.begin();
-        game.batch.draw(title, 73, 135 - 66, 93, 47);
+        game.batch.draw(title, 73, 61, 93, 47);
         game.batch.end();
 
         stage.act(delta);
@@ -107,8 +107,8 @@ public class LoginGatewayScreen implements Screen {
     }
 
     private void initializeActors() {
-        ImageTextButton loginButton = ButtonUtils.createScreenNavigationButton(game, "Login", "textures/button.png", "textures/button.png", 95, 15, (STAGE_WIDTH - 95) / 2, 83, ScreenState.LOGIN);
-        ImageTextButton signupButton = ButtonUtils.createScreenNavigationButton(game, "Signup", "textures/button.png", "textures/button.png", 95, 15, (STAGE_WIDTH - 95) / 2, 66, ScreenState.SIGNUP);
+        ImageTextButton loginButton = ButtonUtils.createScreenNavigationButton(game, "Login", "textures/button.png", "textures/button.png", 95, 15, (STAGE_WIDTH - 95) / 2, 98, ScreenState.LOGIN);
+        ImageTextButton signupButton = ButtonUtils.createScreenNavigationButton(game, "Signup", "textures/button.png", "textures/button.png", 95, 15, (STAGE_WIDTH - 95) / 2, 81, ScreenState.SIGNUP);
 
         stage.addActor(loginButton);
         stage.addActor(signupButton);
