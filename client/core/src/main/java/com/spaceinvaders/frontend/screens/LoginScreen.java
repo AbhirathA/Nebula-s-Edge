@@ -40,7 +40,8 @@ public class LoginScreen implements Screen {
     boolean isErrorDisplayed = false;
     boolean isLoggedIn = false;
 
-    public LoginScreen(SpaceInvadersGame game, float WORLD_WIDTH, float WORLD_HEIGHT, float STAGE_WIDTH, float STAGE_HEIGHT, StarsBackground starsBackground, PlanetsBackground planetsBackground) {
+    public LoginScreen(SpaceInvadersGame game, float WORLD_WIDTH, float WORLD_HEIGHT, float STAGE_WIDTH,
+            float STAGE_HEIGHT, StarsBackground starsBackground, PlanetsBackground planetsBackground) {
         this.game = game;
 
         this.camera = new OrthographicCamera();
@@ -68,7 +69,7 @@ public class LoginScreen implements Screen {
 
     @Override
     public void render(float delta) {
-        ScreenUtils.clear(0, 0, 0,1);
+        ScreenUtils.clear(0, 0, 0, 1);
 
         this.viewport.apply();
         this.camera.update();
@@ -76,10 +77,10 @@ public class LoginScreen implements Screen {
         this.game.batch.setProjectionMatrix(this.camera.combined);
         this.game.shapeRenderer.setProjectionMatrix(this.camera.combined);
 
-        Gdx.gl.glEnable(GL20.GL_BLEND);  // Enable blending
+        Gdx.gl.glEnable(GL20.GL_BLEND); // Enable blending
         Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
 
-        this.starsBackground.render(this.game.shapeRenderer, delta);  // Use delta for time
+        this.starsBackground.render(this.game.shapeRenderer, delta); // Use delta for time
         this.planetsBackground.render(this.game.batch);
 
         this.game.batch.begin();
@@ -117,18 +118,34 @@ public class LoginScreen implements Screen {
     }
 
     private void initialiseActors() {
-        Label errorMessage = LabelUtils.createLabel("Incorrect username or password", this.game.assetManager.get("fonts/minecraft.fnt", BitmapFont.class), 0, 0);
-        Label successMessage = LabelUtils.createLabel("Login successful", this.game.assetManager.get("fonts/minecraft.fnt", BitmapFont.class), 0, 0);
 
-        Label enterId = LabelUtils.createLabel("Id:", this.game.assetManager.get("fonts/minecraft.fnt", BitmapFont.class), (STAGE_WIDTH - 143) / 2f, 86);
-        Label enterPassword = LabelUtils.createLabel("Password:", this.game.assetManager.get("fonts/minecraft.fnt", BitmapFont.class), (STAGE_WIDTH - 143) / 2f, 70);
-        TextField idField = TextFieldUtils.createTextField("Enter id", this.game.assetManager, 95, 15, (STAGE_WIDTH - 95) / 2f + 22, 84);
-        TextField passwordField = TextFieldUtils.createPasswordField(this.game.assetManager, 95, 15, (STAGE_WIDTH - 95) / 2f + 22, 68);
+        BitmapFont minecraftFont = this.game.assetManager.get("fonts/minecraft.fnt", BitmapFont.class);
 
-        ImageTextButton submitButton = ButtonUtils.createButton(this.game, "Submit", "textures/button.png", "textures/button.png", 95, 15, (STAGE_WIDTH - 95) / 2f, 50);
-        ImageTextButton signUpButton = ButtonUtils.createScreenNavigationButton(this.game, "SignUp", "textures/button.png", "textures/button.png", 95, 15, (STAGE_WIDTH - 95) / 2f, 34, ScreenState.SIGNUP);
+        Label errorMessage = LabelUtils.createLabel("Incorrect username or password", minecraftFont, 0, 0);
+        Label successMessage = LabelUtils.createLabel("Login successful", minecraftFont, 0, 0);
 
-        ImageButton backButton = ButtonUtils.createBackButton(this.game, "textures/back-button.png", "textures/back-button.png", 28, 15, 10, 177, game.screenManager.getRecentScreen());
+        Label enterId = LabelUtils.createLabel("Id:", minecraftFont, (STAGE_WIDTH - 143) / 2f, 86);
+
+        Label enterPassword = LabelUtils.createLabel("Password:", minecraftFont, (STAGE_WIDTH - 143) / 2f, 70);
+
+        TextField idField = TextFieldUtils.createTextField("", this.game.assetManager, 95, 15,
+                (STAGE_WIDTH - 95) / 2f + 22, 84);
+        idField.setMessageText("Enter id");
+        // Placeholder text will look gray without the following line
+        idField.getStyle().messageFontColor = idField.getStyle().fontColor;
+
+        TextField passwordField = TextFieldUtils.createPasswordField(this.game.assetManager, 95, 15,
+                (STAGE_WIDTH - 95) / 2f + 22, 68);
+        passwordField.setMessageText("Enter password");
+        passwordField.getStyle().messageFontColor = passwordField.getStyle().fontColor;
+
+        ImageTextButton submitButton = ButtonUtils.createButton(this.game, "Submit", "textures/button.png",
+                "textures/button.png", 95, 15, (STAGE_WIDTH - 95) / 2f, 50);
+        ImageTextButton signUpButton = ButtonUtils.createScreenNavigationButton(this.game, "SignUp",
+                "textures/button.png", "textures/button.png", 95, 15, (STAGE_WIDTH - 95) / 2f, 34, ScreenState.SIGNUP);
+
+        ImageButton backButton = ButtonUtils.createBackButton(this.game, "textures/back-button.png",
+                "textures/back-button.png", 28, 15, 10, 177, game.screenManager.getRecentScreen());
 
         this.stage.addActor(enterId);
         this.stage.addActor(enterPassword);
@@ -160,24 +177,19 @@ public class LoginScreen implements Screen {
                         isLoggedIn = true;
                         game.screenManager.setScreen(ScreenState.MAIN_MENU);
                     }
-                }
-                catch(AuthenticationException e)
-                {
-                    //@TODO: Convert to logging
+                } catch (AuthenticationException e) {
+                    // @TODO: Convert to logging
                     System.out.println("Incorrect username or password");
-                    if (!isErrorDisplayed)
-                    {
+                    if (!isErrorDisplayed) {
                         stage.addActor(errorMessage);
                         isErrorDisplayed = true;
 
-                        if (isLoggedIn)
-                        {
+                        if (isLoggedIn) {
                             stage.getActors().removeValue(successMessage, true);
                         }
                     }
-                }
-                catch(Exception e) {
-                    //@TODO: Convert to logging
+                } catch (Exception e) {
+                    // @TODO: Convert to logging
                     System.err.println(e.getMessage());
                     System.exit(1);
                 }
