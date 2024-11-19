@@ -18,9 +18,16 @@ textures/Planet9.png
 textures/back-button.png
 textures/button.png
 textures/cursor.png
+textures/menu.png
 textures/multiplayer.png
+textures/music.png
 textures/options.png
 textures/outline.png
+textures/play.png
+textures/restart.png
 textures/selection.png
 textures/singleplayer.png
+textures/sliderBackground.png
+textures/sliderKnob.png
+textures/sound.png
 textures/title.png

@@ -136,4 +136,34 @@ public class ButtonUtils {
 
         return button;
     }
+
+    public static ImageButton createImageButton(SpaceInvadersGame game, String upImagePath, String downImagePath, float width, float height, float x, float y) {
+        Texture upTexture = game.assetManager.get(upImagePath, Texture.class);
+        Texture downTexture = game.assetManager.get(downImagePath, Texture.class);
+
+        TextureRegionDrawable upDrawable = new TextureRegionDrawable(new TextureRegion(upTexture));
+        TextureRegionDrawable downDrawable = new TextureRegionDrawable(new TextureRegion(downTexture));
+
+        ImageButton.ImageButtonStyle style = new ImageButton.ImageButtonStyle();
+        style.up = upDrawable;
+        style.down = downDrawable;
+
+        ImageButton button = new ImageButton(style);
+        button.setSize(width, height);
+        button.setPosition(x, y);
+
+        button.addListener(new InputListener() {
+            @Override
+            public void enter(InputEvent event, float x, float y, int pointer, Actor button) {
+                Gdx.graphics.setSystemCursor(Cursor.SystemCursor.Hand);
+            }
+
+            @Override
+            public void exit(InputEvent event, float x, float y, int pointer, Actor button) {
+                Gdx.graphics.setSystemCursor(Cursor.SystemCursor.Arrow);
+            }
+        });
+
+        return button;
+    }
 }

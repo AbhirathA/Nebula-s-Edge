@@ -5,9 +5,9 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
-import com.badlogic.gdx.scenes.scene2d.ui.ImageTextButton;
+import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
@@ -15,8 +15,10 @@ import com.spaceinvaders.frontend.SpaceInvadersGame;
 import com.spaceinvaders.frontend.background.PlanetsBackground;
 import com.spaceinvaders.frontend.background.StarsBackground;
 import com.spaceinvaders.frontend.utils.ButtonUtils;
+import com.spaceinvaders.frontend.utils.LabelUtils;
+import com.spaceinvaders.frontend.utils.SliderUtils;
 
-public class MainMenuScreen implements Screen {
+public class PauseScreen implements Screen {
     private final SpaceInvadersGame game;
 
     private final OrthographicCamera camera;
@@ -27,11 +29,9 @@ public class MainMenuScreen implements Screen {
     private final Stage stage;
 
     private final StarsBackground starsBackground;
-    private final PlanetsBackground planetsBackground;
 
-    private final Texture title;
 
-    public MainMenuScreen(SpaceInvadersGame game, float WORLD_WIDTH, float WORLD_HEIGHT, float STAGE_WIDTH, float STAGE_HEIGHT, StarsBackground starsBackground, PlanetsBackground planetsBackground) {
+    public PauseScreen(SpaceInvadersGame game, float WORLD_WIDTH, float WORLD_HEIGHT, float STAGE_WIDTH, float STAGE_HEIGHT, StarsBackground starsBackground) {
         this.game = game;
 
         camera = new OrthographicCamera();
@@ -47,9 +47,6 @@ public class MainMenuScreen implements Screen {
         initializeActors();
 
         this.starsBackground = starsBackground;
-        this.planetsBackground = planetsBackground;
-
-        title = game.assetManager.get("textures/title.png", Texture.class);
     }
 
     @Override
@@ -71,10 +68,8 @@ public class MainMenuScreen implements Screen {
         Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
 
         starsBackground.render(game.shapeRenderer, delta);  // Use delta for time
-        planetsBackground.render(game.batch);
 
         game.batch.begin();
-        game.batch.draw(title, 73, 61, 93, 47);
         game.batch.end();
 
         stage.act(delta);
@@ -104,18 +99,35 @@ public class MainMenuScreen implements Screen {
 
     @Override
     public void dispose() {
+
     }
 
     private void initializeActors() {
-        ImageTextButton singlePlayerButton = ButtonUtils.createScreenNavigationButton(game, "SinglePlayer", "textures/button.png", "textures/button.png", 95, 15, (STAGE_WIDTH - 95) / 2, 98, null);
-        ImageTextButton multiPlayerButton = ButtonUtils.createScreenNavigationButton(game, "MultiPlayer", "textures/button.png", "textures/button.png", 95, 15, (STAGE_WIDTH - 95) / 2, 81, null);
-        ImageTextButton optionsButton = ButtonUtils.createScreenNavigationButton(game, "Options", "textures/button.png", "textures/button.png", 95, 15, (STAGE_WIDTH - 95) / 2, 64, ScreenState.PAUSE);
+        ImageButton menuButton = ButtonUtils.createImageButton(game, "textures/menu.png", "textures/menu.png", 38, 38, (STAGE_WIDTH - 38) / 2f - 58, 80);
+        ImageButton playButton = ButtonUtils.createImageButton(game, "textures/play.png", "textures/play.png", 38, 38, (STAGE_WIDTH - 38) / 2f, 80);
+        ImageButton restartButton = ButtonUtils.createImageButton(game, "textures/restart.png", "textures/restart.png", 38, 38, (STAGE_WIDTH - 38) / 2f + 58, 80);
 
-        ImageButton backButton = ButtonUtils.createBackButton(this.game, "textures/back-button.png", "textures/back-button.png", 28, 15, 10, 245, game.screenManager.getRecentScreen());
+        Image musicIcon = new Image(game.assetManager.get("textures/music.png", Texture.class));
+        musicIcon.setSize(20, 20);
+        musicIcon.setPosition((STAGE_WIDTH - 150) / 2f - 29, 155);
+        Slider musicSlider = SliderUtils.createSlider(game.assetManager, 150, 20, (STAGE_WIDTH - 150) / 2f, 155);
+        Label musicLabel = SliderUtils.getValueLabel(game.assetManager, musicSlider, 150, 20, (STAGE_WIDTH - 150) / 2f, 155);
 
-        stage.addActor(singlePlayerButton);
-        stage.addActor(multiPlayerButton);
-        stage.addActor(optionsButton);
-        stage.addActor(backButton);
+        Image soundIcon = new Image(game.assetManager.get("textures/sound.png", Texture.class));
+        soundIcon.setSize(20, 20);
+        soundIcon.setPosition((STAGE_WIDTH - 150) / 2f - 29, 130);
+        Slider soundSlider = SliderUtils.createSlider(game.assetManager, 150, 20, (STAGE_WIDTH - 150) / 2f, 130);
+        Label soundLabel = SliderUtils.getValueLabel(game.assetManager, soundSlider, 150, 20, (STAGE_WIDTH - 150) / 2f, 130);
+
+
+        stage.addActor(menuButton);
+        stage.addActor(playButton);
+        stage.addActor(restartButton);
+        stage.addActor(musicIcon);
+        stage.addActor(musicSlider);
+        stage.addActor(musicLabel);
+        stage.addActor(soundIcon);
+        stage.addActor(soundSlider);
+        stage.addActor(soundLabel);
     }
 }

@@ -33,6 +33,13 @@ public class MyAssetManager {
         assetManager.load("textures/cursor.png", Texture.class);
         assetManager.load("textures/selection.png", Texture.class);
         assetManager.load("fonts/minecraft.fnt", BitmapFont.class);
+        assetManager.load("textures/menu.png", Texture.class);
+        assetManager.load("textures/music.png", Texture.class);
+        assetManager.load("textures/play.png", Texture.class);
+        assetManager.load("textures/restart.png", Texture.class);
+        assetManager.load("textures/sound.png", Texture.class);
+        assetManager.load("textures/sliderBackground.png", Texture.class);
+        assetManager.load("textures/sliderKnob.png", Texture.class);
     }
 
     public <T> T get(String filePath, Class<T> type) {

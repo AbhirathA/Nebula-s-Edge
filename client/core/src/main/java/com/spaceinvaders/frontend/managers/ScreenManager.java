@@ -31,7 +31,7 @@ public class ScreenManager {
     public ScreenManager(SpaceInvadersGame game) {
         this.game = game;
         this.currentScreen = null;
-        this.starsBackground = new StarsBackground(WORLD_WIDTH, WORLD_HEIGHT, 150);
+        this.starsBackground = new StarsBackground(WORLD_WIDTH, WORLD_HEIGHT, 50);
         this.planetsBackground = new PlanetsBackground(game.assetManager);
         screenStateStack = new Stack<>();
     }
@@ -110,6 +110,8 @@ public class ScreenManager {
                 return new MainMenuScreen(this.game, WORLD_WIDTH, WORLD_HEIGHT, STAGE_WIDTH, STAGE_HEIGHT, starsBackground, planetsBackground);
             case LOGIN_GATEWAY:
                 return new LoginGatewayScreen(this.game, WORLD_WIDTH, WORLD_HEIGHT, STAGE_WIDTH, STAGE_HEIGHT, starsBackground, planetsBackground);
+            case PAUSE:
+                return new PauseScreen(this.game, WORLD_WIDTH, WORLD_HEIGHT, STAGE_WIDTH, STAGE_HEIGHT, starsBackground);
             default:
                 throw new IllegalArgumentException("Unknown screen state: " + screenState);
         }
