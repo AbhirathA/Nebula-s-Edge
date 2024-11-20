@@ -5,17 +5,14 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.spaceinvaders.frontend.SpaceInvadersGame;
-import com.spaceinvaders.frontend.background.PlanetsBackground;
 import com.spaceinvaders.frontend.background.StarsBackground;
 import com.spaceinvaders.frontend.utils.ButtonUtils;
-import com.spaceinvaders.frontend.utils.LabelUtils;
 import com.spaceinvaders.frontend.utils.SliderUtils;
 
 public class PauseScreen implements Screen {
@@ -113,9 +110,9 @@ public class PauseScreen implements Screen {
         Slider musicSlider = SliderUtils.createSlider(game.assetManager, 150, 20, (STAGE_WIDTH - 150) / 2f, 155);
         Label musicLabel = SliderUtils.getValueLabel(game.assetManager, musicSlider, 150, 20, (STAGE_WIDTH - 150) / 2f, 155);
 
-        musicSlider.setValue(game.musicManager.getVolume() * 100);
+        musicSlider.setValue(game.musicManager.getVolume() * 200);
         musicSlider.addListener(event -> {
-            game.musicManager.setVolume(musicSlider.getValue() / 100f);
+            game.musicManager.setVolume(musicSlider.getValue() / 200f);
             return false;
         });
 
@@ -124,6 +121,12 @@ public class PauseScreen implements Screen {
         soundIcon.setPosition((STAGE_WIDTH - 150) / 2f - 29, 130);
         Slider soundSlider = SliderUtils.createSlider(game.assetManager, 150, 20, (STAGE_WIDTH - 150) / 2f, 130);
         Label soundLabel = SliderUtils.getValueLabel(game.assetManager, soundSlider, 150, 20, (STAGE_WIDTH - 150) / 2f, 130);
+
+        soundSlider.setValue(game.soundManager.getVolume() * 200);
+        soundSlider.addListener(event -> {
+            game.soundManager.setVolume(soundSlider.getValue() / 200f);
+            return false;
+        });
 
         ImageButton backButton = ButtonUtils.createBackButton(this.game, "textures/back-button.png", "textures/back-button.png", 28, 15, 10, 245, game.screenManager.getRecentScreen());
 

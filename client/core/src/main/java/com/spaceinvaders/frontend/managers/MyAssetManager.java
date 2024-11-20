@@ -1,6 +1,7 @@
 package com.spaceinvaders.frontend.managers;
 
 import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 
@@ -40,6 +41,7 @@ public class MyAssetManager {
         assetManager.load("textures/sound.png", Texture.class);
         assetManager.load("textures/sliderBackground.png", Texture.class);
         assetManager.load("textures/sliderKnob.png", Texture.class);
+        assetManager.load("sounds/mixkit-winning-a-coin-video-game-2069.wav", Sound.class);
     }
 
     public <T> T get(String filePath, Class<T> type) {

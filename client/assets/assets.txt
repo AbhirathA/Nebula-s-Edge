@@ -3,6 +3,7 @@ fonts/minecraft.fnt
 fonts/minecraft.png
 music/08 Easy Funkship 106.mp3
 music/10 - Continue.mp3
+sounds/mixkit-winning-a-coin-video-game-2069.wav
 textures/Planet1.png
 textures/Planet10.png
 textures/Planet11.png

@@ -41,6 +41,8 @@ public class ButtonUtils {
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
                 Gdx.graphics.setSystemCursor(Cursor.SystemCursor.Arrow);
 
+                game.soundManager.play("buttonClick");
+
                 if(targetScreen == null){
                     System.out.println("Move to new screen");
                 }
@@ -83,6 +85,8 @@ public class ButtonUtils {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
                 Gdx.graphics.setSystemCursor(Cursor.SystemCursor.Arrow);
+
+                game.soundManager.play("buttonClick");
 
                 game.screenManager.screenStateStack.pop();
                 game.screenManager.setScreen(nextState);
