@@ -27,6 +27,7 @@ import com.sun.net.httpserver.HttpServer;
 import com.sun.net.httpserver.HttpHandler;
 import com.sun.net.httpserver.HttpExchange;
 import org.spaceinvaders.firebase.util.DatabaseAccessException;
+import org.spaceinvaders.firebase.util.HTTPCode;
 import org.spaceinvaders.firebase.util.LoggerUtil;
 import org.spaceinvaders.firebase.util.NetworkNotFoundException;
 
@@ -46,6 +47,7 @@ public class Server
         {
             HttpServer server = HttpServer.create(new InetSocketAddress(PORT), BACKLOG_LIMIT);
             server.createContext("/signup", new SignUpHandler());
+            server.createContext("/signin", new SignInHandler());
             server.setExecutor(null);
             server.start();
             LoggerUtil.logInfo("Server started at http://localhost:" + PORT);
@@ -53,6 +55,66 @@ public class Server
         catch(IOException e)
         {
             LoggerUtil.logException("Cannot create a localhost server on port " + PORT, e);
+        }
+    }
+
+    //handler class for sign in
+    private static class SignInHandler implements HttpHandler
+    {
+        /**
+         * Handles a user request to sign in
+         *
+         * @param exchange the exchange containing the request from the
+         *                 client and used to send the response
+         * @throws IOException  if any error occurs in communication with firebase
+         */
+        @Override
+        public void handle(HttpExchange exchange) throws IOException
+        {
+            if ("POST".equals(exchange.getRequestMethod()))
+            {
+                try
+                {
+                    // Parse request body
+                    String requestBody = new String(exchange.getRequestBody().readAllBytes(), StandardCharsets.UTF_8);
+                    JsonObject json = JsonParser.parseString(requestBody).getAsJsonObject();
+
+                    //get the payload from the request
+                    String email = json.get("email").getAsString();
+                    String password = json.get("password").getAsString();
+
+                    //create the user and send code 200
+                    String token = Firebase.getInstance().signinUser(email, password);
+                    sendHTTPResponse(exchange, HTTPCode.SUCCESS.getCode(), "User Signed in");
+                }
+                catch(JsonSyntaxException e)
+                {
+                    //JSON Format is invalid
+                    sendHTTPResponse(exchange, HTTPCode.INVALID_JSON.getCode(), "Invalid JSON Format");
+                }
+                catch(NullPointerException e)
+                {
+                    //User did not send email or password
+                    sendHTTPResponse(exchange, HTTPCode.INVALID_ID_PASS.getCode(), "Invalid email or password");
+                }
+                catch(NetworkNotFoundException e)
+                {
+                    //The server is not connected to the internet
+                    sendHTTPResponse(exchange, HTTPCode.CANNOT_CONNECT.getCode(), "Cannot connect to the network");
+                }
+                catch(DatabaseAccessException e)
+                {
+                    sendHTTPResponse(exchange, HTTPCode.DATABASE_ERROR.getCode(), "Could not sign in user data");
+                }
+                catch (Exception e)
+                {
+                    sendHTTPResponse(exchange, HTTPCode.SERVER_ERROR.getCode(), "Failed to sign in user");
+                }
+            }
+            else
+            {
+                sendHTTPResponse(exchange, HTTPCode.SERVER_ERROR.getCode(), "Failed to sign in user");
+            }
         }
     }
 
@@ -83,44 +145,44 @@ public class Server
 
                     //create the user and send code 200
                     Firebase.getInstance().createUser(email, password);
-                    sendHTTPResponse(exchange, 200, "User Created");
+                    sendHTTPResponse(exchange, HTTPCode.SUCCESS.getCode(), "User Created");
                 }
                 catch(JsonSyntaxException e)
                 {
                     //JSON Format is invalid
-                    sendHTTPResponse(exchange, 400, "Invalid JSON Format");
+                    sendHTTPResponse(exchange, HTTPCode.INVALID_JSON.getCode(), "Invalid JSON Format");
                 }
                 catch(NullPointerException e)
                 {
                     //User did not send email or password
-                    sendHTTPResponse(exchange, 400, "Invalid email or password");
+                    sendHTTPResponse(exchange, HTTPCode.INVALID_ID_PASS.getCode(), "Invalid email or password");
                 }
                 catch(NetworkNotFoundException e)
                 {
                     //The server is not connected to the internet
-                    sendHTTPResponse(exchange, 500, "Cannot connect to the network");
+                    sendHTTPResponse(exchange, HTTPCode.CANNOT_CONNECT.getCode(), "Cannot connect to the network");
                 }
                 catch(FirebaseAuthException e)
                 {
                     //The email is too weak
-                    sendHTTPResponse(exchange, 400, "Email already exists");
+                    sendHTTPResponse(exchange, HTTPCode.EMAIL_EXISTS.getCode(), "Email already exists");
                 }
                 catch(IllegalArgumentException e)
                 {
-                    sendHTTPResponse(exchange, 400, "Password is too weak");
+                    sendHTTPResponse(exchange, HTTPCode.WEAK_PASSWORD.getCode(), "Password is too weak");
                 }
                 catch(DatabaseAccessException e)
                 {
-                    sendHTTPResponse(exchange, 400, "Could not create user data");
+                    sendHTTPResponse(exchange, HTTPCode.DATABASE_ERROR.getCode(), "Could not create user data");
                 }
                 catch (Exception e)
                 {
-                    sendHTTPResponse(exchange, 500, "Failed to sign up user");
+                    sendHTTPResponse(exchange, HTTPCode.SERVER_ERROR.getCode(), "Failed to sign up user");
                 }
             }
             else
             {
-                sendHTTPResponse(exchange, 500, "Failed to sign up user");
+                sendHTTPResponse(exchange, HTTPCode.SERVER_ERROR.getCode(), "Failed to sign up user");
             }
         }
     }

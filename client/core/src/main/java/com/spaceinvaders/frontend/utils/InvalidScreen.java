@@ -1,4 +1,4 @@
-package com.spaceinvaders.util;
+package com.spaceinvaders.frontend.utils;
 
 /**
  * Exception thrown to indicate an invalid screen state error occurred during the set-screen process.

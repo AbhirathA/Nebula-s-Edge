@@ -1,4 +1,4 @@
-package com.spaceinvaders.util;
+package com.spaceinvaders.backend.firebase.utils;
 
 /**
  * Exception thrown to indicate an authentication error occurred during the sign-in process.

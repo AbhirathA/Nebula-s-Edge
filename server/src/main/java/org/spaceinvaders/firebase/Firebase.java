@@ -105,7 +105,7 @@ public final class Firebase
      * @param email                     the email address of the user
      * @param password                  the password of the user
      * @throws FirebaseAuthException    if the user with the given username already exists (or password is too weak)
-     * @throws DatabaseAccessException if the user's  data could not be created
+     * @throws DatabaseAccessException  if the user's  data could not be created
      */
     public void createUser(String email, String password) throws FirebaseAuthException, DatabaseAccessException
     {
@@ -147,5 +147,15 @@ public final class Firebase
             org.spaceinvaders.firebase.util.LoggerUtil.logException("Error creating user: " + userId, e);
             throw new DatabaseAccessException("Error creating database for user: " + userId);
         }
+    }
+    /**
+     * Method for checking if the email and password is correct
+     * @param email                        the email id of the user
+     * @param password                     the password of the user
+     * @throws DatabaseAccessException     if any errors occurred in accessing the database
+     */
+    public String signinUser(String email, String password) throws DatabaseAccessException
+    {
+        return "";
     }
 }

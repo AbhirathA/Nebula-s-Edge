@@ -6,12 +6,11 @@ import com.spaceinvaders.frontend.background.PlanetsBackground;
 import com.spaceinvaders.frontend.background.StarsBackground;
 import com.spaceinvaders.frontend.screens.*;
 import com.spaceinvaders.frontend.utils.Command;
-import com.spaceinvaders.util.InvalidScreen;
+import com.spaceinvaders.frontend.utils.InvalidScreen;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Stack;
-import java.util.concurrent.ExecutionException;
 
 public class ScreenManager {
     private static ScreenManager instance = null;

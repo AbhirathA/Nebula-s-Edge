@@ -12,15 +12,13 @@ import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.spaceinvaders.frontend.SpaceInvadersGame;
-import com.spaceinvaders.util.AuthenticationException;
+import com.spaceinvaders.backend.firebase.utils.AuthenticationException;
 import com.spaceinvaders.backend.firebase.ClientFirebase;
 import com.spaceinvaders.frontend.background.PlanetsBackground;
 import com.spaceinvaders.frontend.background.StarsBackground;
 import com.spaceinvaders.frontend.utils.ButtonUtils;
 import com.spaceinvaders.frontend.utils.LabelUtils;
 import com.spaceinvaders.frontend.utils.TextFieldUtils;
-
-import java.io.IOException;
 
 public class SignupScreen implements Screen {
     private final SpaceInvadersGame game;
