@@ -6,3 +6,46 @@
 2024-11-20 07:00:39 [HTTP-Dispatcher] INFO  o.s.firebase.util.LoggerUtil - User Signed in
 2024-11-20 07:01:27 [HTTP-Dispatcher] INFO  o.s.firebase.util.LoggerUtil - User Signed in
 2024-11-20 07:01:33 [HTTP-Dispatcher] INFO  o.s.firebase.util.LoggerUtil - User Signed in
+2024-11-20 07:11:17 [HTTP-Dispatcher] INFO  o.s.firebase.util.LoggerUtil - User Signed in
+2024-11-20 07:11:26 [HTTP-Dispatcher] INFO  o.s.firebase.util.LoggerUtil - User Signed in
+2024-11-20 07:49:00 [HTTP-Dispatcher] INFO  o.s.firebase.util.LoggerUtil - User Signed in
+2024-11-20 07:49:03 [HTTP-Dispatcher] INFO  o.s.firebase.util.LoggerUtil - User Signed in
+2024-11-20 07:49:51 [main] ERROR o.s.firebase.util.LoggerUtil - Cannot create a localhost server on port 8080
+java.net.BindException: Address already in use
+	at java.base/sun.nio.ch.Net.bind0(Native Method)
+	at java.base/sun.nio.ch.Net.bind(Net.java:555)
+	at java.base/sun.nio.ch.ServerSocketChannelImpl.netBind(ServerSocketChannelImpl.java:337)
+	at java.base/sun.nio.ch.ServerSocketChannelImpl.bind(ServerSocketChannelImpl.java:294)
+	at java.base/sun.nio.ch.ServerSocketAdaptor.bind(ServerSocketAdaptor.java:89)
+	at jdk.httpserver/sun.net.httpserver.ServerImpl.<init>(ServerImpl.java:142)
+	at jdk.httpserver/sun.net.httpserver.HttpServerImpl.<init>(HttpServerImpl.java:50)
+	at jdk.httpserver/sun.net.httpserver.DefaultHttpServerProvider.createHttpServer(DefaultHttpServerProvider.java:35)
+	at jdk.httpserver/com.sun.net.httpserver.HttpServer.create(HttpServer.java:150)
+	at org.spaceinvaders.firebase.Server.main(Server.java:48)
+2024-11-20 07:50:09 [HTTP-Dispatcher] INFO  o.s.firebase.util.LoggerUtil - User Signed in
+2024-11-20 07:50:29 [main] ERROR o.s.firebase.util.LoggerUtil - Cannot create a localhost server on port 8080
+java.net.BindException: Address already in use
+	at java.base/sun.nio.ch.Net.bind0(Native Method)
+	at java.base/sun.nio.ch.Net.bind(Net.java:555)
+	at java.base/sun.nio.ch.ServerSocketChannelImpl.netBind(ServerSocketChannelImpl.java:337)
+	at java.base/sun.nio.ch.ServerSocketChannelImpl.bind(ServerSocketChannelImpl.java:294)
+	at java.base/sun.nio.ch.ServerSocketAdaptor.bind(ServerSocketAdaptor.java:89)
+	at jdk.httpserver/sun.net.httpserver.ServerImpl.<init>(ServerImpl.java:142)
+	at jdk.httpserver/sun.net.httpserver.HttpServerImpl.<init>(HttpServerImpl.java:50)
+	at jdk.httpserver/sun.net.httpserver.DefaultHttpServerProvider.createHttpServer(DefaultHttpServerProvider.java:35)
+	at jdk.httpserver/com.sun.net.httpserver.HttpServer.create(HttpServer.java:150)
+	at org.spaceinvaders.firebase.Server.main(Server.java:48)
+2024-11-20 07:51:01 [main] ERROR o.s.firebase.util.LoggerUtil - Cannot create a localhost server on port 8080
+java.net.BindException: Address already in use
+	at java.base/sun.nio.ch.Net.bind0(Native Method)
+	at java.base/sun.nio.ch.Net.bind(Net.java:555)
+	at java.base/sun.nio.ch.ServerSocketChannelImpl.netBind(ServerSocketChannelImpl.java:337)
+	at java.base/sun.nio.ch.ServerSocketChannelImpl.bind(ServerSocketChannelImpl.java:294)
+	at java.base/sun.nio.ch.ServerSocketAdaptor.bind(ServerSocketAdaptor.java:89)
+	at jdk.httpserver/sun.net.httpserver.ServerImpl.<init>(ServerImpl.java:142)
+	at jdk.httpserver/sun.net.httpserver.HttpServerImpl.<init>(HttpServerImpl.java:50)
+	at jdk.httpserver/sun.net.httpserver.DefaultHttpServerProvider.createHttpServer(DefaultHttpServerProvider.java:35)
+	at jdk.httpserver/com.sun.net.httpserver.HttpServer.create(HttpServer.java:150)
+	at org.spaceinvaders.firebase.Server.main(Server.java:48)
+2024-11-20 07:52:21 [HTTP-Dispatcher] INFO  o.s.firebase.util.LoggerUtil - User Signed in
+2024-11-20 07:54:04 [HTTP-Dispatcher] INFO  o.s.firebase.util.LoggerUtil - User Signed in

@@ -11,9 +11,9 @@ import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import com.spaceinvaders.backend.firebase.AuthenticationManager;
 import com.spaceinvaders.frontend.SpaceInvadersGame;
 import com.spaceinvaders.backend.firebase.utils.AuthenticationException;
-import com.spaceinvaders.backend.firebase.ClientFirebase;
 import com.spaceinvaders.frontend.background.PlanetsBackground;
 import com.spaceinvaders.frontend.background.StarsBackground;
 import com.spaceinvaders.frontend.utils.ButtonUtils;
@@ -165,15 +165,15 @@ public class LoginScreen implements Screen {
                 String id = idField.getText();
                 String password = passwordField.getText();
                 try {
-                    ClientFirebase.signIn(id, password);
+                    AuthenticationManager.signIn(id, password);
 
                     if (LoginScreen.this.stage.getActors().contains(LoginScreen.this.errorMessage, true)) {
                         LoginScreen.this.stage.getActors().removeValue(LoginScreen.this.errorMessage, true);
                     }
 
-                    if (LoginScreen.this.stage.getActors().contains(LoginScreen.this.successMessage, true)) {
+                    if (!LoginScreen.this.stage.getActors().contains(LoginScreen.this.successMessage, true)) {
                         LoginScreen.this.stage.addActor(LoginScreen.this.successMessage);
-                        LoginScreen.this.game.screenManager.setScreen(ScreenState.LOGIN);
+                        LoginScreen.this.game.screenManager.setScreen(ScreenState.MAIN_MENU);
                     }
 
                 } catch (AuthenticationException e) {

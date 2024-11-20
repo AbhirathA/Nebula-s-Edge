@@ -22,4 +22,13 @@ public enum HTTPCode {
     {
         return this.code;
     }
+
+    public static HTTPCode fromCode(int code) {
+        for (HTTPCode httpCode : HTTPCode.values()) {
+            if (httpCode.getCode() == code) {
+                return httpCode;
+            }
+        }
+        throw new IllegalArgumentException("Unknown HTTP code: " + code);
+    }
 }

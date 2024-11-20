@@ -11,9 +11,9 @@ import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import com.spaceinvaders.backend.firebase.AuthenticationManager;
 import com.spaceinvaders.frontend.SpaceInvadersGame;
 import com.spaceinvaders.backend.firebase.utils.AuthenticationException;
-import com.spaceinvaders.backend.firebase.ClientFirebase;
 import com.spaceinvaders.frontend.background.PlanetsBackground;
 import com.spaceinvaders.frontend.background.StarsBackground;
 import com.spaceinvaders.frontend.utils.ButtonUtils;
@@ -36,8 +36,8 @@ public class SignupScreen implements Screen {
 
     private final Texture title;
 
-    boolean isErrorDisplayed = false;
-    boolean isLoggedIn = false;
+    private Label errorMessage;
+    private Label successMessage;
 
     public SignupScreen(SpaceInvadersGame game, float WORLD_WIDTH, float WORLD_HEIGHT, float STAGE_WIDTH,
             float STAGE_HEIGHT, StarsBackground starsBackground, PlanetsBackground planetsBackground) {
@@ -120,10 +120,10 @@ public class SignupScreen implements Screen {
 
         BitmapFont minecraftFont = game.assetManager.get("fonts/minecraft.fnt", BitmapFont.class);
 
-        Label errorMessage = LabelUtils.createLabel("Incorrect username or password",
+        errorMessage = LabelUtils.createLabel("Incorrect username or password",
                 minecraftFont, 0, 0);
 
-        Label successMessage = LabelUtils.createLabel("Login successful",
+        successMessage = LabelUtils.createLabel("Login successful",
                 minecraftFont, 0, 0);
 
         Label enterId = LabelUtils.createLabel("Id:", minecraftFont,
@@ -173,33 +173,30 @@ public class SignupScreen implements Screen {
                 String password = passwordField.getText();
                 String confirm = confirmField.getText();
                 try {
-                    ClientFirebase.signUp(id, password, confirm);
+                    AuthenticationManager.signUp(id, password, confirm);
 
-                    if (isErrorDisplayed) {
-                        stage.getActors().removeValue(errorMessage, true);
-                        isErrorDisplayed = false;
+                    if (SignupScreen.this.stage.getActors().contains(SignupScreen.this.errorMessage, true)) {
+                        SignupScreen.this.stage.getActors().removeValue(SignupScreen.this.errorMessage, true);
+                    }
 
-                        if (isLoggedIn) {
-                            stage.getActors().removeValue(successMessage, true);
-                            isLoggedIn = false;
-                        }
+                    if (!SignupScreen.this.stage.getActors().contains(SignupScreen.this.successMessage, true)) {
+                        SignupScreen.this.stage.addActor(SignupScreen.this.successMessage);
+                        SignupScreen.this.game.screenManager.setScreen(ScreenState.MAIN_MENU);
                     }
-                    if (!isLoggedIn) {
-                        stage.addActor(successMessage);
-                        isLoggedIn = true;
-                        game.screenManager.setScreen(ScreenState.LOGIN);
-                    }
+
                 } catch (AuthenticationException e) {
                     // @TODO: Convert to logging
-                    System.out.println("Incorrect username or password");
-                    if (!isErrorDisplayed) {
-                        stage.addActor(errorMessage);
-                        isErrorDisplayed = true;
+                    System.out.println(e.getMessage());
+                    SignupScreen.this.errorMessage.setText(e.getMessage());
 
-                        if (isLoggedIn) {
-                            stage.getActors().removeValue(successMessage, true);
-                        }
+                    if (!SignupScreen.this.stage.getActors().contains(SignupScreen.this.successMessage, true)) {
+                        SignupScreen.this.stage.getActors().removeValue(SignupScreen.this.successMessage, true);
                     }
+
+                    if (!SignupScreen.this.stage.getActors().contains(SignupScreen.this.errorMessage, true)) {
+                        SignupScreen.this.stage.addActor(SignupScreen.this.errorMessage);
+                    }
+
                 } catch (Exception e) {
                     // @TODO: Convert to logging
                     System.err.println(e.getMessage());

@@ -85,7 +85,7 @@ public class Server
 
                     //create the user and send code 200
                     String token = Firebase.getInstance().signinUser(email, password);
-                    sendHTTPResponse(exchange, HTTPCode.SUCCESS.getCode(), "User Signed in");
+                    sendHTTPResponse(exchange, HTTPCode.SUCCESS.getCode(), token);
                 }
                 catch(JsonSyntaxException e)
                 {
