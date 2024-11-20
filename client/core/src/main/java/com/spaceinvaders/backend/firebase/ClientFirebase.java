@@ -41,6 +41,8 @@ public class ClientFirebase
         {
             throw new AuthenticationException("Failed to authenticate the user.");
         }
+
+        return "";
     }
 
     public static void signUp(String email, String password, String confirmPassword) throws AuthenticationException

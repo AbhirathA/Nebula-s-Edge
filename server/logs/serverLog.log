@@ -1,0 +1,8 @@
+2024-11-20 07:00:14 [main] INFO  o.s.firebase.util.LoggerUtil - Server started at http://localhost:8080
+2024-11-20 07:00:30 [HTTP-Dispatcher] INFO  o.s.firebase.util.LoggerUtil - User Signed in
+2024-11-20 07:00:36 [HTTP-Dispatcher] INFO  o.s.firebase.util.LoggerUtil - User Signed in
+2024-11-20 07:00:39 [HTTP-Dispatcher] INFO  o.s.firebase.util.LoggerUtil - User Signed in
+2024-11-20 07:00:39 [HTTP-Dispatcher] INFO  o.s.firebase.util.LoggerUtil - User Signed in
+2024-11-20 07:00:39 [HTTP-Dispatcher] INFO  o.s.firebase.util.LoggerUtil - User Signed in
+2024-11-20 07:01:27 [HTTP-Dispatcher] INFO  o.s.firebase.util.LoggerUtil - User Signed in
+2024-11-20 07:01:33 [HTTP-Dispatcher] INFO  o.s.firebase.util.LoggerUtil - User Signed in

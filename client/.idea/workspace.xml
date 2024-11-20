@@ -5,20 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ed598eda-462a-4fa5-a345-0bb43f98042b" name="Changes" comment="Changed exception handling LoginScreen">
-      <change afterPath="$PROJECT_DIR$/core/src/main/java/com/spaceinvaders/backend/firebase/AuthenticationManager.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/core/src/main/java/com/spaceinvaders/backend/firebase/utils/HTTPCode.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../server/src/main/java/org/spaceinvaders/firebase/util/HTTPCode.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/core/src/main/java/com/spaceinvaders/backend/firebase/ClientFirebase.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/com/spaceinvaders/backend/firebase/ClientFirebase.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/main/java/com/spaceinvaders/frontend/managers/ScreenManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/com/spaceinvaders/frontend/managers/ScreenManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/main/java/com/spaceinvaders/frontend/screens/LoginScreen.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/com/spaceinvaders/frontend/screens/LoginScreen.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/main/java/com/spaceinvaders/frontend/screens/SignupScreen.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/com/spaceinvaders/frontend/screens/SignupScreen.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/main/java/com/spaceinvaders/util/AuthenticationException.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/com/spaceinvaders/backend/firebase/utils/AuthenticationException.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/main/java/com/spaceinvaders/util/HTTPRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/com/spaceinvaders/backend/firebase/HTTPRequest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/main/java/com/spaceinvaders/util/InvalidScreen.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/com/spaceinvaders/frontend/utils/InvalidScreen.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../server/logs/serverLog.log" beforeDir="false" afterPath="$PROJECT_DIR$/../server/logs/serverLog.log" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../server/src/main/java/org/spaceinvaders/firebase/Firebase.java" beforeDir="false" afterPath="$PROJECT_DIR$/../server/src/main/java/org/spaceinvaders/firebase/Firebase.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../server/src/main/java/org/spaceinvaders/firebase/Server.java" beforeDir="false" afterPath="$PROJECT_DIR$/../server/src/main/java/org/spaceinvaders/firebase/Server.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
