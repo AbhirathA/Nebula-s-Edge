@@ -27,8 +27,8 @@ public class PauseScreen implements Screen {
 
     private final StarsBackground starsBackground;
 
-
-    public PauseScreen(SpaceInvadersGame game, float WORLD_WIDTH, float WORLD_HEIGHT, float STAGE_WIDTH, float STAGE_HEIGHT, StarsBackground starsBackground) {
+    public PauseScreen(SpaceInvadersGame game, float WORLD_WIDTH, float WORLD_HEIGHT, float STAGE_WIDTH,
+            float STAGE_HEIGHT, StarsBackground starsBackground) {
         this.game = game;
 
         camera = new OrthographicCamera();
@@ -53,7 +53,7 @@ public class PauseScreen implements Screen {
 
     @Override
     public void render(float delta) {
-        ScreenUtils.clear(0, 0, 0,1);
+        ScreenUtils.clear(0, 0, 0, 1);
 
         viewport.apply();
         camera.update();
@@ -61,10 +61,10 @@ public class PauseScreen implements Screen {
         game.batch.setProjectionMatrix(camera.combined);
         game.shapeRenderer.setProjectionMatrix(camera.combined);
 
-        Gdx.gl.glEnable(GL20.GL_BLEND);  // Enable blending
+        Gdx.gl.glEnable(GL20.GL_BLEND); // Enable blending
         Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
 
-        starsBackground.render(game.shapeRenderer, delta);  // Use delta for time
+        starsBackground.render(game.shapeRenderer, delta); // Use delta for time
 
         game.batch.begin();
         game.batch.end();
@@ -100,15 +100,20 @@ public class PauseScreen implements Screen {
     }
 
     private void initializeActors() {
-        ImageButton menuButton = ButtonUtils.createImageButton(game, "textures/menu.png", "textures/menu.png", 38, 38, (STAGE_WIDTH - 38) / 2f - 58, 80);
-        ImageButton playButton = ButtonUtils.createImageButton(game, "textures/play.png", "textures/play.png", 38, 38, (STAGE_WIDTH - 38) / 2f, 80);
-        ImageButton restartButton = ButtonUtils.createImageButton(game, "textures/restart.png", "textures/restart.png", 38, 38, (STAGE_WIDTH - 38) / 2f + 58, 80);
+
+        ImageButton menuButton = ButtonUtils.createImageButton(game, "textures/menu.png", "textures/menu.png", 38, 38,
+                (STAGE_WIDTH - 38) / 2f - 58, 80);
+        ImageButton playButton = ButtonUtils.createImageButton(game, "textures/play.png", "textures/play.png", 38, 38,
+                (STAGE_WIDTH - 38) / 2f, 80);
+        ImageButton restartButton = ButtonUtils.createImageButton(game, "textures/restart.png", "textures/restart.png",
+                38, 38, (STAGE_WIDTH - 38) / 2f + 58, 80);
 
         Image musicIcon = new Image(game.assetManager.get("textures/music.png", Texture.class));
         musicIcon.setSize(20, 20);
         musicIcon.setPosition((STAGE_WIDTH - 150) / 2f - 29, 155);
         Slider musicSlider = SliderUtils.createSlider(game.assetManager, 150, 20, (STAGE_WIDTH - 150) / 2f, 155);
-        Label musicLabel = SliderUtils.getValueLabel(game.assetManager, musicSlider, 150, 20, (STAGE_WIDTH - 150) / 2f, 155);
+        Label musicLabel = SliderUtils.getValueLabel(game.assetManager, musicSlider, 150, 20, (STAGE_WIDTH - 150) / 2f,
+                155);
 
         musicSlider.setValue(game.musicManager.getVolume() * 200);
         musicSlider.addListener(event -> {
@@ -120,7 +125,8 @@ public class PauseScreen implements Screen {
         soundIcon.setSize(20, 20);
         soundIcon.setPosition((STAGE_WIDTH - 150) / 2f - 29, 130);
         Slider soundSlider = SliderUtils.createSlider(game.assetManager, 150, 20, (STAGE_WIDTH - 150) / 2f, 130);
-        Label soundLabel = SliderUtils.getValueLabel(game.assetManager, soundSlider, 150, 20, (STAGE_WIDTH - 150) / 2f, 130);
+        Label soundLabel = SliderUtils.getValueLabel(game.assetManager, soundSlider, 150, 20, (STAGE_WIDTH - 150) / 2f,
+                130);
 
         soundSlider.setValue(game.soundManager.getVolume() * 200);
         soundSlider.addListener(event -> {
@@ -128,7 +134,8 @@ public class PauseScreen implements Screen {
             return false;
         });
 
-        ImageButton backButton = ButtonUtils.createBackButton(this.game, "textures/back-button.png", "textures/back-button.png", 28, 15, 10, 245, game.screenManager.getRecentScreen());
+        ImageButton backButton = ButtonUtils.createBackButton(this.game, "textures/back-button.png",
+                "textures/back-button.png", 28, 15, 10, 245, game.screenManager.getRecentScreen());
 
         stage.addActor(menuButton);
         stage.addActor(playButton);
