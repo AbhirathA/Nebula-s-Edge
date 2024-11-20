@@ -2,7 +2,6 @@ package com.spaceinvaders.backend.firebase;
 
 import com.spaceinvaders.backend.firebase.utils.AuthenticationException;
 import com.spaceinvaders.backend.firebase.utils.HTTPCode;
-import org.checkerframework.checker.units.qual.A;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
