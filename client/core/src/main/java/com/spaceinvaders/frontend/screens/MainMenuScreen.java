@@ -74,7 +74,7 @@ public class MainMenuScreen implements Screen {
         planetsBackground.render(game.batch);
 
         game.batch.begin();
-        game.batch.draw(title, 73, 135 - 66, 93, 47);
+        game.batch.draw(title, 73, 61, 93, 47);
         game.batch.end();
 
         stage.act(delta);
@@ -107,11 +107,11 @@ public class MainMenuScreen implements Screen {
     }
 
     private void initializeActors() {
-        ImageTextButton singlePlayerButton = ButtonUtils.createScreenNavigationButton(game, "SinglePlayer", "textures/button.png", "textures/button.png", 95, 15, (STAGE_WIDTH - 95) / 2, 83, null);
-        ImageTextButton multiPlayerButton = ButtonUtils.createScreenNavigationButton(game, "MultiPlayer", "textures/button.png", "textures/button.png", 95, 15, (STAGE_WIDTH - 95) / 2, 66, ScreenState.SIGNUP);
-        ImageTextButton optionsButton = ButtonUtils.createScreenNavigationButton(game, "Options", "textures/button.png", "textures/button.png", 95, 15, (STAGE_WIDTH - 95) / 2, 49, ScreenState.LOGIN);
+        ImageTextButton singlePlayerButton = ButtonUtils.createScreenNavigationButton(game, "SinglePlayer", "textures/button.png", "textures/button.png", 95, 15, (STAGE_WIDTH - 95) / 2, 98, null);
+        ImageTextButton multiPlayerButton = ButtonUtils.createScreenNavigationButton(game, "MultiPlayer", "textures/button.png", "textures/button.png", 95, 15, (STAGE_WIDTH - 95) / 2, 81, null);
+        ImageTextButton optionsButton = ButtonUtils.createScreenNavigationButton(game, "Options", "textures/button.png", "textures/button.png", 95, 15, (STAGE_WIDTH - 95) / 2, 64, ScreenState.PAUSE);
 
-        ImageButton backButton = ButtonUtils.createBackButton(this.game, "textures/back-button.png", "textures/back-button.png", 28, 15, 10, 177, game.screenManager.getRecentScreen());
+        ImageButton backButton = ButtonUtils.createBackButton(this.game, "textures/back-button.png", "textures/back-button.png", 28, 15, 10, 245, game.screenManager.getRecentScreen());
 
         stage.addActor(singlePlayerButton);
         stage.addActor(multiPlayerButton);

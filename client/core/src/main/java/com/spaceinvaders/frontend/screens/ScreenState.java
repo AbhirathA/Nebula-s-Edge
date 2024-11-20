@@ -5,5 +5,6 @@ public enum ScreenState {
     LOGIN,
     SIGNUP,
     MAIN_MENU,
-    LOGIN_GATEWAY
+    LOGIN_GATEWAY,
+    PAUSE
 }

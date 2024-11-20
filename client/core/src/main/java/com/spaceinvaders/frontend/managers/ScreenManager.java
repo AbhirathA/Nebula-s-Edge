@@ -1,6 +1,7 @@
 package com.spaceinvaders.frontend.managers;
 
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.utils.Disposable;
 import com.spaceinvaders.frontend.SpaceInvadersGame;
 import com.spaceinvaders.frontend.background.PlanetsBackground;
 import com.spaceinvaders.frontend.background.StarsBackground;
@@ -12,7 +13,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Stack;
 
-public class ScreenManager {
+public class ScreenManager implements Disposable {
     private static ScreenManager instance = null;
     private final SpaceInvadersGame game;
     private final Map<ScreenState, Screen> screens = new HashMap<>();
@@ -25,13 +26,13 @@ public class ScreenManager {
     private final float WORLD_WIDTH = 240;
     private final float WORLD_HEIGHT = 135;
 
-    private final float STAGE_WIDTH = WORLD_WIDTH * 3/2; // 360
-    private final float STAGE_HEIGHT = WORLD_HEIGHT * 3/2; // 202.5
+    private final float STAGE_WIDTH = WORLD_WIDTH * 2; // 360
+    private final float STAGE_HEIGHT = WORLD_HEIGHT * 2; // 202.5
 
     public ScreenManager(SpaceInvadersGame game) {
         this.game = game;
         this.currentScreen = null;
-        this.starsBackground = new StarsBackground(WORLD_WIDTH, WORLD_HEIGHT, 150);
+        this.starsBackground = new StarsBackground(WORLD_WIDTH, WORLD_HEIGHT, 50);
         this.planetsBackground = new PlanetsBackground(game.assetManager);
         screenStateStack = new Stack<>();
     }
@@ -110,6 +111,8 @@ public class ScreenManager {
                 return new MainMenuScreen(this.game, WORLD_WIDTH, WORLD_HEIGHT, STAGE_WIDTH, STAGE_HEIGHT, starsBackground, planetsBackground);
             case LOGIN_GATEWAY:
                 return new LoginGatewayScreen(this.game, WORLD_WIDTH, WORLD_HEIGHT, STAGE_WIDTH, STAGE_HEIGHT, starsBackground, planetsBackground);
+            case PAUSE:
+                return new PauseScreen(this.game, WORLD_WIDTH, WORLD_HEIGHT, STAGE_WIDTH, STAGE_HEIGHT, starsBackground);
             default:
                 throw new IllegalArgumentException("Unknown screen state: " + screenState);
         }
@@ -119,6 +122,7 @@ public class ScreenManager {
         return this.currentScreen;
     }
 
+    @Override
     public void dispose() {
         for (Screen screen : this.screens.values()) {
             screen.dispose();

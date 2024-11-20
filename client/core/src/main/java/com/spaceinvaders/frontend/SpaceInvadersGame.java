@@ -4,6 +4,7 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.spaceinvaders.frontend.managers.MusicManager;
 import com.spaceinvaders.frontend.managers.ScreenManager;
 import com.spaceinvaders.frontend.managers.MyAssetManager;
 import com.spaceinvaders.frontend.screens.LoadingScreen;
@@ -17,11 +18,13 @@ public class SpaceInvadersGame extends Game {
 
     public MyAssetManager assetManager;
     public ScreenManager screenManager;
+    public MusicManager musicManager;
 
     private class CommandClass implements Command {
 
         @Override
         public void execute() {
+            SpaceInvadersGame.this.musicManager.loadMusic("introMusic", "music/10 - Continue.mp3");
             SpaceInvadersGame.this.assetManager.loadAssets();
         }
 
@@ -29,6 +32,7 @@ public class SpaceInvadersGame extends Game {
         public void onUpdate() {
             SpaceInvadersGame.this.screenManager = new ScreenManager(SpaceInvadersGame.this);
             SpaceInvadersGame.this.screenManager.setScreen(ScreenState.LOGIN_GATEWAY);
+            SpaceInvadersGame.this.musicManager.play("introMusic");
         }
 
         @Override
@@ -43,6 +47,7 @@ public class SpaceInvadersGame extends Game {
         shapeRenderer = new ShapeRenderer();
         font = new BitmapFont();
         assetManager = new MyAssetManager();
+        musicManager = new MusicManager();
 
         setScreen(new LoadingScreen(this, new CommandClass()));
     }

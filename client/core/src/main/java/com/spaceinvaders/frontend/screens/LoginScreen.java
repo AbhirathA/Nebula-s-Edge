@@ -83,7 +83,7 @@ public class LoginScreen implements Screen {
         this.planetsBackground.render(this.game.batch);
 
         this.game.batch.begin();
-        this.game.batch.draw(title, 73, 135 - 66, 93, 47);
+        this.game.batch.draw(title, 73, 61, 93, 47);
         this.game.batch.end();
 
         this.stageViewport.apply();
@@ -128,35 +128,35 @@ public class LoginScreen implements Screen {
         this.errorMessage = LabelUtils.createLabel("Incorrect username or password", minecraftFont, 0, 0);
         this.successMessage = LabelUtils.createLabel("Login successful", minecraftFont, 0, 0);
 
-        Label enterId = LabelUtils.createLabel("Id:", minecraftFont, (STAGE_WIDTH - 143) / 2f, 86);
+        Label enterId = LabelUtils.createLabel("Id:", minecraftFont, (STAGE_WIDTH - 143) / 2f, 101);
 
-        Label enterPassword = LabelUtils.createLabel("Password:", minecraftFont, (STAGE_WIDTH - 143) / 2f, 70);
+        Label enterPassword = LabelUtils.createLabel("Password:", minecraftFont, (STAGE_WIDTH - 143) / 2f, 85);
 
         TextField idField = TextFieldUtils.createTextField("", this.game.assetManager, 95, 15,
-                (STAGE_WIDTH - 95) / 2f + 22, 84);
+                (STAGE_WIDTH - 95) / 2f + 22, 99);
         idField.setMessageText("Enter id");
         // Placeholder text will look gray without the following line
         idField.getStyle().messageFontColor = idField.getStyle().fontColor;
 
         TextField passwordField = TextFieldUtils.createPasswordField(this.game.assetManager, 95, 15,
-                (STAGE_WIDTH - 95) / 2f + 22, 68);
+                (STAGE_WIDTH - 95) / 2f + 22, 83);
         passwordField.setMessageText("Enter password");
         passwordField.getStyle().messageFontColor = passwordField.getStyle().fontColor;
 
         ImageTextButton submitButton = ButtonUtils.createButton(this.game, "Submit", "textures/button.png",
-                "textures/button.png", 95, 15, (STAGE_WIDTH - 95) / 2f, 50);
-        ImageTextButton signUpButton = ButtonUtils.createScreenNavigationButton(this.game, "SignUp",
-                "textures/button.png", "textures/button.png", 95, 15, (STAGE_WIDTH - 95) / 2f, 34, ScreenState.SIGNUP);
+                "textures/button.png", 95, 15, (STAGE_WIDTH - 95) / 2f, 65);
+        ImageTextButton homeButton = ButtonUtils.createScreenNavigationButton(this.game, "Home",
+                "textures/button.png", "textures/button.png", 95, 15, (STAGE_WIDTH - 95) / 2f, 49, ScreenState.MAIN_MENU);
 
         ImageButton backButton = ButtonUtils.createBackButton(this.game, "textures/back-button.png",
-                "textures/back-button.png", 28, 15, 10, 177, game.screenManager.getRecentScreen());
+                "textures/back-button.png", 28, 15, 10, 245, game.screenManager.getRecentScreen());
 
         this.stage.addActor(enterId);
         this.stage.addActor(enterPassword);
         this.stage.addActor(idField);
         this.stage.addActor(passwordField);
         this.stage.addActor(submitButton);
-        this.stage.addActor(signUpButton);
+        this.stage.addActor(homeButton);
         this.stage.addActor(backButton);
 
         submitButton.addListener(new InputListener() {
