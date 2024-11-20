@@ -26,7 +26,7 @@ public class AuthenticationManager
      */
     public static String signIn(String email, String password) throws AuthenticationException, IllegalStateException
     {
-        String url = SERVER_URL + "signin";
+        String url = SERVER_URL + "signIn";
 
         String payload = String.format("{\"email\":\"%s\",\"password\":\"%s\",\"returnSecureToken\":true}", email, password);
 

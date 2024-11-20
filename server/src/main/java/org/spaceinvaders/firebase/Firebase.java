@@ -26,6 +26,7 @@ import com.google.firebase.auth.FirebaseAuthException;
 import com.google.firebase.auth.UserRecord;
 import com.google.firebase.cloud.FirestoreClient;
 import org.spaceinvaders.firebase.util.DatabaseAccessException;
+import org.spaceinvaders.firebase.util.NetworkNotFoundException;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -38,9 +39,9 @@ public final class Firebase
 
     /**
      * @throws IOException                  If the firebase could not be initialized
-     * @throws org.spaceinvaders.firebase.util.NetworkNotFoundException     If there is no network connection
+     * @throws NetworkNotFoundException     If there is no network connection
      */
-    private Firebase() throws IOException, org.spaceinvaders.firebase.util.NetworkNotFoundException
+    private Firebase() throws IOException, NetworkNotFoundException
     {
         initializeFirebase();
     }
@@ -66,8 +67,8 @@ public final class Firebase
 
     /**
      * Initializes the firebase database from the service account key provided in the "resources" folder.
-     * @throws IOException if the service account key is missing
-     * @throws org.spaceinvaders.firebase.util.NetworkNotFoundException if the program cannot connect to the network
+     * @throws IOException              if the service account key is missing
+     * @throws NetworkNotFoundException if the program cannot connect to the network
      */
     private void initializeFirebase() throws IOException, org.spaceinvaders.firebase.util.NetworkNotFoundException
     {
