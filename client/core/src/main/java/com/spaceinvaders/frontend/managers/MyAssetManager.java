@@ -6,12 +6,15 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 
 public class MyAssetManager {
+    // The AssetManager handles all asset loading and management
     private final AssetManager assetManager;
 
+    // Constructor initializes the AssetManager instance
     public MyAssetManager() {
         this.assetManager = new AssetManager();
     }
 
+    // Loads all game assets (textures, sounds, fonts) into the AssetManager
     public void loadAssets() {
         assetManager.load("textures/title.png", Texture.class);
         assetManager.load("textures/Planet1.png", Texture.class);
@@ -49,22 +52,27 @@ public class MyAssetManager {
         assetManager.load("textures/emptyHeart.png", Texture.class);
     }
 
+    // Retrieves an asset from the AssetManager based on its file path and type
     public <T> T get(String filePath, Class<T> type) {
         return assetManager.get(filePath, type);
     }
 
+    // Disposes of all assets in the AssetManager to free resources
     public void dispose() {
         assetManager.dispose();
     }
 
+    // Updates the AssetManager, returns true when all assets are loaded
     public boolean update() {
         return assetManager.update();
     }
 
+    // Returns the progress of asset loading (from 0.0f to 1.0f)
     public float getProgress() {
         return assetManager.getProgress();
     }
 
+    // Checks if a specific asset has been loaded
     public boolean isAssetLoaded(String path) {
         return assetManager.isLoaded(path);
     }
