@@ -16,6 +16,9 @@ package org.spaceinvaders.firebase.util;
 
 public class DatabaseAccessException extends Exception
 {
+    /**
+     * @param message   the message to display when this exception is thrown
+     */
     public DatabaseAccessException(String message)
     {
         super(message);

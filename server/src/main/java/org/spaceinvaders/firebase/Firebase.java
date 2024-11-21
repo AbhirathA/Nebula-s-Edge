@@ -25,8 +25,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthException;
 import com.google.firebase.auth.UserRecord;
 import com.google.firebase.cloud.FirestoreClient;
-import org.spaceinvaders.firebase.util.DatabaseAccessException;
-import org.spaceinvaders.firebase.util.NetworkNotFoundException;
+import org.spaceinvaders.firebase.util.*;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -57,10 +56,10 @@ public final class Firebase
             {
                 INSTANCE = new Firebase();
             }
-            catch(IOException | org.spaceinvaders.firebase.util.NetworkNotFoundException e)
+            catch(IOException | NetworkNotFoundException e)
             {
-                org.spaceinvaders.firebase.util.LoggerUtil.logError(e.getMessage());
-                throw new org.spaceinvaders.firebase.util.NetworkNotFoundException("Cannot connect to the network.");
+                LoggerUtil.logError(e.getMessage());
+                throw new NetworkNotFoundException("Cannot connect to the network.");
             }
         }
     }
@@ -70,7 +69,7 @@ public final class Firebase
      * @throws IOException              if the service account key is missing
      * @throws NetworkNotFoundException if the program cannot connect to the network
      */
-    private void initializeFirebase() throws IOException, org.spaceinvaders.firebase.util.NetworkNotFoundException
+    private void initializeFirebase() throws IOException, NetworkNotFoundException
     {
         try (InputStream serviceAccount = getClass().getClassLoader().getResourceAsStream(SERVICE_ACCOUNT_KEY))
         {
@@ -87,7 +86,7 @@ public final class Firebase
             }
             catch(IOException e)
             {
-                throw new org.spaceinvaders.firebase.util.NetworkNotFoundException("Cannot connect to the network.");
+                throw new NetworkNotFoundException("Cannot connect to the network.");
             }
         }
     }
@@ -141,22 +140,11 @@ public final class Firebase
         {
             // Blocks until the write operation is done
             docRef.set(userData).get();
-            org.spaceinvaders.firebase.util.LoggerUtil.logInfo("Created user: " + userId);
-        }
-        catch (Exception e)
+            LoggerUtil.logInfo("Created user: " + userId);
+        } catch (Exception e)
         {
-            org.spaceinvaders.firebase.util.LoggerUtil.logException("Error creating user: " + userId, e);
+            LoggerUtil.logException("Error creating user: " + userId, e);
             throw new DatabaseAccessException("Error creating database for user: " + userId);
         }
-    }
-    /**
-     * Method for checking if the email and password is correct
-     * @param email                        the email id of the user
-     * @param password                     the password of the user
-     * @throws DatabaseAccessException     if any errors occurred in accessing the database
-     */
-    public String signinUser(String email, String password) throws DatabaseAccessException
-    {
-        return "";
     }
 }

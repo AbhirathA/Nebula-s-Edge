@@ -16,6 +16,9 @@ package org.spaceinvaders.firebase.util;
 
 public class NetworkNotFoundException extends RuntimeException
 {
+    /**
+     * @param message       the message to display
+     */
     public NetworkNotFoundException(String message)
     {
         super(message);

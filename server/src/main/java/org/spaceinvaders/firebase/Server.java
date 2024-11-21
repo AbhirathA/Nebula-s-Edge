@@ -47,7 +47,6 @@ public class Server
         {
             HttpServer server = HttpServer.create(new InetSocketAddress(PORT), BACKLOG_LIMIT);
             server.createContext("/signup", new SignUpHandler());
-            server.createContext("/signin", new SignInHandler());
             server.setExecutor(null);
             server.start();
             LoggerUtil.logInfo("Server started at http://localhost:" + PORT);
@@ -58,74 +57,14 @@ public class Server
         }
     }
 
-    //handler class for sign in
-    private static class SignInHandler implements HttpHandler
-    {
-        /**
-         * Handles a user request to sign in
-         *
-         * @param exchange the exchange containing the request from the
-         *                 client and used to send the response
-         * @throws IOException  if any error occurs in communication with firebase
-         */
-        @Override
-        public void handle(HttpExchange exchange) throws IOException
-        {
-            if ("POST".equals(exchange.getRequestMethod()))
-            {
-                try
-                {
-                    // Parse request body
-                    String requestBody = new String(exchange.getRequestBody().readAllBytes(), StandardCharsets.UTF_8);
-                    JsonObject json = JsonParser.parseString(requestBody).getAsJsonObject();
-
-                    //get the payload from the request
-                    String email = json.get("email").getAsString();
-                    String password = json.get("password").getAsString();
-
-                    //create the user and send code 200
-                    String token = Firebase.getInstance().signinUser(email, password);
-                    sendHTTPResponse(exchange, HTTPCode.SUCCESS.getCode(), token);
-                }
-                catch(JsonSyntaxException e)
-                {
-                    //JSON Format is invalid
-                    sendHTTPResponse(exchange, HTTPCode.INVALID_JSON.getCode(), "Invalid JSON Format");
-                }
-                catch(NullPointerException e)
-                {
-                    //User did not send email or password
-                    sendHTTPResponse(exchange, HTTPCode.INVALID_ID_PASS.getCode(), "Invalid email or password");
-                }
-                catch(NetworkNotFoundException e)
-                {
-                    //The server is not connected to the internet
-                    sendHTTPResponse(exchange, HTTPCode.CANNOT_CONNECT.getCode(), "Cannot connect to the network");
-                }
-                catch(DatabaseAccessException e)
-                {
-                    sendHTTPResponse(exchange, HTTPCode.DATABASE_ERROR.getCode(), "Could not sign in user data");
-                }
-                catch (Exception e)
-                {
-                    sendHTTPResponse(exchange, HTTPCode.SERVER_ERROR.getCode(), "Failed to sign in user");
-                }
-            }
-            else
-            {
-                sendHTTPResponse(exchange, HTTPCode.SERVER_ERROR.getCode(), "Failed to sign in user");
-            }
-        }
-    }
-
     //handler class for sign up
     private static class SignUpHandler implements HttpHandler
     {
         /**
          * Handles a user request to sign up
          *
-         * @param exchange the exchange containing the request from the
-         *                 client and used to send the response
+         * @param exchange      the exchange containing the request from the
+         *                      client and used to send the response
          * @throws IOException  if any error occurs in communication with firebase
          */
         @Override
@@ -169,14 +108,17 @@ public class Server
                 }
                 catch(IllegalArgumentException e)
                 {
+                    //The password is too weak
                     sendHTTPResponse(exchange, HTTPCode.WEAK_PASSWORD.getCode(), "Password is too weak");
                 }
                 catch(DatabaseAccessException e)
                 {
+                    //User data could not be created
                     sendHTTPResponse(exchange, HTTPCode.DATABASE_ERROR.getCode(), "Could not create user data");
                 }
                 catch (Exception e)
                 {
+                    //any other exception which may have occurred
                     sendHTTPResponse(exchange, HTTPCode.SERVER_ERROR.getCode(), "Failed to sign up user");
                 }
             }
@@ -191,7 +133,7 @@ public class Server
      * Sends an error response to the client
      * @param exchange          the HTTPExchange between the server and the client
      * @param statusCode        the status code for the message (ex. 200)
-     * @param message      the error message to send
+     * @param message           the error message to send
      * @throws IOException      if any error occurs in sending the message
      */
     private static void sendHTTPResponse(HttpExchange exchange, int statusCode, String message) throws IOException

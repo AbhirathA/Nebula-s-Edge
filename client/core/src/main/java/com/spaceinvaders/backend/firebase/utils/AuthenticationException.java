@@ -1,12 +1,22 @@
-package com.spaceinvaders.backend.firebase.utils;
-
 /**
+ * AuthenticationException.java
  * Exception thrown to indicate an authentication error occurred during the sign-in process.
  * This exception extends {@link Exception}, making it a checked exception that must be
  * either caught or declared in the method signature.
  * It is typically used to signal that user authentication failed due to invalid credentials
  * or other issues encountered with the authentication process.
+ * @author Gathik
+ * @author Aryan
+ * @author Abhirath
+ * @author Ibrahim
+ * @author Jayant
+ * @author Dedeepya
+ * @version 1.0
+ * @since 11/21/2024
  */
+
+package com.spaceinvaders.backend.firebase.utils;
+
 public class AuthenticationException extends Exception
 {
     /**

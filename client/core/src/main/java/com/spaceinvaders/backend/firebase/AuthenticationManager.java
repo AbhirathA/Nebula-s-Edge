@@ -1,7 +1,45 @@
+/**
+ * AuthenticationManager.java
+ * This class handles user authentication and session management.
+ * It provides methods for validating credentials, generating authentication tokens,
+ * and managing user sessions. This can be integrated with services like Firebase, JWT, or a database.
+ * Key Features:
+ * - Validates user credentials against a data source (e.g., database or external API).
+ * - Generates and validates authentication tokens.
+ * - Provides support for session management (e.g., login, logout).
+ * Dependencies:
+ * - Java SE 8 or higher
+ * - External library (optional): JWT for token generation and validation
+ * Usage example:
+ * ```
+ * AuthenticationManager authManager = new AuthenticationManager();
+ * boolean isAuthenticated = authManager.authenticate("user@example.com", "password123");
+ * if (isAuthenticated)
+ * {
+ *     String token = authManager.generateToken("user@example.com");
+ *     System.out.println("Authentication successful. Token: " + token);
+ * }
+ * else
+ * {
+ *     System.out.println("Authentication failed.");
+ * }
+ * ```
+ * @author Aryan
+ * @author Gathik
+ * @author Abhirath
+ * @author Ibrahim
+ * @author Jayant
+ * @author Dedeepya
+ * @version 1.0
+ * @since 11/21/2024
+ */
+
 package com.spaceinvaders.backend.firebase;
 
 import com.spaceinvaders.backend.firebase.utils.AuthenticationException;
 import com.spaceinvaders.backend.firebase.utils.HTTPCode;
+import com.spaceinvaders.backend.firebase.utils.HTTPRequest;
+import com.spaceinvaders.backend.firebase.utils.HttpResponse;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -17,32 +55,26 @@ public class AuthenticationManager
      * Sends a POST request to Firebase's Authentication REST API and retrieves
      * an ID token if the credentials are valid.
      *
-     * @param email    The email address of the user attempting to sign in.
-     * @param password The password associated with the user's email.
-     * @return A String representing the ID token returned by Firebase upon
-     *         successful authentication. This token can be used to securely
-     *         access Firebase services.
-     * @throws AuthenticationException If the response indicates authentication failure.
+     * @param email                     The email address of the user attempting to sign in.
+     * @param password                  The password associated with the user's email.
+     * @return                          A String representing the ID token returned by Firebase upon
+     *                                  successful authentication. This token can be used to securely
+     *                                  access Firebase services.
+     * @throws AuthenticationException  If the response indicates authentication failure.
+     * @throws IllegalStateException    If an error occurs while parsing the JSON file
      */
     public static String signIn(String email, String password) throws AuthenticationException, IllegalStateException
     {
-        String url = SERVER_URL + "signIn";
-
-        String payload = String.format("{\"email\":\"%s\",\"password\":\"%s\",\"returnSecureToken\":true}", email, password);
-
-        Map<String, String> headers = new HashMap<>();
-        headers.put("Content-Type", "application/json");
         int returnCode;
         String returnString;
         try
         {
-            HashMap<Integer, String> returnValue = HTTPRequest.sendRequest(url, payload, "POST", headers);
+            HttpResponse response = ClientFirebase.signIn(email, password);
+            returnCode = response.getCode();
+            returnString = response.getMessage();
 
-            Map.Entry<Integer, String> entry = returnValue.entrySet().iterator().next();
-            returnCode = entry.getKey();
-            returnString = entry.getValue();
-
-            switch (HTTPCode.fromCode(returnCode)) {
+            switch (HTTPCode.fromCode(returnCode))
+            {
                 case SUCCESS:
                     return returnString;
 
@@ -72,6 +104,17 @@ public class AuthenticationManager
         }
     }
 
+    /**
+     * Registers a new user with the provided email and password.
+     * This method validates the input fields, ensures the password and confirm password match,
+     * and then performs the signup logic (i.e. storing in Firebase).
+     *
+     * @param email                     The email address of the user to be registered.
+     * @param password                  The password chosen by the user.
+     * @param confirmPassword           Confirmation of the password to ensure accuracy.
+     * @return                          A success message or token (e.g., "Signup successful" or a generated token) as a String.
+     * @throws AuthenticationException  If the input validation fails (e.g., invalid email, mismatched passwords).
+     */
     public static String signUp(String email, String password, String confirmPassword) throws AuthenticationException
     {
         if(!password.equals(confirmPassword))
@@ -90,13 +133,12 @@ public class AuthenticationManager
 
         try
         {
-            HashMap<Integer, String> returnValue = HTTPRequest.sendRequest(url, payload, "POST", headers);
+            HttpResponse response = HTTPRequest.sendRequest(url, payload, "POST", headers);
+            returnCode = response.getCode();
+            returnString = response.getMessage();
 
-            Map.Entry<Integer, String> entry = returnValue.entrySet().iterator().next();
-            returnCode = entry.getKey();
-            returnString = entry.getValue();
-
-            switch (HTTPCode.fromCode(returnCode)) {
+            switch (HTTPCode.fromCode(returnCode))
+            {
                 case SUCCESS:
                     return returnString;
 
