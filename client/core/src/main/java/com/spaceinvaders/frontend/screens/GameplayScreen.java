@@ -8,13 +8,12 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.MathUtils;
-import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.spaceinvaders.frontend.SpaceInvadersGame;
 import com.spaceinvaders.frontend.background.StarsBackground;
-import com.spaceinvaders.frontend.ui.HealthBar;
+import com.spaceinvaders.frontend.ui.UIStage;
 
 public class GameplayScreen implements Screen {
     private final SpaceInvadersGame game;
@@ -31,8 +30,7 @@ public class GameplayScreen implements Screen {
     private final StarsBackground starsBackground;
     private final Sprite rocketSprite;
 
-    private HealthBar healthBar;
-    int health = 0;
+    private UIStage uiStage;
 
     public GameplayScreen(SpaceInvadersGame game, float CAMERA_WIDTH, float CAMERA_HEIGHT, float WORLD_WIDTH, float WORLD_HEIGHT) {
         this.game = game;
@@ -56,7 +54,7 @@ public class GameplayScreen implements Screen {
         rocketSprite.setSize(21, 21);
         rocketSprite.setOrigin(rocketSprite.getWidth() / 2, rocketSprite.getHeight() / 2);
 
-        healthBar = new HealthBar(game.assetManager);
+        uiStage = new UIStage(game, new FitViewport(CAMERA_WIDTH, CAMERA_HEIGHT));
     }
     @Override
     public void show() {
@@ -95,17 +93,14 @@ public class GameplayScreen implements Screen {
         this.starsBackground.render(this.game.shapeRenderer, delta);
 
         game.batch.begin();
-
-        // Update health bar position relative to the camera
-        float healthBarX = camera.position.x - CAMERA_WIDTH / 2 + 1;
-        float healthBarY = camera.position.y + CAMERA_HEIGHT / 2 - 10;
-        healthBar.render(game.batch, health, 20, healthBarX, healthBarY);
-
         rocketSprite.draw(game.batch);
         game.batch.end();
 
+        uiStage.act(delta);
+        uiStage.draw();
+
         if(Gdx.input.justTouched()) {
-            if(health<20) health++;
+            uiStage.getHealthBar().changeHealth(-1);
             game.soundManager.play("shoot");
         }
     }
