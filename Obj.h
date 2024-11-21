@@ -1,5 +1,6 @@
 #pragma once
 #include <cmath>
+#include "AABB/AABBtree.h"
 
 // Different the type of physics to be used for the simulation
 enum class TypeOfPhy{
@@ -36,6 +37,9 @@ class Obj
 		double innerRad = 0;
 		double outerRad = 0;
 
+		//The bounding box of the object
+		AABB* objBox = nullptr;
+
 	public:
 		Obj(int id, double x, double y, double innerRad, double outerRad, double mass) {
 			this->id = id;
@@ -44,6 +48,7 @@ class Obj
 			this->innerRad = innerRad;
 			this->outerRad = outerRad;
 			this->mass = mass;
+			this->objBox = new AABB({x-outerRad, y-outerRad}, {x+outerRad, y+outerRad});
 		}
 
 		double getX() {
@@ -76,6 +81,10 @@ class Obj
 
 		double getMass() {
 			return mass;
+		}
+
+		AABB* getObjBox() {
+			return objBox;
 		}
 
 		void changeState() {

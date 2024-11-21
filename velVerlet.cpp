@@ -1,6 +1,8 @@
 #include "velVerlet.h"
 #include <math.h>
 
+//Wherever the position is being changed, objBox needs to be changed as wellf
+
 // Returns the next position if we update right now.
 double velVerlet::getNextX(double t){
     return this->posX + this->vX * t + 0.5 * this->accX * t * t;
@@ -16,9 +18,14 @@ void velVerlet::updatePos(double t){
     this->posX = this->getNextX(t);
     this->posY = this->getNextY(t);
 
+    // AABB is updated
+    this->objBox->advance({this->vX * t + 0.5 * this->accX * t * t, this->vY * t + 0.5 * this->accY * t * t});
+
     // Velocity is updated
     this->vX = this->vX + this->accX * t;
     this->vY = this->vY + this->accY * t;
+
+
 }
 
 // Check if collision has occured
