@@ -67,7 +67,7 @@ AABBnode* AABBtree::BestSibling(AABBnode* leaf) {
 int AABBtree::insert(AABB* objBox, int id) {
     auto leaf = new AABBnode();
     leaf->objBox = objBox;
-    leaf->bound = 1.0f;
+    leaf->bound = 50.0f;
     leaf->isLeaf = true;
     leaf->id = id;
     leaf->updateAABB();
@@ -300,6 +300,27 @@ void AABBtree::countLeaves(int &c) {
         if(p->child2 != nullptr) Q.push(p->child2);
         if(p->isLeaf) c++;
     }
+}
+
+void AABBtree::boxCollidersHelper(AABB *Box, AABBnode* st2, std::vector<int> &v) {
+        if(st2==nullptr) return;
+        if(st2->isLeaf) {
+            if(Box->collides(*(st2->objBox))) {
+                v.emplace_back(st2->id);
+                return;
+            }
+        }
+        else {
+            if(st2->child1->box.collides(*Box)) boxCollidersHelper(Box, st2->child1, v);
+            if(st2->child2->box.collides(*Box)) boxCollidersHelper(Box, st2->child2, v);
+        }
+}
+
+
+std::vector<int> &AABBtree::boxColliders(AABB *Box) {
+    std::vector<int> vp(0);
+    boxCollidersHelper(Box, root, vp);
+    return vp;
 }
 
 

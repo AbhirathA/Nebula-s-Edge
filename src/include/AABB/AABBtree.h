@@ -53,6 +53,7 @@ private:
     void collisionCheck(AABBnode* st1, AABBnode* st2, std::vector<std::pair<int, int>>&);
     void collisionCheck(AABBnode* st, std::vector<std::pair<int,int>>&);
     void  clearCollisionChecks();
+    void boxCollidersHelper(AABB *Box, AABBnode* st, std::vector<int> &v);
 
 public:
     AABBtree();
@@ -63,6 +64,7 @@ public:
     void Update();
     AABBnode* find(AABB* objBox, int id);
     std::vector<std::pair<int,int>> colliderPairs();
+    std::vector<int>& boxColliders(AABB &Box);
 };
 
 

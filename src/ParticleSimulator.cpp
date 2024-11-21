@@ -91,7 +91,7 @@ void ParticleSimulator::run() {
         if(!isPaused)
         {
             count++;
-            if(count<5000 && count%2==0) addParticle(1000, 1000, 0, 5, 100, 0, 0, 20);
+            if(count<2000) addParticle(1000, 1000, 0, 5, 1000, 0, 0, 20);
             double dt = 0.02f; // Adjust the time step as per your requirement
             update(dt);
             checkBoundaries();
