@@ -20,7 +20,6 @@ public class LoginGatewayScreen implements Screen {
 
     private final OrthographicCamera camera;
     private final Viewport viewport;
-    private final Viewport stageViewport;
 
     private final float STAGE_WIDTH;
 
@@ -36,7 +35,7 @@ public class LoginGatewayScreen implements Screen {
 
         camera = new OrthographicCamera();
         viewport = new FitViewport(WORLD_WIDTH, WORLD_HEIGHT, camera);
-        stageViewport = new FitViewport(STAGE_WIDTH, STAGE_HEIGHT);
+        Viewport stageViewport = new FitViewport(STAGE_WIDTH, STAGE_HEIGHT);
 
         this.STAGE_WIDTH = STAGE_WIDTH;
 
@@ -99,7 +98,7 @@ public class LoginGatewayScreen implements Screen {
 
     @Override
     public void hide() {
-
+        Gdx.input.setInputProcessor(null);
     }
 
     @Override

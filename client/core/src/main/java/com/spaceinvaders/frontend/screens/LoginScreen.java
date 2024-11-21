@@ -25,7 +25,6 @@ public class LoginScreen implements Screen {
 
     private final OrthographicCamera camera;
     private final Viewport viewport;
-    private final Viewport stageViewport;
 
     private final Stage stage;
     private final float STAGE_WIDTH;
@@ -44,12 +43,12 @@ public class LoginScreen implements Screen {
 
         this.camera = new OrthographicCamera();
         this.viewport = new FitViewport(WORLD_WIDTH, WORLD_HEIGHT, this.camera);
-        this.stageViewport = new FitViewport(STAGE_WIDTH, STAGE_HEIGHT);
+        Viewport stageViewport = new FitViewport(STAGE_WIDTH, STAGE_HEIGHT);
 
         this.camera.position.set(WORLD_WIDTH / 2, WORLD_HEIGHT / 2, 0);
         this.camera.update();
 
-        this.stage = new Stage(this.stageViewport);
+        this.stage = new Stage(stageViewport);
         this.STAGE_WIDTH = STAGE_WIDTH;
 
         this.initialiseActors();
@@ -86,7 +85,6 @@ public class LoginScreen implements Screen {
         this.game.batch.draw(title, 73, 61, 93, 47);
         this.game.batch.end();
 
-        this.stageViewport.apply();
         this.stage.act(delta);
         this.stage.draw();
     }
@@ -94,7 +92,7 @@ public class LoginScreen implements Screen {
     @Override
     public void resize(int i, int i1) {
         this.viewport.update(i, i1);
-        this.stageViewport.update(i, i1);
+        stage.getViewport().update(i, i1, true);
     }
 
     @Override
@@ -109,7 +107,7 @@ public class LoginScreen implements Screen {
 
     @Override
     public void hide() {
-
+        Gdx.input.setInputProcessor(null);
     }
 
     @Override

@@ -10,6 +10,7 @@ public class SoundManager {
 
     public void loadSounds (MyAssetManager assetManager) {
         sounds.put("buttonClick", assetManager.get("sounds/mixkit-winning-a-coin-video-game-2069.wav", Sound.class));
+        sounds.put("shoot", assetManager.get("sounds/mixkit-short-laser-gun-shot-1670.wav", Sound.class));
     }
 
     public void play (String key) {

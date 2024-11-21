@@ -42,6 +42,11 @@ public class MyAssetManager {
         assetManager.load("textures/sliderBackground.png", Texture.class);
         assetManager.load("textures/sliderKnob.png", Texture.class);
         assetManager.load("sounds/mixkit-winning-a-coin-video-game-2069.wav", Sound.class);
+        assetManager.load("sounds/mixkit-short-laser-gun-shot-1670.wav", Sound.class);
+        assetManager.load("textures/Rocket3.png", Texture.class);
+        assetManager.load("textures/heart.png", Texture.class);
+        assetManager.load("textures/halfHeart.png", Texture.class);
+        assetManager.load("textures/emptyHeart.png", Texture.class);
     }
 
     public <T> T get(String filePath, Class<T> type) {

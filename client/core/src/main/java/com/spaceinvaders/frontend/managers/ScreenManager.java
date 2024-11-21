@@ -113,6 +113,8 @@ public class ScreenManager implements Disposable {
                 return new LoginGatewayScreen(this.game, WORLD_WIDTH, WORLD_HEIGHT, STAGE_WIDTH, STAGE_HEIGHT, starsBackground, planetsBackground);
             case PAUSE:
                 return new PauseScreen(this.game, WORLD_WIDTH, WORLD_HEIGHT, STAGE_WIDTH, STAGE_HEIGHT, starsBackground);
+            case GAMEPLAY:
+                return new GameplayScreen(this.game, WORLD_WIDTH, WORLD_HEIGHT, 720, 405);
             default:
                 throw new IllegalArgumentException("Unknown screen state: " + screenState);
         }

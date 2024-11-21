@@ -34,7 +34,7 @@ public class SliderUtils {
         SpriteDrawable sliderKnobAfter = new SpriteDrawable(new Sprite(sliderBackgroundTexture));
 
         sliderKnobBefore.getSprite().setColor(new Color(1.2f, 1.2f, 1.2f, 1f)); // Lighter
-        sliderKnobAfter.getSprite().setColor(new Color(0.8f, 0.8f, 0.8f, 1f)); // Darker
+        sliderKnobAfter.getSprite().setColor(new Color(1f, 0.65f, 0.2f, 1f)); // Darker
 
         Slider.SliderStyle style = new Slider.SliderStyle();
         style.background = sliderBackground;

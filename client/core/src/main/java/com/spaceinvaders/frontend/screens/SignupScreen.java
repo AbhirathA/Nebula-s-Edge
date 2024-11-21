@@ -27,7 +27,6 @@ public class SignupScreen implements Screen {
 
     private final OrthographicCamera camera;
     private final Viewport viewport;
-    private final Viewport stageViewport;
 
     private final Stage stage;
 
@@ -45,7 +44,7 @@ public class SignupScreen implements Screen {
 
         camera = new OrthographicCamera();
         viewport = new FitViewport(WORLD_WIDTH, WORLD_HEIGHT, camera);
-        stageViewport = new FitViewport(STAGE_WIDTH, STAGE_HEIGHT);
+        Viewport stageViewport = new FitViewport(STAGE_WIDTH, STAGE_HEIGHT);
 
         camera.position.set(WORLD_WIDTH / 2, WORLD_HEIGHT / 2, 0);
         camera.update();
@@ -86,7 +85,6 @@ public class SignupScreen implements Screen {
         game.batch.draw(title, 73, 61, 93, 47);
         game.batch.end();
 
-        stageViewport.apply();
         stage.act(delta);
         stage.draw();
     }
@@ -94,7 +92,7 @@ public class SignupScreen implements Screen {
     @Override
     public void resize(int i, int i1) {
         viewport.update(i, i1);
-        stageViewport.update(i, i1);
+        stage.getViewport().update(i, i1, true);
     }
 
     @Override
@@ -109,7 +107,7 @@ public class SignupScreen implements Screen {
 
     @Override
     public void hide() {
-
+        Gdx.input.setInputProcessor(null);
     }
 
     @Override

@@ -50,6 +50,8 @@ public class MainMenuScreen implements Screen {
         this.planetsBackground = planetsBackground;
 
         title = game.assetManager.get("textures/title.png", Texture.class);
+
+        game.musicManager.loadMusic("gameplay", "music/08 Easy Funkship 106.mp3");
     }
 
     @Override
@@ -99,7 +101,7 @@ public class MainMenuScreen implements Screen {
 
     @Override
     public void hide() {
-
+        Gdx.input.setInputProcessor(null);
     }
 
     @Override
@@ -107,7 +109,7 @@ public class MainMenuScreen implements Screen {
     }
 
     private void initializeActors() {
-        ImageTextButton singlePlayerButton = ButtonUtils.createScreenNavigationButton(game, "SinglePlayer", "textures/button.png", "textures/button.png", 95, 15, (STAGE_WIDTH - 95) / 2, 98, null);
+        ImageTextButton singlePlayerButton = ButtonUtils.createScreenNavigationButton(game, "SinglePlayer", "textures/button.png", "textures/button.png", 95, 15, (STAGE_WIDTH - 95) / 2, 98, ScreenState.GAMEPLAY);
         ImageTextButton multiPlayerButton = ButtonUtils.createScreenNavigationButton(game, "MultiPlayer", "textures/button.png", "textures/button.png", 95, 15, (STAGE_WIDTH - 95) / 2, 81, null);
         ImageTextButton optionsButton = ButtonUtils.createScreenNavigationButton(game, "Options", "textures/button.png", "textures/button.png", 95, 15, (STAGE_WIDTH - 95) / 2, 64, ScreenState.PAUSE);
 
