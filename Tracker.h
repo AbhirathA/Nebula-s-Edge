@@ -4,16 +4,16 @@ class Tracker : public LinearObj
 {
     protected:
         Obj* target = nullptr;
-        double velocity = 0;
+        int velocity = 0;
 
     public:
-        Tracker(int id, double x, double y, double v, double res, double innerRad, double outerRad, double mass, bool startX, double startSign, Obj* aim) : LinearObj(id, x, y, startX ? startSign * v : 0, startX ? 0 : startSign * v, 0, 0, res, innerRad, outerRad, mass), target{ aim }, velocity{v}{}
-        virtual void updatePos(double t) override final;
-        virtual double getNextX(double t) override final;
-        virtual double getNextY(double t) override final;
+        Tracker(int id, int x, int y, int v, int res, int innerRad, int outerRad, int mass, bool startX, int startSign, Obj* aim) : LinearObj(id, x, y, startX ? startSign * v : 0, startX ? 0 : startSign * v, 0, 0, res, innerRad, outerRad, mass), target{ aim }, velocity{v}{}
+        virtual void updatePos(int t) override final;
+        virtual int getNextX(int t) override final;
+        virtual int getNextY(int t) override final;
 
         virtual bool checkCollision(Obj* obj);
-        virtual bool boundCorrection(double lft, double rt, double tp, double bt, double t);
+        virtual bool boundCorrection(int lft, int rt, int tp, int bt, int t);
         virtual bool collisionCorection(Obj* other);
 
         virtual ~Tracker() {}

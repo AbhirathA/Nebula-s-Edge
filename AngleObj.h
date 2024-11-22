@@ -1,6 +1,7 @@
 #pragma once
 #include "Obj.h"
 #include <cmath>
+#define SCALE 1000
 
 class AngleObj:Obj{
 	
@@ -9,36 +10,36 @@ class AngleObj:Obj{
 		int id = 0;
 
 		// Orientation
-		double angle = 0;
+		int angleScaled = 0;
 
 		//The X-Y coordinates of the object
-		double posX = 0;
-		double posY = 0;
+		int posX = 0;
+		int posY = 0;
 
 		//The velocity of the object
-		double v = 0;
+		int v = 0;
 
 		//The acceleration of the object
-		double acc = 0;
-		double accX = 0;
-		double accY = 0;
+		int acc = 0;
+		int accX = 0;
+		int accY = 0;
 
 		//The state of the object
 		int state = 0;
 
 		//The mass and radii of the object
-		double mass = 0;
-		double innerRad = 0;
-		double outerRad = 0;
+		int mass = 0;
+		int innerRad = 0;
+		int outerRad = 0;
 
 	public:
 
-		AngleObj(int id, double x, double y, double v, double angle, double acc, double accX, double accY, double innerRad, double outerRad, double mass) {
+		AngleObj(int id, int x, int y, int v, int angle, int acc, int accX, int accY, int innerRad, int outerRad, int mass):Obj(id,x,y,innerRad,outerRad, mass) {
 			this->id = id;
 			this->posX = x;
 			this->posY = y;
 			this->v = v;
-			this->angle = angle;
+			this->angleScaled = angle;
 			this->acc = acc;
 			this->accX = accX;
 			this->accY = accY;
@@ -47,56 +48,56 @@ class AngleObj:Obj{
 			this->mass = mass;
 		}
 
-		double getX() {
+		int getX() {
 			return posX;
 		}
 
-		double getY() {
+		int getY() {
 			return posY;
 		}
 
-		virtual double getV() {
+		virtual int getV() {
 			return this->v;
 		}
 
-		virtual void updateV(double v) {
+		virtual void updateV(int v) {
 			this->v = v;
 		}
 
-		virtual void updateX(double x) {
+		virtual void updateX(int x) {
 			posX = x;
 		}
 
-		virtual void updateY(double y) {
+		virtual void updateY(int y) {
 			posY = y;
 		}
 
-		virtual double getXacc() {
+		virtual int getXacc() {
 			return accX;
 		}
 
-		virtual double getYacc() {
+		virtual int getYacc() {
 			return accY;
 		}
 
-		virtual void updateAcc(double x, double y) {
+		virtual void updateAcc(int x, int y) {
 			accX = x; accY = y;
 		}
 
-		double getAngle() {
-			return this->angle;
+		int getAngle() {
+			return this->angleScaled;
 		}
 
 		// Sin of angle wrt x-axis
 		double getOri() {
-			return std::sin(this->angle);
+			return std::sin(this->angleScaled/SCALE);
 		}
 
-		double getOuterR() {
+		int getOuterR() {
 			return outerRad;
 		}
 
-		double getInnerR() {
+		int getInnerR() {
 			return innerRad;
 		}
 
@@ -104,7 +105,7 @@ class AngleObj:Obj{
 			return state;
 		}
 
-		double getMass() {
+		int getMass() {
 			return mass;
 		}
 

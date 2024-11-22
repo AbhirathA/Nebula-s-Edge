@@ -3,7 +3,7 @@
 class LinearObj : public Obj {
 
 	protected:
-		//The velocity of the object
+		//The velocity of the object in x-y form
 		int vX = 0;
 		int vY = 0;
 		int terminalX = 200;
@@ -17,7 +17,7 @@ class LinearObj : public Obj {
 
 	public:
 
-		LinearObj(int id, int x, int y, int vX, int vY, int accX, int accY, int res, int innerRad, int outerRad, int mass) :Obj(id, x, y, vX, vY, accX, accY, res, innerRad, outerRad, mass) {
+		LinearObj(int id, int x, int y, int vX, int vY, int accX, int accY, int res, int innerRad, int outerRad, int mass) :Obj(id, x, y, innerRad, outerRad, mass) {
 			this->vX = vX;
 			this->vY = vY;
 			this->accX = accX;
