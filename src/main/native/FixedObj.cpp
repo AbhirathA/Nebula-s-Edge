@@ -1,130 +1,68 @@
 // FixedObj.cpp
 #include "FixedObj.h"
 #include <cmath>
-#include "com_physics_FixedObj.h"
-#include <jni.h>
 
-jlong getNativeHandle(JNIEnv *env, jobject obj)
+void FixedObj::updatePos(int t)
 {
-    jclass cls = env->GetObjectClass(obj);
-    jfieldID fid = env->GetFieldID(cls, "nativeHandle", "J");
-    return env->GetLongField(obj, fid);
+    // Fixed object does not move
 }
 
-void setNativeHandle(JNIEnv *env, jobject obj, jlong value)
-{
-    jclass cls = env->GetObjectClass(obj);
-    jfieldID fid = env->GetFieldID(cls, "nativeHandle", "J");
-    env->SetLongField(obj, fid, value);
-}
-
-FixedObj::FixedObj(int id, double x, double y, double innerRad, double outerRad, double mass)
-    : LinearObj(id, x, y, 0.0, 0.0, 0.0, 0.0, 0.0, innerRad, outerRad, mass) {}
-
-double FixedObj::getNextX(double t)
+int FixedObj::getNextX(int t)
 {
     return this->posX;
 }
 
-double FixedObj::getNextY(double t)
+int FixedObj::getNextY(int t)
 {
     return this->posY;
 }
 
-void FixedObj::updatePos(double t) {}
-
 bool FixedObj::checkCollision(Obj *obj)
 {
-    double dx = this->getX() - obj->getX();
-    double dy = this->getY() - obj->getY();
-    double distance = sqrt(dx * dx + dy * dy);
-    double overlap = this->getInnerR() + obj->getInnerR() - distance;
+    int temp = 100;
+    int temp2 = temp * temp;
+
+    int dx = this->getX() - obj->getX();
+    int dy = this->getY() - obj->getY();
+    int distance = std::sqrt(dx * dx * temp2 + dy * dy * temp2);
+    int overlap = this->getInnerR() * temp + obj->getInnerR() * temp - distance;
 
     return overlap > 0;
 }
 
-bool FixedObj::boundCorrection(double lft, double rt, double tp, double bt, double t)
+bool FixedObj::boundCorrection(int lft, int rt, int tp, int bt, int t)
 {
-    return true;
+    return true; // Fixed object doesn't need boundary correction
 }
 
 bool FixedObj::collisionCorection(Obj *obj)
 {
-    LinearObj *linearObj = dynamic_cast<LinearObj *>(obj);
-    if (linearObj)
-    {
-        double dx = this->getX() - linearObj->getX();
-        double dy = this->getY() - linearObj->getY();
-        double distance = sqrt(dx * dx + dy * dy);
-        double overlap = this->getInnerR() + linearObj->getInnerR() - distance;
+    int temp = 100;
+    int temp2 = temp * temp;
 
-        if (overlap > 0)
+    int dx = this->getX() - obj->getX();
+    int dy = this->getY() - obj->getY();
+    int distance = std::sqrt(dx * dx * temp2 + dy * dy * temp2);
+    int overlap = this->getInnerR() * temp + obj->getInnerR() * temp - distance;
+
+    if (overlap > 0)
+    {
+        // Attempt to cast obj to LinearObj*
+        LinearObj *linearObj = dynamic_cast<LinearObj *>(obj);
+        if (linearObj)
         {
-            double adjustmentFactor = overlap;
-            double adjustmentX = (dx * adjustmentFactor) / distance;
-            double adjustmentY = (dy * adjustmentFactor) / distance;
+            // Position Correction
+            int adjustmentFactor = overlap;
+            int adjustmentX = (dx * adjustmentFactor) / distance / temp;
+            int adjustmentY = (dy * adjustmentFactor) / distance / temp;
 
             linearObj->updateX(linearObj->getX() + adjustmentX);
             linearObj->updateY(linearObj->getY() + adjustmentY);
 
+            // Velocity Correction
             linearObj->updateV(-linearObj->getvX(), -linearObj->getvY());
-
-            return true;
         }
+        return true;
     }
     return false;
-}
-
-extern "C"
-{
-
-    JNIEXPORT jlong JNICALL Java_com_physics_FixedObj_createNativeObject(JNIEnv *env, jclass cls, jint id, jdouble x, jdouble y, jdouble innerRad, jdouble outerRad, jdouble mass)
-    {
-        FixedObj *nativeObj = new FixedObj(id, x, y, innerRad, outerRad, mass);
-        return reinterpret_cast<jlong>(nativeObj);
-    }
-
-    JNIEXPORT void JNICALL Java_com_physics_FixedObj_destroyNativeObject(JNIEnv *env, jobject obj, jlong nativeHandle)
-    {
-        FixedObj *nativeObj = reinterpret_cast<FixedObj *>(nativeHandle);
-        delete nativeObj;
-    }
-
-    JNIEXPORT void JNICALL Java_com_physics_FixedObj_updatePos(JNIEnv *env, jobject obj, jdouble t)
-    {
-        FixedObj *nativeObj = reinterpret_cast<FixedObj *>(getNativeHandle(env, obj));
-        nativeObj->updatePos(t);
-    }
-
-    JNIEXPORT jdouble JNICALL Java_com_physics_FixedObj_getNextX(JNIEnv *env, jobject obj, jdouble t)
-    {
-        FixedObj *nativeObj = reinterpret_cast<FixedObj *>(getNativeHandle(env, obj));
-        return nativeObj->getNextX(t);
-    }
-
-    JNIEXPORT jdouble JNICALL Java_com_physics_FixedObj_getNextY(JNIEnv *env, jobject obj, jdouble t)
-    {
-        FixedObj *nativeObj = reinterpret_cast<FixedObj *>(getNativeHandle(env, obj));
-        return nativeObj->getNextY(t);
-    }
-
-    JNIEXPORT jboolean JNICALL Java_com_physics_FixedObj_checkCollision(JNIEnv *env, jobject obj, jobject otherObj)
-    {
-        FixedObj *nativeObj = reinterpret_cast<FixedObj *>(getNativeHandle(env, obj));
-        Obj *otherNativeObj = reinterpret_cast<Obj *>(getNativeHandle(env, otherObj));
-        return nativeObj->checkCollision(otherNativeObj);
-    }
-
-    JNIEXPORT jboolean JNICALL Java_com_physics_FixedObj_boundCorrection(JNIEnv *env, jobject obj, jdouble lft, jdouble rt, jdouble tp, jdouble bt, jdouble t)
-    {
-        FixedObj *nativeObj = reinterpret_cast<FixedObj *>(getNativeHandle(env, obj));
-        return nativeObj->boundCorrection(lft, rt, tp, bt, t);
-    }
-
-    JNIEXPORT jboolean JNICALL Java_com_physics_FixedObj_collisionCorection(JNIEnv *env, jobject obj, jobject otherObj)
-    {
-        FixedObj *nativeObj = reinterpret_cast<FixedObj *>(getNativeHandle(env, obj));
-        Obj *otherNativeObj = reinterpret_cast<Obj *>(getNativeHandle(env, otherObj));
-        return nativeObj->collisionCorection(otherNativeObj);
-    }
 }

@@ -1,49 +1,52 @@
+// Obj.java
 package com.physics;
 
 public abstract class Obj {
+
     protected long nativeHandle;
 
     protected Obj(long nativeHandle) {
         this.nativeHandle = nativeHandle;
     }
 
-    private native void destroyNativeObject(long nativeHandle);
+    // Native methods for common properties
+    public native int getX();
 
-    @Override
-    protected void finalize() throws Throwable {
-        destroyNativeObject(nativeHandle);
-        super.finalize();
-    }
+    public native int getY();
 
-    // Native methods
-    public native double getX();
+    public native void updateX(int x);
 
-    public native double getY();
+    public native void updateY(int y);
 
-    public native void updateX(double x);
+    public native int getOuterR();
 
-    public native void updateY(double y);
+    public native int getInnerR();
 
-    public native double getOuterR();
+    public native int getState();
 
-    public native double getInnerR();
-
-    public native double getState();
-
-    public native double getMass();
+    public native int getMass();
 
     public native void changeState();
 
     // Abstract methods
     public abstract boolean checkCollision(Obj obj);
 
-    public abstract void updatePos(double t);
+    public abstract void updatePos(int t);
 
-    public abstract double getNextX(double t);
+    public abstract int getNextX(int t);
 
-    public abstract double getNextY(double t);
+    public abstract int getNextY(int t);
 
-    public abstract boolean boundCorrection(double lft, double rt, double tp, double bt, double t);
+    public abstract boolean boundCorrection(int lft, int rt, int tp, int bt, int t);
 
     public abstract boolean collisionCorection(Obj other);
+
+    // Finalizer to clean up native resources
+    @Override
+    protected void finalize() throws Throwable {
+        destroyNativeObject(nativeHandle);
+        super.finalize();
+    }
+
+    private native void destroyNativeObject(long nativeHandle);
 }

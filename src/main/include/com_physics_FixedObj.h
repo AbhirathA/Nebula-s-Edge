@@ -10,10 +10,10 @@ extern "C" {
 /*
  * Class:     com_physics_FixedObj
  * Method:    createNativeObject
- * Signature: (IDDDDD)J
+ * Signature: (IIIIII)J
  */
 JNIEXPORT jlong JNICALL Java_com_physics_FixedObj_createNativeObject
-  (JNIEnv *, jclass, jint, jdouble, jdouble, jdouble, jdouble, jdouble);
+  (JNIEnv *, jclass, jint, jint, jint, jint, jint, jint);
 
 /*
  * Class:     com_physics_FixedObj
@@ -25,30 +25,6 @@ JNIEXPORT void JNICALL Java_com_physics_FixedObj_destroyNativeObject
 
 /*
  * Class:     com_physics_FixedObj
- * Method:    updatePos
- * Signature: (D)V
- */
-JNIEXPORT void JNICALL Java_com_physics_FixedObj_updatePos
-  (JNIEnv *, jobject, jdouble);
-
-/*
- * Class:     com_physics_FixedObj
- * Method:    getNextX
- * Signature: (D)D
- */
-JNIEXPORT jdouble JNICALL Java_com_physics_FixedObj_getNextX
-  (JNIEnv *, jobject, jdouble);
-
-/*
- * Class:     com_physics_FixedObj
- * Method:    getNextY
- * Signature: (D)D
- */
-JNIEXPORT jdouble JNICALL Java_com_physics_FixedObj_getNextY
-  (JNIEnv *, jobject, jdouble);
-
-/*
- * Class:     com_physics_FixedObj
  * Method:    checkCollision
  * Signature: (Lcom/physics/Obj;)Z
  */
@@ -57,11 +33,35 @@ JNIEXPORT jboolean JNICALL Java_com_physics_FixedObj_checkCollision
 
 /*
  * Class:     com_physics_FixedObj
+ * Method:    updatePos
+ * Signature: (I)V
+ */
+JNIEXPORT void JNICALL Java_com_physics_FixedObj_updatePos
+  (JNIEnv *, jobject, jint);
+
+/*
+ * Class:     com_physics_FixedObj
+ * Method:    getNextX
+ * Signature: (I)I
+ */
+JNIEXPORT jint JNICALL Java_com_physics_FixedObj_getNextX
+  (JNIEnv *, jobject, jint);
+
+/*
+ * Class:     com_physics_FixedObj
+ * Method:    getNextY
+ * Signature: (I)I
+ */
+JNIEXPORT jint JNICALL Java_com_physics_FixedObj_getNextY
+  (JNIEnv *, jobject, jint);
+
+/*
+ * Class:     com_physics_FixedObj
  * Method:    boundCorrection
- * Signature: (DDDDD)Z
+ * Signature: (IIIII)Z
  */
 JNIEXPORT jboolean JNICALL Java_com_physics_FixedObj_boundCorrection
-  (JNIEnv *, jobject, jdouble, jdouble, jdouble, jdouble, jdouble);
+  (JNIEnv *, jobject, jint, jint, jint, jint, jint);
 
 /*
  * Class:     com_physics_FixedObj

@@ -1,63 +1,61 @@
+// LinearObj.h
 #pragma once
 #include "Obj.h"
+
 class LinearObj : public Obj
 {
-
 protected:
-	// The velocity of the object
-	double vX = 0;
-	double vY = 0;
-	double terminalX = 200;
-	double terminalY = 200;
+	// The velocity of the object in x-y form
+	int vX = 0;
+	int vY = 0;
+	int terminalX = 200;
+	int terminalY = 200;
 	bool isXTerminal = false;
 	bool isYTerminal = false;
 
 	// The acceleration of the object
-	double accX = 0;
-	double accY = 0;
+	int accX = 0;
+	int accY = 0;
 
 public:
-	LinearObj(int id, double x, double y, double vX, double vY, double accX, double accY, double res, double innerRad, double outerRad, double mass) : Obj(id, x, y, res, innerRad, outerRad, mass)
-	{
-		this->vX = vX;
-		this->vY = vY;
-		this->accX = accX;
-		this->accY = accY;
-	}
+	LinearObj(int id, int x, int y, int vX, int vY, int accX, int accY, int res, int innerRad, int outerRad, int mass)
+		: Obj(id, x, y, innerRad, outerRad, mass), vX(vX), vY(vY), accX(accX), accY(accY) {}
 
-	double getvX()
+	virtual ~LinearObj() {}
+
+	int getvX()
 	{
 		return vX;
 	}
 
-	double getvY()
+	int getvY()
 	{
 		return vY;
 	}
 
-	virtual void updateV(double x, double y)
+	virtual void updateV(int x, int y)
 	{
 		vX = x;
 		vY = y;
 	}
 
-	virtual double getXacc()
+	virtual int getXacc()
 	{
 		return accX;
 	}
 
-	virtual double getYacc()
+	virtual int getYacc()
 	{
 		return accY;
 	}
 
-	virtual void updateAcc(double x, double y)
+	virtual void updateAcc(int x, int y)
 	{
 		accX = x;
 		accY = y;
 	}
 
-	// Sin of angle wrt x-axis
+	// Sin of angle with respect to x-axis
 	double getOri()
 	{
 		return ((double)vX) / std::sqrt(vX * vX + vY * vY);
@@ -73,12 +71,11 @@ public:
 		return isYTerminal;
 	}
 
+	// Pure virtual functions inherited from Obj
 	virtual bool checkCollision(Obj *obj) = 0;
-	virtual void updatePos(double t) = 0;
-	// void doubleernalUpdate();
-	virtual double getNextX(double t) = 0;
-	virtual double getNextY(double t) = 0;
-	virtual bool boundCorrection(double lft, double rt, double tp, double bt, double t) = 0;
+	virtual void updatePos(int t) = 0;
+	virtual int getNextX(int t) = 0;
+	virtual int getNextY(int t) = 0;
+	virtual bool boundCorrection(int lft, int rt, int tp, int bt, int t) = 0;
 	virtual bool collisionCorection(Obj *other) = 0;
-	virtual ~LinearObj() {};
 };

@@ -1,7 +1,8 @@
+// Obj.h
 #pragma once
 #include <cmath>
 
-// Different the type of physics to be used for the simulation
+// Different types of physics to be used for the simulation
 enum class TypeOfPhy
 {
 	FIXEDOBJ = 0,
@@ -25,67 +26,59 @@ protected:
 	int id = 0;
 
 	// The X-Y coordinates of the object
-	double posX = 0;
-	double posY = 0;
+	int posX = 0;
+	int posY = 0;
 
 	// The state of the object
-	double state = 0;
+	int state = 0;
 
 	// The mass and radii of the object
-	double mass = 0;
-	double innerRad = 0;
-	double outerRad = 0;
-
-	double res = 0;
+	int mass = 0;
+	int innerRad = 0;
+	int outerRad = 0;
 
 public:
-	Obj(int id, double x, double y, double res, double innerRad, double outerRad, double mass)
-	{
-		this->id = id;
-		this->posX = x;
-		this->posY = y;
-		this->innerRad = innerRad;
-		this->outerRad = outerRad;
-		this->mass = mass;
-		this->res = res;
-	}
+	Obj(int id, int x, int y, int innerRad, int outerRad, int mass)
+		: id(id), posX(x), posY(y), innerRad(innerRad), outerRad(outerRad), mass(mass) {}
 
-	double getX()
+	virtual ~Obj() {}
+
+	int getX()
 	{
 		return posX;
 	}
 
-	double getY()
+	int getY()
 	{
 		return posY;
 	}
 
-	virtual void updateX(double x)
+	virtual void updateX(int x)
 	{
 		posX = x;
 	}
 
-	virtual void updateY(double y)
+	virtual void updateY(int y)
 	{
 		posY = y;
 	}
 
-	double getOuterR()
+	int getOuterR()
 	{
 		return outerRad;
 	}
 
-	double getInnerR()
+	int getInnerR()
 	{
 		return innerRad;
 	}
 
-	double getState()
+	int getState()
 	{
 		return state;
 	}
 
-	double getMass()
+	int getMass()
 	{
 		return mass;
 	}
@@ -95,12 +88,11 @@ public:
 		state = 1 - state;
 	}
 
+	// Pure virtual functions
 	virtual bool checkCollision(Obj *obj) = 0;
-	virtual void updatePos(double t) = 0;
-	// void internalUpdate();
-	virtual double getNextX(double t) = 0;
-	virtual double getNextY(double t) = 0;
-	virtual bool boundCorrection(double lft, double rt, double tp, double bt, double t) = 0;
+	virtual void updatePos(int t) = 0;
+	virtual int getNextX(int t) = 0;
+	virtual int getNextY(int t) = 0;
+	virtual bool boundCorrection(int lft, int rt, int tp, int bt, int t) = 0;
 	virtual bool collisionCorection(Obj *other) = 0;
-	virtual ~Obj() {};
 };

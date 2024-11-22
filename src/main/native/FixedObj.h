@@ -5,13 +5,16 @@
 class FixedObj : public LinearObj
 {
 public:
-	FixedObj(int id, double x, double y, double innerRad, double outerRad, double mass);
+	FixedObj(int id, int x, int y, int innerRad, int outerRad, int mass)
+		: LinearObj(id, x, y, 0, 0, 0, 0, 0, innerRad, outerRad, mass) {}
 
-	// Override methods from LinearObj and Obj
-	virtual void updatePos(double t) override final;
-	virtual double getNextX(double t) override final;
-	virtual double getNextY(double t) override final;
-	virtual bool checkCollision(Obj *obj) override final;
-	virtual bool boundCorrection(double lft, double rt, double tp, double bt, double t) override;
-	virtual bool collisionCorection(Obj *other) override;
+	virtual ~FixedObj() {}
+
+	// Overridden methods
+	void updatePos(int t) override;
+	int getNextX(int t) override;
+	int getNextY(int t) override;
+	bool checkCollision(Obj *obj) override;
+	bool boundCorrection(int lft, int rt, int tp, int bt, int t) override;
+	bool collisionCorection(Obj *other) override;
 };

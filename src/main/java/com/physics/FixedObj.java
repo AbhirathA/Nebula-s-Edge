@@ -1,14 +1,13 @@
-// src/main/java/com/physics/FixedObj.java
+// FixedObj.java
 package com.physics;
 
-public class FixedObj extends LinearObject {
+public class FixedObj extends LinearObj {
 
-    public FixedObj(int id, double x, double y, double innerRad, double outerRad, double mass) {
+    public FixedObj(int id, int x, int y, int innerRad, int outerRad, int mass) {
         super(createNativeObject(id, x, y, innerRad, outerRad, mass));
     }
 
-    private static native long createNativeObject(int id, double x, double y, double innerRad, double outerRad,
-            double mass);
+    private static native long createNativeObject(int id, int x, int y, int innerRad, int outerRad, int mass);
 
     private native void destroyNativeObject(long nativeHandle);
 
@@ -18,20 +17,21 @@ public class FixedObj extends LinearObject {
         super.finalize();
     }
 
-    @Override
-    public native void updatePos(double t);
-
-    @Override
-    public native double getNextX(double t);
-
-    @Override
-    public native double getNextY(double t);
-
+    // Implement abstract methods using native code
     @Override
     public native boolean checkCollision(Obj obj);
 
     @Override
-    public native boolean boundCorrection(double lft, double rt, double tp, double bt, double t);
+    public native void updatePos(int t);
+
+    @Override
+    public native int getNextX(int t);
+
+    @Override
+    public native int getNextY(int t);
+
+    @Override
+    public native boolean boundCorrection(int lft, int rt, int tp, int bt, int t);
 
     @Override
     public native boolean collisionCorection(Obj other);

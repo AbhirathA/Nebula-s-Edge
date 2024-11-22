@@ -9,74 +9,66 @@ extern "C" {
 #endif
 /*
  * Class:     com_physics_Obj
- * Method:    destroyNativeObject
- * Signature: (J)V
- */
-JNIEXPORT void JNICALL Java_com_physics_Obj_destroyNativeObject
-  (JNIEnv *, jobject, jlong);
-
-/*
- * Class:     com_physics_Obj
  * Method:    getX
- * Signature: ()D
+ * Signature: ()I
  */
-JNIEXPORT jdouble JNICALL Java_com_physics_Obj_getX
+JNIEXPORT jint JNICALL Java_com_physics_Obj_getX
   (JNIEnv *, jobject);
 
 /*
  * Class:     com_physics_Obj
  * Method:    getY
- * Signature: ()D
+ * Signature: ()I
  */
-JNIEXPORT jdouble JNICALL Java_com_physics_Obj_getY
+JNIEXPORT jint JNICALL Java_com_physics_Obj_getY
   (JNIEnv *, jobject);
 
 /*
  * Class:     com_physics_Obj
  * Method:    updateX
- * Signature: (D)V
+ * Signature: (I)V
  */
 JNIEXPORT void JNICALL Java_com_physics_Obj_updateX
-  (JNIEnv *, jobject, jdouble);
+  (JNIEnv *, jobject, jint);
 
 /*
  * Class:     com_physics_Obj
  * Method:    updateY
- * Signature: (D)V
+ * Signature: (I)V
  */
 JNIEXPORT void JNICALL Java_com_physics_Obj_updateY
-  (JNIEnv *, jobject, jdouble);
+  (JNIEnv *, jobject, jint);
 
 /*
  * Class:     com_physics_Obj
  * Method:    getOuterR
- * Signature: ()D
+ * Signature: ()I
  */
-JNIEXPORT jdouble JNICALL Java_com_physics_Obj_getOuterR
+JNIEXPORT jint JNICALL Java_com_physics_Obj_getOuterR
   (JNIEnv *, jobject);
 
 /*
  * Class:     com_physics_Obj
  * Method:    getInnerR
- * Signature: ()D
+ * Signature: ()I
  */
-JNIEXPORT jdouble JNICALL Java_com_physics_Obj_getInnerR
+JNIEXPORT jint JNICALL Java_com_physics_Obj_getInnerR
   (JNIEnv *, jobject);
 
 /*
  * Class:     com_physics_Obj
  * Method:    getState
- * Signature: ()D
+ * Signature: ()I
  */
-JNIEXPORT jdouble JNICALL Java_com_physics_Obj_getState
+JNIEXPORT jint JNICALL Java_com_physics_Obj_getState
   (JNIEnv *, jobject);
 
 /*
  * Class:     com_physics_Obj
  * Method:    getMass
- * Signature: ()D
+ * Signature: ()I
  */
-JNIEXPORT jdouble JNICALL Java_com_physics_Obj_getMass
+JNIEXPORT jint JNICALL Java_com_physics_Obj_getMass
   (JNIEnv *, jobject);
 
 /*
@@ -86,6 +78,14 @@ JNIEXPORT jdouble JNICALL Java_com_physics_Obj_getMass
  */
 JNIEXPORT void JNICALL Java_com_physics_Obj_changeState
   (JNIEnv *, jobject);
+
+/*
+ * Class:     com_physics_Obj
+ * Method:    destroyNativeObject
+ * Signature: (J)V
+ */
+JNIEXPORT void JNICALL Java_com_physics_Obj_destroyNativeObject
+  (JNIEnv *, jobject, jlong);
 
 #ifdef __cplusplus
 }
