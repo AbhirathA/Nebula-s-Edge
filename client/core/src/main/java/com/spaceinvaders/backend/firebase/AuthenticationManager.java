@@ -46,8 +46,7 @@ import java.net.URISyntaxException;
 import java.util.HashMap;
 import java.util.Map;
 
-public class AuthenticationManager
-{
+public class AuthenticationManager {
     public static final String SERVER_URL = "http://localhost:8080/";
 
     /**
@@ -55,26 +54,25 @@ public class AuthenticationManager
      * Sends a POST request to Firebase's Authentication REST API and retrieves
      * an ID token if the credentials are valid.
      *
-     * @param email                     The email address of the user attempting to sign in.
-     * @param password                  The password associated with the user's email.
-     * @return                          A String representing the ID token returned by Firebase upon
-     *                                  successful authentication. This token can be used to securely
-     *                                  access Firebase services.
-     * @throws AuthenticationException  If the response indicates authentication failure.
-     * @throws IllegalStateException    If an error occurs while parsing the JSON file
+     * @param email    The email address of the user attempting to sign in.
+     * @param password The password associated with the user's email.
+     * @return A String representing the ID token returned by Firebase upon
+     *         successful authentication. This token can be used to securely
+     *         access Firebase services.
+     * @throws AuthenticationException If the response indicates authentication
+     *                                 failure.
+     * @throws IllegalStateException   If an error occurs while parsing the JSON
+     *                                 file
      */
-    public static String signIn(String email, String password) throws AuthenticationException, IllegalStateException
-    {
+    public static String signIn(String email, String password) throws AuthenticationException, IllegalStateException {
         int returnCode;
         String returnString;
-        try
-        {
+        try {
             HttpResponse response = ClientFirebase.signIn(email, password);
             returnCode = response.getCode();
             returnString = response.getMessage();
 
-            switch (HTTPCode.fromCode(returnCode))
-            {
+            switch (HTTPCode.fromCode(returnCode)) {
                 case SUCCESS:
                     return returnString;
 
@@ -97,48 +95,46 @@ public class AuthenticationManager
                     throw new AuthenticationException("Unknown error");
 
             }
-        }
-        catch(Exception e)
-        {
+        } catch (Exception e) {
             throw new AuthenticationException("Failed to authenticate the user.");
         }
     }
 
     /**
      * Registers a new user with the provided email and password.
-     * This method validates the input fields, ensures the password and confirm password match,
+     * This method validates the input fields, ensures the password and confirm
+     * password match,
      * and then performs the signup logic (i.e. storing in Firebase).
      *
-     * @param email                     The email address of the user to be registered.
-     * @param password                  The password chosen by the user.
-     * @param confirmPassword           Confirmation of the password to ensure accuracy.
-     * @return                          A success message or token (e.g., "Signup successful" or a generated token) as a String.
-     * @throws AuthenticationException  If the input validation fails (e.g., invalid email, mismatched passwords).
+     * @param email           The email address of the user to be registered.
+     * @param password        The password chosen by the user.
+     * @param confirmPassword Confirmation of the password to ensure accuracy.
+     * @return A success message or token (e.g., "Signup successful" or a generated
+     *         token) as a String.
+     * @throws AuthenticationException If the input validation fails (e.g., invalid
+     *                                 email, mismatched passwords).
      */
-    public static String signUp(String email, String password, String confirmPassword) throws AuthenticationException
-    {
-        if(!password.equals(confirmPassword))
-        {
+    public static String signUp(String email, String password, String confirmPassword) throws AuthenticationException {
+        if (!password.equals(confirmPassword)) {
             throw new AuthenticationException("Passwords do not match");
         }
 
         String url = SERVER_URL + "signup";
 
-        String payload = String.format("{\"email\":\"%s\",\"password\":\"%s\",\"returnSecureToken\":true}", email, password);
+        String payload = String.format("{\"email\":\"%s\",\"password\":\"%s\",\"returnSecureToken\":true}", email,
+                password);
 
         Map<String, String> headers = new HashMap<>();
         headers.put("Content-Type", "application/json");
         int returnCode;
         String returnString;
 
-        try
-        {
+        try {
             HttpResponse response = HTTPRequest.sendRequest(url, payload, "POST", headers);
             returnCode = response.getCode();
             returnString = response.getMessage();
 
-            switch (HTTPCode.fromCode(returnCode))
-            {
+            switch (HTTPCode.fromCode(returnCode)) {
                 case SUCCESS:
                     return returnString;
 
@@ -166,10 +162,45 @@ public class AuthenticationManager
                 default:
                     throw new AuthenticationException("Unknown error");
             }
-        }
-        catch(IOException | URISyntaxException e)
-        {
+        } catch (IOException | URISyntaxException e) {
             throw new AuthenticationException("Failed to authenticate the user.");
         }
     }
+
+    /**
+     * Sends a password reset email to the specified email address.
+     *
+     * @param email The email address of the user requesting a password reset.
+     * @return A success message if the password reset email is sent successfully.
+     * @throws AuthenticationException If an error occurs during the password reset
+     *                                 process.
+     */
+    public static String resetPassword(String email) throws AuthenticationException {
+        HttpResponse response = ClientFirebase.resetPassword(email);
+        int responseCode = response.getCode();
+
+        switch (HTTPCode.fromCode(responseCode)) {
+            case SUCCESS:
+                return "Password reset email sent successfully.";
+
+            case INVALID_JSON:
+                throw new AuthenticationException("Error in sending information to the server.");
+
+            case EMAIL_NOT_FOUND:
+                throw new AuthenticationException("The provided email address does not exist.");
+
+            case CANNOT_CONNECT:
+                throw new AuthenticationException("Server cannot connect to the network.");
+
+            case DATABASE_ERROR:
+                throw new AuthenticationException("Server database error.");
+
+            case SERVER_ERROR:
+                throw new AuthenticationException("Internal server error occurred.");
+
+            default:
+                throw new AuthenticationException("Unknown error occurred during the password reset process.");
+        }
+    }
+
 }

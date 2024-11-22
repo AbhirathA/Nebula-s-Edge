@@ -44,7 +44,7 @@ public class ResetPasswordScreen implements Screen {
     private Label successMessage;
 
     public ResetPasswordScreen(SpaceInvadersGame game, float WORLD_WIDTH, float WORLD_HEIGHT, float STAGE_WIDTH,
-                        float STAGE_HEIGHT, StarsBackground starsBackground, PlanetsBackground planetsBackground) {
+            float STAGE_HEIGHT, StarsBackground starsBackground, PlanetsBackground planetsBackground) {
         this.game = game;
 
         camera = new OrthographicCamera();
@@ -121,88 +121,71 @@ public class ResetPasswordScreen implements Screen {
     }
 
     private void initialiseActors() {
-
         BitmapFont minecraftFont = game.assetManager.get("fonts/minecraft.fnt", BitmapFont.class);
 
-        errorMessage = LabelUtils.createLabel("Incorrect username or password",
-            minecraftFont, 0, 0);
+        // Error and success messages
+        errorMessage = LabelUtils.createLabel("Invalid email address", minecraftFont, 0, 0);
+        successMessage = LabelUtils.createLabel("Password reset email sent", minecraftFont, 0, 0);
 
-        successMessage = LabelUtils.createLabel("Login successful",
-            minecraftFont, 0, 0);
+        // Label for entering email
+        Label enterEmail = LabelUtils.createLabel("Email:", minecraftFont, (STAGE_WIDTH - 143) / 2f, 101);
 
-        Label enterId = LabelUtils.createLabel("Id:", minecraftFont,
-            (STAGE_WIDTH - 143) / 2f, 101);
+        // TextField for email
+        TextField emailField = TextFieldUtils.createTextField("", game.assetManager, 95, 15,
+                (STAGE_WIDTH - 95) / 2f + 22, 99);
+        emailField.setMessageText("Enter email");
+        emailField.getStyle().messageFontColor = emailField.getStyle().fontColor;
 
-        Label enterPassword = LabelUtils.createLabel("Password:",
-            minecraftFont, (STAGE_WIDTH - 143) / 2f, 85);
-
-        Label confirmPassword = LabelUtils.createLabel("Confirm:",
-            minecraftFont, (STAGE_WIDTH - 143) / 2f, 68);
-
-        TextField idField = TextFieldUtils.createTextField("", game.assetManager, 95, 15, (STAGE_WIDTH - 95) / 2f + 22,
-            99);
-        idField.setMessageText("Enter id");
-        // Placeholder text will look gray without the following line
-        idField.getStyle().messageFontColor = idField.getStyle().fontColor;
-
-        TextField passwordField = TextFieldUtils.createPasswordField(game.assetManager, 95, 15,
-            (STAGE_WIDTH - 95) / 2f + 22, 83);
-        passwordField.setMessageText("Enter password");
-        passwordField.getStyle().messageFontColor = passwordField.getStyle().fontColor;
-
-        TextField confirmField = TextFieldUtils.createPasswordField(game.assetManager, 95, 15,
-            (STAGE_WIDTH - 95) / 2f + 22, 66);
-        confirmField.setMessageText("Confirm password");
-        confirmField.getStyle().messageFontColor = confirmField.getStyle().fontColor;
-
+        // Submit button
         ImageTextButton submitButton = ButtonUtils.createButton(game, "Submit", "textures/button.png",
-            "textures/button.png", 95, 15, (STAGE_WIDTH - 95) / 2f, 49);
+                "textures/button.png", 95, 15, (STAGE_WIDTH - 95) / 2f, 49);
 
+        // Back button
         ImageButton backButton = ButtonUtils.createBackButton(this.game, "textures/back-button.png",
-            "textures/back-button.png", 28, 15, 10, 245, game.screenManager.getRecentScreen());
+                "textures/back-button.png", 28, 15, 10, 245, game.screenManager.getRecentScreen());
 
-        stage.addActor(enterId);
-        stage.addActor(enterPassword);
-        stage.addActor(confirmPassword);
-        stage.addActor(idField);
-        stage.addActor(passwordField);
-        stage.addActor(confirmField);
+        // Add actors to the stage
+        stage.addActor(enterEmail);
+        stage.addActor(emailField);
         stage.addActor(submitButton);
         stage.addActor(backButton);
 
+        // Add listener to the submit button
         submitButton.addListener(new InputListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                String id = idField.getText();
-                String password = passwordField.getText();
-                String confirm = confirmField.getText();
+                String email = emailField.getText();
                 try {
-                    AuthenticationManager.signUp(id, password, confirm);
+                    AuthenticationManager.resetPassword(email);
 
-                    if (ResetPasswordScreen.this.stage.getActors().contains(ResetPasswordScreen.this.errorMessage, true)) {
-                        ResetPasswordScreen.this.stage.getActors().removeValue(ResetPasswordScreen.this.errorMessage, true);
+                    // Remove error message if present
+                    if (ResetPasswordScreen.this.stage.getActors().contains(ResetPasswordScreen.this.errorMessage,
+                            true)) {
+                        ResetPasswordScreen.this.stage.getActors().removeValue(ResetPasswordScreen.this.errorMessage,
+                                true);
                     }
 
-                    if (!ResetPasswordScreen.this.stage.getActors().contains(ResetPasswordScreen.this.successMessage, true)) {
+                    // Display success message
+                    if (!ResetPasswordScreen.this.stage.getActors().contains(ResetPasswordScreen.this.successMessage,
+                            true)) {
                         ResetPasswordScreen.this.stage.addActor(ResetPasswordScreen.this.successMessage);
-                        ResetPasswordScreen.this.game.screenManager.setScreen(ScreenState.MAIN_MENU);
                     }
 
                 } catch (AuthenticationException e) {
-                    // @TODO: Convert to logging
-                    System.out.println(e.getMessage());
+                    // Display error message
                     ResetPasswordScreen.this.errorMessage.setText(e.getMessage());
 
-                    if (!ResetPasswordScreen.this.stage.getActors().contains(ResetPasswordScreen.this.successMessage, true)) {
-                        ResetPasswordScreen.this.stage.getActors().removeValue(ResetPasswordScreen.this.successMessage, true);
+                    if (!ResetPasswordScreen.this.stage.getActors().contains(ResetPasswordScreen.this.successMessage,
+                            true)) {
+                        ResetPasswordScreen.this.stage.getActors().removeValue(ResetPasswordScreen.this.successMessage,
+                                true);
                     }
 
-                    if (!ResetPasswordScreen.this.stage.getActors().contains(ResetPasswordScreen.this.errorMessage, true)) {
+                    if (!ResetPasswordScreen.this.stage.getActors().contains(ResetPasswordScreen.this.errorMessage,
+                            true)) {
                         ResetPasswordScreen.this.stage.addActor(ResetPasswordScreen.this.errorMessage);
                     }
-
                 } catch (Exception e) {
-                    // @TODO: Convert to logging
                     System.err.println(e.getMessage());
                     System.exit(1);
                 }
@@ -210,4 +193,5 @@ public class ResetPasswordScreen implements Screen {
             }
         });
     }
+
 }

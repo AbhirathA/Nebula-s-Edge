@@ -39,8 +39,7 @@ import com.spaceinvaders.backend.firebase.utils.HttpResponse;
 import java.util.HashMap;
 import java.util.Map;
 
-public class ClientFirebase
-{
+public class ClientFirebase {
     // Firebase API Key (replace with your own for production use)
     public static final String PUBLIC_FIREBASE_API_KEY = "AIzaSyB5uPRGEMilBLExcfU9w1nKaY0I0Xye7D8";
 
@@ -52,35 +51,34 @@ public class ClientFirebase
      * Sends a POST request to Firebase's Authentication REST API and retrieves
      * an ID token if the credentials are valid.
      *
-     * @param email                     The email address of the user attempting to sign in.
-     * @param password                  The password associated with the user's email.
-     * @return                          An HttpResponse object containing the success code and the ID token.
-     *                                  The ID token can be used to securely access Firebase services.
-     * @throws AuthenticationException  If the response indicates authentication failure or any other issue occurs.
-     * @throws IllegalStateException    If parsing the JSON response fails.
+     * @param email    The email address of the user attempting to sign in.
+     * @param password The password associated with the user's email.
+     * @return An HttpResponse object containing the success code and the ID token.
+     *         The ID token can be used to securely access Firebase services.
+     * @throws AuthenticationException If the response indicates authentication
+     *                                 failure or any other issue occurs.
+     * @throws IllegalStateException   If parsing the JSON response fails.
      */
-    public static HttpResponse signIn(String email, String password) throws AuthenticationException, IllegalStateException
-    {
+    public static HttpResponse signIn(String email, String password)
+            throws AuthenticationException, IllegalStateException {
         // Constructs the Firebase sign-in URL
         String url = FIREBASE_SIGN_IN_URL + PUBLIC_FIREBASE_API_KEY;
 
         // Prepares the JSON payload with the user's credentials
-        String payload = String.format("{\"email\":\"%s\",\"password\":\"%s\",\"returnSecureToken\":true}", email, password);
+        String payload = String.format("{\"email\":\"%s\",\"password\":\"%s\",\"returnSecureToken\":true}", email,
+                password);
 
         // Sets the required headers for the HTTP request
         Map<String, String> headers = new HashMap<>();
         headers.put("Content-Type", "application/json");
 
-        try
-        {
+        try {
             // Sends the HTTP POST request to Firebase
             HttpResponse output = HTTPRequest.sendRequest(url, payload, "POST", headers);
 
             // Parses the response and extracts the ID token
             return new HttpResponse(HTTPCode.SUCCESS.getCode(), parseIdToken(output.getMessage()));
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             // Handles exceptions and rethrows as an AuthenticationException
             throw new AuthenticationException("Failed to authenticate the user.");
         }
@@ -89,16 +87,70 @@ public class ClientFirebase
     /**
      * Parses the JSON response from Firebase to extract the ID token.
      *
-     * @param response                  The JSON response string containing the ID token.
-     * @return                          A String representing the ID token extracted from the response.
-     * @throws IllegalStateException    If an error occurs while parsing the JSON response.
+     * @param response The JSON response string containing the ID token.
+     * @return A String representing the ID token extracted from the response.
+     * @throws IllegalStateException If an error occurs while parsing the JSON
+     *                               response.
      */
-    private static String parseIdToken(String response) throws IllegalStateException
-    {
+    private static String parseIdToken(String response) throws IllegalStateException {
         // Parses the JSON response string into a JsonObject
         JsonObject jsonObject = JsonParser.parseString(response).getAsJsonObject();
 
         // Extracts and returns the ID token
         return jsonObject.get("idToken").getAsString();
     }
+
+    public static HttpResponse resetPassword(String email) throws AuthenticationException {
+
+        String url = "https://identitytoolkit.googleapis.com/v1/accounts:sendOobCode?key=" + PUBLIC_FIREBASE_API_KEY;
+
+        String payload = String.format("{\"requestType\":\"PASSWORD_RESET\",\"email\":\"%s\"}", email);
+
+        Map<String, String> headers = new HashMap<>();
+        headers.put("Content-Type", "application/json");
+
+        try {
+
+            HttpResponse response = HTTPRequest.sendRequest(url, payload, "POST", headers);
+
+            if (response.getCode() == HTTPCode.SUCCESS.getCode()) {
+                return response;
+            } else {
+
+                handleFirebaseError(response.getMessage());
+            }
+
+            // Default return for unexpected scenarios
+            throw new AuthenticationException("Unexpected error occurred during password reset.");
+        } catch (Exception e) {
+            throw new AuthenticationException(e.getMessage());
+        }
+    }
+
+    /**
+     * Handles Firebase error responses by parsing the error message and throwing
+     * an appropriate AuthenticationException.
+     *
+     * @param responseMessage The response body containing the error details.
+     * @throws AuthenticationException with a detailed message based on the Firebase
+     *                                 error.
+     */
+    private static void handleFirebaseError(String responseMessage) throws AuthenticationException {
+        try {
+            JsonObject jsonObject = JsonParser.parseString(responseMessage).getAsJsonObject();
+            String errorCode = jsonObject.getAsJsonObject("error").get("message").getAsString();
+
+            switch (errorCode) {
+                case "EMAIL_NOT_FOUND":
+                    throw new AuthenticationException("The email address is not registered.");
+                case "INVALID_EMAIL":
+                    throw new AuthenticationException("The email address format is invalid.");
+                default:
+                    throw new AuthenticationException("Firebase error: " + errorCode);
+            }
+        } catch (Exception e) {
+            throw new AuthenticationException(e.getMessage());
+        }
+    }
+
 }

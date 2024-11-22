@@ -49,3 +49,150 @@ java.net.BindException: Address already in use
 	at org.spaceinvaders.firebase.Server.main(Server.java:48)
 2024-11-20 07:52:21 [HTTP-Dispatcher] INFO  o.s.firebase.util.LoggerUtil - User Signed in
 2024-11-20 07:54:04 [HTTP-Dispatcher] INFO  o.s.firebase.util.LoggerUtil - User Signed in
+2024-11-22 19:30:13 [main] INFO  o.s.firebase.util.LoggerUtil - Server started at http://localhost:8080
+2024-11-22 19:31:15 [HTTP-Dispatcher] ERROR o.s.firebase.util.LoggerUtil - Failed to send password reset email
+com.google.firebase.auth.FirebaseAuthException: Unexpected HTTP response with status: 400
+{
+  "error": {
+    "code": 400,
+    "message": "INVALID_EMAIL",
+    "errors": [
+      {
+        "message": "INVALID_EMAIL",
+        "domain": "global",
+        "reason": "invalid"
+      }
+    ]
+  }
+}
+
+	at com.google.firebase.auth.internal.AuthErrorHandler.createException(AuthErrorHandler.java:122)
+	at com.google.firebase.auth.internal.AuthErrorHandler.createException(AuthErrorHandler.java:35)
+	at com.google.firebase.internal.AbstractHttpErrorHandler.handleHttpResponseException(AbstractHttpErrorHandler.java:57)
+	at com.google.firebase.internal.ErrorHandlingHttpClient.send(ErrorHandlingHttpClient.java:108)
+	at com.google.firebase.auth.internal.AuthHttpClient.sendRequest(AuthHttpClient.java:75)
+	at com.google.firebase.auth.internal.AuthHttpClient.sendRequest(AuthHttpClient.java:69)
+	at com.google.firebase.auth.FirebaseUserManager.post(FirebaseUserManager.java:351)
+	at com.google.firebase.auth.FirebaseUserManager.getEmailActionLink(FirebaseUserManager.java:230)
+	at com.google.firebase.auth.AbstractFirebaseAuth$18.execute(AbstractFirebaseAuth.java:1236)
+	at com.google.firebase.auth.AbstractFirebaseAuth$18.execute(AbstractFirebaseAuth.java:1233)
+	at com.google.firebase.internal.CallableOperation.call(CallableOperation.java:36)
+	at com.google.firebase.auth.AbstractFirebaseAuth.generatePasswordResetLink(AbstractFirebaseAuth.java:1097)
+	at com.google.firebase.auth.AbstractFirebaseAuth.generatePasswordResetLink(AbstractFirebaseAuth.java:1081)
+	at org.spaceinvaders.firebase.Firebase.sendResetPasswordEmail(Firebase.java:151)
+	at org.spaceinvaders.firebase.Server$ResetPasswordHandler.handle(Server.java:144)
+	at jdk.httpserver/com.sun.net.httpserver.Filter$Chain.doFilter(Filter.java:95)
+	at jdk.httpserver/sun.net.httpserver.AuthFilter.doFilter(AuthFilter.java:82)
+	at jdk.httpserver/com.sun.net.httpserver.Filter$Chain.doFilter(Filter.java:98)
+	at jdk.httpserver/sun.net.httpserver.ServerImpl$Exchange$LinkHandler.handle(ServerImpl.java:853)
+	at jdk.httpserver/com.sun.net.httpserver.Filter$Chain.doFilter(Filter.java:95)
+	at jdk.httpserver/sun.net.httpserver.ServerImpl$Exchange.run(ServerImpl.java:820)
+	at jdk.httpserver/sun.net.httpserver.ServerImpl$DefaultExecutor.execute(ServerImpl.java:201)
+	at jdk.httpserver/sun.net.httpserver.ServerImpl$Dispatcher.handle(ServerImpl.java:562)
+	at jdk.httpserver/sun.net.httpserver.ServerImpl$Dispatcher.run(ServerImpl.java:527)
+	at java.base/java.lang.Thread.run(Thread.java:842)
+Caused by: com.google.api.client.http.HttpResponseException: 400 Bad Request
+POST https://identitytoolkit.googleapis.com/v1/projects/nebula-s-edge-6e33d/accounts:sendOobCode
+{
+  "error": {
+    "code": 400,
+    "message": "INVALID_EMAIL",
+    "errors": [
+      {
+        "message": "INVALID_EMAIL",
+        "domain": "global",
+        "reason": "invalid"
+      }
+    ]
+  }
+}
+
+	at com.google.api.client.http.HttpResponseException$Builder.build(HttpResponseException.java:293)
+	at com.google.api.client.http.HttpRequest.execute(HttpRequest.java:1118)
+	at com.google.firebase.internal.ErrorHandlingHttpClient.send(ErrorHandlingHttpClient.java:96)
+	... 21 common frames omitted
+2024-11-22 19:31:15 [HTTP-Dispatcher] INFO  o.s.firebase.util.LoggerUtil - Invalid email address
+2024-11-22 19:31:42 [HTTP-Dispatcher] INFO  o.s.firebase.util.LoggerUtil - Password reset email sent to: avancha.dedeepya@iiitb.ac.in
+2024-11-22 19:31:42 [HTTP-Dispatcher] INFO  o.s.firebase.util.LoggerUtil - Password reset email sent
+2024-11-22 19:35:48 [HTTP-Dispatcher] INFO  o.s.firebase.util.LoggerUtil - Created user: JlBmSVKpiDemikoN0Ag3tvt3chh1
+2024-11-22 19:35:48 [HTTP-Dispatcher] INFO  o.s.firebase.util.LoggerUtil - User Created
+2024-11-22 19:39:54 [main] INFO  o.s.firebase.util.LoggerUtil - Server started at http://localhost:8080
+2024-11-22 19:40:19 [HTTP-Dispatcher] ERROR o.s.firebase.util.LoggerUtil - Failed to send password reset email
+com.google.firebase.auth.FirebaseAuthException: Unexpected HTTP response with status: 400
+{
+  "error": {
+    "code": 400,
+    "message": "INVALID_EMAIL",
+    "errors": [
+      {
+        "message": "INVALID_EMAIL",
+        "domain": "global",
+        "reason": "invalid"
+      }
+    ]
+  }
+}
+
+	at com.google.firebase.auth.internal.AuthErrorHandler.createException(AuthErrorHandler.java:122)
+	at com.google.firebase.auth.internal.AuthErrorHandler.createException(AuthErrorHandler.java:35)
+	at com.google.firebase.internal.AbstractHttpErrorHandler.handleHttpResponseException(AbstractHttpErrorHandler.java:57)
+	at com.google.firebase.internal.ErrorHandlingHttpClient.send(ErrorHandlingHttpClient.java:108)
+	at com.google.firebase.auth.internal.AuthHttpClient.sendRequest(AuthHttpClient.java:75)
+	at com.google.firebase.auth.internal.AuthHttpClient.sendRequest(AuthHttpClient.java:69)
+	at com.google.firebase.auth.FirebaseUserManager.post(FirebaseUserManager.java:351)
+	at com.google.firebase.auth.FirebaseUserManager.getEmailActionLink(FirebaseUserManager.java:230)
+	at com.google.firebase.auth.AbstractFirebaseAuth$18.execute(AbstractFirebaseAuth.java:1236)
+	at com.google.firebase.auth.AbstractFirebaseAuth$18.execute(AbstractFirebaseAuth.java:1233)
+	at com.google.firebase.internal.CallableOperation.call(CallableOperation.java:36)
+	at com.google.firebase.auth.AbstractFirebaseAuth.generatePasswordResetLink(AbstractFirebaseAuth.java:1097)
+	at com.google.firebase.auth.AbstractFirebaseAuth.generatePasswordResetLink(AbstractFirebaseAuth.java:1081)
+	at org.spaceinvaders.firebase.Firebase.sendResetPasswordEmail(Firebase.java:151)
+	at org.spaceinvaders.firebase.Server$ResetPasswordHandler.handle(Server.java:144)
+	at jdk.httpserver/com.sun.net.httpserver.Filter$Chain.doFilter(Filter.java:95)
+	at jdk.httpserver/sun.net.httpserver.AuthFilter.doFilter(AuthFilter.java:82)
+	at jdk.httpserver/com.sun.net.httpserver.Filter$Chain.doFilter(Filter.java:98)
+	at jdk.httpserver/sun.net.httpserver.ServerImpl$Exchange$LinkHandler.handle(ServerImpl.java:853)
+	at jdk.httpserver/com.sun.net.httpserver.Filter$Chain.doFilter(Filter.java:95)
+	at jdk.httpserver/sun.net.httpserver.ServerImpl$Exchange.run(ServerImpl.java:820)
+	at jdk.httpserver/sun.net.httpserver.ServerImpl$DefaultExecutor.execute(ServerImpl.java:201)
+	at jdk.httpserver/sun.net.httpserver.ServerImpl$Dispatcher.handle(ServerImpl.java:562)
+	at jdk.httpserver/sun.net.httpserver.ServerImpl$Dispatcher.run(ServerImpl.java:527)
+	at java.base/java.lang.Thread.run(Thread.java:842)
+Caused by: com.google.api.client.http.HttpResponseException: 400 Bad Request
+POST https://identitytoolkit.googleapis.com/v1/projects/nebula-s-edge-6e33d/accounts:sendOobCode
+{
+  "error": {
+    "code": 400,
+    "message": "INVALID_EMAIL",
+    "errors": [
+      {
+        "message": "INVALID_EMAIL",
+        "domain": "global",
+        "reason": "invalid"
+      }
+    ]
+  }
+}
+
+	at com.google.api.client.http.HttpResponseException$Builder.build(HttpResponseException.java:293)
+	at com.google.api.client.http.HttpRequest.execute(HttpRequest.java:1118)
+	at com.google.firebase.internal.ErrorHandlingHttpClient.send(ErrorHandlingHttpClient.java:96)
+	... 21 common frames omitted
+2024-11-22 19:40:19 [HTTP-Dispatcher] INFO  o.s.firebase.util.LoggerUtil - Invalid email address
+2024-11-22 19:40:29 [HTTP-Dispatcher] INFO  o.s.firebase.util.LoggerUtil - Password reset email sent to: dedeepya@gmail.com
+2024-11-22 19:40:29 [HTTP-Dispatcher] INFO  o.s.firebase.util.LoggerUtil - Password reset email sent
+2024-11-22 19:40:58 [HTTP-Dispatcher] INFO  o.s.firebase.util.LoggerUtil - Password reset email sent to: avancha.dedeepya@iiitb.ac.in
+2024-11-22 19:40:58 [HTTP-Dispatcher] INFO  o.s.firebase.util.LoggerUtil - Password reset email sent
+2024-11-22 19:41:02 [HTTP-Dispatcher] INFO  o.s.firebase.util.LoggerUtil - Password reset email sent to: avancha.dedeepya@iiitb.ac.in
+2024-11-22 19:41:02 [HTTP-Dispatcher] INFO  o.s.firebase.util.LoggerUtil - Password reset email sent
+2024-11-22 19:41:05 [HTTP-Dispatcher] INFO  o.s.firebase.util.LoggerUtil - Password reset email sent to: avancha.dedeepya@iiitb.ac.in
+2024-11-22 19:41:05 [HTTP-Dispatcher] INFO  o.s.firebase.util.LoggerUtil - Password reset email sent
+2024-11-22 19:48:30 [main] INFO  o.s.firebase.util.LoggerUtil - Server started at http://localhost:8080
+2024-11-22 19:48:54 [HTTP-Dispatcher] INFO  o.s.firebase.util.LoggerUtil - Email not registered
+2024-11-22 19:49:29 [HTTP-Dispatcher] INFO  o.s.firebase.util.LoggerUtil - Email not registered
+2024-11-22 19:49:33 [HTTP-Dispatcher] INFO  o.s.firebase.util.LoggerUtil - Email not registered
+2024-11-22 19:50:01 [HTTP-Dispatcher] INFO  o.s.firebase.util.LoggerUtil - Created user: thcDWgR2XhQcvtp7XnGwGMjLVDb2
+2024-11-22 19:50:01 [HTTP-Dispatcher] INFO  o.s.firebase.util.LoggerUtil - User Created
+2024-11-22 19:50:16 [HTTP-Dispatcher] INFO  o.s.firebase.util.LoggerUtil - Email not registered
+2024-11-22 19:50:21 [HTTP-Dispatcher] INFO  o.s.firebase.util.LoggerUtil - Password reset email sent to: deepya1235@gmail.com
+2024-11-22 19:50:21 [HTTP-Dispatcher] INFO  o.s.firebase.util.LoggerUtil - Password reset email sent

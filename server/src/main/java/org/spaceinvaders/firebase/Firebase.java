@@ -32,32 +32,25 @@ import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
 
-public final class Firebase
-{
+public final class Firebase {
     public static final String SERVICE_ACCOUNT_KEY = "serviceAccountKey.json";
 
     /**
-     * @throws IOException                  If the firebase could not be initialized
-     * @throws NetworkNotFoundException     If there is no network connection
+     * @throws IOException              If the firebase could not be initialized
+     * @throws NetworkNotFoundException If there is no network connection
      */
-    private Firebase() throws IOException, NetworkNotFoundException
-    {
+    private Firebase() throws IOException, NetworkNotFoundException {
         initializeFirebase();
     }
 
-    //Holder class so that the Firebase is only initialized once
-    private static class Holder
-    {
+    // Holder class so that the Firebase is only initialized once
+    private static class Holder {
         private static final Firebase INSTANCE;
 
-        static
-        {
-            try
-            {
+        static {
+            try {
                 INSTANCE = new Firebase();
-            }
-            catch(IOException | NetworkNotFoundException e)
-            {
+            } catch (IOException | NetworkNotFoundException e) {
                 LoggerUtil.logError(e.getMessage());
                 throw new NetworkNotFoundException("Cannot connect to the network.");
             }
@@ -65,27 +58,24 @@ public final class Firebase
     }
 
     /**
-     * Initializes the firebase database from the service account key provided in the "resources" folder.
+     * Initializes the firebase database from the service account key provided in
+     * the "resources" folder.
+     * 
      * @throws IOException              if the service account key is missing
      * @throws NetworkNotFoundException if the program cannot connect to the network
      */
-    private void initializeFirebase() throws IOException, NetworkNotFoundException
-    {
-        try (InputStream serviceAccount = getClass().getClassLoader().getResourceAsStream(SERVICE_ACCOUNT_KEY))
-        {
+    private void initializeFirebase() throws IOException, NetworkNotFoundException {
+        try (InputStream serviceAccount = getClass().getClassLoader().getResourceAsStream(SERVICE_ACCOUNT_KEY)) {
             if (serviceAccount == null)
                 throw new IOException("Resource file 'serviceAccountKey.json' not found in resources.");
 
-            try
-            {
+            try {
                 FirebaseOptions options = FirebaseOptions.builder()
                         .setCredentials(GoogleCredentials.fromStream(serviceAccount))
                         .build();
 
                 FirebaseApp.initializeApp(options);
-            }
-            catch(IOException e)
-            {
+            } catch (IOException e) {
                 throw new NetworkNotFoundException("Cannot connect to the network.");
             }
         }
@@ -93,22 +83,23 @@ public final class Firebase
 
     /**
      * Returns the firebase instance
+     * 
      * @return the firebase instance
      */
-    public static Firebase getInstance()
-    {
+    public static Firebase getInstance() {
         return Holder.INSTANCE;
     }
 
     /**
      * Creates a user from the given email address and password
-     * @param email                     the email address of the user
-     * @param password                  the password of the user
-     * @throws FirebaseAuthException    if the user with the given username already exists (or password is too weak)
-     * @throws DatabaseAccessException  if the user's  data could not be created
+     * 
+     * @param email    the email address of the user
+     * @param password the password of the user
+     * @throws FirebaseAuthException   if the user with the given username already
+     *                                 exists (or password is too weak)
+     * @throws DatabaseAccessException if the user's data could not be created
      */
-    public void createUser(String email, String password) throws FirebaseAuthException, DatabaseAccessException
-    {
+    public void createUser(String email, String password) throws FirebaseAuthException, DatabaseAccessException {
         UserRecord.CreateRequest request = new UserRecord.CreateRequest()
                 .setEmail(email)
                 .setPassword(password);
@@ -120,13 +111,15 @@ public final class Firebase
     }
 
     /**
-     * When a new user is created, this function adds the default data for that user.
-     * @param userId                        the unique user id of the user
-     * @param email                         the email address of the user
-     * @throws DatabaseAccessException      if any errors occurred in accessing the database
+     * When a new user is created, this function adds the default data for that
+     * user.
+     * 
+     * @param userId the unique user id of the user
+     * @param email  the email address of the user
+     * @throws DatabaseAccessException if any errors occurred in accessing the
+     *                                 database
      */
-    private void addUserData(String userId, String email) throws DatabaseAccessException
-    {
+    private void addUserData(String userId, String email) throws DatabaseAccessException {
         // Add additional user data to Firestore
         Firestore db = FirestoreClient.getFirestore();
         Map<String, Object> userData = new HashMap<>();
@@ -136,13 +129,11 @@ public final class Firebase
 
         // Save the data in the Firestore users collection
         DocumentReference docRef = db.collection("users").document(userId);
-        try
-        {
+        try {
             // Blocks until the write operation is done
             docRef.set(userData).get();
             LoggerUtil.logInfo("Created user: " + userId);
-        } catch (Exception e)
-        {
+        } catch (Exception e) {
             LoggerUtil.logException("Error creating user: " + userId, e);
             throw new DatabaseAccessException("Error creating database for user: " + userId);
         }

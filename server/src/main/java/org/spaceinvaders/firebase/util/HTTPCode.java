@@ -14,8 +14,7 @@
 
 package org.spaceinvaders.firebase.util;
 
-public enum HTTPCode
-{
+public enum HTTPCode {
     SUCCESS(200),
     INVALID_JSON(400),
     INVALID_ID_PASS(401),
@@ -29,19 +28,18 @@ public enum HTTPCode
     private final int code;
 
     /**
-     * @param code      the http code
+     * @param code the http code
      */
-    private HTTPCode(int code)
-    {
+    private HTTPCode(int code) {
         this.code = code;
     }
 
     /**
      * Returns the http code of this enum
-     * @return      the http code
+     * 
+     * @return the http code
      */
-    public int getCode()
-    {
+    public int getCode() {
         return this.code;
     }
 }
