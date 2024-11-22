@@ -48,6 +48,7 @@ public class PauseScreen implements Screen {
 
     @Override
     public void show() {
+        game.musicManager.play("gameplay");
         Gdx.input.setInputProcessor(stage);
     }
 
@@ -81,12 +82,12 @@ public class PauseScreen implements Screen {
 
     @Override
     public void pause() {
-
+        game.musicManager.pause();
     }
 
     @Override
     public void resume() {
-
+        game.musicManager.resume();
     }
 
     @Override
@@ -101,10 +102,10 @@ public class PauseScreen implements Screen {
 
     private void initializeActors() {
 
-        ImageButton menuButton = ButtonUtils.createImageButton(game, "textures/menu.png", "textures/menu.png", 38, 38,
-                (STAGE_WIDTH - 38) / 2f - 58, 80);
-        ImageButton playButton = ButtonUtils.createImageButton(game, "textures/play.png", "textures/play.png", 38, 38,
-                (STAGE_WIDTH - 38) / 2f, 80);
+        ImageButton menuButton = ButtonUtils.createScreenNavigationButton(game, "textures/menu.png", "textures/menu.png", 38, 38,
+                (STAGE_WIDTH - 38) / 2f - 58, 80, ScreenState.MAIN_MENU);
+        ImageButton playButton = ButtonUtils.createScreenNavigationButton(game, "textures/play.png", "textures/play.png", 38, 38,
+                (STAGE_WIDTH - 38) / 2f, 80, ScreenState.GAMEPLAY);
         ImageButton restartButton = ButtonUtils.createImageButton(game, "textures/restart.png", "textures/restart.png",
                 38, 38, (STAGE_WIDTH - 38) / 2f + 58, 80);
 
@@ -134,9 +135,6 @@ public class PauseScreen implements Screen {
             return false;
         });
 
-        ImageButton backButton = ButtonUtils.createBackButton(this.game, "textures/back-button.png",
-                "textures/back-button.png", 28, 15, 10, 245, game.screenManager.getRecentScreen());
-
         stage.addActor(menuButton);
         stage.addActor(playButton);
         stage.addActor(restartButton);
@@ -146,6 +144,5 @@ public class PauseScreen implements Screen {
         stage.addActor(soundIcon);
         stage.addActor(soundSlider);
         stage.addActor(soundLabel);
-        stage.addActor(backButton);
     }
 }

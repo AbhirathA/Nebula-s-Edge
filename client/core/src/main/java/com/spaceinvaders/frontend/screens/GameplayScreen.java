@@ -1,8 +1,6 @@
 package com.spaceinvaders.frontend.screens;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
-import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.*;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -32,6 +30,8 @@ public class GameplayScreen implements Screen {
 
     private UIStage uiStage;
 
+    InputMultiplexer multiplexer;
+
     public GameplayScreen(SpaceInvadersGame game, float CAMERA_WIDTH, float CAMERA_HEIGHT, float WORLD_WIDTH, float WORLD_HEIGHT) {
         this.game = game;
         this.CAMERA_WIDTH = CAMERA_WIDTH;
@@ -55,9 +55,25 @@ public class GameplayScreen implements Screen {
         rocketSprite.setOrigin(rocketSprite.getWidth() / 2, rocketSprite.getHeight() / 2);
 
         uiStage = new UIStage(game, new FitViewport(CAMERA_WIDTH, CAMERA_HEIGHT));
+
+        multiplexer = new InputMultiplexer();
+        multiplexer.addProcessor(uiStage); // UI input comes first
+        multiplexer.addProcessor(new InputAdapter() { // Gameplay-specific input
+            @Override
+            public boolean keyDown(int keycode) {
+                if (keycode == Input.Keys.ESCAPE) {
+                    game.screenManager.setScreen(ScreenState.PAUSE); // Switch to PauseScreen
+                    return true;
+                }
+                return false;
+            }
+        });
+        Gdx.input.setInputProcessor(multiplexer);
     }
+
     @Override
     public void show() {
+        Gdx.input.setInputProcessor(multiplexer);
         game.musicManager.play("gameplay");
     }
 
@@ -112,13 +128,15 @@ public class GameplayScreen implements Screen {
 
     @Override
     public void pause() {
-
+        game.musicManager.pause();
+        game.screenManager.setScreen(ScreenState.PAUSE);
     }
 
     @Override
     public void resume() {
-
+        game.musicManager.resume();
     }
+
 
     @Override
     public void hide() {
@@ -145,7 +163,7 @@ public class GameplayScreen implements Screen {
     }
 
     private void updateCamera() {
-        camera.position.set(rocketSprite.getX(), rocketSprite.getY(), 0);
+        camera.position.set(rocketSprite.getX() + rocketSprite.getWidth() / 2, rocketSprite.getY() + rocketSprite.getHeight() / 2, 0);
 
         camera.position.x = MathUtils.clamp(camera.position.x, CAMERA_WIDTH / 2, WORLD_WIDTH - CAMERA_WIDTH / 2);
         camera.position.y = MathUtils.clamp(camera.position.y, CAMERA_HEIGHT / 2, WORLD_HEIGHT - CAMERA_HEIGHT / 2);

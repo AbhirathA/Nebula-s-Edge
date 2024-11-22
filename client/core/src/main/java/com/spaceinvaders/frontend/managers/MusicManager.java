@@ -28,6 +28,10 @@ public class MusicManager implements Disposable {
 
     // Plays the music track associated with the provided key
     public void play(String key) {
+        if(currentMusic == musicTracks.get(key)) {
+            return;
+        }
+
         // Stop the currently playing music if there is one
         if(currentMusic != null) {
             currentMusic.stop();

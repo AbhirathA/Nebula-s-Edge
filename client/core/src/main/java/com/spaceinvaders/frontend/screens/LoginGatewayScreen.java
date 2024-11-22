@@ -53,6 +53,7 @@ public class LoginGatewayScreen implements Screen {
 
     @Override
     public void show() {
+        game.musicManager.play("introMusic");
         Gdx.input.setInputProcessor(stage);
     }
 
@@ -88,13 +89,14 @@ public class LoginGatewayScreen implements Screen {
 
     @Override
     public void pause() {
-
+        game.musicManager.pause();
     }
 
     @Override
     public void resume() {
-
+        game.musicManager.resume();
     }
+
 
     @Override
     public void hide() {

@@ -49,19 +49,19 @@ public class HealthBar extends Actor {
 
         // Render full hearts
         for (int i = 0; i < numFull; i++) {
-            batch.draw(fullHeart, startX, getY());
+            batch.draw(fullHeart, startX, getY(), 9, 9);
             startX += width + spacing;
         }
 
         // Render half heart if needed
         if (numHalf == 1) {
-            batch.draw(halfHeart, startX, getY());
+            batch.draw(halfHeart, startX, getY(), 9, 9);
             startX += width + spacing;
         }
 
         // Render empty hearts
         for (int i = 0; i < numEmpty; i++) {
-            batch.draw(emptyHeart, startX, getY());
+            batch.draw(emptyHeart, startX, getY(), 9, 9);
             startX += width + spacing;
         }
     }

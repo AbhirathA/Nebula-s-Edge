@@ -50,6 +50,7 @@ public class MyAssetManager {
         assetManager.load("textures/heart.png", Texture.class);
         assetManager.load("textures/halfHeart.png", Texture.class);
         assetManager.load("textures/emptyHeart.png", Texture.class);
+        assetManager.load("textures/pause.png", Texture.class);
     }
 
     // Retrieves an asset from the AssetManager based on its file path and type

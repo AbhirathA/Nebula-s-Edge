@@ -31,6 +31,7 @@ textures/multiplayer.png
 textures/music.png
 textures/options.png
 textures/outline.png
+textures/pause.png
 textures/play.png
 textures/restart.png
 textures/selection.png

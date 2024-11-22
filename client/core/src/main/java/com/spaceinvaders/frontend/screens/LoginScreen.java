@@ -62,6 +62,7 @@ public class LoginScreen implements Screen {
     @Override
     public void show() {
         this.clearErrorAndSuccessLabel();
+        game.musicManager.play("introMusic");
         Gdx.input.setInputProcessor(this.stage);
     }
 
@@ -97,13 +98,14 @@ public class LoginScreen implements Screen {
 
     @Override
     public void pause() {
-
+        game.musicManager.pause();
     }
 
     @Override
     public void resume() {
-
+        game.musicManager.resume();
     }
+
 
     @Override
     public void hide() {

@@ -35,7 +35,6 @@ public class SpaceInvadersGame extends Game {
             SpaceInvadersGame.this.screenManager = new ScreenManager(SpaceInvadersGame.this);
             SpaceInvadersGame.this.screenManager.setScreen(ScreenState.LOGIN_GATEWAY);
             SpaceInvadersGame.this.soundManager.loadSounds(SpaceInvadersGame.this.assetManager);
-            SpaceInvadersGame.this.musicManager.play("introMusic");
         }
 
         @Override
