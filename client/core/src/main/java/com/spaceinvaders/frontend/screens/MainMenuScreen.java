@@ -113,7 +113,7 @@ public class MainMenuScreen implements Screen {
     private void initializeActors() {
         ImageTextButton singlePlayerButton = ButtonUtils.createScreenNavigationButton(game, "SinglePlayer", "textures/button.png", "textures/button.png", 95, 15, (STAGE_WIDTH - 95) / 2, 98, ScreenState.GAMEPLAY);
         ImageTextButton multiPlayerButton = ButtonUtils.createScreenNavigationButton(game, "MultiPlayer", "textures/button.png", "textures/button.png", 95, 15, (STAGE_WIDTH - 95) / 2, 81, null);
-        ImageTextButton optionsButton = ButtonUtils.createScreenNavigationButton(game, "Options", "textures/button.png", "textures/button.png", 95, 15, (STAGE_WIDTH - 95) / 2, 64, ScreenState.PAUSE);
+        ImageTextButton optionsButton = ButtonUtils.createScreenNavigationButton(game, "Options", "textures/button.png", "textures/button.png", 95, 15, (STAGE_WIDTH - 95) / 2, 64, ScreenState.OPTIONS);
 
         ImageButton backButton = ButtonUtils.createBackButton(this.game, "textures/back-button.png", "textures/back-button.png", 28, 15, 10, 245, game.screenManager.getRecentScreen());
 

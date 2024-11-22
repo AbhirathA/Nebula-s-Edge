@@ -16,4 +16,14 @@ public class LabelUtils {
 
         return label;
     }
+
+    public static Label createLabel(String text, BitmapFont font) {
+        Label.LabelStyle labelStyle = new Label.LabelStyle();
+        labelStyle.font = font;
+        labelStyle.fontColor = Color.WHITE;
+
+        Label label = new Label(text, labelStyle);
+
+        return label;
+    }
 }

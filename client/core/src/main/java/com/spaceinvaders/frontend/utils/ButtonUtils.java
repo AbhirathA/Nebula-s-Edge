@@ -282,6 +282,56 @@ public class ButtonUtils {
     }
 
     /**
+     * Creates an ImageTextButton with text and background textures.
+     *
+     * @param game         The SpaceInvadersGame instance to access shared resources and managers.
+     * @param buttonText   The text displayed on the button.
+     * @param upImagePath  The file path of the texture used when the button is not pressed.
+     * @param downImagePath The file path of the texture used when the button is pressed.
+     * @return             An ImageTextButton instance configured with the given properties without a set position and size.
+     */
+    public static ImageTextButton createButton(SpaceInvadersGame game, String buttonText, String upImagePath, String downImagePath) {
+        // Load textures for the button's visual states
+        Texture upTexture = game.assetManager.get(upImagePath, Texture.class);
+        Texture downTexture = game.assetManager.get(downImagePath, Texture.class);
+
+        // Create drawable objects from the loaded textures
+        TextureRegionDrawable upDrawable = new TextureRegionDrawable(new TextureRegion(upTexture));
+        TextureRegionDrawable downDrawable = new TextureRegionDrawable(new TextureRegion(downTexture));
+
+        // Define the style for the ImageTextButton
+        ImageTextButton.ImageTextButtonStyle style = new ImageTextButton.ImageTextButtonStyle();
+        style.up = upDrawable;
+        style.down = downDrawable;
+
+        // Load the font from the asset manager and set the font properties
+        BitmapFont font = game.assetManager.get("fonts/minecraft.fnt", BitmapFont.class);
+        style.font = font;
+        style.fontColor = Color.valueOf("4b692f");
+
+        // Create the ImageTextButton and set its size and position
+        ImageTextButton button = new ImageTextButton(buttonText, style);
+
+        // Add an input listener to handle hover interactions
+        button.addListener(new InputListener() {
+            @Override
+            public void enter(InputEvent event, float x, float y, int pointer, Actor button) {
+                // Change cursor to hand icon when hovering over the button
+                Gdx.graphics.setSystemCursor(Cursor.SystemCursor.Hand);
+            }
+
+            @Override
+            public void exit(InputEvent event, float x, float y, int pointer, Actor button) {
+                // Reset cursor to default arrow when exiting the button area
+                Gdx.graphics.setSystemCursor(Cursor.SystemCursor.Arrow);
+            }
+        });
+
+        // Return the configured ImageTextButton
+        return button;
+    }
+
+    /**
      * Creates an ImageButton with background textures.
      *
      * @param game         The SpaceInvadersGame instance to access shared resources and managers.
