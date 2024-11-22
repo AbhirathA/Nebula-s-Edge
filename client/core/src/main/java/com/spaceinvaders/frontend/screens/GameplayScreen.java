@@ -75,6 +75,7 @@ public class GameplayScreen implements Screen {
     public void show() {
         Gdx.input.setInputProcessor(multiplexer);
         game.musicManager.play("gameplay");
+        uiStage.setPaused(false);
     }
 
     @Override
@@ -130,17 +131,20 @@ public class GameplayScreen implements Screen {
     public void pause() {
         game.musicManager.pause();
         game.screenManager.setScreen(ScreenState.PAUSE);
+        uiStage.setPaused(true);
     }
 
     @Override
     public void resume() {
         game.musicManager.resume();
+        uiStage.setPaused(false);
     }
 
 
     @Override
     public void hide() {
         Gdx.input.setInputProcessor(null);
+        uiStage.setPaused(true);
     }
 
     @Override
