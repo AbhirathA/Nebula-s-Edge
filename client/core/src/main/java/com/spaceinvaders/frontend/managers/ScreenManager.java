@@ -129,6 +129,8 @@ public class ScreenManager implements Disposable {
                 return new GameplayScreen(this.game, WORLD_WIDTH, WORLD_HEIGHT, 720, 405);
             case OPTIONS:
                 return new OptionsScreen(this.game, WORLD_WIDTH, WORLD_HEIGHT, STAGE_WIDTH, STAGE_HEIGHT, starsBackground, planetsBackground);
+            case RESET_PASSWORD:
+                return new ResetPasswordScreen(this.game, WORLD_WIDTH, WORLD_HEIGHT, STAGE_WIDTH, STAGE_HEIGHT, starsBackground, planetsBackground);
             default:
                 throw new IllegalArgumentException("Unknown screen state: " + screenState); // Throw an error if the screen state is unknown
         }

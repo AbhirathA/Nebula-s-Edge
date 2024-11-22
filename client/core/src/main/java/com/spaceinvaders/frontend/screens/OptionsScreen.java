@@ -286,7 +286,7 @@ public class OptionsScreen implements Screen {
                 game.soundManager.play("buttonClick");
 
                 // Navigate to the Signup screen when the button is clicked
-                game.screenManager.setScreen(ScreenState.SIGNUP);
+                game.screenManager.setScreen(ScreenState.RESET_PASSWORD);
                 return true;
             }
         });
