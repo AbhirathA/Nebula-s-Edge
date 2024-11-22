@@ -3,13 +3,13 @@
 class stdVerlet : public LinearObj{
 
     protected:
-    	double posX_vOld = 0;
-		double posY_vOld = 0;
-		double posX_old = 0;
-		double posY_old = 0;
+    	int posX_vOld = 0;
+		int posY_vOld = 0;
+		int posX_old = 0;
+		int posY_old = 0;
 
     public:
-        stdVerlet(int id, double x, double y, double vX, double vY, double accX, double accY, double res, double innerRad, double outerRad, double mass) : LinearObj(id, x, y, vX, vY, accX, accY, res, innerRad, outerRad, mass) {
+        stdVerlet(int id, int x, int y, int vX, int vY, int accX, int accY, int res, int innerRad, int outerRad, int mass) : LinearObj(id, x, y, vX, vY, accX, accY, res, innerRad, outerRad, mass) {
             
             this->posX_old = x - vX * res;
 			this->posY_old = y - vY * res;
@@ -17,64 +17,64 @@ class stdVerlet : public LinearObj{
 			this->posY_vOld = y - 2 * vY * res ; ///
         }
 
-        double getX_Old(){
+        int getX_Old(){
             return posX_old;
         }
 
-		double getY_Old(){
+		int getY_Old(){
             return posY_old;
         }
 
-		double getX_vOld(){
+		int getX_vOld(){
 			return posX_vOld;
 		}
 
-		double getY_vOld(){
+		int getY_vOld(){
             return posY_vOld;
         }
 
-		void updateX(double x, double o, double vo) {
+		void updateX(int x, int o, int vo) {
 			posX_vOld = vo;
 			posX_old = o;
 			posX = x;
 		}
 
-		void updateX(double x, double o) {
+		void updateX(int x, int o) {
 			posX_vOld = posX_old;
 			posX_old = o;
 			posX = x;
 		}
 
-		void updateX(double x) {
+		void updateX(int x) {
 			posX_vOld = posX_old;
 			posX_old = posX;
 			posX = x;
 		}
 
-		void updateY(double y, double o, double vo) {
+		void updateY(int y, int o, int vo) {
 			posY_vOld = vo;
 			posY_old = o;
 			posY = y;
 		}
 
-		void updateY(double y, double o) {
+		void updateY(int y, int o) {
 			posY_vOld = posY_old;
 			posY_old = o;
 			posY = y;
 		}
 
-		void updateY(double y) {
+		void updateY(int y) {
 			posY_vOld = posY_old;
 			posY_old = posY;
 			posY = y;
 		}
 
-        virtual void updatePos(double t) override final;
-        virtual double getNextX(double t) override final;
-        virtual double getNextY(double t) override final;
+        virtual void updatePos(int t) override final;
+        virtual int getNextX(int t) override final;
+        virtual int getNextY(int t) override final;
 
         virtual bool checkCollision(Obj* obj);
-        virtual bool boundCorrection(double lft, double rt, double tp, double bt, double t);
+        virtual bool boundCorrection(int lft, int rt, int tp, int bt, int t);
         virtual bool collisionCorection(Obj* other);
 
         virtual ~stdVerlet(){}

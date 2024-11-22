@@ -26,22 +26,22 @@ class Obj
 		int id = 0;
 
 		//The X-Y coordinates of the object
-		double posX = 0;
-		double posY = 0;
+		int posX = 0;
+		int posY = 0;
 
 		//The state of the object
-		double state = 0;
+		int state = 0;
 
 		//The mass and radii of the object
-		double mass = 0;
-		double innerRad = 0;
-		double outerRad = 0;
+		int mass = 0;
+		int innerRad = 0;
+		int outerRad = 0;
 
 		//The bounding box of the object
 		AABB* objBox = nullptr;
 
 	public:
-		Obj(int id, double x, double y, double innerRad, double outerRad, double mass) {
+		Obj(int id, int x, int y, int innerRad, int outerRad, int mass) {
 			this->id = id;
 			this->posX = x;
 			this->posY = y;
@@ -51,35 +51,35 @@ class Obj
 			this->objBox = new AABB({x-outerRad, y-outerRad}, {x+outerRad, y+outerRad});
 		}
 
-		double getX() {
+		int getX() {
 			return posX;
 		}
 
-		double getY() {
+		int getY() {
 			return posY;
 		}
 
-		virtual void updateX(double x) {
+		virtual void updateX(int x) {
 			posX = x;
         }
 
-		virtual void updateY(double y) {
+		virtual void updateY(int y) {
             posY = y;
         }
 
-		double getOuterR(){
+		int getOuterR(){
 			return outerRad;
 		}
 
-		double getInnerR(){
+		int getInnerR(){
             return innerRad;
         }
 
-		double getState(){
+		int getState(){
 			return state;
 		}
 
-		double getMass() {
+		int getMass() {
 			return mass;
 		}
 
@@ -92,11 +92,11 @@ class Obj
 		}
 
 		virtual bool checkCollision(Obj* obj) = 0;
-		virtual void updatePos(double t) = 0;
+		virtual void updatePos(int t) = 0;
 		//void internalUpdate();
-		virtual double getNextX(double t) = 0;
-		virtual double getNextY(double t) = 0;
-		virtual bool boundCorrection(double lft, double rt, double tp, double bt, double t) = 0;
+		virtual int getNextX(int t) = 0;
+		virtual int getNextY(int t) = 0;
+		virtual bool boundCorrection(int lft, int rt, int tp, int bt, int t) = 0;
 		virtual bool collisionCorection(Obj* other) = 0;
 		virtual ~Obj() {};
 };

@@ -171,7 +171,7 @@ bool stdVerlet::collisionCorection(Obj* other){
 	// pre-compute the other objects radius.
 	int radOther = other->getInnerR();
 	// get the distance between the 2 centers
-	float distance = std::sqrt(dx * dx + dy * dy);
+	int distance = std::sqrt(dx * dx + dy * dy);
 
 	// Check 
     if(distance < (radOther + this->outerRad - PRECISION)){

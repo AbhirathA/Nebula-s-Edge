@@ -4,15 +4,15 @@
 //Wherever the position is being changed, objBox needs to be changed as wellf
 
 // Returns the next position if we update right now.
-double velVerlet::getNextX(double t){
-    return this->posX + this->vX * t + 0.5 * this->accX * t * t;
+int velVerlet::getNextX(int t){
+    return this->posX + this->vX * t + (this->accX * t * t)/2;
 } 
-double velVerlet::getNextY(double t){
-    return this->posY + this->vY * t + 0.5 * this->accY * t * t;
+int velVerlet::getNextY(int t){
+    return this->posY + this->vY * t + (this->accY * t * t)/2;
 }
 
 // We are using Velocity Verlet Algorithm for this
-void velVerlet::updatePos(double t){
+void velVerlet::updatePos(int t){
 
     // Position is updated
     this->posX = this->getNextX(t);
@@ -48,7 +48,7 @@ bool velVerlet::checkCollision(Obj* obj){ //////////////////////////////////////
 }
 
 // Ensures that the object is in bounds
-bool velVerlet::boundCorrection(double lft, double rt, double tp, double bt, double t){
+bool velVerlet::boundCorrection(int lft, int rt, int tp, int bt, int t){
 
     int x = (this->posX - rt)%(rt-lft+1) + lft;
     int y = (this->posY - bt)%(bt-tp+1) + tp;
