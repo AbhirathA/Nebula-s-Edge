@@ -10,9 +10,26 @@ void GameRender::initWindow() {
 	this->window = new sf::RenderWindow(sf::VideoMode(800, 600), "Dots moving", sf::Style::Close | sf::Style::Resize | sf::Style::Titlebar);
 }
 
+void GameRender::initObjects() {
+    this->o.setPosition(100, 0);
+    this->o.setSize(sf::Vector2f(100.f, 100.f));
+    this->o.setFillColor(sf::Color::Green);
+    this->o.setOutlineColor(sf::Color::Blue);
+    this->o.setOutlineThickness(2.f);
+}
+
+void GameRender::initEnemies(){
+    this->enemy.setPosition(0,0);
+    this->enemy.setSize(sf::Vector2f(100.f, 100.f));
+    this->enemy.setFillColor(sf::Color::Red);
+    this->enemy.setOutlineColor(sf::Color::Blue);
+    this->enemy.setOutlineThickness(2.f);
+}
+
 GameRender::GameRender(){
 	this->initVariables();
 	this->initWindow();
+    this->initEnemies();
 }
 
 GameRender::~GameRender(){
@@ -30,6 +47,8 @@ void GameRender::update(){
 void GameRender::render(){
     // Displays all objects
     this->window->clear(); //clear the frame
+    this->window->draw(this->enemy);
+    this->window->draw(this->o);
     this->window->display(); // redraw the frame
 }
 
@@ -43,7 +62,7 @@ void GameRender::pollEvents(){
 
         case sf::Event::KeyPressed:
             if (ev.key.code == sf::Keyboard::Space) { // Test space bar working
-                std::cout << 10 << std::endl;
+                this->initObjects();
             }
             else if (ev.key.code == sf::Keyboard::Escape) { // Close window if we hit X
                 this->window->close();

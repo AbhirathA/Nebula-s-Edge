@@ -22,7 +22,7 @@ void velVerlet::updatePos(int t){
 }
 
 // Check if collision has occured
-bool velVerlet::checkCollision(Obj* obj){ /////////////////////////////////////////
+bool velVerlet::checkCollision(LinearObj* obj){ /////////////////////////////////////////
     // Factor because of integer computation instead of floating point
     int temp = 100;
     int temp2 = temp * temp;

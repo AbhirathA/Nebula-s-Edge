@@ -61,13 +61,13 @@ class LinearObj : public Obj {
 			return isYTerminal;
 		}
 
-		virtual bool checkCollision(Obj* obj) = 0;
+		virtual bool checkCollision(LinearObj* obj) = 0;
 		virtual void updatePos(int t) = 0;
 		//void internalUpdate();
 		virtual int getNextX(int t) = 0;
 		virtual int getNextY(int t) = 0;
 		virtual bool boundCorrection(int lft, int rt, int tp, int bt, int t) = 0;
-		virtual bool collisionCorection(Obj* other) = 0;
+		virtual bool collisionCorection(LinearObj* other) = 0;
 		virtual ~LinearObj() {};
 };
 
