@@ -73,9 +73,11 @@ class stdVerlet : public LinearObj{
         virtual int getNextX(int t) override final;
         virtual int getNextY(int t) override final;
 
-        virtual bool checkCollision(Obj* obj);
+        virtual bool checkCollision(LinearObj* obj);
+		bool checkCollision(Obj* obj) { return false; }
         virtual bool boundCorrection(int lft, int rt, int tp, int bt, int t);
-        virtual bool collisionCorection(Obj* other);
+        virtual bool collisionCorection(LinearObj* other);
+		virtual bool collisionCorection(Obj* other) { return false; }
 
         virtual ~stdVerlet(){}
 };

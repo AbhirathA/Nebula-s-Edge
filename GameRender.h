@@ -18,9 +18,17 @@ class GameRender{
 		sf::Event ev;
 		sf::VideoMode videoMode;
 
+		//Enemy
+		sf::RectangleShape enemy;
+
+		//Objects
+		sf::RectangleShape o;
+
 		// Private functions
 		void initVariables();
 		void initWindow();
+		void initObjects();
+		void initEnemies();
 
 	public:
 

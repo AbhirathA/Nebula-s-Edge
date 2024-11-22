@@ -61,7 +61,7 @@ void stdVerlet::updatePos(int t) {
 }
 
 // Check collision with another object.
-bool stdVerlet::checkCollision(Obj* obj){
+bool stdVerlet::checkCollision(LinearObj* obj){
 	// Make this pure virtual later
 
 	// get distance along axises
@@ -161,7 +161,7 @@ bool stdVerlet::boundCorrection(int lft, int rt, int tp, int bt, int t){
 }
 
 // Corrects the position if collision is detected
-bool stdVerlet::collisionCorection(Obj* other){
+bool stdVerlet::collisionCorection(LinearObj* other){
 	// Make this pure virtual later
 
 	// get the gap between the two objects.
