@@ -1,6 +1,6 @@
 #pragma once
 #include <cmath>
-#include "AABB/AABBtree.h"
+#include "AABBtree.h"
 
 // Different the type of physics to be used for the simulation
 enum class TypeOfPhy{

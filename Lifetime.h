@@ -5,25 +5,22 @@
 #pragma once
 #include <iostream>
 #include <functional>
-class Manager{
-  Manager();
-  public: void deleteHelper(){
-
-  }
-};
 
 
 class Lifetime {
+
     protected:
       int maxLife;
       int age;
-      std::function<void()> onExpire();
+      std::function<void()> onExpire;
 
     public:
-      Lifetime(int life){
+      Lifetime(int life, std::function<void()> callback){
         this->maxLife = life;
         this->age = 0;
+        this->onExpire = callback;
       }
+      void incrementAge();
       virtual ~Lifetime();
 };
 

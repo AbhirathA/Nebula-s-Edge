@@ -87,5 +87,8 @@ void Manager::update() {
 }
 
 void Manager::removeDead(std::vector<int> ids){
-  for()
+  for(auto id : ids) {
+  	delete objMap[id];
+  	objMap.erase(id);
+  }
 }

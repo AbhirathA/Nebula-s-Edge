@@ -3,3 +3,10 @@
 //
 
 #include "Lifetime.h"
+
+void Lifetime::incrementAge() {
+    age++;
+    if(age>=maxLife) {
+        onExpire();
+    }
+}
