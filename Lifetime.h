@@ -3,7 +3,8 @@
 //
 
 #pragma once
-
+#include <iostream>
+#include <functional>
 class Manager{
   Manager();
   public: void deleteHelper(){
@@ -16,17 +17,12 @@ class Lifetime {
     protected:
       int maxLife;
       int age;
+      std::function<void()> onExpire();
+
     public:
       Lifetime(int life){
         this->maxLife = life;
         this->age = 0;
-      }
-      void grow(Manager manager, int n = 1){
-        age += n;
-        if(age>=maxLife){
-          manager.deleteHelper();
-          delete this;
-        }
       }
       virtual ~Lifetime();
 };

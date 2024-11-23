@@ -40,6 +40,9 @@ class Obj
 		//The bounding box of the object
 		AABB* objBox = nullptr;
 
+		//Status of the object(Alive or dead)
+		bool dead = false;
+
 	public:
 		Obj(int id, int x, int y, int innerRad, int outerRad, int mass) {
 			this->id = id;
@@ -49,6 +52,7 @@ class Obj
 			this->outerRad = outerRad;
 			this->mass = mass;
 			this->objBox = new AABB({x-outerRad, y-outerRad}, {x+outerRad, y+outerRad});
+			this->dead = false;
 		}
 
 		int getX() {
@@ -87,6 +91,19 @@ class Obj
 			return objBox;
 		}
 
+		bool* getStatus() {
+			return &dead;
+		}
+
+		void selfDestruct() {
+			dead = true;
+		}
+
+		void updateBox() {
+			objBox->setLowerBound({posX-outerRad, posY-outerRad});
+			objBox->setUpperBound({posX+outerRad, posY+outerRad});
+		}
+
 		void changeState() {
 			state = 1 - state;
 		}
@@ -98,5 +115,7 @@ class Obj
 		virtual int getNextY(int t) = 0;
 		virtual bool boundCorrection(int lft, int rt, int tp, int bt, int t) = 0;
 		virtual bool collisionCorection(Obj* other) = 0;
-		virtual ~Obj() {};
+		virtual ~Obj() {
+			delete objBox;
+		};
 };

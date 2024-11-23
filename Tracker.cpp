@@ -20,6 +20,8 @@ void Tracker::updatePos(int t) {
 
 	temp = posY;
 	posY = posY + vY * t + accY*t*t/2;
+
+    this->updateBox();
 }
 
 int Tracker::getNextX(int t) {
@@ -77,6 +79,9 @@ bool Tracker::collisionCorection(Obj* obj) {
 
 		this->posX += (overlap*dx)/dist + overlap/100;
 		this->posY += (overlap*dy)/dist + overlap/200;
+
+	     //new AABB box
+	     this->updateBox();
 	}
 	return false;
 }
@@ -88,6 +93,7 @@ bool Tracker::boundCorrection(int lft, int rt, int tp, int bt, int t){
     if(flag){
         this->posX = x;
         this->posY = y;
+        this->updateBox();
     }
     return flag;
 }

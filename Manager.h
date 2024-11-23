@@ -23,6 +23,7 @@ class Manager
 
 	std::vector<Obj*> objList = {}; // list of created objects (make to map)
 	std::map<int, Obj*> objMap = {};
+    AABBtree tree;
 	public:
 		
 		Manager(int accX = 1, int accY = 0, int lft = 0, int rt = 95, int tp = 0, int bt = -31, int t = 1) {
@@ -33,6 +34,7 @@ class Manager
 			this->tp = tp;
 			this->bt = bt;
 			this->t = t;
+            tree = AABBtree();
 		}
 
 		void display();
@@ -46,5 +48,6 @@ class Manager
 				delete i;
 			}
 		}
+        void removeDead(std::vector<int> ids);
 };
 

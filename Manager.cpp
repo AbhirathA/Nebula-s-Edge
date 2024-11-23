@@ -34,6 +34,7 @@ bool Manager::drop1(int x, int y, int vX, int vY, int accX, int accY, int res, i
 	}
 	objList.push_back(temp);
 	objMap[count] = temp;
+    tree.insert(temp->getObjBox(), count, temp->getStatus());
 	//temp->updateAcc(gX, gY);
 	count++;
 	return true;
@@ -54,6 +55,7 @@ bool Manager::drop2(int x, int y, int vX, int vY, int accX, int accY, int res, i
 	}
 	objList.push_back(temp);
 	objMap[count] = temp;
+	tree.insert(temp->getObjBox(), count, temp->getStatus());
 	//temp->updateAcc(gX, gY);
 	count++;
 	return true;
@@ -82,4 +84,8 @@ void Manager::update() {
 	}
 	*/
 
+}
+
+void Manager::removeDead(std::vector<int> ids){
+  for()
 }

@@ -58,6 +58,9 @@ void stdVerlet::updatePos(int t) {
 		isYTerminal = false;
 	}
 	*/
+
+    //Update the bounding box
+    this->updateBox();
 }
 
 // Check collision with another object.
@@ -157,6 +160,8 @@ bool stdVerlet::boundCorrection(int lft, int rt, int tp, int bt, int t){
 		posY_vOld = posY_old - vY*t;;
 		answer = true;
 	}
+    //update AABB box
+    this->updateBox();
 	return answer;
 }
 
@@ -213,7 +218,8 @@ bool stdVerlet::collisionCorection(LinearObj* other){
 		// Change state due to collision being detected.
 		this->changeState();
 		other->changeState();
-
+        //update AABB box;
+		this->updateBox();
 		return true;
 	}
 	return false;
