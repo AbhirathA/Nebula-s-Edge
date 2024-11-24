@@ -94,25 +94,25 @@ public class GameplayMultiplayerScreen implements Screen {
         this.game.batch.setProjectionMatrix(this.camera.combined);
         this.game.shapeRenderer.setProjectionMatrix(this.camera.combined);
 
-        String state = "NULL";
-        if (Gdx.input.isKeyPressed(Input.Keys.A)) {
-            state = "LEFT";
-        }
-        else if (Gdx.input.isKeyPressed(Input.Keys.D)) {
-            state = "RIGHT";
-        }
-
+        String state = "";
         if (Gdx.input.isKeyPressed(Input.Keys.W)) {
-            state = "FORWARD";
+            state += "FORWARD";
         }
         else if (Gdx.input.isKeyPressed(Input.Keys.S)) {
-            state = "BACKWARD";
+            state += "BACKWARD";
+        }
+        if (Gdx.input.isKeyPressed(Input.Keys.A)) {
+            state += "LEFT";
+        }
+        else if (Gdx.input.isKeyPressed(Input.Keys.D)) {
+            state += "RIGHT";
         }
 
         this.client.send(state, this.game.token);
-        Coordinate coords = this.client.reviece(this.rocketSprite.getX(), this.rocketSprite.getY());
-        System.out.println(coords.x + " " + coords.y);
+        Coordinate coords = this.client.reviece(this.rocketSprite.getX(), this.rocketSprite.getY(), this.rocketSprite.getRotation());
+        System.out.println(coords.x + " " + coords.y + " " + coords.angle);
         this.rocketSprite.setPosition(coords.x, coords.y);
+        this.rocketSprite.setRotation(coords.angle);
         updateCamera();
 
         Gdx.gl.glEnable(GL20.GL_BLEND); // Enable blending

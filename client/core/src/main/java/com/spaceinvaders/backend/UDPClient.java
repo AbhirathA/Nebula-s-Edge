@@ -34,7 +34,7 @@ public class UDPClient {
         }
     }
 
-    public Coordinate reviece(float x, float y) {
+    public Coordinate reviece(float x, float y, float angle) {
         try {
             byte[] receiveBuffer = new byte[BUFFER_SIZE];
             DatagramPacket receivePacket = new DatagramPacket(receiveBuffer, receiveBuffer.length);
@@ -45,7 +45,7 @@ public class UDPClient {
 
         } catch (Exception e) {
             e.printStackTrace();
-            return new Coordinate("spaceship", x, y);
+            return new Coordinate("spaceship", x, y, angle);
         }
     }
 

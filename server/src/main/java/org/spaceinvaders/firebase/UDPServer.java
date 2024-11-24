@@ -9,14 +9,14 @@ public class UDPServer {
     private static final int SERVER_PORT = 9876;
     private static final int BUFFER_SIZE = 10000;
 
-    private final float WORLD_WIDTH = 240;
-    private final float WORLD_HEIGHT = 135;
+    private final float WORLD_WIDTH = 720;
+    private final float WORLD_HEIGHT = 405;
 
     private final Coordinate coords;
     private final Gson gson;
 
     public UDPServer() {
-        this.coords = new Coordinate("spaceship", WORLD_WIDTH / 2 - 21f / 2f, WORLD_HEIGHT / 2 - 21f / 2f);
+        this.coords = new Coordinate("spaceship", WORLD_WIDTH / 2 - 21f / 2f, WORLD_HEIGHT / 2 - 21f / 2f, 0);
         this.gson = new Gson();
     }
 
@@ -66,32 +66,28 @@ public class UDPServer {
         String state = data.get("state");
 
         // some computation
-        switch (state) {
-            case "FORWARD":
-                this.coords.y += 1;
-                break;
-
-            case "BACKWARD":
-                this.coords.y -= 1;
-                break;
-
-            case "LEFT":
-                this.coords.x -= 1;
-                break;
-
-            case "RIGHT":
-                this.coords.x += 1;
-                break;
-
-            default:
-                break;
-        }
+        if (state.contains("LEFT")) coords.angle += 1;
+        else if (state.contains("RIGHT")) coords.angle -= 1;
+        if (state.contains("FORWARD")) moveInDirection(1, coords);
+        else if (state.contains("BACKWARD")) moveInDirection(-1, coords);
 
         return this.gson.toJson(this.coords);
     }
 
-    public static void main(String[] args) {
-        UDPServer server = new UDPServer();
-        server.server();
+    private void moveInDirection(float speed, Coordinate coords) {
+        double angleRad = Math.toRadians(coords.angle) + 1.571f;
+
+        double deltaX = Math.cos(angleRad) * speed;
+        double deltaY = Math.sin(angleRad) * speed;
+
+        coords.x += (float) deltaX;
+        coords.y += (float) deltaY;
+
+        this.fixCoords(coords);
+    }
+
+    private void fixCoords(Coordinate coords) {
+        coords.x = Math.min(Math.max(coords.x, 0), this.WORLD_WIDTH - 21);
+        coords.y = Math.min(Math.max(0, coords.y), this.WORLD_HEIGHT - 21);
     }
 }
