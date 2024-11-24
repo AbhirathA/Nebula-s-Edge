@@ -12,27 +12,42 @@ import com.spaceinvaders.frontend.screens.ScreenState;
 import com.spaceinvaders.frontend.utils.ButtonUtils;
 import com.spaceinvaders.frontend.utils.LabelUtils;
 
+/**
+ * UIStage is a custom Stage that contains UI elements for the Space Invaders game,
+ * such as a health bar, a pause button, and a countdown timer.
+ */
 public class UIStage extends Stage {
     private HealthBar healthBar;
-    private Label timerLabel; // Timer label to display the countdown
-    private float timeRemaining; // Time remaining for the countdown
+    private Label timerLabel;
+    private float timeRemaining;
     private boolean isPaused = false;
 
+    /**
+     * Constructor for UIStage.
+     *
+     * @param game     The SpaceInvadersGame instance.
+     * @param viewport The viewport used to display the stage.
+     */
     public UIStage(SpaceInvadersGame game, Viewport viewport) {
         super(viewport, game.batch);
 
-        // Initialize health bar and add to stage
+        // Initialize health bar and add it to the stage
         healthBar = new HealthBar(game.assetManager, 2, viewport.getWorldHeight() - 11, 10);
         addActor(healthBar);
 
-        // Create pause button and add to stage
-        ImageButton pauseButton = ButtonUtils.createScreenNavigationButton(game, "textures/pause.png", "textures/pause.png", 7, 7, viewport.getWorldWidth() - 10, viewport.getWorldHeight() - 10, ScreenState.PAUSE);
+        // Create and add a pause button to the stage
+        ImageButton pauseButton = ButtonUtils.createScreenNavigationButton( game, "textures/pause.png", "textures/pause.png", 7, 7, viewport.getWorldWidth() - 10, viewport.getWorldHeight() - 10, ScreenState.PAUSE);
         addActor(pauseButton);
 
-        // Initialize and add timer
-        initializeTimer(game.assetManager.get("fonts/minecraft.fnt", BitmapFont.class), viewport.getWorldWidth(), viewport.getWorldHeight(), 60); // Start a 60-second timer
+        // Initialize and start the countdown timer
+        initializeTimer(game.assetManager.get("fonts/minecraft.fnt", BitmapFont.class), viewport.getWorldWidth(), viewport.getWorldHeight(), 60);  // Start a 60-second timer
     }
 
+    /**
+     * Gets the health bar associated with the UIStage.
+     *
+     * @return The HealthBar instance.
+     */
     public HealthBar getHealthBar() {
         return healthBar;
     }
@@ -40,50 +55,68 @@ public class UIStage extends Stage {
     /**
      * Initializes and starts a countdown timer.
      *
-     * @param font          The font for the timer label.
-     * @param viewportWidth The width of the viewport.
+     * @param font           The font used to display the timer.
+     * @param viewportWidth  The width of the viewport.
      * @param viewportHeight The height of the viewport.
-     * @param initialTime   The starting time for the timer in seconds.
+     * @param initialTime    The starting time for the timer in seconds.
      */
     private void initializeTimer(BitmapFont font, float viewportWidth, float viewportHeight, float initialTime) {
-        // Initialize timer label with the initial time
+        // Set the initial countdown time
         timeRemaining = initialTime;
+
+        // Create the timer label with the initial time formatted as MM:SS
         timerLabel = LabelUtils.createLabel(convertSecondsToTimeString(timeRemaining), font);
-        timerLabel.setPosition((viewportWidth - timerLabel.getWidth()) / 2, viewportHeight - 10);
+        timerLabel.setPosition((viewportWidth - timerLabel.getWidth()) / 2, viewportHeight - 10); // Center the label at the top of the screen
         addActor(timerLabel);
 
-        // Schedule timer updates
+        // Schedule a task to update the timer every second
         Timer.schedule(new Timer.Task() {
             @Override
             public void run() {
-                if (!isPaused) { // Only update if not paused
-                    timeRemaining--;
+                if (!isPaused) { // Update the timer only if the game is not paused
+                    timeRemaining--; // Decrease the remaining time
 
-                    // Update the timer label
+                    // Update the timer label with the new time
                     timerLabel.setText(convertSecondsToTimeString(timeRemaining));
 
-                    // Stop the timer when time runs out
+                    // Stop the timer when the countdown reaches zero
                     if (timeRemaining <= 0) {
                         cancel();
                     }
                 }
             }
-        }, 1, 1); // Schedule the task to run every second after an initial delay of 1 second
+        }, 1, 1); // Start after 1 second and repeat every 1 second
     }
 
+    /**
+     * Converts a time value in seconds to a string formatted as MM:SS.
+     *
+     * @param seconds The time in seconds.
+     * @return A string formatted as MM:SS.
+     */
     private String convertSecondsToTimeString(float seconds) {
         int totalSeconds = Math.round(seconds);
-        int minutes = totalSeconds / 60; // Get minutes
-        int remainingSeconds = totalSeconds % 60; // Get remaining seconds
+        int minutes = totalSeconds / 60; // Calculate minutes
+        int remainingSeconds = totalSeconds % 60; // Calculate remaining seconds
 
-        // Format as MM:SS
+        // Return the formatted time string
         return String.format("%02d:%02d", minutes, remainingSeconds);
     }
 
+    /**
+     * Sets the paused state of the game.
+     *
+     * @param paused True to pause the game, false to resume.
+     */
     public void setPaused(boolean paused) {
         isPaused = paused;
     }
 
+    /**
+     * Checks if the game is currently paused.
+     *
+     * @return True if the game is paused, false otherwise.
+     */
     public boolean isPaused() {
         return isPaused;
     }

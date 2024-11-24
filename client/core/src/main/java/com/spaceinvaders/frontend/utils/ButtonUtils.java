@@ -16,6 +16,10 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.spaceinvaders.frontend.SpaceInvadersGame;
 import com.spaceinvaders.frontend.screens.ScreenState;
 
+/**
+ * Utility class for creating buttons in a LibGDX application.
+ * Provides methods to create and customize labels with different parameters.
+ */
 public class ButtonUtils {
 
     /**
