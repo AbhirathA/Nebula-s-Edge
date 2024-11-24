@@ -13,7 +13,7 @@ import com.spaceinvaders.frontend.SpaceInvadersGame;
 import com.spaceinvaders.frontend.background.StarsBackground;
 import com.spaceinvaders.frontend.ui.UIStage;
 
-public class GameplayScreen implements Screen {
+public class GameplaySingleplayerScreen implements Screen {
     private final SpaceInvadersGame game;
 
     private final OrthographicCamera camera;
@@ -32,7 +32,7 @@ public class GameplayScreen implements Screen {
 
     InputMultiplexer multiplexer;
 
-    public GameplayScreen(SpaceInvadersGame game, float CAMERA_WIDTH, float CAMERA_HEIGHT, float WORLD_WIDTH, float WORLD_HEIGHT) {
+    public GameplaySingleplayerScreen(SpaceInvadersGame game, float CAMERA_WIDTH, float CAMERA_HEIGHT, float WORLD_WIDTH, float WORLD_HEIGHT) {
         this.game = game;
         this.CAMERA_WIDTH = CAMERA_WIDTH;
         this.CAMERA_HEIGHT = CAMERA_HEIGHT;
