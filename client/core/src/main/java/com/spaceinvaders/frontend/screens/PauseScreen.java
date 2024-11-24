@@ -105,7 +105,7 @@ public class PauseScreen implements Screen {
         ImageButton menuButton = ButtonUtils.createScreenNavigationButton(game, "textures/menu.png", "textures/menu.png", 38, 38,
                 (STAGE_WIDTH - 38) / 2f - 58, 80, ScreenState.MAIN_MENU);
         ImageButton playButton = ButtonUtils.createScreenNavigationButton(game, "textures/play.png", "textures/play.png", 38, 38,
-                (STAGE_WIDTH - 38) / 2f, 80, ScreenState.GAMEPLAY);
+                (STAGE_WIDTH - 38) / 2f, 80, ScreenState.SINGLEPLAYER_GAMEPLAY);
         ImageButton restartButton = ButtonUtils.createImageButton(game, "textures/restart.png", "textures/restart.png",
                 38, 38, (STAGE_WIDTH - 38) / 2f + 58, 80);
 

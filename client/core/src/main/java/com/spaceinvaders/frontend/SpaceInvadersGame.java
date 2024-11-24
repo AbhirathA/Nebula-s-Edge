@@ -22,6 +22,8 @@ public class SpaceInvadersGame extends Game {
     public MusicManager musicManager;
     public SoundManager soundManager;
 
+    public String token;
+
     private class CommandClass implements Command {
 
         @Override
@@ -45,6 +47,7 @@ public class SpaceInvadersGame extends Game {
 
     @Override
     public void create() {
+        token = "";
         batch = new SpriteBatch();
         shapeRenderer = new ShapeRenderer();
         font = new BitmapFont();
