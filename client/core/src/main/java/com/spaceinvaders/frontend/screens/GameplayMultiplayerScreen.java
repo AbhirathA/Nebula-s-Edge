@@ -108,6 +108,12 @@ public class GameplayMultiplayerScreen implements Screen {
             state += "RIGHT";
         }
 
+//        try {
+//            Thread.sleep(Math.max((int)(100/3) - ((int) delta * 1000L), 0));
+//        } catch (Exception e)  {
+//            e.printStackTrace();
+//        }
+
         this.client.send(state, this.game.token);
         Coordinate coords = this.client.reviece(this.rocketSprite.getX(), this.rocketSprite.getY(), this.rocketSprite.getRotation());
         System.out.println(coords.x + " " + coords.y + " " + coords.angle);
