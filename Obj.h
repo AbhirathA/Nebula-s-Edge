@@ -54,7 +54,7 @@ public:
 		this->innerRad = innerRad;
 		this->outerRad = outerRad;
 		this->mass = mass;
-		this->objBox = new AABB({x - outerRad, y - outerRad}, {x + outerRad, y + outerRad});
+		this->objBox = new AABB({x - outerRad, y - outerRad, 0}, {x + outerRad, y + outerRad, 0});
 		this->dead = false;
 	}
 

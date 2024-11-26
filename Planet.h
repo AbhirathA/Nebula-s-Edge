@@ -7,7 +7,7 @@
 
 
 
-class Planet {
+class Planet: FixedObj {
     public:
         Planet(int id, int x, int y, int innerRad, int outerRad, int mass):FixedObj(id, x, y, innerRad, outerRad, mass) {}
 

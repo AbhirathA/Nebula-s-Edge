@@ -243,6 +243,7 @@ std::vector<int> AABBtree::removeDead() {
     }
 }
 
+
 void AABBtree::collectDeadNodes(AABBnode* node, std::vector<AABBnode*>&deadNodes) {
     if(node->isLeaf) {
         if(*(node->dead)) {
@@ -267,8 +268,8 @@ AABBtree::~AABBtree() {
     while(!Q.empty()) {
         auto p = Q.front();
         Q.pop();
-        if(p->child1 != nullptr) Q.push(p->child1);
-        if(p->child2 != nullptr) Q.push(p->child2);
+        if(p!= nullptr && p->child1 != nullptr) Q.push(p->child1);
+        if(p != nullptr && p->child2 != nullptr) Q.push(p->child2);
         delete p;
     }
 }

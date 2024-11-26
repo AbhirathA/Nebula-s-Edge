@@ -22,7 +22,7 @@ void AABB::setLowerBound(const Vector &v) {
 
 int AABB::SA() {
     Vector s = upperBound - lowerBound;
-    return 2.0*(s[0]*s[1]+s[1]*s[2]+s[2]*s[0]);
+    return 2*(s[0]*s[1]+s[1]*s[2]+s[2]*s[0]);
 }
 
 AABB AABB::Union(AABB &other) {
@@ -35,11 +35,10 @@ AABB AABB::Union(AABB &other) {
 bool AABB::Contains(AABB &other) {
     Vector v = other.getUpperBound();
     Vector s = upperBound;
-    const float eps = 1e-8;
-    if((v[0] <= s[0] && v[1] <= s[1] && v[2] <= s[2]) || (abs(v[0] - s[0])<=eps && (v[1] - s[1])<=eps && (v[2] - s[2])<= eps)) {
+    if((v[0] <= s[0] && v[1] <= s[1] && v[2] <= s[2])) {
         v = lowerBound;
         s = other.getLowerBound();
-        if(v[0] <= s[0] && v[1] <= s[1] && v[2] <= s[2] || (abs(v[0] - s[0])<=eps && (v[1] - s[1])<=eps && (v[2] - s[2])<= eps)) {
+        if(v[0] <= s[0] && v[1] <= s[1] && v[2] <= s[2]) {
             return true;
         }
     }

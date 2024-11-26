@@ -3,9 +3,9 @@
 //
 
 #include "velVerlet.h"
-#include "Bullet.h"
-#include "Flare.h"
-#include "User.h"
+// #include "Bullet.h"
+// #include "Flare.h"
+// #include "User.h"
 #include "Tracker.h"
 
 #ifndef METEOR_H
