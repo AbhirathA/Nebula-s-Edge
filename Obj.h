@@ -120,8 +120,8 @@ public:
 
 	void updateBox()
 	{
-		objBox->setLowerBound({posX - outerRad, posY - outerRad});
-		objBox->setUpperBound({posX + outerRad, posY + outerRad});
+		objBox->setLowerBound({posX - outerRad, posY - outerRad, 0});
+		objBox->setUpperBound({posX + outerRad, posY + outerRad, 0});
 	}
 
 	void updateMass(int m)

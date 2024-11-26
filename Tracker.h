@@ -14,7 +14,7 @@ class Tracker : public LinearObj
 
         virtual bool checkCollision(Obj* obj);
         virtual bool boundCorrection(int lft, int rt, int tp, int bt, int t);
-        virtual bool collisionCorection(Obj* other);
+        virtual bool collisionCorrection(Obj* other);
 
         virtual ~Tracker() {}
 };

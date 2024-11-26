@@ -14,14 +14,14 @@ std::map<int, std::pair<int, int>> Manager::display() {
 
 std::vector<std::vector<int>> Manager::display(int lowerX, int lowerY, int upperX, int upperY) {
 	std::vector<std::vector<int>> m;
-	AABB box = AABB({lowerX, lowerY}, {upperX, upperY});
+	AABB box = AABB({lowerX, lowerY, 0}, {upperX, upperY, 0});
 	std::vector<int> v = tree.boxColliders(&box);
 
-	for(auto i: v) {
-		int x = objMap[i]->getX();
-		int y = objMap[i]->getY();
-		int ori = objMap[i]->getOri();
-		m.push_back({i, x, y, ori});
+	for(auto id: v) {
+		int x = objMap[id]->getX();
+		int y = objMap[id]->getY();
+		int ori = objMap[id]->getOri();
+		m.push_back({id, x, y, ori});
 	}
 	return m;
 }

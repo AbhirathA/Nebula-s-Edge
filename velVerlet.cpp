@@ -20,6 +20,9 @@ void velVerlet::updatePos(int t){
     this->posX = this->getNextX(t);
     this->posY = this->getNextY(t);
 
+    //update aabb box;
+    this->updateBox();
+
     // Velocity is updated
     this->vX = this->vX + this->accX * t;
     this->vY = this->vY + this->accY * t;
@@ -94,10 +97,13 @@ bool velVerlet::collisionCorrection(LinearObj* obj){
             
         this->updateX(this->getX() + adjustmentX);
         this->updateY(this->getY() + adjustmentY);
+
+        this->updateBox();
         
         obj->updateX(obj->getX() - adjustmentX);
         obj->updateY(obj->getY() - adjustmentY);
 
+        obj->updateBox();
 
         // Velocity Correction
         

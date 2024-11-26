@@ -63,7 +63,7 @@ bool Tracker::checkCollision(Obj* obj) {
 	return false;
 }
 
-bool Tracker::collisionCorection(Obj* obj) {
+bool Tracker::collisionCorrection(Obj* obj) {
 
 	// get the distance from the object.
 	int dx = (posX - obj->getX());
@@ -77,6 +77,7 @@ bool Tracker::collisionCorection(Obj* obj) {
 
 		this->posX += (overlap*dx)/dist + overlap/100;
 		this->posY += (overlap*dy)/dist + overlap/200;
+		this->updateBox();
 	}
 	return false;
 }
@@ -88,6 +89,7 @@ bool Tracker::boundCorrection(int lft, int rt, int tp, int bt, int t){
     if(flag){
         this->posX = x;
         this->posY = y;
+    	this->updateBox();
     }
     return flag;
 }
