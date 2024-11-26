@@ -1,7 +1,5 @@
 package com.spaceinvaders.frontend.gameplay;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -29,20 +27,6 @@ public class Rocket extends Actor {
     @Override
     public void act(float delta) {
         super.act(delta);
-
-//        if (Gdx.input.isKeyPressed(Input.Keys.A)) {
-//            rocketSprite.rotate(1);
-//        }
-//        else if (Gdx.input.isKeyPressed(Input.Keys.D)) {
-//            rocketSprite.rotate(-1);
-//        }
-//
-//        if (Gdx.input.isKeyPressed(Input.Keys.W)) {
-//            moveInDirection(1);
-//        }
-//        else if (Gdx.input.isKeyPressed(Input.Keys.S)) {
-//            moveInDirection(-1);
-//        }
     }
 
     @Override

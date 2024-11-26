@@ -58,6 +58,43 @@ public class MyAssetManager {
         assetManager.load("sounds/game-over-38511.mp3", Sound.class);
         assetManager.load("textures/victory.png", Texture.class);
         assetManager.load("sounds/goodresult-82807.mp3", Sound.class);
+        assetManager.load("textures/smallAst1.png", Texture.class);
+        assetManager.load("textures/smallAst2.png", Texture.class);
+        assetManager.load("textures/smallAst3.png", Texture.class);
+        assetManager.load("textures/smallAst4.png", Texture.class);
+        assetManager.load("textures/smallAst5.png", Texture.class);
+        assetManager.load("textures/smallAst6.png", Texture.class);
+        assetManager.load("textures/smallAst7.png", Texture.class);
+        assetManager.load("textures/midAst1.png", Texture.class);
+        assetManager.load("textures/midAst2.png", Texture.class);
+        assetManager.load("textures/midAst3.png", Texture.class);
+        assetManager.load("textures/midAst4.png", Texture.class);
+        assetManager.load("textures/midAst5.png", Texture.class);
+        assetManager.load("textures/midAst6.png", Texture.class);
+        assetManager.load("textures/midAst7.png", Texture.class);
+        assetManager.load("textures/bigAst1.png", Texture.class);
+        assetManager.load("textures/bigAst2.png", Texture.class);
+        assetManager.load("textures/bigAst3.png", Texture.class);
+        assetManager.load("textures/bigAst4.png", Texture.class);
+        assetManager.load("textures/bigAst5.png", Texture.class);
+        assetManager.load("textures/bigAst6.png", Texture.class);
+        assetManager.load("textures/bigAst7.png", Texture.class);
+        assetManager.load("textures/enemy1.png", Texture.class);
+        assetManager.load("textures/enemy2.png", Texture.class);
+        assetManager.load("textures/enemy3.png", Texture.class);
+        assetManager.load("textures/enemy4.png", Texture.class);
+        assetManager.load("textures/enemy5.png", Texture.class);
+        assetManager.load("textures/enemy6.png", Texture.class);
+        assetManager.load("textures/enemy7.png", Texture.class);
+        assetManager.load("textures/enemy8.png", Texture.class);
+        assetManager.load("textures/enemy9.png", Texture.class);
+        assetManager.load("textures/enemy10.png", Texture.class);
+        assetManager.load("textures/enemy11.png", Texture.class);
+        assetManager.load("textures/enemy12.png", Texture.class);
+        assetManager.load("textures/powerup1.png", Texture.class);
+        assetManager.load("textures/powerup2.png", Texture.class);
+        assetManager.load("textures/powerup3.png", Texture.class);
+        assetManager.load("textures/bullet.png", Texture.class);
     }
 
     // Retrieves an asset from the AssetManager based on its file path and type
