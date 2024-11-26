@@ -1,10 +1,10 @@
-package org.spaceinvaders.firebase;
+package org.spaceinvaders;
 
 import java.net.*;
 import com.google.gson.Gson;
-import org.checkerframework.checker.units.qual.A;
-import org.spaceinvaders.firebase.util.Coordinate;
-import org.spaceinvaders.firebase.util.UDPPacket;
+import org.spaceinvaders.gameEngine.GameEngine;
+import org.spaceinvaders.util.Coordinate;
+import org.spaceinvaders.util.UDPPacket;
 
 import java.net.DatagramSocket;
 import java.net.InetSocketAddress;
@@ -29,6 +29,8 @@ public class UDPServer
     private final Map<String, Integer> tokenToId;
     private final Map<String, String> tokenToState;
 
+    private final GameEngine gameEngine;
+
     private Thread gameLogicThread;
     private Thread networkThread;
 
@@ -43,8 +45,10 @@ public class UDPServer
         this.tokenToId = new HashMap<>();
         this.tokenToState = new HashMap<>();
 
-        inputBuffer =  new AtomicBoolean(false);
-        outputBuffer = new AtomicBoolean(false);
+        this.inputBuffer =  new AtomicBoolean(false);
+        this.outputBuffer = new AtomicBoolean(false);
+
+        this.gameEngine = new GameEngine();
     }
 
     public void startThreads() {
@@ -77,24 +81,38 @@ public class UDPServer
 
             while (true) {
                 HashMap<Integer, String> idToState = new HashMap<>();
-                ArrayList<String> newTokens = new ArrayList<>();
                 synchronized (UDPServer.this.tokenToState) {
                     synchronized (UDPServer.this.tokenToId) {
                         for (String token : UDPServer.this.tokenToState.keySet()) {
-                            if (tokenToId.get(token) == null)
-                                newTokens.add(token);
-                            else {
-                                idToState.put(UDPServer.this.tokenToId.get(token), UDPServer.this.tokenToState.get(token));
+                            if (tokenToId.get(token) == null) {
+                                UDPServer.this.tokenToId.put(token, UDPServer.this.gameEngine.addElement("SHIP"));
                             }
+
+                            idToState.put(UDPServer.this.tokenToId.get(token), UDPServer.this.tokenToState.get(token));
                         }
                     }
                 }
 
-                // TODO: call create object and obtain new ids (new tokens are in newTokens) and add them to
-                //  do the tokenToId map.
+                // updating states
+                for (int id : idToState.keySet()) {
+                    UDPServer.this.gameEngine.updateState(id, idToState.get(id));
+                }
 
-                // TODO: assume we get it back in the form of an ArrayList<Coordinate>, and I have to look at id
-                //  and categorize them, and then add them to the outputBuffer and set its atomic variable to true
+                UDPServer.this.gameEngine.update();
+
+                UDPPacket packet = new UDPPacket();
+                packet.spaceShips = UDPServer.this.gameEngine.display("SHIP");
+                packet.asteroids = UDPServer.this.gameEngine.display("ASTERIOD");
+                packet.bullets = UDPServer.this.gameEngine.display("BULLET");
+                packet.blackholes = UDPServer.this.gameEngine.display("BLACKHOLES");
+
+                synchronized (UDPServer.this.tokenToUdpPacket) {
+                    for (String token : UDPServer.this.tokenToId.keySet()) {
+                        packet.id = UDPServer.this.tokenToId.get(token);
+                        UDPServer.this.tokenToUdpPacket.put(token, packet.clone());
+                    }
+                }
+                UDPServer.this.outputBuffer.set(true);
             }
         }
     }
@@ -165,27 +183,5 @@ public class UDPServer
                 e.printStackTrace();
             }
         }
-    }
-
-    // Simulates game engine
-    private String processData(String receiveData) {
-        // Deserialize JSON into a Map
-        Map<String, String> data = this.gson.fromJson(receiveData, Map.class);
-
-        // Retrieve the values
-        String token = data.get("token");
-        String state = data.get("state");
-
-        // TODO: Implement JNI here
-        // some computation
-        if (state.contains("LEFT")) coords.angle += 1;
-        else if (state.contains("RIGHT")) coords.angle -= 1;
-        if (state.contains("FORWARD")) moveInDirection(1, coords);
-        else if (state.contains("BACKWARD")) moveInDirection(-1, coords);
-
-        // NOTE: You can return anything from which this class can infer the different coords of different objects
-        // it can be in any form (the most preferred form this UDPPacket) but I can always convert any form to that :P
-
-        return this.gson.toJson(new UDPPacket(this.coords));
     }
 }

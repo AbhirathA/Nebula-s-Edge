@@ -17,7 +17,7 @@
  * @since 11/13/2024
  */
 
-package org.spaceinvaders.firebase;
+package org.spaceinvaders;
 
 import com.google.firebase.auth.FirebaseAuthException;
 import com.google.gson.JsonObject;
@@ -26,10 +26,11 @@ import com.google.gson.JsonSyntaxException;
 import com.sun.net.httpserver.HttpServer;
 import com.sun.net.httpserver.HttpHandler;
 import com.sun.net.httpserver.HttpExchange;
+import org.spaceinvaders.firebase.Firebase;
 import org.spaceinvaders.firebase.util.DatabaseAccessException;
-import org.spaceinvaders.firebase.util.HTTPCode;
-import org.spaceinvaders.firebase.util.LoggerUtil;
-import org.spaceinvaders.firebase.util.NetworkNotFoundException;
+import org.spaceinvaders.util.HTTPCode;
+import org.spaceinvaders.util.LoggerUtil;
+import org.spaceinvaders.util.NetworkNotFoundException;
 
 import java.io.IOException;
 import java.io.OutputStream;

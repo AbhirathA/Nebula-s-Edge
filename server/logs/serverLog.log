@@ -21,7 +21,7 @@ java.net.BindException: Address already in use
 	at jdk.httpserver/sun.net.httpserver.HttpServerImpl.<init>(HttpServerImpl.java:50)
 	at jdk.httpserver/sun.net.httpserver.DefaultHttpServerProvider.createHttpServer(DefaultHttpServerProvider.java:35)
 	at jdk.httpserver/com.sun.net.httpserver.HttpServer.create(HttpServer.java:150)
-	at org.spaceinvaders.firebase.Server.main(Server.java:48)
+	at org.spaceinvaders.Server.main(Server.java:48)
 2024-11-20 07:50:09 [HTTP-Dispatcher] INFO  o.s.firebase.util.LoggerUtil - User Signed in
 2024-11-20 07:50:29 [main] ERROR o.s.firebase.util.LoggerUtil - Cannot create a localhost server on port 8080
 java.net.BindException: Address already in use
@@ -34,7 +34,7 @@ java.net.BindException: Address already in use
 	at jdk.httpserver/sun.net.httpserver.HttpServerImpl.<init>(HttpServerImpl.java:50)
 	at jdk.httpserver/sun.net.httpserver.DefaultHttpServerProvider.createHttpServer(DefaultHttpServerProvider.java:35)
 	at jdk.httpserver/com.sun.net.httpserver.HttpServer.create(HttpServer.java:150)
-	at org.spaceinvaders.firebase.Server.main(Server.java:48)
+	at org.spaceinvaders.Server.main(Server.java:48)
 2024-11-20 07:51:01 [main] ERROR o.s.firebase.util.LoggerUtil - Cannot create a localhost server on port 8080
 java.net.BindException: Address already in use
 	at java.base/sun.nio.ch.Net.bind0(Native Method)
@@ -46,7 +46,7 @@ java.net.BindException: Address already in use
 	at jdk.httpserver/sun.net.httpserver.HttpServerImpl.<init>(HttpServerImpl.java:50)
 	at jdk.httpserver/sun.net.httpserver.DefaultHttpServerProvider.createHttpServer(DefaultHttpServerProvider.java:35)
 	at jdk.httpserver/com.sun.net.httpserver.HttpServer.create(HttpServer.java:150)
-	at org.spaceinvaders.firebase.Server.main(Server.java:48)
+	at org.spaceinvaders.Server.main(Server.java:48)
 2024-11-20 07:52:21 [HTTP-Dispatcher] INFO  o.s.firebase.util.LoggerUtil - User Signed in
 2024-11-20 07:54:04 [HTTP-Dispatcher] INFO  o.s.firebase.util.LoggerUtil - User Signed in
 2024-11-22 19:30:13 [main] INFO  o.s.firebase.util.LoggerUtil - Server started at http://localhost:8080
@@ -80,7 +80,7 @@ com.google.firebase.auth.FirebaseAuthException: Unexpected HTTP response with st
 	at com.google.firebase.auth.AbstractFirebaseAuth.generatePasswordResetLink(AbstractFirebaseAuth.java:1097)
 	at com.google.firebase.auth.AbstractFirebaseAuth.generatePasswordResetLink(AbstractFirebaseAuth.java:1081)
 	at org.spaceinvaders.firebase.Firebase.sendResetPasswordEmail(Firebase.java:151)
-	at org.spaceinvaders.firebase.Server$ResetPasswordHandler.handle(Server.java:144)
+	at org.spaceinvaders.Server$ResetPasswordHandler.handle(Server.java:144)
 	at jdk.httpserver/com.sun.net.httpserver.Filter$Chain.doFilter(Filter.java:95)
 	at jdk.httpserver/sun.net.httpserver.AuthFilter.doFilter(AuthFilter.java:82)
 	at jdk.httpserver/com.sun.net.httpserver.Filter$Chain.doFilter(Filter.java:98)
@@ -147,7 +147,7 @@ com.google.firebase.auth.FirebaseAuthException: Unexpected HTTP response with st
 	at com.google.firebase.auth.AbstractFirebaseAuth.generatePasswordResetLink(AbstractFirebaseAuth.java:1097)
 	at com.google.firebase.auth.AbstractFirebaseAuth.generatePasswordResetLink(AbstractFirebaseAuth.java:1081)
 	at org.spaceinvaders.firebase.Firebase.sendResetPasswordEmail(Firebase.java:151)
-	at org.spaceinvaders.firebase.Server$ResetPasswordHandler.handle(Server.java:144)
+	at org.spaceinvaders.Server$ResetPasswordHandler.handle(Server.java:144)
 	at jdk.httpserver/com.sun.net.httpserver.Filter$Chain.doFilter(Filter.java:95)
 	at jdk.httpserver/sun.net.httpserver.AuthFilter.doFilter(AuthFilter.java:82)
 	at jdk.httpserver/com.sun.net.httpserver.Filter$Chain.doFilter(Filter.java:98)
