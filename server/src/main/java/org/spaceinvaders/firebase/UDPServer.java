@@ -76,11 +76,15 @@ public class UDPServer
         String token = data.get("token");
         String state = data.get("state");
 
+        // TODO: Implement JNI here
         // some computation
         if (state.contains("LEFT")) coords.angle += 1;
         else if (state.contains("RIGHT")) coords.angle -= 1;
         if (state.contains("FORWARD")) moveInDirection(1, coords);
         else if (state.contains("BACKWARD")) moveInDirection(-1, coords);
+
+        // NOTE: You can return anything from which this class can infer the different coords of different objects
+        // it can be in any form (the most preferred form this UDPPacket) but I can always convert any form to that :P
 
         return this.gson.toJson(new UDPPacket(this.coords));
     }
