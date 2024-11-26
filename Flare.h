@@ -1,32 +1,32 @@
 #pragma once
-#include "FixedObj.h"
-#include <string>
+#include "stdVerlet.h"
 
-class Flare : public FixedObj
+class Flare : public stdVerlet
 {
 private:
     int duration;
     int remainingTime;
-    std::string effectType;
 
 public:
-    Flare(int id, int x, int y, int radius, int duration, const std::string &effectType)
-        : FixedObj(id, x, y, radius, radius, 0), duration(duration), remainingTime(duration), effectType(effectType) {}
+    Flare(int id, int x, int y, int vX, int vY, int accX, int accY, int innerRad, int outerRad, int mass, int duration)
+        : stdVerlet(id, x, y, vX, vY, accX, accY, 1, innerRad, outerRad, mass), duration(duration), remainingTime(duration) {}
 
-    void update()
+    void updateFlare(int t)
     {
+        stdVerlet::updatePos(t);
+
         if (remainingTime > 0)
         {
             remainingTime--;
         }
         else
         {
-            selfDestruct();
+            this->selfDestruct();
         }
     }
 
-    bool isActive() const
+    bool checkCollision(LinearObj *obj) override
     {
-        return remainingTime > 0;
+        return stdVerlet::checkCollision(obj);
     }
 };
