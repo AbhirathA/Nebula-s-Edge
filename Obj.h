@@ -140,7 +140,7 @@ public:
 	virtual int getNextX(int t) = 0;
 	virtual int getNextY(int t) = 0;
 	virtual bool boundCorrection(int lft, int rt, int tp, int bt, int t) = 0;
-	virtual bool collisionCorection(Obj *other) = 0;
+	// virtual bool collisionCorection(Obj *other) = 0;
 	virtual ~Obj()
 	{
 		delete objBox;

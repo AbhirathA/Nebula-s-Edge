@@ -8,6 +8,8 @@
 //
 // }
 
+
+
 AABBtree::AABBtree() {
     root = nullptr;
 }

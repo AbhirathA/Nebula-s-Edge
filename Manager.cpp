@@ -11,6 +11,11 @@ std::map<int, std::pair<int, int>> Manager::display() {
 	return temp;
 }
 
+std::vector<int> Manager::display(int lowerX, int lowerY, int upperX, int upperY) {
+	AABB box = AABB({lowerX, lowerY}, {upperX, upperY});
+	return tree.boxColliders(&box);
+}
+
 int Manager::drop1(int x, int y, int vX, int vY, int accX, int accY, int res, int innerRad, int outerRad, int mass) {
 	if ((((lft <= x) && (x <= rt)) && ((bt <= y) && (y <= tp))) == false) {
 		//std::cout << lft << " " << rt << " ! " << bt << " " << tp << std::endl;
@@ -44,7 +49,7 @@ int Manager::drop2(int x, int y, int vX, int vY, int accX, int accY, int innerRa
 }
 
 void Manager::update() {
-
+	tree.removeDead();
 	bool flag = true;
 	for (auto i : objList) {
 		i->updatePos(t);
@@ -54,21 +59,18 @@ void Manager::update() {
 	int count = 0;
 	while(flag && count++ < precision){
 		flag = false;
-		for (int i = 0; i < objList.size()-1; i++) {
-            for (auto j = i+1; j < objList.size(); j++) {
-                if(objList[i]->checkCollision(objList[j])){
-                    objList[i]->collisionCorrection(objList[j]);
-					objList[i]->boundCorrection(lft, rt, tp, bt, t);
-					objList[j]->boundCorrection(lft, rt, tp, bt, t);
-                    flag = true;
-                }
-            }
-        }
+		std::vector<std::pair<int,int>> collisionPairs = tree.colliderPairs();
+		for(auto p: collisionPairs) {
+			objList[p.first]->collisionCorrection(objList[p.second]);
+			objList[p.first]->boundCorrection(lft, rt, tp, bt, t);
+			objList[p.second]->boundCorrection(lft, rt, tp, bt, t);
+			flag = true;
+		}
+		tree.Update();
 	}
 }
 
-void Manager::removeDead(std::vector<int> ids)
-{
+void Manager::removeDead(std::vector<int> ids) {
 	for (auto id : ids)
 	{
 		delete objMap[id];
