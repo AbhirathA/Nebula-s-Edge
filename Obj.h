@@ -1,6 +1,5 @@
 #pragma once
 #include <cmath>
-#include "AABBtree.h"
 
 // Different the type of physics to be used for the simulation
 enum class TypeOfPhy{
@@ -14,6 +13,7 @@ enum class TypeOfPhy{
     Other = 7
 };
 
+class LinearObj;
 
 /*
 	This class contains all the basic properties every object should have.
@@ -31,17 +31,12 @@ class Obj
 
 		//The state of the object
 		int state = 0;
+		int stateCount = 2;
 
 		//The mass and radii of the object
 		int mass = 0;
 		int innerRad = 0;
 		int outerRad = 0;
-
-		//The bounding box of the object
-		AABB* objBox = nullptr;
-
-		//Status of the object(Alive or dead)
-		bool dead = false;
 
 	public:
 		Obj(int id, int x, int y, int innerRad, int outerRad, int mass) {
@@ -51,8 +46,6 @@ class Obj
 			this->innerRad = innerRad;
 			this->outerRad = outerRad;
 			this->mass = mass;
-			this->objBox = new AABB({x-outerRad, y-outerRad}, {x+outerRad, y+outerRad});
-			this->dead = false;
 		}
 
 		int getX() {
@@ -87,35 +80,22 @@ class Obj
 			return mass;
 		}
 
-		AABB* getObjBox() {
-			return objBox;
-		}
-
-		bool* getStatus() {
-			return &dead;
-		}
-
-		void selfDestruct() {
-			dead = true;
-		}
-
-		void updateBox() {
-			objBox->setLowerBound({posX-outerRad, posY-outerRad});
-			objBox->setUpperBound({posX+outerRad, posY+outerRad});
-		}
-
 		void changeState() {
-			state = 1 - state;
+			state = (state+1)%stateCount;
 		}
 
 		virtual bool checkCollision(Obj* obj) = 0;
+		virtual bool checkCollision(LinearObj* lo) = 0;
+
+		virtual bool collisionCorrection(Obj* other) = 0;
+		virtual bool collisionCorrection(LinearObj* other) = 0;
+
 		virtual void updatePos(int t) = 0;
+		virtual void updateAcc(int ax, int ay) = 0;
 		//void internalUpdate();
 		virtual int getNextX(int t) = 0;
 		virtual int getNextY(int t) = 0;
 		virtual bool boundCorrection(int lft, int rt, int tp, int bt, int t) = 0;
-		virtual bool collisionCorection(Obj* other) = 0;
-		virtual ~Obj() {
-			delete objBox;
-		};
+
+		virtual ~Obj() {};
 };

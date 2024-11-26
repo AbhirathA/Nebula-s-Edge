@@ -1,13 +1,14 @@
 #pragma once
 #include "Obj.h"
+#include <iostream>
 class LinearObj : public Obj {
 
 	protected:
 		//The velocity of the object in x-y form
 		int vX = 0;
 		int vY = 0;
-		int terminalX = 200;
-		int terminalY = 200;
+		int terminalX = 100;
+		int terminalY = 100;
 		bool isXTerminal = false;
 		bool isYTerminal = false;
 
@@ -17,11 +18,12 @@ class LinearObj : public Obj {
 
 	public:
 
-		LinearObj(int id, int x, int y, int vX, int vY, int accX, int accY, int res, int innerRad, int outerRad, int mass) :Obj(id, x, y, innerRad, outerRad, mass) {
+		LinearObj(int id, int x, int y, int vX, int vY, int accX, int accY, int innerRad, int outerRad, int mass) :Obj(id, x, y, innerRad, outerRad, mass) {
 			this->vX = vX;
 			this->vY = vY;
 			this->accX = accX;
 			this->accY = accY;
+			std::cout << "Constructed LO" << x <<" " << y<< std::endl;
 		}
 
 		int getvX() {
@@ -62,12 +64,17 @@ class LinearObj : public Obj {
 		}
 
 		virtual bool checkCollision(LinearObj* obj) = 0;
+		virtual bool checkCollision(Obj* obj) = 0;
+
+		virtual bool collisionCorrection(LinearObj* other) = 0;
+		virtual bool collisionCorrection(Obj* other) = 0;
+
 		virtual void updatePos(int t) = 0;
 		//void internalUpdate();
 		virtual int getNextX(int t) = 0;
 		virtual int getNextY(int t) = 0;
 		virtual bool boundCorrection(int lft, int rt, int tp, int bt, int t) = 0;
-		virtual bool collisionCorection(LinearObj* other) = 0;
+
 		virtual ~LinearObj() {};
 };
 

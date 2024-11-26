@@ -5,6 +5,8 @@
 #include <SFML/System.hpp>
 #include <SFML/Network.hpp>
 #include "Manager.h"
+#include <map>
+#include <vector>
 
 // Rendering stuff
 
@@ -14,21 +16,22 @@
 class GameRender{
 	private:
 		//Window
-		sf::RenderWindow* window;
+		sf::RenderWindow* window = nullptr;
 		sf::Event ev;
 		sf::VideoMode videoMode;
 
-		//Enemy
-		sf::RectangleShape enemy;
+		//ObjectList
+		std::map<int, sf::RectangleShape*> shapeList = {};
 
-		//Objects
-		sf::RectangleShape o;
-
+		//Manager
+		Manager* manager = nullptr;
+		
 		// Private functions
 		void initVariables();
 		void initWindow();
-		void initObjects();
-		void initEnemies();
+		void initObj(int id, double posX, double posY);
+		void initEnemy(int id, double posX, double posY);
+		void deleteShape(int id);
 
 	public:
 
