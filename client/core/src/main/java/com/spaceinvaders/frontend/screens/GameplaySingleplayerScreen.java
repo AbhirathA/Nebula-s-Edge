@@ -123,7 +123,8 @@ public class GameplaySingleplayerScreen implements Screen {
         }
 
         if((uiStage.getTimeRemaining() == 0 || uiStage.getHealthBar().getCurrentHealth() == 0) && !isGameOver) {
-            uiStage.addGameOver();
+//            uiStage.addGameOver();
+            uiStage.addVictory();
             uiStage.setPaused(true);
             isGameOver = true;
         }

@@ -20,6 +20,7 @@ public class UIStage extends Stage {
     private SpaceInvadersGame game;
     private HealthBar healthBar;
     private GameOver gameOver;
+    private Victory victory;
     private Label timerLabel;
     private float timeRemaining;
     private boolean isPaused = false;
@@ -40,6 +41,9 @@ public class UIStage extends Stage {
 
         // Initialize Game over screen
         gameOver = new GameOver(game);
+
+        // Initialize Victory screen
+        victory = new Victory(game);
 
         // Create and add a pause button to the stage
         ImageButton pauseButton = ButtonUtils.createScreenNavigationButton( game, "textures/pause.png", "textures/pause.png", 7, 7, viewport.getWorldWidth() - 10, viewport.getWorldHeight() - 10, ScreenState.PAUSE);
@@ -135,5 +139,11 @@ public class UIStage extends Stage {
         addActor(gameOver);
         game.musicManager.pause();
         game.soundManager.play("gameOver");
+    }
+
+    public void addVictory() {
+        addActor(victory);
+        game.musicManager.pause();
+        game.soundManager.play("victory");
     }
 }
