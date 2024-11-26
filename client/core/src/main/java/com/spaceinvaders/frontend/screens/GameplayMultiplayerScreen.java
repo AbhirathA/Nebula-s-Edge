@@ -11,6 +11,7 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.spaceinvaders.backend.UDPClient;
 import com.spaceinvaders.backend.utils.Coordinate;
+import com.spaceinvaders.backend.utils.UDPPacket;
 import com.spaceinvaders.frontend.SpaceInvadersGame;
 import com.spaceinvaders.frontend.background.StarsBackground;
 import com.spaceinvaders.frontend.ui.UIStage;
@@ -34,7 +35,9 @@ public class GameplayMultiplayerScreen implements Screen {
 
     private UDPClient client;
 
-    InputMultiplexer multiplexer;
+    private InputMultiplexer multiplexer;
+
+    private final UDPPacket udpPacket;
 
     public GameplayMultiplayerScreen(SpaceInvadersGame game, float CAMERA_WIDTH, float CAMERA_HEIGHT, float WORLD_WIDTH, float WORLD_HEIGHT) {
         this.game = game;
@@ -60,7 +63,9 @@ public class GameplayMultiplayerScreen implements Screen {
 
         uiStage = new UIStage(game, new FitViewport(CAMERA_WIDTH, CAMERA_HEIGHT));
 
-        this.client = new UDPClient();
+        this.udpPacket = new UDPPacket(rocketSprite.getX(), rocketSprite.getY(), rocketSprite.getRotation());
+        this.client = new UDPClient(udpPacket);
+        this.client.startReceiveThread(); // start thread to receive packets
 
         multiplexer = new InputMultiplexer();
         multiplexer.addProcessor(uiStage); // UI input comes first
@@ -115,10 +120,18 @@ public class GameplayMultiplayerScreen implements Screen {
 //        }
 
         this.client.send(state, this.game.token);
-        Coordinate coords = this.client.reviece(this.rocketSprite.getX(), this.rocketSprite.getY(), this.rocketSprite.getRotation());
-        System.out.println(coords.x + " " + coords.y + " " + coords.angle);
-        this.rocketSprite.setPosition(coords.x, coords.y);
-        this.rocketSprite.setRotation(coords.angle);
+
+        // use this object to render objects on screen
+        UDPPacket tempUdpPacket = new UDPPacket();
+        synchronized (this.udpPacket) {
+            tempUdpPacket.update(this.udpPacket);
+        }
+
+        // set positions based on this.udpPacket
+        // for now just implemented myShip,
+        // TODO: need to implement for other ships
+        this.rocketSprite.setPosition(tempUdpPacket.myShip.x, tempUdpPacket.myShip.y);
+        this.rocketSprite.setRotation(tempUdpPacket.myShip.angle);
         updateCamera();
 
         Gdx.gl.glEnable(GL20.GL_BLEND); // Enable blending

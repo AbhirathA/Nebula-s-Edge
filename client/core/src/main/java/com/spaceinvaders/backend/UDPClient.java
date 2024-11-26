@@ -3,10 +3,10 @@ package com.spaceinvaders.backend;
 import java.net.*;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
-import com.spaceinvaders.backend.utils.Coordinate;
+import com.spaceinvaders.backend.utils.UDPPacket;
 
 public class UDPClient {
-    private static final String SERVER_ADDRESS = "172.16.224.45";
+    private static final String SERVER_ADDRESS = "localhost";
     private static final int SERVER_PORT = 9876;
     private static final int CLIENT_PORT = 9877; // Change this for each client
     private static final int BUFFER_SIZE = 10000;
@@ -15,7 +15,13 @@ public class UDPClient {
     private InetAddress serverAddress = null;
     private final Gson gson = new Gson();
 
-    public UDPClient() {
+    private final UDPReceive udpReceive;
+    public final UDPPacket udpPacket;
+    public Thread receiveThread;
+
+    public UDPClient(UDPPacket udpPacket) {
+        this.udpPacket = udpPacket;
+        this.udpReceive = new UDPReceive();
         try {
             this.clientSocket = new DatagramSocket(CLIENT_PORT);
             this.serverAddress = InetAddress.getByName(SERVER_ADDRESS);
@@ -24,9 +30,9 @@ public class UDPClient {
         }
     }
 
-    public void send(String data, String token) {
+    public void send(String state, String token) {
         try {
-            String sendData = generateData(data, token);
+            String sendData = generateData(state, token);
             DatagramPacket sendPacket = new DatagramPacket(sendData.getBytes(), sendData.length(), this.serverAddress, SERVER_PORT);
             this.clientSocket.send(sendPacket);
         } catch (Exception e) {
@@ -34,19 +40,33 @@ public class UDPClient {
         }
     }
 
-    public Coordinate reviece(float x, float y, float angle) {
-        try {
-            byte[] receiveBuffer = new byte[BUFFER_SIZE];
-            DatagramPacket receivePacket = new DatagramPacket(receiveBuffer, receiveBuffer.length);
-            this.clientSocket.receive(receivePacket);
+    public void startReceiveThread() {
+        this.receiveThread = new Thread(this.udpReceive);
+        this.receiveThread.start();
+    }
 
-            String receivedData = new String(receivePacket.getData(), 0, receivePacket.getLength());
-            return this.gson.fromJson(receivedData, Coordinate.class);
+    private class UDPReceive implements Runnable {
 
-        } catch (Exception e) {
-            e.printStackTrace();
-            return new Coordinate("spaceship", x, y, angle);
+        @Override
+        public void run() {
+            try {
+                while (true) {
+                    byte[] receiveBuffer = new byte[BUFFER_SIZE];
+                    DatagramPacket receivePacket = new DatagramPacket(receiveBuffer, receiveBuffer.length);
+                    UDPClient.this.clientSocket.receive(receivePacket);
+                    String receivedData = new String(receivePacket.getData(), 0, receivePacket.getLength());
+
+                    System.out.println(receivedData);
+
+                    synchronized (UDPClient.this.udpPacket) {
+                        UDPClient.this.udpPacket.update(UDPClient.this.gson.fromJson(receivedData, UDPPacket.class));
+                    }
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
+
     }
 
     // Simulates random data generation

@@ -1,11 +1,17 @@
 package org.spaceinvaders.firebase;
 
 import java.net.*;
-import java.util.*;
 import com.google.gson.Gson;
 import org.spaceinvaders.firebase.util.Coordinate;
+import org.spaceinvaders.firebase.util.UDPPacket;
 
-public class UDPServer {
+import java.net.DatagramSocket;
+import java.net.InetSocketAddress;
+import java.util.HashMap;
+import java.util.Map;
+
+public class UDPServer
+{
     private static final int SERVER_PORT = 9876;
     private static final int BUFFER_SIZE = 10000;
 
@@ -15,43 +21,48 @@ public class UDPServer {
     private final Coordinate coords;
     private final Gson gson;
 
-    public UDPServer() {
+    public UDPServer()
+    {
         this.coords = new Coordinate("spaceship", WORLD_WIDTH / 2 - 21f / 2f, WORLD_HEIGHT / 2 - 21f / 2f, 0);
         this.gson = new Gson();
     }
 
-    public void server() {
+    public void server()
+    {
         Map<InetSocketAddress, String> clientData = new HashMap<>();
 
-        try (DatagramSocket serverSocket = new DatagramSocket(SERVER_PORT)) {
+        try (DatagramSocket serverSocket = new DatagramSocket(SERVER_PORT))
+        {
             System.out.println("Server running on port " + SERVER_PORT);
 
             byte[] receiveBuffer = new byte[BUFFER_SIZE];
 
-            while (true) {
+            while (true)
+            {
                 // Receive data from a client
                 DatagramPacket receivePacket = new DatagramPacket(receiveBuffer, receiveBuffer.length);
                 serverSocket.receive(receivePacket);
 
                 InetSocketAddress clientAddress = new InetSocketAddress(receivePacket.getAddress(), receivePacket.getPort());
                 String receivedData = new String(receivePacket.getData(), 0, receivePacket.getLength());
-                System.out.println(receivedData);
 
                 // Update the client's data
                 clientData.put(clientAddress, receivedData);
 
                 // Process data (abstracted in this example)
                 String processedData = processData(receivedData);
-                System.out.println(processedData);
 
                 // Broadcast processed data to all connected clients
                 for (InetSocketAddress client : clientData.keySet()) {
                     byte[] sendData = processedData.getBytes();
                     DatagramPacket sendPacket = new DatagramPacket(sendData, sendData.length, client.getAddress(), client.getPort());
                     serverSocket.send(sendPacket);
+                    System.out.println("Sent data");
                 }
             }
-        } catch (Exception e) {
+        }
+        catch (Exception e)
+        {
             e.printStackTrace();
         }
     }
@@ -71,7 +82,7 @@ public class UDPServer {
         if (state.contains("FORWARD")) moveInDirection(1, coords);
         else if (state.contains("BACKWARD")) moveInDirection(-1, coords);
 
-        return this.gson.toJson(this.coords);
+        return this.gson.toJson(new UDPPacket(this.coords));
     }
 
     private void moveInDirection(float speed, Coordinate coords) {
