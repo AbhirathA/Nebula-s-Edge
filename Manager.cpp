@@ -11,17 +11,18 @@ std::map<int, std::pair<int, int>> Manager::display() {
 	return temp;
 }
 
-std::vector<int> Manager::display(int lowerX, int lowerY, int upperX, int upperY) {
-	std::vector<std::pair<std::vector<int>, double>> m;
+std::vector<std::vector<int>> Manager::display(int lowerX, int lowerY, int upperX, int upperY) {
+	std::vector<std::vector<int>> m;
 	AABB box = AABB({lowerX, lowerY}, {upperX, upperY});
 	std::vector<int> v = tree.boxColliders(&box);
 
 	for(auto i: v) {
 		int x = objMap[i]->getX();
 		int y = objMap[i]->getY();
-		double ori = objMap[i]->getOri();
-		m.push_back({{}, })
+		int ori = objMap[i]->getOri();
+		m.push_back({i, x, y, ori});
 	}
+	return m;
 }
 
 int Manager::drop1(int x, int y, int vX, int vY, int accX, int accY, int res, int innerRad, int outerRad, int mass) {

@@ -49,7 +49,7 @@ public:
 		void update();
 		int xForce();
 		int yForce();
-		std::vector<int> display(int lowerX, int lowerY, int upperX, int upperY);
+		std::vector<std::vector<int>> display(int lowerX, int lowerY, int upperX, int upperY);
 		~Manager() {
 			for (auto i : objList) {
 				delete i;
