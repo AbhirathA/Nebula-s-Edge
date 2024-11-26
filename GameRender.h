@@ -21,7 +21,7 @@ class GameRender{
 		sf::VideoMode videoMode;
 
 		//ObjectList
-		std::map<int, sf::RectangleShape*> shapeList = {};
+		std::map<int, sf::Shape*> shapeList = {};
 
 		//Manager
 		Manager* manager = nullptr;
