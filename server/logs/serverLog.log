@@ -197,3 +197,5 @@ POST https://identitytoolkit.googleapis.com/v1/projects/nebula-s-edge-6e33d/acco
 2024-11-22 19:50:21 [HTTP-Dispatcher] INFO  o.s.firebase.util.LoggerUtil - Password reset email sent to: deepya1235@gmail.com
 2024-11-22 19:50:21 [HTTP-Dispatcher] INFO  o.s.firebase.util.LoggerUtil - Password reset email sent
 2024-11-24 17:51:14 [main] INFO  o.s.firebase.util.LoggerUtil - Server started at http://localhost:8080
+2024-11-26 22:00:49 [HTTP-Dispatcher] INFO  o.s.firebase.util.LoggerUtil - Created user: zYv2gbT0PFMCzaocnxB2pttHhhJ3
+2024-11-26 22:00:49 [HTTP-Dispatcher] INFO  o.s.firebase.util.LoggerUtil - User Created

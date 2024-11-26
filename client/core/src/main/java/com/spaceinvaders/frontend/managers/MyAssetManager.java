@@ -54,6 +54,10 @@ public class MyAssetManager {
         assetManager.load("textures/pause.png", Texture.class);
         assetManager.load("music/10 - Continue.mp3", Music.class);
         assetManager.load("music/08 Easy Funkship 106.mp3", Music.class);
+        assetManager.load("textures/gameOver.png", Texture.class);
+        assetManager.load("sounds/game-over-38511.mp3", Sound.class);
+        assetManager.load("textures/victory.png", Texture.class);
+        assetManager.load("sounds/goodresult-82807.mp3", Sound.class);
     }
 
     // Retrieves an asset from the AssetManager based on its file path and type

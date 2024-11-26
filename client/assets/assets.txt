@@ -3,6 +3,8 @@ fonts/minecraft.fnt
 fonts/minecraft.png
 music/08 Easy Funkship 106.mp3
 music/10 - Continue.mp3
+sounds/game-over-38511.mp3
+sounds/goodresult-82807.mp3
 sounds/mixkit-short-laser-gun-shot-1670.wav
 sounds/mixkit-winning-a-coin-video-game-2069.wav
 textures/Planet1.png
@@ -24,6 +26,7 @@ textures/back-button.png
 textures/button.png
 textures/cursor.png
 textures/emptyHeart.png
+textures/gameOver.png
 textures/halfHeart.png
 textures/heart.png
 textures/menu.png
@@ -40,3 +43,4 @@ textures/sliderBackground.png
 textures/sliderKnob.png
 textures/sound.png
 textures/title.png
+textures/victory.png
