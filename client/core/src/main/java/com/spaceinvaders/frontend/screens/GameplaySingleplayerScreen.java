@@ -11,6 +11,7 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.spaceinvaders.frontend.SpaceInvadersGame;
 import com.spaceinvaders.frontend.background.StarsBackground;
+import com.spaceinvaders.frontend.gameplay.GameplayStage;
 import com.spaceinvaders.frontend.ui.UIStage;
 
 public class GameplaySingleplayerScreen implements Screen {
@@ -25,11 +26,9 @@ public class GameplaySingleplayerScreen implements Screen {
     private float WORLD_WIDTH;
     private float WORLD_HEIGHT;
 
-    private final StarsBackground starsBackground;
-    private final Sprite rocketSprite;
-
     private UIStage uiStage;
-    private boolean isGameOver = false;
+
+    private GameplayStage gameplayStage;
 
     InputMultiplexer multiplexer;
 
@@ -48,22 +47,17 @@ public class GameplaySingleplayerScreen implements Screen {
         camera.position.set(WORLD_WIDTH/2, WORLD_HEIGHT/2, 0);
         camera.update();
 
-        starsBackground = new StarsBackground(WORLD_WIDTH, WORLD_HEIGHT, 200);
-        Texture rocket = game.assetManager.get("textures/Rocket3.png", Texture.class);
-        rocketSprite = new Sprite(rocket);
-        rocketSprite.setPosition(WORLD_WIDTH / 2 - 21f / 2f, WORLD_HEIGHT / 2 - 21f / 2f);
-        rocketSprite.setSize(21, 21);
-        rocketSprite.setOrigin(rocketSprite.getWidth() / 2, rocketSprite.getHeight() / 2);
-
         uiStage = new UIStage(game, new FitViewport(CAMERA_WIDTH, CAMERA_HEIGHT));
+        gameplayStage = new GameplayStage(game, viewport, WORLD_WIDTH, WORLD_HEIGHT);
 
         multiplexer = new InputMultiplexer();
         multiplexer.addProcessor(uiStage); // UI input comes first
+        multiplexer.addProcessor(gameplayStage); // Gameplay input
         multiplexer.addProcessor(new InputAdapter() { // Gameplay-specific input
             @Override
             public boolean keyDown(int keycode) {
                 if (keycode == Input.Keys.ESCAPE) {
-                    game.screenManager.setScreen(ScreenState.PAUSE); // Switch to PauseScreen
+                    pause();
                     return true;
                 }
                 return false;
@@ -89,45 +83,16 @@ public class GameplaySingleplayerScreen implements Screen {
         this.game.batch.setProjectionMatrix(this.camera.combined);
         this.game.shapeRenderer.setProjectionMatrix(this.camera.combined);
 
-        if (Gdx.input.isKeyPressed(Input.Keys.A)) {
-            rocketSprite.rotate(1);
-        }
-        else if (Gdx.input.isKeyPressed(Input.Keys.D)) {
-            rocketSprite.rotate(-1);
-        }
-
-        if (Gdx.input.isKeyPressed(Input.Keys.W)) {
-            moveInDirection(1);
-        }
-        else if (Gdx.input.isKeyPressed(Input.Keys.S)) {
-            moveInDirection(-1);
-        }
-
         updateCamera();
 
         Gdx.gl.glEnable(GL20.GL_BLEND); // Enable blending
         Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
 
-        this.starsBackground.render(this.game.shapeRenderer, delta);
-
-        game.batch.begin();
-        rocketSprite.draw(game.batch);
-        game.batch.end();
+        gameplayStage.act(delta);
+        gameplayStage.draw();
 
         uiStage.act(delta);
         uiStage.draw();
-
-        if(Gdx.input.justTouched()) {
-            uiStage.getHealthBar().changeHealth(-1);
-            game.soundManager.play("shoot");
-        }
-
-        if((uiStage.getTimeRemaining() == 0 || uiStage.getHealthBar().getCurrentHealth() == 0) && !isGameOver) {
-//            uiStage.addGameOver();
-            uiStage.addVictory();
-            uiStage.setPaused(true);
-            isGameOver = true;
-        }
     }
 
     @Override
@@ -160,22 +125,8 @@ public class GameplaySingleplayerScreen implements Screen {
 
     }
 
-    private void moveInDirection(float speed) {
-        float rotation = rocketSprite.getRotation();
-
-        float angleRad = (float) Math.toRadians(rotation) + 1.571f;
-
-        float deltaX = MathUtils.cos(angleRad) * speed;
-        float deltaY = MathUtils.sin(angleRad) * speed;
-
-        rocketSprite.translate(deltaX, deltaY);
-
-        rocketSprite.setX(MathUtils.clamp(rocketSprite.getX(), 0, WORLD_WIDTH - rocketSprite.getWidth()));
-        rocketSprite.setY(MathUtils.clamp(rocketSprite.getY(), 0, WORLD_HEIGHT - rocketSprite.getHeight()));
-    }
-
     private void updateCamera() {
-        camera.position.set(rocketSprite.getX() + rocketSprite.getWidth() / 2, rocketSprite.getY() + rocketSprite.getHeight() / 2, 0);
+        camera.position.set(gameplayStage.getRocketSprite().getX() + gameplayStage.getRocketSprite().getWidth() / 2, gameplayStage.getRocketSprite().getY() + gameplayStage.getRocketSprite().getHeight() / 2, 0);
 
         camera.position.x = MathUtils.clamp(camera.position.x, CAMERA_WIDTH / 2, WORLD_WIDTH - CAMERA_WIDTH / 2);
         camera.position.y = MathUtils.clamp(camera.position.y, CAMERA_HEIGHT / 2, WORLD_HEIGHT - CAMERA_HEIGHT / 2);
