@@ -1,5 +1,6 @@
 package com.spaceinvaders.frontend.ui;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -24,6 +25,7 @@ public class UIStage extends Stage {
     private Label timerLabel;
     private float timeRemaining;
     private boolean isPaused = false;
+    private boolean isGameOver = false;
 
     /**
      * Constructor for UIStage.
@@ -31,7 +33,7 @@ public class UIStage extends Stage {
      * @param game     The SpaceInvadersGame instance.
      * @param viewport The viewport used to display the stage.
      */
-    public UIStage(SpaceInvadersGame game, Viewport viewport) {
+    public UIStage(SpaceInvadersGame game, Viewport viewport, ScreenState screenState) {
         super(viewport, game.batch);
         this.game = game;
 
@@ -46,11 +48,28 @@ public class UIStage extends Stage {
         victory = new Victory(game);
 
         // Create and add a pause button to the stage
-        ImageButton pauseButton = ButtonUtils.createScreenNavigationButton( game, "textures/pause.png", "textures/pause.png", 7, 7, viewport.getWorldWidth() - 10, viewport.getWorldHeight() - 10, ScreenState.PAUSE);
+        ImageButton pauseButton = ButtonUtils.createScreenNavigationButton( game, "textures/pause.png", "textures/pause.png", 7, 7, viewport.getWorldWidth() - 10, viewport.getWorldHeight() - 10, screenState);
         addActor(pauseButton);
 
         // Initialize and start the countdown timer
         initializeTimer(game.assetManager.get("fonts/minecraft.fnt", BitmapFont.class), viewport.getWorldWidth(), viewport.getWorldHeight(), 60);  // Start a 60-second timer
+    }
+
+    @Override
+    public void act(float delta) {
+        if(Gdx.input.justTouched()) {
+            healthBar.changeHealth(-1);
+            game.soundManager.play("shoot");
+        }
+
+        if((timeRemaining == 0 || healthBar.getCurrentHealth() == 0) && !isGameOver) {
+//            addGameOver();
+            addVictory();
+            isPaused = true;
+            isGameOver = true;
+        }
+
+        super.act(delta);
     }
 
     /**

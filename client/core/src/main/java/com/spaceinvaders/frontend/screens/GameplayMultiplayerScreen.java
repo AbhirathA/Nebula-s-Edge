@@ -13,6 +13,7 @@ import com.spaceinvaders.backend.UDPClient;
 import com.spaceinvaders.backend.utils.UDPPacket;
 import com.spaceinvaders.frontend.SpaceInvadersGame;
 import com.spaceinvaders.frontend.background.StarsBackground;
+import com.spaceinvaders.frontend.gameplay.GameplayStage;
 import com.spaceinvaders.frontend.ui.UIStage;
 
 public class GameplayMultiplayerScreen implements Screen {
@@ -27,10 +28,9 @@ public class GameplayMultiplayerScreen implements Screen {
     private float WORLD_WIDTH;
     private float WORLD_HEIGHT;
 
-    private final StarsBackground starsBackground;
-    private final Sprite rocketSprite;
-
     private UIStage uiStage;
+
+    private GameplayStage gameplayStage;
 
     private UDPClient udpClient;
     private final UDPPacket udpPacket;
@@ -52,25 +52,20 @@ public class GameplayMultiplayerScreen implements Screen {
         camera.position.set(WORLD_WIDTH/2, WORLD_HEIGHT/2, 0);
         camera.update();
 
-        starsBackground = new StarsBackground(WORLD_WIDTH, WORLD_HEIGHT, 200);
-        Texture rocket = game.assetManager.get("textures/Rocket3.png", Texture.class);
-        rocketSprite = new Sprite(rocket);
-        rocketSprite.setPosition(WORLD_WIDTH / 2 - 21f / 2f, WORLD_HEIGHT / 2 - 21f / 2f);
-        rocketSprite.setSize(21, 21);
-        rocketSprite.setOrigin(rocketSprite.getWidth() / 2, rocketSprite.getHeight() / 2);
+        uiStage = new UIStage(game, new FitViewport(CAMERA_WIDTH, CAMERA_HEIGHT), ScreenState.MULTIPLAYER_PAUSE);
+        gameplayStage = new GameplayStage(game, viewport, WORLD_WIDTH, WORLD_HEIGHT);
 
-        uiStage = new UIStage(game, new FitViewport(CAMERA_WIDTH, CAMERA_HEIGHT));
-
-        this.udpPacket = new UDPPacket(rocketSprite.getX(), rocketSprite.getY(), rocketSprite.getRotation());
+        this.udpPacket = new UDPPacket(gameplayStage.getRocketSprite().getX(), gameplayStage.getRocketSprite().getY(), gameplayStage.getRocketSprite().getRotation());
         this.udpClient = new UDPClient(udpPacket);
 
         multiplexer = new InputMultiplexer();
         multiplexer.addProcessor(uiStage); // UI input comes first
+        multiplexer.addProcessor(gameplayStage); // Gameplay input
         multiplexer.addProcessor(new InputAdapter() { // Gameplay-specific input
             @Override
             public boolean keyDown(int keycode) {
                 if (keycode == Input.Keys.ESCAPE) {
-                    game.screenManager.setScreen(ScreenState.PAUSE); // Switch to PauseScreen
+                    pause();
                     return true;
                 }
                 return false;
@@ -82,7 +77,6 @@ public class GameplayMultiplayerScreen implements Screen {
     @Override
     public void show() {
         Gdx.input.setInputProcessor(multiplexer);
-        game.musicManager.play("gameplay");
         uiStage.setPaused(false);
 
         this.udpClient.startReceiveThread(); // start thread to receive packets
@@ -129,26 +123,18 @@ public class GameplayMultiplayerScreen implements Screen {
         // set positions based on this.udpPacket
         // for now just implemented myShip,
         // TODO: need to implement for other ships
-        this.rocketSprite.setPosition(tempUdpPacket.myShip.x, tempUdpPacket.myShip.y);
-        this.rocketSprite.setRotation(tempUdpPacket.myShip.angle);
+        this.gameplayStage.getRocketSprite().setPosition(tempUdpPacket.myShip.x, tempUdpPacket.myShip.y);
+        this.gameplayStage.getRocketSprite().setRotation(tempUdpPacket.myShip.angle);
         updateCamera();
 
         Gdx.gl.glEnable(GL20.GL_BLEND); // Enable blending
         Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
 
-        this.starsBackground.render(this.game.shapeRenderer, delta);
-
-        game.batch.begin();
-        rocketSprite.draw(game.batch);
-        game.batch.end();
+        gameplayStage.act(delta);
+        gameplayStage.draw();
 
         uiStage.act(delta);
         uiStage.draw();
-
-        if(Gdx.input.justTouched()) {
-            uiStage.getHealthBar().changeHealth(-1);
-            game.soundManager.play("shoot");
-        }
     }
 
     @Override
@@ -159,7 +145,7 @@ public class GameplayMultiplayerScreen implements Screen {
     @Override
     public void pause() {
         game.musicManager.pause();
-        game.screenManager.setScreen(ScreenState.PAUSE);
+        game.screenManager.setScreen(ScreenState.MULTIPLAYER_PAUSE);
         uiStage.setPaused(true);
     }
 
@@ -182,7 +168,7 @@ public class GameplayMultiplayerScreen implements Screen {
     }
 
     private void updateCamera() {
-        camera.position.set(rocketSprite.getX() + rocketSprite.getWidth() / 2, rocketSprite.getY() + rocketSprite.getHeight() / 2, 0);
+        camera.position.set(gameplayStage.getRocketSprite().getX() + gameplayStage.getRocketSprite().getWidth() / 2, gameplayStage.getRocketSprite().getY() + gameplayStage.getRocketSprite().getHeight() / 2, 0);
 
         camera.position.x = MathUtils.clamp(camera.position.x, CAMERA_WIDTH / 2, WORLD_WIDTH - CAMERA_WIDTH / 2);
         camera.position.y = MathUtils.clamp(camera.position.y, CAMERA_HEIGHT / 2, WORLD_HEIGHT - CAMERA_HEIGHT / 2);
