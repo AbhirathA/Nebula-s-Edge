@@ -134,30 +134,20 @@ public:
 		state = (state+1)%stateCount;
 	}
 
-	virtual int getOri() {return 0;}
-	virtual bool checkCollision(Obj *obj) = 0;
+	virtual bool checkCollision(Obj* obj) = 0;
+	virtual bool checkCollision(LinearObj* lo) = 0;
+	virtual bool checkCollision(AngleObj* ao) = 0;
+
+	virtual bool collisionCorrection(Obj* other) = 0;
+	virtual bool collisionCorrection(LinearObj* other) = 0;
+	virtual bool collisionCorrection(AngleObj* other) = 0;
+
 	virtual void updatePos(int t) = 0;
-	// void internalUpdate();
+	virtual void updateAcc(int ax, int ay) = 0;
+
 	virtual int getNextX(int t) = 0;
 	virtual int getNextY(int t) = 0;
 	virtual bool boundCorrection(int lft, int rt, int tp, int bt, int t) = 0;
-	// virtual bool collisionCorection(Obj *other) = 0;
-	virtual ~Obj()
-	{
-		delete objBox;
-	};
-		// virtual bool checkCollision(Obj* obj) = 0;
-		virtual bool checkCollision(LinearObj* lo) = 0;
 
-		virtual bool collisionCorrection(Obj* other) = 0;
-		virtual bool collisionCorrection(LinearObj* other) = 0;
-
-		// virtual void updatePos(int t) = 0;
-		virtual void updateAcc(int ax, int ay) = 0;
-		// void internalUpdate();
-		// virtual int getNextX(int t) = 0;
-		// virtual int getNextY(int t) = 0;
-		// virtual bool boundCorrection(int lft, int rt, int tp, int bt, int t) = 0;
-
-		// virtual ~Obj() {};
+	virtual ~Obj() {};
 };
