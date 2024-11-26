@@ -27,36 +27,28 @@ std::vector<std::vector<int>> Manager::display(int lowerX, int lowerY, int upper
 }
 
 int Manager::drop1(int x, int y, int vX, int vY, int accX, int accY, int res, int innerRad, int outerRad, int mass) {
-	if ((((lft <= x) && (x <= rt)) && ((bt <= y) && (y <= tp))) == false) {
-		//std::cout << lft << " " << rt << " ! " << bt << " " << tp << std::endl;
-		//std::cout << ((lft <= x) && (x <= rt)) << " " << (bt <= y <= tp) << std::endl;
-		return false;
-	}
 	Obj* temp = new stdVerlet(count, x, y, vX, vY, accX, accY, res, innerRad, outerRad, mass);
-	for(auto& obj : objList){
-		if(obj->checkCollision(temp)){
-			delete temp;
-            return false;
-        }
-	}
 	objList.push_back(temp);
 	objMap[count] = temp;
 	tree.insert(temp->getObjBox(), count, temp->getStatus());
-	// temp->updateAcc(gX, gY);
+	temp->updateAcc(gX, gY);
 	count++;
 	return count-1;
 }
+
+
 
 int Manager::drop2(int x, int y, int vX, int vY, int accX, int accY, int innerRad, int outerRad, int mass) {
 	Obj* temp = new velVerlet(count, x, y, vX, vY, accX, accY, innerRad, outerRad, mass);
 	objList.push_back(temp);
 	objMap[count] = temp;
 	tree.insert(temp->getObjBox(), count, temp->getStatus());
-	// temp->updateAcc(gX, gY);
 	temp->updateAcc(gX, gY);
 	count++;
 	return count-1;
 }
+
+
 
 void Manager::update() {
 	tree.removeDead();
@@ -65,7 +57,7 @@ void Manager::update() {
 		i->updatePos(t);
 		i->boundCorrection(lft, rt, tp, bt, t);
 	}
-
+	tree.Update();
 	int count = 0;
 	while(flag && count++ < precision){
 		flag = false;
