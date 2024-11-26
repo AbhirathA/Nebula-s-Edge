@@ -70,6 +70,8 @@ public class UDPClient {
                         return;
                     }
                 }
+            } catch (SocketTimeoutException se) {
+                System.out.println("Server connection timed out");
             } catch (Exception e) {
                 e.printStackTrace();
             }
