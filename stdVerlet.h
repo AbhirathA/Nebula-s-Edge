@@ -9,7 +9,7 @@ class stdVerlet : public LinearObj{
 		int posY_old = 0;
 
     public:
-        stdVerlet(int id, int x, int y, int vX, int vY, int accX, int accY, int res, int innerRad, int outerRad, int mass) : LinearObj(id, x, y, vX, vY, accX, accY, res, innerRad, outerRad, mass) {
+        stdVerlet(int id, int x, int y, int vX, int vY, int accX, int accY, int res, int innerRad, int outerRad, int mass) : LinearObj(id, x, y, vX, vY, accX, accY, innerRad, outerRad, mass) {
             
             this->posX_old = x - vX * res;
 			this->posY_old = y - vY * res;
@@ -75,9 +75,12 @@ class stdVerlet : public LinearObj{
 
         virtual bool checkCollision(LinearObj* obj);
 		bool checkCollision(Obj* obj) { return false; }
-        virtual bool boundCorrection(int lft, int rt, int tp, int bt, int t);
-        virtual bool collisionCorection(LinearObj* other);
-		virtual bool collisionCorection(Obj* other) { return false; }
+        
+		virtual bool collisionCorrection(LinearObj* other);
+		virtual bool collisionCorrection(Obj* other) { return false; }
+
+		virtual bool boundCorrection(int lft, int rt, int tp, int bt, int t);
+
 
         virtual ~stdVerlet(){}
 };

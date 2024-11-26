@@ -6,15 +6,8 @@
 class AngleObj:Obj{
 	
 	protected:
-		// ID of the obj
-		int id = 0;
-
 		// Orientation
 		int angleScaled = 0;
-
-		//The X-Y coordinates of the object
-		int posX = 0;
-		int posY = 0;
 
 		//The velocity of the object
 		int v = 0;
@@ -24,36 +17,14 @@ class AngleObj:Obj{
 		int accX = 0;
 		int accY = 0;
 
-		//The state of the object
-		int state = 0;
-
-		//The mass and radii of the object
-		int mass = 0;
-		int innerRad = 0;
-		int outerRad = 0;
-
 	public:
 
 		AngleObj(int id, int x, int y, int v, int angle, int acc, int accX, int accY, int innerRad, int outerRad, int mass):Obj(id,x,y,innerRad,outerRad, mass) {
-			this->id = id;
-			this->posX = x;
-			this->posY = y;
 			this->v = v;
 			this->angleScaled = angle;
 			this->acc = acc;
 			this->accX = accX;
 			this->accY = accY;
-			this->innerRad = innerRad;
-			this->outerRad = outerRad;
-			this->mass = mass;
-		}
-
-		int getX() {
-			return posX;
-		}
-
-		int getY() {
-			return posY;
 		}
 
 		virtual int getV() {
@@ -62,14 +33,6 @@ class AngleObj:Obj{
 
 		virtual void updateV(int v) {
 			this->v = v;
-		}
-
-		virtual void updateX(int x) {
-			posX = x;
-		}
-
-		virtual void updateY(int y) {
-			posY = y;
 		}
 
 		virtual int getXacc() {
@@ -84,33 +47,12 @@ class AngleObj:Obj{
 			accX = x; accY = y;
 		}
 
+		virtual void updateRadialAcc(int a) {
+			this->acc = a;
+		}
+
 		int getAngle() {
 			return this->angleScaled;
-		}
-
-		// Sin of angle wrt x-axis
-		double getOri() {
-			return std::sin(this->angleScaled/SCALE);
-		}
-
-		int getOuterR() {
-			return outerRad;
-		}
-
-		int getInnerR() {
-			return innerRad;
-		}
-
-		int getState() {
-			return state;
-		}
-
-		int getMass() {
-			return mass;
-		}
-
-		void changeState() {
-			state = 1 - state;
 		}
 
 		virtual bool checkCollision(Obj* obj) = 0;

@@ -27,11 +27,16 @@ int main()
     GameRender game = GameRender();
     int l = 0;
     int t = 0;
+	int flag = 1000000;
     while (game.isRunning()) {
 
         game.update(); // generate the next frame in GUI form
+
         game.render(); // display it to user
 
+		if (flag-- == 0) {
+			break;
+		}
     }
     return 0;
 }

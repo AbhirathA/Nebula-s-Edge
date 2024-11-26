@@ -3,7 +3,7 @@
 class LeapFrog :
     public LinearObj
 {
-    LeapFrog(int id, int x, int y, int vX, int vY, int accX, int accY, int res, int innerRad, int outerRad, int mass) : LinearObj(id, x, y, vX, vY, accX, accY, res, innerRad, outerRad, mass) {}
+    LeapFrog(int id, int x, int y, int vX, int vY, int accX, int accY, int res, int innerRad, int outerRad, int mass) : LinearObj(id, x, y, vX, vY, accX, accY, innerRad, outerRad, mass) {}
     virtual void updatePos(int t) override final;
     virtual int getNextX(int t) override final;
     virtual int getNextY(int t) override final;
