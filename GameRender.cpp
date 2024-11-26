@@ -7,9 +7,9 @@ void GameRender::initVariables() {
     this->videoMode.width = 880;
 
     manager = new Manager(0, 0, 0, this->videoMode.width * DISPLAY_SCALE, 0, (-1) * (this->videoMode.height) * DISPLAY_SCALE, 1);
-    manager->drop2(10*DISPLAY_SCALE, -10*DISPLAY_SCALE, 0, 20, 0, 0, 50*DISPLAY_SCALE, 60*DISPLAY_SCALE, 100);
-    manager->drop2(10*DISPLAY_SCALE, -1000*DISPLAY_SCALE, 0, -10, 0, 0, 50* DISPLAY_SCALE, 60* DISPLAY_SCALE, 100);
-    manager->drop2(10 * DISPLAY_SCALE, -100 * DISPLAY_SCALE, 10, -10, 0, 0, 50 * DISPLAY_SCALE, 60 * DISPLAY_SCALE, 100);
+    manager->drop1(10 * DISPLAY_SCALE, -10 * DISPLAY_SCALE, 20, 0, 0, 0, 0, 40 * DISPLAY_SCALE, 45 * DISPLAY_SCALE, 100);
+    manager->drop2(10 * DISPLAY_SCALE, -600 * DISPLAY_SCALE, -10, 0, 0, 0, 40 * DISPLAY_SCALE, 45 * DISPLAY_SCALE, 100);
+    manager->drop2(10 * DISPLAY_SCALE, -100 * DISPLAY_SCALE, 20, 90, 0, 0, 40 * DISPLAY_SCALE, 45 * DISPLAY_SCALE, 100);
 }
 
 void GameRender::initWindow() {
@@ -17,16 +17,15 @@ void GameRender::initWindow() {
 }
 
 void GameRender::initObj(int id, double posX, double posY) {
-    sf::RectangleShape* temp = nullptr;
+    sf::CircleShape* temp = nullptr;
     if ((this->shapeList).find(id) != (this->shapeList).end()) {
         (this->shapeList)[id]->setPosition(sf::Vector2f(posX/DISPLAY_SCALE, posY/DISPLAY_SCALE));
     }
-    temp = new sf::RectangleShape();
+    temp = new sf::CircleShape(40);
     temp->setPosition(sf::Vector2f(posX/DISPLAY_SCALE, posY/DISPLAY_SCALE));
-    temp->setSize(sf::Vector2f(50.f,50.f));
     temp->setFillColor(sf::Color::Green);
     temp->setOutlineColor(sf::Color::Blue);
-    temp->setOutlineThickness(2.f);
+    temp->setOutlineThickness(1);
     this->shapeList[id] = temp;
 }
 
