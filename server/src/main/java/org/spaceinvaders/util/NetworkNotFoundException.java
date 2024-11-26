@@ -12,7 +12,7 @@
  * @since 11/13/2024
  */
 
-package org.spaceinvaders.firebase.util;
+package org.spaceinvaders.util;
 
 public class NetworkNotFoundException extends RuntimeException
 {

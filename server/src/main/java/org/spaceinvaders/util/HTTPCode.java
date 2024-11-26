@@ -12,7 +12,7 @@
  * @since 11/21/2024
  */
 
-package org.spaceinvaders.firebase.util;
+package org.spaceinvaders.util;
 
 public enum HTTPCode {
     SUCCESS(200),

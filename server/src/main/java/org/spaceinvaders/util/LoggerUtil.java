@@ -12,7 +12,7 @@
  * @since 11/15/2024
  */
 
-package org.spaceinvaders.firebase.util;
+package org.spaceinvaders.util;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

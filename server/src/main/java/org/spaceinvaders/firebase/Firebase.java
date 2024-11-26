@@ -26,6 +26,8 @@ import com.google.firebase.auth.FirebaseAuthException;
 import com.google.firebase.auth.UserRecord;
 import com.google.firebase.cloud.FirestoreClient;
 import org.spaceinvaders.firebase.util.*;
+import org.spaceinvaders.util.LoggerUtil;
+import org.spaceinvaders.util.NetworkNotFoundException;
 
 import java.io.IOException;
 import java.io.InputStream;
