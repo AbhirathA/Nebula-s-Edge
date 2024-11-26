@@ -1,39 +1,46 @@
 #pragma once
 #include <vector>
-#include "FixedObj.h"
 #include "Flare.h"
+#include "PowerUp.h"
+#include "stdVerlet.h"
+#include "velVerlet.h"
 
 class ObjectLauncher
 {
 private:
-    std::vector<FixedObj *> launchedObjects;
+    std::vector<Obj *> launchedObjects;
     int objectCounter = 0;
 
 public:
-    FixedObj *launchProjectile(int x, int y, int vx, int vy, int radius, int mass)
+    Flare *launchFlare(int x, int y, int vX, int vY, int accX, int accY, int radius, int mass, int duration)
     {
-        FixedObj *projectile = new FixedObj(objectCounter++, x, y, radius, radius, mass);
-        projectile->updateV(vx, vy);
-        launchedObjects.push_back(projectile);
-        return projectile;
-    }
-
-    Flare *launchFlare(int x, int y, int radius, int duration, const std::string &effectType)
-    {
-        Flare *flare = new Flare(objectCounter++, x, y, radius, duration, effectType);
+        Flare *flare = new Flare(objectCounter++, x, y, vX, vY, accX, accY, radius, radius, mass, duration);
         launchedObjects.push_back(flare);
         return flare;
     }
 
-    // Update all launched objects
-    void updateObjects()
+    stdVerlet *launchProjectile(int x, int y, int vX, int vY, int accX, int accY, int innerRad, int outerRad, int mass)
+    {
+        stdVerlet *projectile = new stdVerlet(objectCounter++, x, y, vX, vY, accX, accY, 1, innerRad, outerRad, mass);
+        launchedObjects.push_back(projectile);
+        return projectile;
+    }
+
+    PowerUp *launchPowerUp(PowerUp *powerUp)
+    {
+        powerUp->setID(objectCounter++);
+        launchedObjects.push_back(powerUp);
+        return powerUp;
+    }
+
+    void updateObjects(int t)
     {
         for (auto it = launchedObjects.begin(); it != launchedObjects.end();)
         {
-            (*it)->update();
+            (*it)->updatePos(t);
             if (*((*it)->getStatus()))
             {
-                delete *it; // Clean up destroyed objects
+                delete *it;
                 it = launchedObjects.erase(it);
             }
             else
@@ -45,7 +52,7 @@ public:
 
     ~ObjectLauncher()
     {
-        for (FixedObj *obj : launchedObjects)
+        for (Obj *obj : launchedObjects)
         {
             delete obj;
         }

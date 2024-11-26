@@ -3,17 +3,17 @@
 #include "AABBtree.h"
 
 // Different the type of physics to be used for the simulation
-enum class TypeOfPhy{
+enum class TypeOfPhy
+{
 	FIXEDOBJ = 0,
-    MOVINGOBJ = 1,
-    ACCTRACKER = 2,
-    TRACKER = 3,
+	MOVINGOBJ = 1,
+	ACCTRACKER = 2,
+	TRACKER = 3,
 	BEEMAN = 4,
-    STDVERLET = 5,
+	STDVERLET = 5,
 	VELVERLET = 6,
-    Other = 7
+	Other = 7
 };
-
 
 /*
 	This class contains all the basic properties every object should have.
@@ -22,100 +22,124 @@ enum class TypeOfPhy{
 
 class Obj
 {
-	protected:
-		int id = 0;
+protected:
+	int id = 0;
 
-		//The X-Y coordinates of the object
-		int posX = 0;
-		int posY = 0;
+	// The X-Y coordinates of the object
+	int posX = 0;
+	int posY = 0;
 
-		//The state of the object
-		int state = 0;
+	// The state of the object
+	int state = 0;
 
-		//The mass and radii of the object
-		int mass = 0;
-		int innerRad = 0;
-		int outerRad = 0;
+	// The mass and radii of the object
+	int mass = 0;
+	int innerRad = 0;
+	int outerRad = 0;
 
-		//The bounding box of the object
-		AABB* objBox = nullptr;
+	// The bounding box of the object
+	AABB *objBox = nullptr;
 
-		//Status of the object(Alive or dead)
-		bool dead = false;
+	// Status of the object(Alive or dead)
+	bool dead = false;
 
-	public:
-		Obj(int id, int x, int y, int innerRad, int outerRad, int mass) {
-			this->id = id;
-			this->posX = x;
-			this->posY = y;
-			this->innerRad = innerRad;
-			this->outerRad = outerRad;
-			this->mass = mass;
-			this->objBox = new AABB({x-outerRad, y-outerRad}, {x+outerRad, y+outerRad});
-			this->dead = false;
-		}
+public:
+	Obj(int id, int x, int y, int innerRad, int outerRad, int mass)
+	{
+		this->id = id;
+		this->posX = x;
+		this->posY = y;
+		this->innerRad = innerRad;
+		this->outerRad = outerRad;
+		this->mass = mass;
+		this->objBox = new AABB({x - outerRad, y - outerRad}, {x + outerRad, y + outerRad});
+		this->dead = false;
+	}
 
-		int getX() {
-			return posX;
-		}
+	int getID()
+	{
+		return id;
+	}
 
-		int getY() {
-			return posY;
-		}
+	int getX()
+	{
+		return posX;
+	}
 
-		virtual void updateX(int x) {
-			posX = x;
-        }
+	int getY()
+	{
+		return posY;
+	}
 
-		virtual void updateY(int y) {
-            posY = y;
-        }
+	virtual void updateX(int x)
+	{
+		posX = x;
+	}
 
-		int getOuterR(){
-			return outerRad;
-		}
+	virtual void updateY(int y)
+	{
+		posY = y;
+	}
 
-		int getInnerR(){
-            return innerRad;
-        }
+	int getOuterR()
+	{
+		return outerRad;
+	}
 
-		int getState(){
-			return state;
-		}
+	int getInnerR()
+	{
+		return innerRad;
+	}
 
-		int getMass() {
-			return mass;
-		}
+	int getState()
+	{
+		return state;
+	}
 
-		AABB* getObjBox() {
-			return objBox;
-		}
+	int getMass()
+	{
+		return mass;
+	}
 
-		bool* getStatus() {
-			return &dead;
-		}
+	AABB *getObjBox()
+	{
+		return objBox;
+	}
 
-		void selfDestruct() {
-			dead = true;
-		}
+	bool *getStatus()
+	{
+		return &dead;
+	}
 
-		void updateBox() {
-			objBox->setLowerBound({posX-outerRad, posY-outerRad});
-			objBox->setUpperBound({posX+outerRad, posY+outerRad});
-		}
+	void selfDestruct()
+	{
+		dead = true;
+	}
 
-		void changeState() {
-			state = 1 - state;
-		}
+	void updateBox()
+	{
+		objBox->setLowerBound({posX - outerRad, posY - outerRad});
+		objBox->setUpperBound({posX + outerRad, posY + outerRad});
+	}
 
-		virtual bool checkCollision(Obj* obj) = 0;
-		virtual void updatePos(int t) = 0;
-		//void internalUpdate();
-		virtual int getNextX(int t) = 0;
-		virtual int getNextY(int t) = 0;
-		virtual bool boundCorrection(int lft, int rt, int tp, int bt, int t) = 0;
-		virtual bool collisionCorection(Obj* other) = 0;
-		virtual ~Obj() {
-			delete objBox;
-		};
+	void changeState()
+	{
+		state = 1 - state;
+	}
+	void updateMass(int m)
+	{
+		mass = m;
+	}
+
+	virtual bool checkCollision(Obj *obj) = 0;
+	virtual void updatePos(int t) = 0;
+	// void internalUpdate();
+	virtual int getNextX(int t) = 0;
+	virtual int getNextY(int t) = 0;
+	virtual bool boundCorrection(int lft, int rt, int tp, int bt, int t) = 0;
+	virtual bool collisionCorection(Obj *other) = 0;
+	virtual ~Obj()
+	{
+		delete objBox;
+	};
 };
