@@ -33,11 +33,10 @@ public class GameplayMultiplayerScreen implements Screen {
 
     private UIStage uiStage;
 
-    private UDPClient client;
+    private UDPClient udpClient;
+    private final UDPPacket udpPacket;
 
     private InputMultiplexer multiplexer;
-
-    private final UDPPacket udpPacket;
 
     public GameplayMultiplayerScreen(SpaceInvadersGame game, float CAMERA_WIDTH, float CAMERA_HEIGHT, float WORLD_WIDTH, float WORLD_HEIGHT) {
         this.game = game;
@@ -64,8 +63,7 @@ public class GameplayMultiplayerScreen implements Screen {
         uiStage = new UIStage(game, new FitViewport(CAMERA_WIDTH, CAMERA_HEIGHT));
 
         this.udpPacket = new UDPPacket(rocketSprite.getX(), rocketSprite.getY(), rocketSprite.getRotation());
-        this.client = new UDPClient(udpPacket);
-        this.client.startReceiveThread(); // start thread to receive packets
+        this.udpClient = new UDPClient(udpPacket);
 
         multiplexer = new InputMultiplexer();
         multiplexer.addProcessor(uiStage); // UI input comes first
@@ -87,6 +85,8 @@ public class GameplayMultiplayerScreen implements Screen {
         Gdx.input.setInputProcessor(multiplexer);
         game.musicManager.play("gameplay");
         uiStage.setPaused(false);
+
+        this.udpClient.startReceiveThread(); // start thread to receive packets
     }
 
     @Override
@@ -119,7 +119,7 @@ public class GameplayMultiplayerScreen implements Screen {
 //            e.printStackTrace();
 //        }
 
-        this.client.send(state, this.game.token);
+        this.udpClient.send(state, this.game.token);
 
         // use this object to render objects on screen
         UDPPacket tempUdpPacket = new UDPPacket();
@@ -175,25 +175,11 @@ public class GameplayMultiplayerScreen implements Screen {
     public void hide() {
         Gdx.input.setInputProcessor(null);
         uiStage.setPaused(true);
+        this.udpClient.receiveThread.interrupt();
     }
 
     @Override
     public void dispose() {
-
-    }
-
-    private void moveInDirection(float speed) {
-        float rotation = rocketSprite.getRotation();
-
-        float angleRad = (float) Math.toRadians(rotation) + 1.571f;
-
-        float deltaX = MathUtils.cos(angleRad) * speed;
-        float deltaY = MathUtils.sin(angleRad) * speed;
-
-        rocketSprite.translate(deltaX, deltaY);
-
-        rocketSprite.setX(MathUtils.clamp(rocketSprite.getX(), 0, WORLD_WIDTH - rocketSprite.getWidth()));
-        rocketSprite.setY(MathUtils.clamp(rocketSprite.getY(), 0, WORLD_HEIGHT - rocketSprite.getHeight()));
     }
 
     private void updateCamera() {

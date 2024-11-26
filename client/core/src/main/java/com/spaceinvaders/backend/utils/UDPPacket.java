@@ -4,11 +4,11 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 public class UDPPacket implements Serializable {
-
     public Coordinate myShip;
     public ArrayList<Coordinate> spaceShips;
     public ArrayList<Coordinate> asteroids;
     public ArrayList<Coordinate> bullets;
+    public ArrayList<Coordinate> blackholes;
     public long packetNumber;
 
     public UDPPacket() {
@@ -16,6 +16,7 @@ public class UDPPacket implements Serializable {
         spaceShips = new ArrayList<>();
         asteroids = new ArrayList<>();
         bullets = new ArrayList<>();
+        blackholes = new ArrayList<>();
     }
 
     public UDPPacket(float x, float y, float angle) {
@@ -23,6 +24,17 @@ public class UDPPacket implements Serializable {
         spaceShips = new ArrayList<>();
         asteroids = new ArrayList<>();
         bullets = new ArrayList<>();
+        blackholes = new ArrayList<>();
+    }
+
+    // this is incorrect
+    // TODO: need to change server to handle multiple clients
+    public UDPPacket(Coordinate myShip) {
+        this.myShip = myShip;
+        spaceShips = new ArrayList<>();
+        asteroids = new ArrayList<>();
+        bullets = new ArrayList<>();
+        blackholes = new ArrayList<>();
     }
 
     public void update(UDPPacket udpPacket) {
@@ -30,6 +42,7 @@ public class UDPPacket implements Serializable {
         this.bullets = udpPacket.bullets;
         this.spaceShips = udpPacket.spaceShips;
         this.asteroids = udpPacket.asteroids;
+        this.blackholes = udpPacket.blackholes;
         this.packetNumber = udpPacket.packetNumber;
     }
 }

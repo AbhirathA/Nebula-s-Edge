@@ -8,6 +8,7 @@ public class UDPPacket implements Serializable {
     public ArrayList<Coordinate> spaceShips;
     public ArrayList<Coordinate> asteroids;
     public ArrayList<Coordinate> bullets;
+    public ArrayList<Coordinate> blackholes;
     public long packetNumber;
 
     public UDPPacket() {
@@ -15,6 +16,15 @@ public class UDPPacket implements Serializable {
         spaceShips = new ArrayList<>();
         asteroids = new ArrayList<>();
         bullets = new ArrayList<>();
+        blackholes = new ArrayList<>();
+    }
+
+    public UDPPacket(float x, float y, float angle) {
+        myShip = new Coordinate("MYSHIP", x, y, angle);
+        spaceShips = new ArrayList<>();
+        asteroids = new ArrayList<>();
+        bullets = new ArrayList<>();
+        blackholes = new ArrayList<>();
     }
 
     // this is incorrect
@@ -24,6 +34,7 @@ public class UDPPacket implements Serializable {
         spaceShips = new ArrayList<>();
         asteroids = new ArrayList<>();
         bullets = new ArrayList<>();
+        blackholes = new ArrayList<>();
     }
 
     public void update(UDPPacket udpPacket) {
@@ -31,7 +42,7 @@ public class UDPPacket implements Serializable {
         this.bullets = udpPacket.bullets;
         this.spaceShips = udpPacket.spaceShips;
         this.asteroids = udpPacket.asteroids;
+        this.blackholes = udpPacket.blackholes;
         this.packetNumber = udpPacket.packetNumber;
     }
 }
-

@@ -64,10 +64,6 @@ public class ScreenManager implements Disposable {
         if (screenState != ScreenState.LOADING)
             screenStateStack.add(screenState); // Add screen to stack unless it's LOADING screen
 
-        if (this.currentScreen != null) {
-            this.currentScreen.hide(); // Hide the current screen before switching
-        }
-
         // If the screen isn't already created, create and store it in the map
         if (!this.screens.containsKey(screenState)) {
             this.screens.put(screenState, this.createScreen(screenState));

@@ -18,12 +18,14 @@ public class UDPClient {
     private final UDPReceive udpReceive;
     public final UDPPacket udpPacket;
     public Thread receiveThread;
+    public boolean isThreadRunning = false;
 
     public UDPClient(UDPPacket udpPacket) {
         this.udpPacket = udpPacket;
         this.udpReceive = new UDPReceive();
         try {
             this.clientSocket = new DatagramSocket(CLIENT_PORT);
+            this.clientSocket.setSoTimeout(1000);
             this.serverAddress = InetAddress.getByName(SERVER_ADDRESS);
         } catch (Exception e) {
             e.printStackTrace();
@@ -41,8 +43,11 @@ public class UDPClient {
     }
 
     public void startReceiveThread() {
-        this.receiveThread = new Thread(this.udpReceive);
-        this.receiveThread.start();
+        if (!this.isThreadRunning) {
+            this.receiveThread = new Thread(this.udpReceive);
+            this.receiveThread.start();
+            this.isThreadRunning = true;
+        }
     }
 
     private class UDPReceive implements Runnable {
@@ -56,10 +61,13 @@ public class UDPClient {
                     UDPClient.this.clientSocket.receive(receivePacket);
                     String receivedData = new String(receivePacket.getData(), 0, receivePacket.getLength());
 
-                    System.out.println(receivedData);
-
                     synchronized (UDPClient.this.udpPacket) {
                         UDPClient.this.udpPacket.update(UDPClient.this.gson.fromJson(receivedData, UDPPacket.class));
+                    }
+
+                    if (Thread.interrupted()) {
+                        UDPClient.this.isThreadRunning = false;
+                        return;
                     }
                 }
             } catch (Exception e) {
