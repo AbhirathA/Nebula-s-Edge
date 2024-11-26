@@ -5,8 +5,8 @@
 #include <vector>
 #include <map>
 #include <iostream>
-#include "Flare.h"
-#include "ObjectLauncher.h"
+// #include "Flare.h"
+// #include "ObjectLauncher.h"
 
 #define PRECISION 1
 class Manager
@@ -26,7 +26,7 @@ class Manager
 	std::vector<Obj *> objList = {}; // list of created objects (make to map)
 	std::map<int, Obj *> objMap = {};
 	AABBtree tree;
-	ObjectLauncher launcher;
+	// ObjectLauncher launcher;
 
 public:
 	Manager(int accX = 1, int accY = 0, int lft = 0, int rt = 95, int tp = 0, int bt = -31, int t = 1)
@@ -58,19 +58,19 @@ public:
 
 	// to be done
 
-	void launchFlare(int x, int y, int vX, int vY, int accX, int accY, int radius, int mass, int duration)
-	{
-		Flare *flare = launcher.launchFlare(x, y, vX, vY, accX, accY, radius, mass, duration);
-		objList.push_back(flare);
-		objMap[flare->getID()] = flare;
-		tree.insert(flare->getObjBox(), flare->getID(), flare->getStatus());
-	}
+	// void launchFlare(int x, int y, int vX, int vY, int accX, int accY, int radius, int mass, int duration)
+	// {
+	// 	Flare *flare = launcher.launchFlare(x, y, vX, vY, accX, accY, radius, mass, duration);
+	// 	objList.push_back(flare);
+	// 	objMap[flare->getID()] = flare;
+	// 	tree.insert(flare->getObjBox(), flare->getID(), flare->getStatus());
+	// }
 
-	void spawnPowerUp(PowerUp *powerUp)
-	{
-		launcher.launchPowerUp(powerUp);
-		objList.push_back(powerUp);
-		objMap[powerUp->getID()] = powerUp;
-		tree.insert(powerUp->getObjBox(), powerUp->getID(), powerUp->getStatus());
-	}
+	// void spawnPowerUp(PowerUp *powerUp)
+	// {
+	// 	launcher.launchPowerUp(powerUp);
+	// 	objList.push_back(powerUp);
+	// 	objMap[powerUp->getID()] = powerUp;
+	// 	tree.insert(powerUp->getObjBox(), powerUp->getID(), powerUp->getStatus());
+	// }
 };
