@@ -47,6 +47,8 @@ public class MyAssetManager {
         assetManager.load("textures/sliderKnob.png", Texture.class);
         assetManager.load("sounds/mixkit-winning-a-coin-video-game-2069.wav", Sound.class);
         assetManager.load("sounds/mixkit-short-laser-gun-shot-1670.wav", Sound.class);
+        assetManager.load("textures/Rocket1.png", Texture.class);
+        assetManager.load("textures/Rocket2.png", Texture.class);
         assetManager.load("textures/Rocket3.png", Texture.class);
         assetManager.load("textures/heart.png", Texture.class);
         assetManager.load("textures/halfHeart.png", Texture.class);

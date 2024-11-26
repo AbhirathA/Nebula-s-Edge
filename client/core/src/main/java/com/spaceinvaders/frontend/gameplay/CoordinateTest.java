@@ -11,7 +11,8 @@ public class CoordinateTest {
         ArrayList<Coordinate> coordinates = new ArrayList<>();
 
         for (int i = 0; i < count; i++) {
-            String type = "Point"; // You can modify or randomize this if needed
+            String[] types = {"attack", "health", "bonus"};
+            String type = types[random.nextInt(types.length)];
             int id = i;
             float x = random.nextFloat() * 720; // Random x between 0 and 720
             float y = random.nextFloat() * 405; // Random y between 0 and 405

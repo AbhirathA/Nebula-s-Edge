@@ -1,5 +1,7 @@
 package com.spaceinvaders.frontend.gameplay;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -20,7 +22,6 @@ public class Rocket extends Actor {
         Texture rocket = assetManager.get("textures/Rocket3.png", Texture.class);
         rocketSprite = new Sprite(rocket);
         rocketSprite.setPosition(x, y);
-        rocketSprite.setSize(21, 21);
         rocketSprite.setOrigin(rocketSprite.getWidth() / 2, rocketSprite.getHeight() / 2);
     }
 
@@ -32,6 +33,20 @@ public class Rocket extends Actor {
     @Override
     public void draw(Batch batch, float parentAlpha) {
         super.draw(batch, parentAlpha);
+
+        if (Gdx.input.isKeyPressed(Input.Keys.A)) {
+            rocketSprite.rotate(1);
+        }
+        else if (Gdx.input.isKeyPressed(Input.Keys.D)) {
+            rocketSprite.rotate(-1);
+        }
+
+        if (Gdx.input.isKeyPressed(Input.Keys.W)) {
+            moveInDirection(1);
+        }
+        else if (Gdx.input.isKeyPressed(Input.Keys.S)) {
+            moveInDirection(-1);
+        }
 
         rocketSprite.draw(batch);
     }

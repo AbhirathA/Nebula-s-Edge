@@ -21,6 +21,8 @@ textures/Planet6.png
 textures/Planet7.png
 textures/Planet8.png
 textures/Planet9.png
+textures/Rocket1.png
+textures/Rocket2.png
 textures/Rocket3.png
 textures/back-button.png
 textures/bigAst1.png
@@ -30,6 +32,7 @@ textures/bigAst4.png
 textures/bigAst5.png
 textures/bigAst6.png
 textures/bigAst7.png
+textures/blackhole.png
 textures/bullet.png
 textures/button.png
 textures/cursor.png

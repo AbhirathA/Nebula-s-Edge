@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.spaceinvaders.backend.utils.Coordinate;
+import com.spaceinvaders.backend.utils.UDPPacket;
 import com.spaceinvaders.frontend.SpaceInvadersGame;
 import com.spaceinvaders.frontend.background.StarsBackground;
 
@@ -14,11 +15,17 @@ public class GameplayStage extends Stage {
     private final StarsBackground starsBackground;
     private final Rocket rocket;
     private final Bullets bullets;
+    private final Enemies enemies;
+    private final Asteroids asteroids;
+    private final Powerups powerups;
+    private final Spaceships spaceships;
 
     private final float WORLD_WIDTH;
     private final float WORLD_HEIGHT;
 
     private ArrayList<Coordinate> coordinates = CoordinateTest.generateCoordinates(100);
+
+    private UDPPacket udpPacket;
 
     public GameplayStage(SpaceInvadersGame game, Viewport viewport, float WORLD_WIDTH, float WORLD_HEIGHT) {
         super(viewport);
@@ -34,6 +41,10 @@ public class GameplayStage extends Stage {
         addActor(rocket);
 
         bullets = new Bullets(game.assetManager);
+        enemies = new Enemies(game.assetManager);
+        asteroids = new Asteroids(game.assetManager);
+        powerups = new Powerups(game.assetManager);
+        spaceships = new Spaceships(game.assetManager);
     }
 
     @Override
@@ -47,10 +58,16 @@ public class GameplayStage extends Stage {
     public void act(float delta) {
         // Render background
         starsBackground.render(game.shapeRenderer, delta);
-        getBatch().begin();
-        bullets.renderBullets(getBatch(), coordinates);
+//        if(udpPacket != null) {
+            getBatch().begin();
+            spaceships.renderSpaceships(getBatch(), coordinates, -1);
+//            spaceships.renderSpaceships(getBatch(), udpPacket.spaceShips, udpPacket.id);
+            getBatch().end();
+//        }
         super.act(delta);
     }
+
+    public void setUdpPacket(UDPPacket udpPacket) { this.udpPacket = udpPacket; }
 
     public Sprite getRocketSprite() { return rocket.getRocketSprite(); }
 }

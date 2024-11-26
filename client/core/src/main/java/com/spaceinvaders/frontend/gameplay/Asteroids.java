@@ -24,15 +24,15 @@ public class Asteroids {
         entitySpriteMap = new HashMap<>();
 
         for(int i=1; i<=7; i++) {
-            bigAsteroids[i-1] = new Sprite(assetManager.get("textures/bigAst" + i, Texture.class));
+            bigAsteroids[i-1] = new Sprite(assetManager.get("textures/bigAst" + i + ".png", Texture.class));
         }
 
         for(int i=1; i<=7; i++) {
-            mediumAsteroids[i-1] = new Sprite(assetManager.get("textures/midAst" + i, Texture.class));
+            mediumAsteroids[i-1] = new Sprite(assetManager.get("textures/midAst" + i + ".png", Texture.class));
         }
 
         for(int i=1; i<=7; i++) {
-            smallAsteroids[i-1] = new Sprite(assetManager.get("textures/smallAst" + i, Texture.class));
+            smallAsteroids[i-1] = new Sprite(assetManager.get("textures/smallAst" + i + ".png", Texture.class));
         }
     }
 

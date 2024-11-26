@@ -10,6 +10,7 @@ import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.spaceinvaders.backend.UDPClient;
+import com.spaceinvaders.backend.utils.Coordinate;
 import com.spaceinvaders.backend.utils.UDPPacket;
 import com.spaceinvaders.frontend.SpaceInvadersGame;
 import com.spaceinvaders.frontend.background.StarsBackground;
@@ -123,8 +124,16 @@ public class GameplayMultiplayerScreen implements Screen {
         // set positions based on this.udpPacket
         // for now just implemented myShip,
         // TODO: need to implement for other ships
-        this.gameplayStage.getRocketSprite().setPosition(tempUdpPacket.myShip.x, tempUdpPacket.myShip.y);
-        this.gameplayStage.getRocketSprite().setRotation(tempUdpPacket.myShip.angle);
+//        this.gameplayStage.getRocketSprite().setPosition(tempUdpPacket.myShip.x, tempUdpPacket.myShip.y);
+//        this.gameplayStage.getRocketSprite().setRotation(tempUdpPacket.myShip.angle);
+
+        for(Coordinate coordinate : tempUdpPacket.spaceShips) {
+            if(coordinate.id == tempUdpPacket.id) {
+                this.gameplayStage.getRocketSprite().setPosition(coordinate.x, coordinate.y);
+                this.gameplayStage.getRocketSprite().setRotation(coordinate.angle);
+                break;
+            }
+        }
         updateCamera();
 
         Gdx.gl.glEnable(GL20.GL_BLEND); // Enable blending
