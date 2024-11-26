@@ -29,6 +29,7 @@ public class GameplaySingleplayerScreen implements Screen {
     private final Sprite rocketSprite;
 
     private UIStage uiStage;
+    private boolean isGameOver = false;
 
     InputMultiplexer multiplexer;
 
@@ -119,6 +120,12 @@ public class GameplaySingleplayerScreen implements Screen {
         if(Gdx.input.justTouched()) {
             uiStage.getHealthBar().changeHealth(-1);
             game.soundManager.play("shoot");
+        }
+
+        if((uiStage.getTimeRemaining() == 0 || uiStage.getHealthBar().getCurrentHealth() == 0) && !isGameOver) {
+            uiStage.addGameOver();
+            uiStage.setPaused(true);
+            isGameOver = true;
         }
     }
 

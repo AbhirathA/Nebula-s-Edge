@@ -10,7 +10,6 @@ import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.spaceinvaders.backend.UDPClient;
-import com.spaceinvaders.backend.utils.Coordinate;
 import com.spaceinvaders.backend.utils.UDPPacket;
 import com.spaceinvaders.frontend.SpaceInvadersGame;
 import com.spaceinvaders.frontend.background.StarsBackground;

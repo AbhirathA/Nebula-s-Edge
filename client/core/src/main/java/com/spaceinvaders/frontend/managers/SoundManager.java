@@ -14,6 +14,7 @@ public class SoundManager {
     public void loadSounds(MyAssetManager assetManager) {
         sounds.put("buttonClick", assetManager.get("sounds/mixkit-winning-a-coin-video-game-2069.wav", Sound.class));
         sounds.put("shoot", assetManager.get("sounds/mixkit-short-laser-gun-shot-1670.wav", Sound.class));
+        sounds.put("gameOver", assetManager.get("sounds/game-over-38511.mp3", Sound.class));
     }
 
     // Plays the sound associated with the provided key at the current volume
