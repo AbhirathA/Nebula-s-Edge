@@ -28,15 +28,15 @@ public class SpaceInvadersGame extends Game {
 
         @Override
         public void execute() {
-            SpaceInvadersGame.this.musicManager.loadMusic("introMusic", "music/10 - Continue.mp3");
             SpaceInvadersGame.this.assetManager.loadAssets();
         }
 
         @Override
         public void onUpdate() {
+            SpaceInvadersGame.this.musicManager.loadMusic(SpaceInvadersGame.this.assetManager);
+            SpaceInvadersGame.this.soundManager.loadSounds(SpaceInvadersGame.this.assetManager);
             SpaceInvadersGame.this.screenManager = new ScreenManager(SpaceInvadersGame.this);
             SpaceInvadersGame.this.screenManager.setScreen(ScreenState.LOGIN_GATEWAY);
-            SpaceInvadersGame.this.soundManager.loadSounds(SpaceInvadersGame.this.assetManager);
         }
 
         @Override

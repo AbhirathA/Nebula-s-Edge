@@ -50,8 +50,6 @@ public class MainMenuScreen implements Screen {
         this.planetsBackground = planetsBackground;
 
         title = game.assetManager.get("textures/title.png", Texture.class);
-
-        game.musicManager.loadMusic("gameplay", "music/08 Easy Funkship 106.mp3");
     }
 
     @Override

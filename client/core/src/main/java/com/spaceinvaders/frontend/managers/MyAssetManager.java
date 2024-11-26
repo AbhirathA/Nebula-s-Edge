@@ -1,6 +1,7 @@
 package com.spaceinvaders.frontend.managers;
 
 import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -51,6 +52,8 @@ public class MyAssetManager {
         assetManager.load("textures/halfHeart.png", Texture.class);
         assetManager.load("textures/emptyHeart.png", Texture.class);
         assetManager.load("textures/pause.png", Texture.class);
+        assetManager.load("music/10 - Continue.mp3", Music.class);
+        assetManager.load("music/08 Easy Funkship 106.mp3", Music.class);
     }
 
     // Retrieves an asset from the AssetManager based on its file path and type

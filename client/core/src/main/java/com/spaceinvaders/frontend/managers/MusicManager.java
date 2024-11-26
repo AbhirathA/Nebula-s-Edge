@@ -17,13 +17,14 @@ public class MusicManager implements Disposable {
     private float volume = 0.5f;
 
     // Loads a music track from the given file path and stores it in the musicTracks HashMap
-    public void loadMusic(String key, String filePath) {
-        Music music = Gdx.audio.newMusic(Gdx.files.internal(filePath));
+    public void loadMusic(MyAssetManager assetManager) {
+        musicTracks.put("introMusic", assetManager.get("music/10 - Continue.mp3", Music.class));
+        musicTracks.put("gameplay", assetManager.get("music/08 Easy Funkship 106.mp3", Music.class));
 
         // Set the music to loop indefinitely
-        music.setLooping(true);
-
-        musicTracks.put(key, music);
+        for(String key : musicTracks.keySet()) {
+            musicTracks.get(key).setLooping(true);
+        }
     }
 
     // Plays the music track associated with the provided key
