@@ -15,7 +15,7 @@ enum class TypeOfPhy{
 };
 
 class LinearObj;
-
+class AngleObj;
 /*
 	This class contains all the basic properties every object should have.
 	It also looks at basic functionality that every object should have.
