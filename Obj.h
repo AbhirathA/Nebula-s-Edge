@@ -134,7 +134,7 @@ public:
 		state = (state+1)%stateCount;
 	}
 
-	virtual int getOri() {return 0.0;}
+	virtual int getOri() {return 0;}
 	virtual bool checkCollision(Obj *obj) = 0;
 	virtual void updatePos(int t) = 0;
 	// void internalUpdate();
