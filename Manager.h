@@ -44,7 +44,7 @@ public:
 	}
 
 		std::map<int, std::pair<int, int>>  display();
-		int drop1(int x, int y, int vX, int vY, int accX, int accY, int res, int innerRad, int outerRad, int mass); // add an object
+		int drop1(int x, int y, int v, int angle, int acc, int accX, int accY, int innerRad, int outerRad, int mass); // add an object
 		int drop2(int x, int y, int vX, int vY, int accX, int accY, int innerRad, int outerRad, int mass); // add an object
 		void update();
 		int xForce();
