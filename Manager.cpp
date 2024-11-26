@@ -1,6 +1,7 @@
 #include "Manager.h"
 
 std::map<int, std::pair<int, int>> Manager::display() {
+	// Only Game Render
 	std::map<int, std::pair<int, int>> temp = {};
 	for (auto i : this->objMap) {
 		temp[i.first] = {(i.second)->getX(),(i.second)->getY()};
