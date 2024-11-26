@@ -7,6 +7,7 @@
 #include <iostream>
 // #include "Flare.h"
 // #include "ObjectLauncher.h"
+// #include "PowerUp.h"
 
 #define PRECISION 1
 class Manager
@@ -27,6 +28,7 @@ class Manager
 	std::map<int, Obj *> objMap = {};
 	AABBtree tree;
 	// ObjectLauncher launcher;
+	// std::map<PowerUp*, Obj*> activePowerUps;
 
 public:
 	Manager(int accX = 1, int accY = 0, int lft = 0, int rt = 95, int tp = 0, int bt = -31, int t = 1)
@@ -72,5 +74,36 @@ public:
 	// 	objList.push_back(powerUp);
 	// 	objMap[powerUp->getID()] = powerUp;
 	// 	tree.insert(powerUp->getObjBox(), powerUp->getID(), powerUp->getStatus());
+	// }
+
+	// void activatePowerUp(PowerUp* powerUp, Obj* target);
+	// void updatePowerUps();
+
+	// void Manager::activatePowerUp(PowerUp* powerUp, Obj* target) {
+	// powerUp->applyEffect(target);
+	// activePowerUps[powerUp] = target; }
+
+	// just call updatePowerUps in update once onde
+
+	// void Manager::updatePowerUps()
+	// {
+	// 	std::vector<PowerUp *> expiredPowerUps;
+
+	// 	for (auto &[powerUp, target] : activePowerUps)
+	// 	{
+	// 		powerUp->updateTime();
+	// 		if (powerUp->isExpired())
+	// 		{
+	// 			powerUp->revokeEffect(target);
+	// 			expiredPowerUps.push_back(powerUp);
+	// 		}
+	// 	}
+
+	// 	// Remove expired power-ups
+	// 	for (PowerUp *powerUp : expiredPowerUps)
+	// 	{
+	// 		activePowerUps.erase(powerUp);
+	// 		delete powerUp; // Clean up the power-up object
+	// 	}
 	// }
 };

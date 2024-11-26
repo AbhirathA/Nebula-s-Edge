@@ -1,9 +1,10 @@
 #pragma once
 #include <vector>
 #include "Flare.h"
-#include "PowerUp.h"
 #include "stdVerlet.h"
 #include "velVerlet.h"
+
+// not complete, need to integrate with manager
 
 class ObjectLauncher
 {
@@ -24,13 +25,6 @@ public:
         stdVerlet *projectile = new stdVerlet(objectCounter++, x, y, vX, vY, accX, accY, 1, innerRad, outerRad, mass);
         launchedObjects.push_back(projectile);
         return projectile;
-    }
-
-    PowerUp *launchPowerUp(PowerUp *powerUp)
-    {
-        powerUp->setID(objectCounter++);
-        launchedObjects.push_back(powerUp);
-        return powerUp;
     }
 
     void updateObjects(int t)
