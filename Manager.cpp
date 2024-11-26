@@ -11,7 +11,7 @@ std::map<int, std::pair<int, int>> Manager::display() {
 	return temp;
 }
 
-std::vector<std::pair<std::vector<int>, double>> Manager::display(int lowerX, int lowerY, int upperX, int upperY) {
+std::vector<int> Manager::display(int lowerX, int lowerY, int upperX, int upperY) {
 	std::vector<std::pair<std::vector<int>, double>> m;
 	AABB box = AABB({lowerX, lowerY}, {upperX, upperY});
 	std::vector<int> v = tree.boxColliders(&box);
