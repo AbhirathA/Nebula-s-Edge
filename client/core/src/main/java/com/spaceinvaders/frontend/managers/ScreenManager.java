@@ -71,7 +71,6 @@ public class ScreenManager implements Disposable {
 
         this.currentScreen = this.screens.get(screenState); // Get the screen from the map
         this.game.setScreen(this.currentScreen); // Set the screen for the game
-        this.currentScreen.show(); // Show the new screen
     }
 
     // Set the screen and execute a command if the screen state is LOADING
@@ -119,8 +118,12 @@ public class ScreenManager implements Disposable {
                 return new MainMenuScreen(this.game, WORLD_WIDTH, WORLD_HEIGHT, STAGE_WIDTH, STAGE_HEIGHT, starsBackground, planetsBackground);
             case LOGIN_GATEWAY:
                 return new LoginGatewayScreen(this.game, WORLD_WIDTH, WORLD_HEIGHT, STAGE_WIDTH, STAGE_HEIGHT, starsBackground, planetsBackground);
-            case PAUSE:
-                return new PauseScreen(this.game, WORLD_WIDTH, WORLD_HEIGHT, STAGE_WIDTH, STAGE_HEIGHT, starsBackground);
+//            case PAUSE:
+//                return new PauseScreen(this.game, WORLD_WIDTH, WORLD_HEIGHT, STAGE_WIDTH, STAGE_HEIGHT, starsBackground);
+            case SINGLEPLAYER_PAUSE:
+                return new PauseSingleplayerScreen(this.game, WORLD_WIDTH, WORLD_HEIGHT, STAGE_WIDTH, STAGE_HEIGHT, starsBackground);
+            case MULTIPLAYER_PAUSE:
+                return new PauseMultiplayerScreen(this.game, WORLD_WIDTH, WORLD_HEIGHT, STAGE_WIDTH, STAGE_HEIGHT, starsBackground);
             case SINGLEPLAYER_GAMEPLAY:
                 return new GameplaySingleplayerScreen(this.game, WORLD_WIDTH, WORLD_HEIGHT, 720, 405);
             case MULTIPLAYER_GAMEPLAY:

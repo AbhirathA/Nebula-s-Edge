@@ -47,7 +47,7 @@ public class GameplaySingleplayerScreen implements Screen {
         camera.position.set(WORLD_WIDTH/2, WORLD_HEIGHT/2, 0);
         camera.update();
 
-        uiStage = new UIStage(game, new FitViewport(CAMERA_WIDTH, CAMERA_HEIGHT));
+        uiStage = new UIStage(game, new FitViewport(CAMERA_WIDTH, CAMERA_HEIGHT), ScreenState.SINGLEPLAYER_PAUSE);
         gameplayStage = new GameplayStage(game, viewport, WORLD_WIDTH, WORLD_HEIGHT);
 
         multiplexer = new InputMultiplexer();
@@ -103,7 +103,7 @@ public class GameplaySingleplayerScreen implements Screen {
     @Override
     public void pause() {
         game.musicManager.pause();
-        game.screenManager.setScreen(ScreenState.PAUSE);
+        game.screenManager.setScreen(ScreenState.SINGLEPLAYER_PAUSE);
         uiStage.setPaused(true);
     }
 

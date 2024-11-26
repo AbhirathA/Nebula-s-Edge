@@ -33,7 +33,7 @@ public class UIStage extends Stage {
      * @param game     The SpaceInvadersGame instance.
      * @param viewport The viewport used to display the stage.
      */
-    public UIStage(SpaceInvadersGame game, Viewport viewport) {
+    public UIStage(SpaceInvadersGame game, Viewport viewport, ScreenState screenState) {
         super(viewport, game.batch);
         this.game = game;
 
@@ -48,7 +48,7 @@ public class UIStage extends Stage {
         victory = new Victory(game);
 
         // Create and add a pause button to the stage
-        ImageButton pauseButton = ButtonUtils.createScreenNavigationButton( game, "textures/pause.png", "textures/pause.png", 7, 7, viewport.getWorldWidth() - 10, viewport.getWorldHeight() - 10, ScreenState.PAUSE);
+        ImageButton pauseButton = ButtonUtils.createScreenNavigationButton( game, "textures/pause.png", "textures/pause.png", 7, 7, viewport.getWorldWidth() - 10, viewport.getWorldHeight() - 10, screenState);
         addActor(pauseButton);
 
         // Initialize and start the countdown timer

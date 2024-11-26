@@ -43,11 +43,13 @@ public class UDPClient {
     }
 
     public void startReceiveThread() {
-        if (!this.isThreadRunning) {
-            this.receiveThread = new Thread(this.udpReceive);
-            this.receiveThread.start();
-            this.isThreadRunning = true;
+        if (this.isThreadRunning) {
+            this.receiveThread.interrupt();
         }
+
+        this.receiveThread = new Thread(this.udpReceive);
+        this.receiveThread.start();
+        this.isThreadRunning = true;
     }
 
     private class UDPReceive implements Runnable {
