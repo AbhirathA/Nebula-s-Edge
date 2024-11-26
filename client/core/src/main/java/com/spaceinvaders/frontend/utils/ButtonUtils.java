@@ -140,6 +140,7 @@ public class ButtonUtils {
 
                 // Navigate to the next Screen
                 if(targetScreen == null){
+                    System.out.println(targetScreen);
                     System.out.println("Move to new screen");
                 }
                 else {

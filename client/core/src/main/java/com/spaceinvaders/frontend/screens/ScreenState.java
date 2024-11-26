@@ -6,7 +6,6 @@ public enum ScreenState {
     SIGNUP,
     MAIN_MENU,
     LOGIN_GATEWAY,
-    PAUSE,
     SINGLEPLAYER_PAUSE,
     MULTIPLAYER_PAUSE,
     SINGLEPLAYER_GAMEPLAY,

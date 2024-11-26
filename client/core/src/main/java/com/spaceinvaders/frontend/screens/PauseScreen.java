@@ -27,9 +27,12 @@ public class PauseScreen implements Screen {
 
     private final StarsBackground starsBackground;
 
+    private final ScreenState screenState;
+
     public PauseScreen(SpaceInvadersGame game, float WORLD_WIDTH, float WORLD_HEIGHT, float STAGE_WIDTH,
-            float STAGE_HEIGHT, StarsBackground starsBackground) {
+                       float STAGE_HEIGHT, StarsBackground starsBackground, ScreenState screenState) {
         this.game = game;
+        this.screenState = screenState;
 
         camera = new OrthographicCamera();
         viewport = new FitViewport(WORLD_WIDTH, WORLD_HEIGHT, camera);
@@ -105,7 +108,7 @@ public class PauseScreen implements Screen {
         ImageButton menuButton = ButtonUtils.createScreenNavigationButton(game, "textures/menu.png", "textures/menu.png", 38, 38,
                 (STAGE_WIDTH - 38) / 2f - 58, 80, ScreenState.MAIN_MENU);
         ImageButton playButton = ButtonUtils.createScreenNavigationButton(game, "textures/play.png", "textures/play.png", 38, 38,
-                (STAGE_WIDTH - 38) / 2f, 80, ScreenState.SINGLEPLAYER_GAMEPLAY);
+                (STAGE_WIDTH - 38) / 2f, 80, screenState);
         ImageButton restartButton = ButtonUtils.createImageButton(game, "textures/restart.png", "textures/restart.png",
                 38, 38, (STAGE_WIDTH - 38) / 2f + 58, 80);
 
