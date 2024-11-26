@@ -51,7 +51,7 @@ class LinearObj : public Obj {
 		}
 
 		// Sin of angle wrt x-axis
-		int getOri() {
+		double getOri() {
 			return ((double)vX) / std::sqrt(vX * vX + vY * vY);
 		}
 
@@ -63,17 +63,20 @@ class LinearObj : public Obj {
 			return isYTerminal;
 		}
 
-		virtual bool checkCollision(LinearObj* obj) = 0;
 		virtual bool checkCollision(Obj* obj) = 0;
+		virtual bool checkCollision(LinearObj* lo) = 0;
+		virtual bool checkCollision(AngleObj* ao) = 0;
 
-		virtual bool collisionCorrection(LinearObj* other) = 0;
 		virtual bool collisionCorrection(Obj* other) = 0;
+		virtual bool collisionCorrection(LinearObj* other) = 0;
+		virtual bool collisionCorrection(AngleObj* other) = 0;
 
 		virtual void updatePos(int t) = 0;
-		//void internalUpdate();
+
 		virtual int getNextX(int t) = 0;
 		virtual int getNextY(int t) = 0;
 		virtual bool boundCorrection(int lft, int rt, int tp, int bt, int t) = 0;
+
 
 		virtual ~LinearObj() {};
 };
