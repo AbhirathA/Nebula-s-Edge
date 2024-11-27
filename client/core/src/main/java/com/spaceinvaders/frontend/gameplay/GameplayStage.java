@@ -19,6 +19,8 @@ public class GameplayStage extends Stage {
     private final Asteroids asteroids;
     private final Powerups powerups;
     private final Spaceships spaceships;
+    private final Blackholes blackholes;
+    private final Player player;
 
     private final float WORLD_WIDTH;
     private final float WORLD_HEIGHT;
@@ -27,7 +29,7 @@ public class GameplayStage extends Stage {
 
     private UDPPacket udpPacket;
 
-    public GameplayStage(SpaceInvadersGame game, Viewport viewport, float WORLD_WIDTH, float WORLD_HEIGHT) {
+    public GameplayStage(SpaceInvadersGame game, Viewport viewport, float WORLD_WIDTH, float WORLD_HEIGHT, boolean isMulti) {
         super(viewport);
         this.game = game;
         this.WORLD_WIDTH = WORLD_WIDTH;
@@ -45,6 +47,13 @@ public class GameplayStage extends Stage {
         asteroids = new Asteroids(game.assetManager);
         powerups = new Powerups(game.assetManager);
         spaceships = new Spaceships(game.assetManager);
+        blackholes = new Blackholes(game.assetManager);
+
+        if(isMulti) {
+            player = spaceships;
+        } else {
+            player = enemies;
+        }
     }
 
     @Override
@@ -60,8 +69,10 @@ public class GameplayStage extends Stage {
         starsBackground.render(game.shapeRenderer, delta);
         if(udpPacket != null) {
             getBatch().begin();
-//            spaceships.renderSpaceships(getBatch(), coordinates, -1);
-            spaceships.renderSpaceships(getBatch(), udpPacket.spaceShips, udpPacket.id);
+            asteroids.render(getBatch(), udpPacket.asteroids);
+            blackholes.render(getBatch(), udpPacket.blackholes);
+            bullets.render(getBatch(), udpPacket.bullets);
+            player.render(getBatch(), udpPacket.spaceShips, udpPacket.id);
             getBatch().end();
         }
         super.act(delta);

@@ -13,7 +13,7 @@ import java.util.ArrayList;
  * It holds the bullet texture and renders it at specific positions and rotations
  * based on the provided coordinates for each bullet in the game world.
  */
-public class Bullets {
+public class Bullets implements Entity {
     // A Sprite object representing the bullet texture
     private final Sprite bullet;
 
@@ -35,7 +35,8 @@ public class Bullets {
      * @param coordinateList   A list of coordinates that contains information about the position,
      *                         rotation, and other properties of each bullet in the game world.
      */
-    public void renderBullets(Batch batch, ArrayList<Coordinate> coordinateList) {
+    @Override
+    public void render(Batch batch, ArrayList<Coordinate> coordinateList) {
         // Iterate through each coordinate in the list
         for (Coordinate coordinate : coordinateList) {
             bullet.setPosition(coordinate.x, coordinate.y);

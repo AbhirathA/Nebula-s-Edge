@@ -12,7 +12,7 @@ import java.util.ArrayList;
  * The Powerups class handles the rendering of powerup sprites (such as attack, health, and bonus powerups).
  * It loads the textures for each powerup and draws the corresponding sprite at the correct position and rotation.
  */
-public class Powerups {
+public class Powerups implements Entity {
     // Sprites for different types of powerups (attack, health, bonus)
     private final Sprite attack;
     private final Sprite health;
@@ -37,7 +37,8 @@ public class Powerups {
      * @param batch            The batch used to draw the sprites to the screen.
      * @param coordinateList   A list of coordinates representing the position, rotation, and type of each powerup.
      */
-    public void renderPowerups(Batch batch, ArrayList<Coordinate> coordinateList) {
+    @Override
+    public void render(Batch batch, ArrayList<Coordinate> coordinateList) {
         // Iterate through the list of coordinates to render each powerup
         for(Coordinate coordinate : coordinateList) {
             // Determine the correct sprite based on the powerup type in the coordinate

@@ -15,7 +15,7 @@ import java.util.HashMap;
  * by storing their respective textures and rendering them based on the
  * coordinates provided for each asteroid in the game world.
  */
-public class Asteroids {
+public class Asteroids implements Entity {
     // Arrays to hold sprites for different types of asteroids (big, medium, small)
     private final Sprite[] bigAsteroids;
     private final Sprite[] mediumAsteroids;
@@ -64,7 +64,8 @@ public class Asteroids {
      * @param coordinateList   A list of coordinates that contains information about the position,
      *                         rotation, and type of each asteroid in the game world.
      */
-    public void renderAsteroids(Batch batch, ArrayList<Coordinate> coordinateList) {
+    @Override
+    public void render(Batch batch, ArrayList<Coordinate> coordinateList) {
         // Iterate through each coordinate in the provided list
         for (Coordinate coordinate : coordinateList) {
             // If the asteroid ID is not already in the map, assign it a sprite index based on ID % 7

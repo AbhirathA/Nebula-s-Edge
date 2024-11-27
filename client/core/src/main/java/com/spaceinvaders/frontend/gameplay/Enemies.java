@@ -15,7 +15,7 @@ import java.util.HashMap;
  * to which enemy entity based on their ID. The class provides functionality to render
  * enemies at their respective positions and rotations.
  */
-public class Enemies {
+public class Enemies implements Player {
     // Array to hold the different enemy sprites (up to 12)
     private final Sprite[] enemies;
 
@@ -48,10 +48,17 @@ public class Enemies {
      * @param batch            The batch used for drawing the sprites.
      * @param coordinateList   A list of coordinates that specifies the position and rotation
      *                         of each enemy in the game world.
+     * @param id               The ID of the enemy that needs to be excluded from rendering.
      */
-    public void renderEnemies(Batch batch, ArrayList<Coordinate> coordinateList) {
+    @Override
+    public void render(Batch batch, ArrayList<Coordinate> coordinateList, int id) {
         // Iterate through the list of coordinates for the enemies
         for (Coordinate coordinate : coordinateList) {
+            // Skip rendering if the enemy's ID matches the provided ID (typically the player's spaceship)
+            if(coordinate.id == id) {
+                continue;
+            }
+
             // If the entity's ID hasn't been mapped to a sprite yet, do so
             if (!entitySpriteMap.containsKey(coordinate.id)) {
                 // Use the entity's ID modulo 12 to determine the sprite index

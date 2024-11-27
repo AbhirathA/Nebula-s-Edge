@@ -54,7 +54,7 @@ public class GameplayMultiplayerScreen implements Screen {
         camera.update();
 
         uiStage = new UIStage(game, new FitViewport(CAMERA_WIDTH, CAMERA_HEIGHT), ScreenState.MULTIPLAYER_PAUSE);
-        gameplayStage = new GameplayStage(game, viewport, WORLD_WIDTH, WORLD_HEIGHT);
+        gameplayStage = new GameplayStage(game, viewport, WORLD_WIDTH, WORLD_HEIGHT, true);
 
         this.udpPacket = new UDPPacket();
         this.udpClient = new UDPClient(udpPacket);

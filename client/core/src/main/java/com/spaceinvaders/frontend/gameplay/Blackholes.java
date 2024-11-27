@@ -12,7 +12,7 @@ import java.util.ArrayList;
  * The Blackholes class is responsible for handling the rendering of blackhole sprites in the game.
  * It loads the blackhole texture and draws it at the specified coordinates and rotations.
  */
-public class Blackholes {
+public class Blackholes implements Entity {
     // Sprite object to hold the blackhole texture
     private final Sprite blackhole;
 
@@ -22,7 +22,6 @@ public class Blackholes {
      * @param assetManager The asset manager used to load the blackhole texture.
      */
     public Blackholes(MyAssetManager assetManager) {
-        // Load the blackhole texture and create a sprite for it
         blackhole = new Sprite(assetManager.get("textures/blackhole.png", Texture.class));
     }
 
@@ -32,7 +31,8 @@ public class Blackholes {
      * @param batch            The batch used to draw the sprite to the screen.
      * @param coordinateList   A list of coordinates representing the position and rotation of each blackhole.
      */
-    public void renderBullet(Batch batch, ArrayList<Coordinate> coordinateList) {
+    @Override
+    public void render(Batch batch, ArrayList<Coordinate> coordinateList) {
         // Iterate through the list of coordinates to render each blackhole
         for (Coordinate coordinate : coordinateList) {
             blackhole.setPosition(coordinate.x, coordinate.y);

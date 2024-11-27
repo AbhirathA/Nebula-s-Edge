@@ -14,7 +14,7 @@ import java.util.HashMap;
  * It loads the textures for the spaceships and draws them at the correct position and rotation
  * based on the data provided in the coordinate list.
  */
-public class Spaceships {
+public class Spaceships implements Player {
     // Array to store the sprites for the three different spaceship textures
     private final Sprite[] spaceships;
 
@@ -47,12 +47,13 @@ public class Spaceships {
      * @param coordinateList   A list of coordinates representing the position, rotation, and ID of each spaceship.
      * @param id               The ID of the spaceship that needs to be excluded from rendering.
      */
-    public void renderSpaceships(Batch batch, ArrayList<Coordinate> coordinateList, int id) {
+    @Override
+    public void render(Batch batch, ArrayList<Coordinate> coordinateList, int id) {
         // Iterate through the list of coordinates to render each spaceship
         for(Coordinate coordinate : coordinateList) {
             // Skip rendering if the spaceship's ID matches the provided ID (typically the player's spaceship)
             if(coordinate.id == id) {
-                continue;  // Exit the loop if the spaceship's ID matches the excluded ID
+                continue;
             }
 
             // Check if the spaceship's ID is already in the map, if not, associate it with a sprite index
