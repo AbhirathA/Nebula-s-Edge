@@ -269,7 +269,7 @@ public class OptionsScreen implements Screen {
         // Create labels for player profile section
         Label playerProfile = LabelUtils.createLabel("Player Profile", game.assetManager.get("fonts/minecraft.fnt", BitmapFont.class));
         Label highscore = LabelUtils.createLabel("Highscore: ", game.assetManager.get("fonts/minecraft.fnt", BitmapFont.class));
-        Label email = LabelUtils.createLabel("Email: ", game.assetManager.get("fonts/minecraft.fnt", BitmapFont.class));
+        Label email = LabelUtils.createLabel("Email: " + game.token, game.assetManager.get("fonts/minecraft.fnt", BitmapFont.class));
 
         // Create buttons for user interactions
         ImageTextButton resetPasswordButton = ButtonUtils.createButton(game, "Reset Password", "textures/button.png", "textures/button.png");
