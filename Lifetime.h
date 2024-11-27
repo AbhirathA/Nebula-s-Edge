@@ -5,6 +5,7 @@
 #pragma once
 #include <iostream>
 #include <vector>
+#include <algorithm>
 #include <functional>
 
 
@@ -30,7 +31,9 @@ class Lifetime {
       void start();
       void end();
       void resetAge();
-      virtual ~Lifetime();
+      virtual ~Lifetime(){
+          instances.erase(find(v.begin(), v.end(), this));
+      }
 };
 
 
