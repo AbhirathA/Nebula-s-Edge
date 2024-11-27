@@ -46,7 +46,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class AuthenticationManager {
-    public static final String SERVER_URL = "http://localhost:8080/";
+    public static final String SERVER_URL = "http://192.168.99.196:8080/";
 
     /**
      * Authenticates a user with Firebase using their email and password.
