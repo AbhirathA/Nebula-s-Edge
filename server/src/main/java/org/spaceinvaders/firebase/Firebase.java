@@ -144,8 +144,8 @@ public final class Firebase {
 
     /**
      * Retrieves user data from the database by the JWT id token of the user
-     * @param idToken                   the JWT id token
-     * @return                          A map representation of all the data belonging to this user
+     * @param idToken the JWT id token
+     * @return A map representation of all the data belonging to this user
      * @throws DatabaseAccessException  If the data could not be accessed for this user
      * @throws FirebaseAuthException    If the user could not be verified
      */
