@@ -1,15 +1,17 @@
 #pragma once
 #include "AngleObj.h"
 class CtrledObj : public AngleObj {
-	int forward = 0;
-	int peakV = 0;
-	int thrust = 0;
-	Lifetime* thrustCtrl = nullptr;
-	Lifetime* thrustReverse = nullptr;
-	Lifetime* moveCtrl = nullptr;
-	Lifetime* thrustBlock = nullptr;
+	private:
+		int direction = 0;
+		int peakV = 0;
+		int thrust = 0;
+		Lifetime* thrustCtrl = nullptr;
+		Lifetime* thrustReverse = nullptr;
+		Lifetime* moveCtrl = nullptr;
+		Lifetime* thrustBlock = nullptr;
 
-	bool isThrustable = true;
+		bool isThrustable = true;
+		bool isMovable = true;
 
 		void reverseThrust(){
 			thrustReverse.start();
@@ -18,7 +20,6 @@ class CtrledObj : public AngleObj {
 
 		void blockThrust(){
 			thrustBlocker.start();
-			this->isThrustable = false;
 			this->acc = 0;
 		}
 
