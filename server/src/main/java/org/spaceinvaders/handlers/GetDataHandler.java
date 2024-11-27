@@ -38,7 +38,6 @@ public class GetDataHandler extends BaseHandler {
 
         // Retrieve user data from Firebase using the provided idToken.
         Map<String, Object> userData = Firebase.getInstance().getUserData(idToken);
-
         // Convert the user data to a JSON string for the response.
         String response = new Gson().toJson(userData);
 
