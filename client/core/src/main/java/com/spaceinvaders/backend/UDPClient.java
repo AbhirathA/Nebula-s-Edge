@@ -6,7 +6,7 @@ import com.google.gson.JsonObject;
 import com.spaceinvaders.backend.utils.UDPPacket;
 
 public class UDPClient {
-    private static final String SERVER_ADDRESS = "172.16.224.45";
+    private static final String SERVER_ADDRESS = "192.168.99.73";
     private static final int SERVER_PORT = 9876;
     private static final int CLIENT_PORT = 9877; // Change this for each client
     private static final int BUFFER_SIZE = 10000;
@@ -56,12 +56,13 @@ public class UDPClient {
 
         @Override
         public void run() {
-            try {
-                while (true) {
+            while (true) {
+                try {
                     byte[] receiveBuffer = new byte[BUFFER_SIZE];
                     DatagramPacket receivePacket = new DatagramPacket(receiveBuffer, receiveBuffer.length);
                     UDPClient.this.clientSocket.receive(receivePacket);
                     String receivedData = new String(receivePacket.getData(), 0, receivePacket.getLength());
+                    System.out.println(receivedData);
 
                     synchronized (UDPClient.this.udpPacket) {
                         UDPClient.this.udpPacket.update(UDPClient.this.gson.fromJson(receivedData, UDPPacket.class));
@@ -71,14 +72,14 @@ public class UDPClient {
                         UDPClient.this.isThreadRunning = false;
                         return;
                     }
+
+                } catch (SocketTimeoutException se) {
+                    System.out.println("Server connection timed out");
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
-            } catch (SocketTimeoutException se) {
-                System.out.println("Server connection timed out");
-            } catch (Exception e) {
-                e.printStackTrace();
             }
         }
-
     }
 
     // Simulates random data generation

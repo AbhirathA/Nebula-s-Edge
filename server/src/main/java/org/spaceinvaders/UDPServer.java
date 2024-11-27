@@ -4,6 +4,7 @@ import java.net.*;
 import com.google.gson.Gson;
 import org.spaceinvaders.gameEngine.GameEngine;
 import org.spaceinvaders.util.Coordinate;
+import org.spaceinvaders.util.LoggerUtil;
 import org.spaceinvaders.util.UDPPacket;
 
 import java.net.DatagramSocket;
@@ -97,6 +98,13 @@ public class UDPServer
                     }
                 }
                 UDPServer.this.outputBuffer.set(true);
+
+                // sleeping
+                try {
+                    Thread.sleep(1000 / 144);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
         }
     }
@@ -157,6 +165,7 @@ public class UDPServer
                             byte[] sendData = UDPServer.this.gson.toJson(sendDataTemp.get(client)).getBytes();
                             DatagramPacket sendPacket = new DatagramPacket(sendData, sendData.length, client.getAddress(), client.getPort());
                             serverSocket.send(sendPacket);
+                            System.out.println(UDPServer.this.gson.toJson(sendDataTemp.get(client)));
                         }
                     }
 

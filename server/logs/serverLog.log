@@ -208,3 +208,17 @@ POST https://identitytoolkit.googleapis.com/v1/projects/nebula-s-edge-6e33d/acco
 2024-11-27 05:43:22 [main] INFO  org.spaceinvaders.util.LoggerUtil - Server started at http://localhost:8080
 2024-11-27 05:46:35 [main] INFO  org.spaceinvaders.util.LoggerUtil - Server started at http://localhost:8080
 2024-11-27 05:47:21 [main] INFO  org.spaceinvaders.util.LoggerUtil - Server started at http://localhost:8080
+2024-11-27 06:03:52 [main] INFO  org.spaceinvaders.util.LoggerUtil - Server started at http://localhost:8080
+2024-11-27 06:06:57 [main] INFO  org.spaceinvaders.util.LoggerUtil - Server started at http://localhost:8080
+2024-11-27 06:09:15 [main] INFO  org.spaceinvaders.util.LoggerUtil - Server started at http://localhost:8080
+2024-11-27 06:09:46 [main] INFO  org.spaceinvaders.util.LoggerUtil - Server started at http://localhost:8080
+2024-11-27 06:12:14 [main] INFO  org.spaceinvaders.util.LoggerUtil - Server started at http://localhost:8080
+2024-11-27 06:13:09 [main] INFO  org.spaceinvaders.util.LoggerUtil - Server started at http://localhost:8080
+2024-11-27 06:15:24 [main] INFO  org.spaceinvaders.util.LoggerUtil - Server started at http://localhost:8080
+2024-11-27 06:15:49 [Thread-2] INFO  org.spaceinvaders.util.LoggerUtil - Gave a token id: 0
+2024-11-27 06:16:44 [main] INFO  org.spaceinvaders.util.LoggerUtil - Server started at http://localhost:8080
+2024-11-27 06:17:01 [Thread-2] INFO  org.spaceinvaders.util.LoggerUtil - Gave a token id: 1
+2024-11-27 06:19:20 [main] INFO  org.spaceinvaders.util.LoggerUtil - Server started at http://localhost:8080
+2024-11-27 06:20:58 [main] INFO  org.spaceinvaders.util.LoggerUtil - Server started at http://localhost:8080
+2024-11-27 06:23:03 [main] INFO  org.spaceinvaders.util.LoggerUtil - Server started at http://localhost:8080
+2024-11-27 06:28:02 [main] INFO  org.spaceinvaders.util.LoggerUtil - Server started at http://localhost:8080
