@@ -68,7 +68,8 @@ AABBnode* AABBtree::BestSibling(AABBnode* leaf) {
 int AABBtree::insert(AABB* objBox, int id, bool* status) {
     auto leaf = new AABBnode();
     leaf->objBox = objBox;
-    leaf->bound = 50;
+    Vector upperB = objBox->getUpperBound();
+    leaf->bound = objBox->getLowerBound().distance(upperB)*10;
     leaf->isLeaf = true;
     leaf->id = id;
     leaf->dead = status;

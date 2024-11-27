@@ -112,6 +112,8 @@ bool AngleObj::collisionCorrection(LinearObj* obj){
         obj->updateY(obj->getY() - adjustmentY);
 
 
+        this->updateBox();
+
         // Velocity Correction
 
         int nx = (dx * temp2) / distance;
@@ -174,6 +176,7 @@ bool AngleObj::collisionCorrection(AngleObj* obj){
         obj->updateX(obj->getX() - adjustmentX);
         obj->updateY(obj->getY() - adjustmentY);
 
+        this->updateBox();
 
         // Velocity Correction
 
@@ -219,6 +222,8 @@ void AngleObj::updatePos(int t){
     std::cout << "Before update: " << " v: " << v << " vX: " << this->getvX() <<" vY: " << this->getvY() << " angle: " << angleScaled << std::endl;
     this->posX = this->getNextX(t);
     this->posY = this->getNextY(t);
+
+    this->updateBox();
     std::cout << "mid update: " << " v: " << v << " vX: " << this->getvX() << " vY: " << this->getvY() << " angle: " << angleScaled << std::endl;
     // Velocity is updated
     int vX = this->getvX() + this->getaccX() * t;
