@@ -56,5 +56,7 @@ class CtrledObj : public AngleObj {
 			}
 		}
 
+		virtual ~CtrledObj() {}
+
 
 };
