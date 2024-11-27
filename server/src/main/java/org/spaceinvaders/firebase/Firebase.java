@@ -23,9 +23,10 @@ import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthException;
+import com.google.firebase.auth.FirebaseToken;
 import com.google.firebase.auth.UserRecord;
 import com.google.firebase.cloud.FirestoreClient;
-import org.spaceinvaders.firebase.util.*;
+import org.spaceinvaders.firebase.util.DatabaseAccessException;
 import org.spaceinvaders.util.LoggerUtil;
 import org.spaceinvaders.util.NetworkNotFoundException;
 
@@ -138,6 +139,30 @@ public final class Firebase {
         } catch (Exception e) {
             LoggerUtil.logException("Error creating user: " + userId, e);
             throw new DatabaseAccessException("Error creating database for user: " + userId);
+        }
+    }
+
+    /**
+     * Retrieves user data from the database by the JWT id token of the user
+     * @param idToken                   the JWT id token
+     * @return                          A map representation of all the data belonging to this user
+     * @throws DatabaseAccessException  If the data could not be accessed for this user
+     * @throws FirebaseAuthException    If the user could not be verified
+     */
+    public Map<String, Object> getUserData(String idToken) throws DatabaseAccessException, FirebaseAuthException {
+        // Verify the ID token and retrieve the UID
+        FirebaseToken decodedToken = FirebaseAuth.getInstance().verifyIdToken(idToken);
+        String userId = decodedToken.getUid(); // Extract UID from the token
+
+        // Use the UID to fetch user data
+        Firestore db = FirestoreClient.getFirestore();
+        DocumentReference docRef = db.collection("users").document(userId);
+
+        try {
+            return docRef.get().get().getData();
+        } catch (Exception e) {
+            LoggerUtil.logException("Error retrieving data for user: " + userId, e);
+            throw new DatabaseAccessException("Error accessing data for user: " + userId);
         }
     }
 }
