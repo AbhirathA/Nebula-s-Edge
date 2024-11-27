@@ -45,8 +45,3 @@ private:
 		};
 };
 
-/*
- *
- *Mangager:-
- *
- *

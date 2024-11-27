@@ -51,8 +51,8 @@ class LinearObj : public Obj {
 		}
 
 		// Sin of angle wrt x-axis
-		int getOri() {
-			return (vX) / std::sqrt(vX * vX + vY * vY);
+		double getOri() {
+			return ((double)vX) / std::sqrt(vX * vX + vY * vY);
 		}
 
 		bool checkXTerminal() {

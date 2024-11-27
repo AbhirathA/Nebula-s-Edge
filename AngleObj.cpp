@@ -27,10 +27,10 @@ void AngleObj::updateV(int vX, int vY, int scale){
         this->v = 0;
         return;
     }
-    std::cout << "\n\nvel :" << v << std::endl << std::endl;
+    //std::cout << "\n\nvel :" << v << std::endl << std::endl;
     double t = asin(vY / v);
 
-    std::cout << "big idiot: " << (int)((((t * 180) / PI)) * ANGLE_SCALE)%(360 * ANGLE_SCALE) << " " << v;
+    //std::cout << "big idiot: " << (int)((((t * 180) / PI)) * ANGLE_SCALE)%(360 * ANGLE_SCALE) << " " << v;
 
     if (vX >= 0) {
         this->angleScaled = mod((int)((((t * 180) / PI)) * ANGLE_SCALE) , (360 * ANGLE_SCALE));
@@ -102,7 +102,7 @@ bool AngleObj::collisionCorrection(LinearObj* obj){
 
     // If the distance is less than the sum of radii, there is a collision.
     if (overlap > temp) {
-        std::cout << "In collision before: " << this->posX << " " << this->posY << " velocity:" << this->getvX() / VALUE_SCALE << " " << this->getvY() / VALUE_SCALE << std::endl;
+        //std::cout << "In collision before: " << this->posX << " " << this->posY << " velocity:" << this->getvX() / VALUE_SCALE << " " << this->getvY() / VALUE_SCALE << std::endl;
 
         // Position Correction
         int adjustmentFactor = overlap / 2;
@@ -115,8 +115,6 @@ bool AngleObj::collisionCorrection(LinearObj* obj){
         obj->updateX(obj->getX() - adjustmentX);
         obj->updateY(obj->getY() - adjustmentY);
 
-
-        this->updateBox();
 
         // Velocity Correction
 
@@ -148,7 +146,7 @@ bool AngleObj::collisionCorrection(LinearObj* obj){
 
         this->updateV(v1x / temp2, v1y / temp2, 1);
         obj->updateV(v2x / temp2, v2y / temp2);
-        std::cout << "In collision after: " << this->posX << " " << this->posY << " velocity:" << this->getvX() / VALUE_SCALE << " " << this->getvY() / VALUE_SCALE << std::endl;
+        //std::cout << "In collision after: " << this->posX << " " << this->posY << " velocity:" << this->getvX() / VALUE_SCALE << " " << this->getvY() / VALUE_SCALE << std::endl;
 
         return true;
     }
@@ -168,7 +166,7 @@ bool AngleObj::collisionCorrection(AngleObj* obj){
 
     // If the distance is less than the sum of radii, there is a collision.
     if (overlap > temp) {
-        std::cout << "In collision before: " << this->posX << " " << this->posY << " velocity:" << this->getvX() / VALUE_SCALE << " " << this->getvY() / VALUE_SCALE << std::endl;
+        //std::cout << "In collision before: " << this->posX << " " << this->posY << " velocity:" << this->getvX() / VALUE_SCALE << " " << this->getvY() / VALUE_SCALE << std::endl;
 
         // Position Correction
         int adjustmentFactor = overlap / 2;
@@ -181,7 +179,6 @@ bool AngleObj::collisionCorrection(AngleObj* obj){
         obj->updateX(obj->getX() - adjustmentX);
         obj->updateY(obj->getY() - adjustmentY);
 
-        this->updateBox();
 
         // Velocity Correction
 
@@ -213,7 +210,7 @@ bool AngleObj::collisionCorrection(AngleObj* obj){
 
         this->updateV(v1x / temp2, v1y / temp2, 1);
         obj->updateV(v2x / temp2, v2y / temp2, 1);
-        std::cout << "In collision after: " << this->posX << " " << this->posY << " velocity:" << this->getvX() / VALUE_SCALE << " " << this->getvY() / VALUE_SCALE << std::endl;
+        //std::cout << "In collision after: " << this->posX << " " << this->posY << " velocity:" << this->getvX() / VALUE_SCALE << " " << this->getvY() / VALUE_SCALE << std::endl;
 
         return true;
     }
@@ -224,19 +221,19 @@ bool AngleObj::collisionCorrection(AngleObj* obj){
 void AngleObj::updatePos(int t){
 
     // Position is updated
-    std::cout << "Before update: " << " v: " << v << " vX: " << this->getvX() <<" vY: " << this->getvY() << " angle: " << angleScaled << std::endl;
+    std::cout << "Before update: ";
+    printProp();
     this->posX = this->getNextX(t);
     this->posY = this->getNextY(t);
-
-    this->updateBox();
-    std::cout << "mid update: " << " v: " << v << " vX: " << this->getvX() << " vY: " << this->getvY() << " angle: " << angleScaled << std::endl;
+    //std::cout << "mid update: " << " v: " << v << " vX: " << this->getvX() << " vY: " << this->getvY() << " angle: " << angleScaled << std::endl;
     // Velocity is updated
     int vX = this->getvX() + this->getaccX() * t;
     int vY = this->getvY() + this->getaccY() * t;
 
     //this->v = sqrt(vX * vX + vY * vY) / VALUE_SCALE;
     this->updateV(vX, vY, VALUE_SCALE);
-    std::cout << "after update: " << " v: " << v << " vX: " << this->getvX() << " vY: " << this->getvY() << " angle: " << angleScaled << std::endl;
+    std::cout << "after update: ";
+    printProp();
 }
 int AngleObj::getNextX(int t) {
     return this->posX + (this->getvX() * t + (this->getaccX() * t * t) / 2) / VALUE_SCALE;
@@ -247,7 +244,7 @@ int AngleObj::getNextY(int t) {
 
 bool AngleObj::boundCorrection(int lft, int rt, int tp, int bt, int t) {
     bool flag = false;
-    std::cout << "in bound correction before:" << posX << " " << posY << " Bounds are" << lft << " " << rt << " " << tp << " " << bt << std::endl;
+    //std::cout << "in bound correction before:" << posX << " " << posY << " Bounds are" << lft << " " << rt << " " << tp << " " << bt << std::endl;
     while (posX > rt) {
         posX = posX - rt + lft + 1;
         flag = true;
@@ -264,7 +261,7 @@ bool AngleObj::boundCorrection(int lft, int rt, int tp, int bt, int t) {
         posY = posY + tp - bt - 1;
         flag = true;
     }
-    std::cout << "in bound correction after:" << posX << " " << posY << std::endl;
+    //std::cout << "in bound correction after:" << posX << " " << posY << std::endl;
     return flag;
 
 }

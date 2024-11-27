@@ -2,6 +2,7 @@
 #include "Obj.h"
 #include "stdVerlet.h"
 #include "velVerlet.h"
+#include "CtrledObj.h"
 #include <vector>
 #include<map>
 #include "Lifetime.h"
@@ -12,6 +13,7 @@
 // #include "PowerUp.h"
 
 #define PRECISION 1
+
 class Manager
 {
 	// Unique id creation
@@ -46,18 +48,41 @@ public:
 		tree = AABBtree();
 	}
 
-	std::map<int, std::pair<int, int>>  display();
-	int drop1(int x, int y, int vX, int vY, int accX, int accY, int res, int innerRad, int outerRad, int mass); // add an object
-	int drop2(int x, int y, int vX, int vY, int accX, int accY, int innerRad, int outerRad, int mass); // add an object
-	void update();
-	int xForce();
-	int yForce();
-	std::vector<std::vector<int>> display(int lowerX, int lowerY, int upperX, int upperY);
-	~Manager() {
-		for (auto i : objList) {
-			delete i;
+		std::map<int, std::pair<int, int>>  display();
+
+		int dropP(int x, int y, int peakV, int driftV, int angle, int thrust, int thrustPersistance, int movePersistance, int coolDown, int accX, int accY, int innerRad, int outerRad, int mass);
+		int drop1(int x, int y, int v, int angle, int acc, int accX, int accY, int innerRad, int outerRad, int mass); // add an object
+		int drop2(int x, int y, int vX, int vY, int accX, int accY, int innerRad, int outerRad, int mass); // add an object
+
+		void update();
+		std::vector<std::vector<int>> display(int lowerX, int lowerY, int upperX, int upperY);
+		void forward() {
+			this->player->moveForward();
 		}
-	}
+		void stop() {
+			this->player->stopForward();
+		}
+		void thrust() {
+			this->player->startThrust();
+		}
+		void left() {
+			this->player->turnLeft(5);
+		}
+		void right() {
+			this->player->turnRight(5);
+		}
+
+		double angle() {
+			return this->player->getAngle();
+		}
+
+		int xForce();
+		int yForce();
+		~Manager() {
+			for (auto i : objMap) {
+				delete i.second;
+			}
+		}
 	void removeDead(std::vector<int> ids);
 
 	int Manager::shoot(int id, int innerRadius, int outerRadius, int mass);
@@ -68,23 +93,7 @@ public:
 	int dropMeteor(int x, int y, int vX, int vY, int accX, int accY, int innerRad, int outerRad, int mass);
 	int dropUser(int x, int y, int vX, int vY, int accX, int accY, int innerRad, int outerRad, int mass);
 
-	// to be done
-
-	// void launchFlare(int x, int y, int vX, int vY, int accX, int accY, int radius, int mass, int duration)
-	// {
-	// 	Flare *flare = launcher.launchFlare(x, y, vX, vY, accX, accY, radius, mass, duration);
-	// 	objList.push_back(flare);
-	// 	objMap[flare->getID()] = flare;
-	// 	tree.insert(flare->getObjBox(), flare->getID(), flare->getStatus());
-	// }
-
-	// void spawnPowerUp(PowerUp *powerUp)
-	// {
-	// 	launcher.launchPowerUp(powerUp);
-	// 	objList.push_back(powerUp);
-	// 	objMap[powerUp->getID()] = powerUp;
-	// 	tree.insert(powerUp->getObjBox(), powerUp->getID(), powerUp->getStatus());
-	// }
+};
 
 	// void activatePowerUp(PowerUp* powerUp, Obj* target);
 	// void updatePowerUps();

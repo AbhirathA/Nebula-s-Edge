@@ -24,6 +24,7 @@ enum class TypeOfPhy{
 
 class LinearObj;
 class AngleObj;
+
 /*
 	This class contains all the basic properties every object should have.
 	It also looks at basic functionality that every object should have.
@@ -75,45 +76,39 @@ public:
 		return id;
 	}
 
-	int getX()
-	{
-		return posX;
-	}
+		int getX() {
+			return posX;
+		}
 
-	int getY()
-	{
-		return posY;
-	}
+		int getY() {
+			return posY;
+		}
 
-	virtual void updateX(int x)
-	{
-		posX = x;
-	}
+		virtual void updateX(int x) {
+			posX = x;
+        }
 
-	virtual void updateY(int y)
-	{
-		posY = y;
-	}
+		virtual void updateY(int y) {
+            posY = y;
+        }
 
-	int getOuterR()
-	{
-		return outerRad;
-	}
+		virtual double getOri() { return 0.0; };
 
-	int getInnerR()
-	{
-		return innerRad;
-	}
+		int getOuterR(){
+			return outerRad;
+		}
 
-	int getState()
-	{
-		return state;
-	}
+		int getInnerR(){
+            return innerRad;
+        }
 
-	int getMass()
-	{
-		return mass;
-	}
+		int getState(){
+			return state;
+		}
+
+		int getMass() {
+			return mass;
+		}
 
 	AABB *getObjBox()
 	{

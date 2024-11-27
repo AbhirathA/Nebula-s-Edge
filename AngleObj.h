@@ -45,7 +45,7 @@ class AngleObj: public Obj{
 			this->accX = accX;
 			this->accY = accY;
 
-			std::cout << "Created AO: " << v << " " << angle << std::endl;
+			std::cout << "Created AO: " << "id" << id << "x:" << x << " y: " << y << " v: " << v << " angle: " << angle << std::endl;
 			this->initializeTrig();
 		}
 
@@ -111,4 +111,8 @@ class AngleObj: public Obj{
 
 		virtual bool boundCorrection(int lft, int rt, int tp, int bt, int t);
 		virtual ~AngleObj() {};
+
+		virtual void printProp() {
+			std::cout << "x: " << posX << " y: " << posY << " v rad" << v << " a rad " << acc << " angle " << angleScaled << std::endl;
+		}
 };
