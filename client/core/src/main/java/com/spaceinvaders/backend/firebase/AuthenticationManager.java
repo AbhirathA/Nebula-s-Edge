@@ -35,11 +35,8 @@ package com.spaceinvaders.backend.firebase;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import com.spaceinvaders.backend.UDPClient;
-import com.spaceinvaders.backend.firebase.utils.AuthenticationException;
-import com.spaceinvaders.backend.firebase.utils.HTTPCode;
+import com.spaceinvaders.backend.firebase.utils.*;
 import com.spaceinvaders.backend.firebase.utils.HTTPRequest;
-import com.spaceinvaders.backend.firebase.utils.HttpResponse;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -47,7 +44,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class AuthenticationManager {
-    public static final String SERVER_URL = "http://" + UDPClient.SERVER_ADDRESS + ":8080/";
+    public static final String SERVER_URL = "http://" + ServerInfo.getIP() + ":" + ServerInfo.getHttpPort() + "/";
 
     /**
      * Authenticates a user with Firebase using their email and password.
@@ -109,12 +106,10 @@ public class AuthenticationManager {
      * @param email           The email address of the user to be registered.
      * @param password        The password chosen by the user.
      * @param confirmPassword Confirmation of the password to ensure accuracy.
-     * @return A success message or token (e.g., "Signup successful" or a generated
-     *         token) as a String.
      * @throws AuthenticationException If the input validation fails (e.g., invalid
      *                                 email, mismatched passwords).
      */
-    public static String signUp(String email, String password, String confirmPassword) throws AuthenticationException {
+    public static void signUp(String email, String password, String confirmPassword) throws AuthenticationException {
         if (!password.equals(confirmPassword)) {
             throw new AuthenticationException("Passwords do not match");
         }
@@ -127,16 +122,14 @@ public class AuthenticationManager {
         Map<String, String> headers = new HashMap<>();
         headers.put("Content-Type", "application/json");
         int returnCode;
-        String returnString;
 
         try {
             HttpResponse response = HTTPRequest.sendRequest(url, payload, "POST", headers);
             returnCode = response.getCode();
-            returnString = response.getMessage();
 
             switch (HTTPCode.fromCode(returnCode)) {
                 case SUCCESS:
-                    return returnString;
+                    break;
 
                 case INVALID_JSON:
                     throw new AuthenticationException("Error in sending information to server");
@@ -227,17 +220,16 @@ public class AuthenticationManager {
      * Sends a password reset email to the specified email address.
      *
      * @param email The email address of the user requesting a password reset.
-     * @return A success message if the password reset email is sent successfully.
      * @throws AuthenticationException If an error occurs during the password reset
      *                                 process.
      */
-    public static String resetPassword(String email) throws AuthenticationException {
+    public static void resetPassword(String email) throws AuthenticationException {
         HttpResponse response = ClientFirebase.resetPassword(email);
         int responseCode = response.getCode();
 
         switch (HTTPCode.fromCode(responseCode)) {
             case SUCCESS:
-                return "Password reset email sent successfully.";
+                break;
 
             case INVALID_JSON:
                 throw new AuthenticationException("Error in sending information to the server.");

@@ -3,11 +3,10 @@ package com.spaceinvaders.backend;
 import java.net.*;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
+import com.spaceinvaders.backend.firebase.utils.ServerInfo;
 import com.spaceinvaders.backend.utils.UDPPacket;
 
 public class UDPClient {
-    public static final String SERVER_ADDRESS = "172.16.224.45";
-    private static final int SERVER_PORT = 9876;
     private static final int CLIENT_PORT = 9877; // Change this for each client
     private static final int BUFFER_SIZE = 10000;
 
@@ -26,7 +25,7 @@ public class UDPClient {
         try {
             this.clientSocket = new DatagramSocket(CLIENT_PORT);
             this.clientSocket.setSoTimeout(1000);
-            this.serverAddress = InetAddress.getByName(SERVER_ADDRESS);
+            this.serverAddress = InetAddress.getByName(ServerInfo.getIP());
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -35,7 +34,7 @@ public class UDPClient {
     public void send(String state, String token) {
         try {
             String sendData = generateData(state, token);
-            DatagramPacket sendPacket = new DatagramPacket(sendData.getBytes(), sendData.length(), this.serverAddress, SERVER_PORT);
+            DatagramPacket sendPacket = new DatagramPacket(sendData.getBytes(), sendData.length(), this.serverAddress, ServerInfo.getUdpPort());
             this.clientSocket.send(sendPacket);
         } catch (Exception e) {
             e.printStackTrace();
