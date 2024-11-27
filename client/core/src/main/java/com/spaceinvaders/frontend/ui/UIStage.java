@@ -58,12 +58,17 @@ public class UIStage extends Stage {
     @Override
     public void act(float delta) {
         if(Gdx.input.justTouched()) {
-            healthBar.changeHealth(-1);
+//            healthBar.changeHealth(-1);
             game.soundManager.play("shoot");
         }
 
-        if((timeRemaining == 0 || healthBar.getCurrentHealth() == 0) && !isGameOver) {
-//            addGameOver();
+        if(healthBar.getCurrentHealth() == 0 && !isGameOver) {
+            addGameOver();
+            isPaused = true;
+            isGameOver = true;
+        }
+
+        if(timeRemaining == 0 && !isGameOver) {
             addVictory();
             isPaused = true;
             isGameOver = true;
@@ -79,10 +84,6 @@ public class UIStage extends Stage {
      */
     public HealthBar getHealthBar() {
         return healthBar;
-    }
-
-    public float getTimeRemaining() {
-        return timeRemaining;
     }
 
     /**
