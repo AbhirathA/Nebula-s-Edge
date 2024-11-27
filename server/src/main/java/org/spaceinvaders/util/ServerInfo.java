@@ -1,7 +1,7 @@
 package org.spaceinvaders.util;
 
-import java.net.InetAddress;
-import java.net.UnknownHostException;
+import java.net.*;
+import java.util.Enumeration;
 
 /**
  * ServerInfo.java
@@ -39,13 +39,30 @@ public class ServerInfo
     public static final int UDP_PORT = 9090;
 
     static {
-        String ipAddress;
+        String ipAddress = "127.0.0.1";
         try {
-            // Try to get the local IP address of the machine
-            ipAddress = InetAddress.getLocalHost().getHostAddress();
-        } catch (UnknownHostException e) {
-            // If an error occurs (e.g., unable to determine the host), fall back to localhost
-            ipAddress = "127.0.0.1"; // Fallback to localhost
+            // getting interfaces
+            Enumeration<NetworkInterface> interfaces = NetworkInterface.getNetworkInterfaces();
+
+            // iterating over it
+            while (interfaces.hasMoreElements()) {
+                NetworkInterface iface = interfaces.nextElement();
+
+                // checking if the iface is a loopback or is down
+                if (iface.isLoopback() || !iface.isUp()) continue;
+
+                // getting the addresses for that interface
+                Enumeration<InetAddress> addresses = iface.getInetAddresses();
+                while (addresses.hasMoreElements()) {
+                    InetAddress addr = addresses.nextElement();
+                    if (addr instanceof Inet4Address) {  // Prefer IPv4
+                        ipAddress = addr.getHostAddress();
+                        break;
+                    }
+                }
+            }
+        } catch (SocketException e) {
+            e.printStackTrace();
         }
         // Assign the determined IP address (or localhost) to the static final variable
         IP = ipAddress;
