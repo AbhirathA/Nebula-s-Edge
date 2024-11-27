@@ -97,6 +97,7 @@ public class MyAssetManager {
         assetManager.load("textures/powerup2.png", Texture.class);
         assetManager.load("textures/powerup3.png", Texture.class);
         assetManager.load("textures/bullet.png", Texture.class);
+        assetManager.load("textures/blackhole.png", Texture.class);
     }
 
     // Retrieves an asset from the AssetManager based on its file path and type
