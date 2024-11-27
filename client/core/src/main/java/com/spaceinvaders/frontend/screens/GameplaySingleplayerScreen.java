@@ -47,7 +47,7 @@ public class GameplaySingleplayerScreen implements Screen {
         camera.position.set(WORLD_WIDTH/2, WORLD_HEIGHT/2, 0);
         camera.update();
 
-        uiStage = new UIStage(game, new FitViewport(CAMERA_WIDTH, CAMERA_HEIGHT), ScreenState.SINGLEPLAYER_PAUSE);
+        uiStage = new UIStage(game, new FitViewport(CAMERA_WIDTH, CAMERA_HEIGHT), false);
         gameplayStage = new GameplayStage(game, viewport, WORLD_WIDTH, WORLD_HEIGHT, false);
 
         multiplexer = new InputMultiplexer();

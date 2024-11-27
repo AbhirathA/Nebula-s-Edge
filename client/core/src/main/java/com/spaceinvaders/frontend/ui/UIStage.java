@@ -26,6 +26,7 @@ public class UIStage extends Stage {
     private float timeRemaining;
     private boolean isPaused = false;
     private boolean isGameOver = false;
+    private final boolean isMulti;
 
     /**
      * Constructor for UIStage.
@@ -33,9 +34,10 @@ public class UIStage extends Stage {
      * @param game     The SpaceInvadersGame instance.
      * @param viewport The viewport used to display the stage.
      */
-    public UIStage(SpaceInvadersGame game, Viewport viewport, ScreenState screenState) {
+    public UIStage(SpaceInvadersGame game, Viewport viewport, boolean isMulti) {
         super(viewport, game.batch);
         this.game = game;
+        this.isMulti = isMulti;
 
         // Initialize health bar and add it to the stage
         healthBar = new HealthBar(game.assetManager, 2, viewport.getWorldHeight() - 11, 10);
@@ -47,12 +49,21 @@ public class UIStage extends Stage {
         // Initialize Victory screen
         victory = new Victory(game);
 
+        ScreenState screenState;
+        if(isMulti) {
+            screenState = ScreenState.MULTIPLAYER_PAUSE;
+        } else {
+            screenState = ScreenState.SINGLEPLAYER_PAUSE;
+        }
+
         // Create and add a pause button to the stage
         ImageButton pauseButton = ButtonUtils.createScreenNavigationButton( game, "textures/pause.png", "textures/pause.png", 7, 7, viewport.getWorldWidth() - 10, viewport.getWorldHeight() - 10, screenState);
         addActor(pauseButton);
 
         // Initialize and start the countdown timer
-        initializeTimer(game.assetManager.get("fonts/minecraft.fnt", BitmapFont.class), viewport.getWorldWidth(), viewport.getWorldHeight(), 60);  // Start a 60-second timer
+        if(!isMulti) {
+            initializeTimer(game.assetManager.get("fonts/minecraft.fnt", BitmapFont.class), viewport.getWorldWidth(), viewport.getWorldHeight(), 60);  // Start a 60-second timer
+        }
     }
 
     @Override
@@ -62,13 +73,13 @@ public class UIStage extends Stage {
             game.soundManager.play("shoot");
         }
 
-        if(healthBar.getCurrentHealth() == 0 && !isGameOver) {
+        if(!isMulti && healthBar.getCurrentHealth() == 0 && !isGameOver) {
             addGameOver();
             isPaused = true;
             isGameOver = true;
         }
 
-        if(timeRemaining == 0 && !isGameOver) {
+        if(!isMulti && timeRemaining == 0 && !isGameOver) {
             addVictory();
             isPaused = true;
             isGameOver = true;

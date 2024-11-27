@@ -56,7 +56,7 @@ public class GameplayScreen implements Screen {
         camera.position.set(WORLD_WIDTH/2, WORLD_HEIGHT/2, 0);
         camera.update();
 
-        uiStage = new UIStage(game, new FitViewport(CAMERA_WIDTH, CAMERA_HEIGHT), ScreenState.MULTIPLAYER_PAUSE);
+        uiStage = new UIStage(game, new FitViewport(CAMERA_WIDTH, CAMERA_HEIGHT), isMulti);
         gameplayStage = new GameplayStage(game, viewport, WORLD_WIDTH, WORLD_HEIGHT, isMulti);
 
         this.udpPacket = new UDPPacket();
@@ -158,7 +158,12 @@ public class GameplayScreen implements Screen {
     @Override
     public void pause() {
         game.musicManager.pause();
-        game.screenManager.setScreen(ScreenState.MULTIPLAYER_PAUSE);
+        if(isMulti) {
+            game.screenManager.setScreen(ScreenState.MULTIPLAYER_PAUSE);
+        }
+        else {
+            game.screenManager.setScreen(ScreenState.SINGLEPLAYER_PAUSE);
+        }
         uiStage.setPaused(true);
     }
 
