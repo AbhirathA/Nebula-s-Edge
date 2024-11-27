@@ -4,6 +4,7 @@
 
 class CtrledObj : public AngleObj {
 	protected:
+		int driftV = 0;
 		int peakV = 0;
 		int thrust = 0;
 
@@ -14,25 +15,6 @@ class CtrledObj : public AngleObj {
 
 		bool isThrustable = true;
 		bool isMovable = true;
-
-		void reverseThrust(){
-			thrustReverse->start();
-			this->acc = (-1)*thrust;
-		}
-
-		void blockThrust(){
-			thrustBlock->start();
-			this->acc = 0;
-		}
-
-		void freeThrust(){
-			this->isThrustable = true;	
-		}
-
-		void removeMove(){	
-			int t = this->v - this->peakV;
-			this->v = (t>0)?t:0;		
-		}
 
 		void reverseThrust();
 		void blockThrust();
@@ -49,45 +31,12 @@ class CtrledObj : public AngleObj {
 				});
 			thrustBlock = new Lifetime(coolDown, [this]()-> void {this->freeThrust();
 				});
-
+			this->driftV = driftV;
 			this->peakV = peakV;
 			this->thrust = thrust;
 		}
 
 		void startThrust();
-
-
-		void moveForward(){
-			if(this->isMovable){
-				this->v += this->peakV;
-				this->isMovable = false;
-				this->moveCtrl->start();
-			}
-			else{
-				this->moveCtrl->reset();
-				this->moveCtrl->start();
-			}
-		}
-
-		void stopForward(){
-			if(!this->isMovable){
-				this->moveCtrl->reset();
-				this->removeMove();
-			}
-		}
-
-		void turnRight(int d){
-			this->angleScaled -= d;
-			this->angleScaled = (this->angleScaled)%(360*ANGLE_SCALE);
-		}
-
-		void turnLeft(int d){
-			this->angleScaled += d;
-			this->angleScaled = (this->angleScaled)%(360*ANGLE_SCALE);
-		}
-
-
-		virtual ~CtrledObj() { 
 
 		void moveForward();
 		void stopForward();
@@ -96,7 +45,6 @@ class CtrledObj : public AngleObj {
 		void turnLeft(int d);
 
 		virtual ~CtrledObj() {
-
 			delete this->thrustCtrl;
 			delete this->thrustReverse;
 			delete this->thrustBlock;
