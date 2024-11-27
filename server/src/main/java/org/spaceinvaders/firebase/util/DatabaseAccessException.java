@@ -1,5 +1,8 @@
+package org.spaceinvaders.firebase.util;
+
 /**
  * DatabaseAccessException.java
+ * <br>
  * The DatabaseAccessException exception is used when the server cannot connect
  * to the database.
  * @author Aryan
@@ -11,9 +14,6 @@
  * @version 1.0
  * @since 11/13/2024
  */
-
-package org.spaceinvaders.firebase.util;
-
 public class DatabaseAccessException extends Exception
 {
     /**

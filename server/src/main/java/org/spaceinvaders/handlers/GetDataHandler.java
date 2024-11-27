@@ -1,5 +1,16 @@
+package org.spaceinvaders.handlers;
+
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+import com.sun.net.httpserver.HttpExchange;
+import org.spaceinvaders.firebase.Firebase;
+import org.spaceinvaders.util.HTTPCode;
+
+import java.util.Map;
+
 /**
  * GetDataHandler.java
+ * <br>
  * Handler for processing requests to retrieve user data from Firebase.
  * This handler expects a JSON payload containing an "idToken" to authenticate the request.
  * @author Aryan
@@ -11,17 +22,6 @@
  * @version 1.0
  * @since 11/27/2024
  */
-
-package org.spaceinvaders.handlers;
-
-import com.google.gson.Gson;
-import com.google.gson.JsonObject;
-import com.sun.net.httpserver.HttpExchange;
-import org.spaceinvaders.firebase.Firebase;
-import org.spaceinvaders.util.HTTPCode;
-
-import java.util.Map;
-
 public class GetDataHandler extends BaseHandler {
 
     /**
@@ -38,7 +38,6 @@ public class GetDataHandler extends BaseHandler {
 
         // Retrieve user data from Firebase using the provided idToken.
         Map<String, Object> userData = Firebase.getInstance().getUserData(idToken);
-
         // Convert the user data to a JSON string for the response.
         String response = new Gson().toJson(userData);
 

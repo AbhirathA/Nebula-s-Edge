@@ -1,19 +1,3 @@
-/**
- * Firebase.java
- * This class facilitates communication between the server and a Firebase
- * database. It provides methods to manage user state, retrieve and update
- * stored data, and handle user authentication. The class supports CRUD
- * operations and handles common exceptions related to database access.
- * @author Aryan
- * @author Gathik
- * @author Abhirath
- * @author Ibrahim
- * @author Jayant
- * @author Dedeepya
- * @version 1.0
- * @since 11/13/2024
- */
-
 package org.spaceinvaders.firebase;
 
 import com.google.auth.oauth2.GoogleCredentials;
@@ -26,19 +10,50 @@ import com.google.firebase.auth.FirebaseAuthException;
 import com.google.firebase.auth.FirebaseToken;
 import com.google.firebase.auth.UserRecord;
 import com.google.firebase.cloud.FirestoreClient;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import org.spaceinvaders.firebase.util.DatabaseAccessException;
 import org.spaceinvaders.util.LoggerUtil;
 import org.spaceinvaders.util.NetworkNotFoundException;
+import org.spaceinvaders.util.ServerInfo;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Firebase.java
+ * <br>
+ * This class facilitates communication between the server and a Firebase
+ * database. It provides methods to manage user state, retrieve and update
+ * stored data, and handle user authentication. The class supports CRUD
+ * operations and handles common exceptions related to database access.
+ * @author Aryan
+ * @author Gathik
+ * @author Abhirath
+ * @author Ibrahim
+ * @author Jayant
+ * @author Dedeepya
+ * @version 1.2
+ * @since 11/13/2024
+ */
 public final class Firebase {
+    /**
+     * The filename of the service account key JSON file used for authentication
+     * with Firebase services.
+     */
     public static final String SERVICE_ACCOUNT_KEY = "serviceAccountKey.json";
 
     /**
+     * The URL of the Firebase Realtime Database associated with the application.
+     */
+    public static final String FIREBASE_DATABASE = "https://nebula-s-edge-6e33d-default-rtdb.firebaseio.com";
+
+    /**
+     * Initializes the Firebase Instance and updates the Firebase Realtime Database with the
+     * Server IP Address and related info.
+     *
      * @throws IOException              If the firebase could not be initialized
      * @throws NetworkNotFoundException If there is no network connection
      */
@@ -75,9 +90,21 @@ public final class Firebase {
             try {
                 FirebaseOptions options = FirebaseOptions.builder()
                         .setCredentials(GoogleCredentials.fromStream(serviceAccount))
+                        .setDatabaseUrl(FIREBASE_DATABASE)
                         .build();
 
                 FirebaseApp.initializeApp(options);
+
+                DatabaseReference databaseRef = FirebaseDatabase.getInstance().getReference("serverInfo");
+
+                Map<String, Object> data = new HashMap<>();
+                data.put("ip", ServerInfo.IP);
+                data.put("http-port", ServerInfo.HTTP_PORT);
+                data.put("udp-port", ServerInfo.UDP_PORT);
+
+                databaseRef.setValueAsync(data);
+
+                LoggerUtil.logInfo("Server Info Updated Successfully");
             } catch (IOException e) {
                 throw new NetworkNotFoundException("Cannot connect to the network.");
             }

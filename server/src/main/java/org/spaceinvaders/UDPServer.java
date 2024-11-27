@@ -6,6 +6,7 @@ import org.apache.commons.logging.Log;
 import org.spaceinvaders.gameEngine.GameEngine;
 import org.spaceinvaders.util.Coordinate;
 import org.spaceinvaders.util.LoggerUtil;
+import org.spaceinvaders.util.ServerInfo;
 import org.spaceinvaders.util.UDPPacket;
 
 import java.net.DatagramSocket;
@@ -17,7 +18,6 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 public class UDPServer
 {
-    private static final int SERVER_PORT = 9876;
     private static final int BUFFER_SIZE = 10000;
 
     private final float WORLD_WIDTH = 720;
@@ -113,9 +113,9 @@ public class UDPServer
     private class NetworkThreadClass extends Thread {
         @Override
         public void run() {
-            try (DatagramSocket serverSocket = new DatagramSocket(SERVER_PORT))
+            try (DatagramSocket serverSocket = new DatagramSocket(ServerInfo.UDP_PORT))
             {
-                LoggerUtil.logInfo("Server running on port " + SERVER_PORT);
+                LoggerUtil.logInfo("Server running on port " + ServerInfo.UDP_PORT);
 
                 byte[] receiveBuffer = new byte[BUFFER_SIZE];
 

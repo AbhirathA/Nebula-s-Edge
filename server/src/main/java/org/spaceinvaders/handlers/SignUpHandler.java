@@ -1,5 +1,13 @@
+package org.spaceinvaders.handlers;
+
+import com.google.gson.JsonObject;
+import com.sun.net.httpserver.HttpExchange;
+import org.spaceinvaders.firebase.Firebase;
+import org.spaceinvaders.util.HTTPCode;
+
 /**
  * SignUpHandler.java
+ * <br>
  * Handler for processing user sign-up requests.
  * This handler expects a JSON payload containing "email" and "password" to create a new user.
  * @author Aryan
@@ -11,14 +19,6 @@
  * @version 1.0
  * @since 11/27/2024
  */
-
-package org.spaceinvaders.handlers;
-
-import com.google.gson.JsonObject;
-import com.sun.net.httpserver.HttpExchange;
-import org.spaceinvaders.firebase.Firebase;
-import org.spaceinvaders.util.HTTPCode;
-
 public class SignUpHandler extends BaseHandler {
 
     /**
