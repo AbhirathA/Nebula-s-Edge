@@ -1,6 +1,6 @@
 #include "GameRender.h"
 
-#define DISPLAY_SCALE 30
+#define DISPLAY_SCALE 100
 
 void GameRender::initVariables() {
     this->videoMode.height = 780;

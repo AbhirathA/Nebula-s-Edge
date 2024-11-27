@@ -2,15 +2,9 @@
 // Created by ibrahim on 27/11/24.
 //
 
-#include "velVerlet.h"
-// #include "Bullet.h"
-// #include "Flare.h"
-// #include "User.h"
-#include "Tracker.h"
 
-#ifndef METEOR_H
-#define METEOR_H
-
+#pragma once
+#include "Utilities.h"
 
 
 class Meteor: public velVerlet {
@@ -21,4 +15,3 @@ public:
 
 
 
-#endif //METEOR_H
