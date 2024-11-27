@@ -46,13 +46,13 @@ public class ServerInfo
 
             // iterating over it
             while (interfaces.hasMoreElements()) {
-                NetworkInterface iface = interfaces.nextElement();
+                NetworkInterface networkInterface = interfaces.nextElement();
 
-                // checking if the iface is a loopback or is down
-                if (iface.isLoopback() || !iface.isUp()) continue;
+                // checking if the networkInterface is a loop-back or is down
+                if (networkInterface.isLoopback() || !networkInterface.isUp()) continue;
 
                 // getting the addresses for that interface
-                Enumeration<InetAddress> addresses = iface.getInetAddresses();
+                Enumeration<InetAddress> addresses = networkInterface.getInetAddresses();
                 while (addresses.hasMoreElements()) {
                     InetAddress addr = addresses.nextElement();
                     if (addr instanceof Inet4Address) {  // Prefer IPv4
@@ -62,7 +62,7 @@ public class ServerInfo
                 }
             }
         } catch (SocketException e) {
-            e.printStackTrace();
+            LoggerUtil.logException(e.getMessage(), e);
         }
         // Assign the determined IP address (or localhost) to the static final variable
         IP = ipAddress;
