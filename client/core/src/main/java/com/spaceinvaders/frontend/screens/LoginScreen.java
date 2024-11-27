@@ -145,8 +145,6 @@ public class LoginScreen implements Screen {
 
         ImageTextButton submitButton = ButtonUtils.createButton(this.game, "Submit", "textures/button.png",
                 "textures/button.png", 95, 15, (STAGE_WIDTH - 95) / 2f, 65);
-        ImageTextButton homeButton = ButtonUtils.createScreenNavigationButton(this.game, "Home",
-                "textures/button.png", "textures/button.png", 95, 15, (STAGE_WIDTH - 95) / 2f, 49, ScreenState.MAIN_MENU);
 
         ImageButton backButton = ButtonUtils.createBackButton(this.game, "textures/back-button.png",
                 "textures/back-button.png", 28, 15, 10, 245, game.screenManager.getRecentScreen());
@@ -156,7 +154,6 @@ public class LoginScreen implements Screen {
         this.stage.addActor(idField);
         this.stage.addActor(passwordField);
         this.stage.addActor(submitButton);
-        this.stage.addActor(homeButton);
         this.stage.addActor(backButton);
 
         submitButton.addListener(new InputListener() {
@@ -166,6 +163,7 @@ public class LoginScreen implements Screen {
                 String password = passwordField.getText();
                 try {
                     LoginScreen.this.game.token = AuthenticationManager.signIn(id, password);
+                    LoginScreen.this.game.killCount = AuthenticationManager.getUserData(LoginScreen.this.game.token);
                     LoginScreen.this.game.email = id;
 
                     if (LoginScreen.this.stage.getActors().contains(LoginScreen.this.errorMessage, true)) {

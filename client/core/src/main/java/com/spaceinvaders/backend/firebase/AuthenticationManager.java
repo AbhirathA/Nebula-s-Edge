@@ -36,6 +36,8 @@
 
 package com.spaceinvaders.backend.firebase;
 
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import com.spaceinvaders.backend.firebase.utils.AuthenticationException;
 import com.spaceinvaders.backend.firebase.utils.HTTPCode;
 import com.spaceinvaders.backend.firebase.utils.HTTPRequest;
@@ -137,6 +139,62 @@ public class AuthenticationManager {
             switch (HTTPCode.fromCode(returnCode)) {
                 case SUCCESS:
                     return returnString;
+
+                case INVALID_JSON:
+                    throw new AuthenticationException("Error in sending information to server");
+
+                case INVALID_ID_PASS:
+                    throw new AuthenticationException("Invalid id or password");
+
+                case CANNOT_CONNECT:
+                    throw new AuthenticationException("Server cannot connect to network");
+
+                case EMAIL_EXISTS:
+                    throw new AuthenticationException("Account with id already exists");
+
+                case WEAK_PASSWORD:
+                    throw new AuthenticationException("Password is too weak");
+
+                case DATABASE_ERROR:
+                    throw new AuthenticationException("Server database error");
+
+                case SERVER_ERROR:
+                    throw new AuthenticationException("Server error");
+
+                default:
+                    throw new AuthenticationException("Unknown error");
+            }
+        } catch (IOException | URISyntaxException e) {
+            throw new AuthenticationException("Failed to authenticate the user.");
+        }
+    }
+
+    /**
+     * Gets the user data from the Firebase
+     *
+     * @param tokenID   the token id of this user
+     * @throws AuthenticationException If the input validation fails (e.g., invalid
+     *                                 email, mismatched passwords).
+     */
+    public static String getUserData(String tokenID) throws AuthenticationException {
+        String url = SERVER_URL + "getData";
+
+        String payload = String.format("{\"idToken\":\"%s\"}", tokenID);
+
+        Map<String, String> headers = new HashMap<>();
+        headers.put("Content-Type", "application/json");
+        int returnCode;
+        String returnString;
+
+        try {
+            HttpResponse response = HTTPRequest.sendRequest(url, payload, "POST", headers);
+            returnCode = response.getCode();
+            returnString = response.getMessage();
+
+            switch (HTTPCode.fromCode(returnCode)) {
+                case SUCCESS:
+                    JsonObject jsonObject = JsonParser.parseString(returnString).getAsJsonObject();
+                    return jsonObject.get("killCount").getAsString();
 
                 case INVALID_JSON:
                     throw new AuthenticationException("Error in sending information to server");

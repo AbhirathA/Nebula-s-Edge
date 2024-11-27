@@ -46,6 +46,9 @@ public class ClientFirebase {
     // Firebase sign-in endpoint
     public static final String FIREBASE_SIGN_IN_URL = "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=";
 
+    //Firebase reset password endpoint
+    public static final String FIREBASE_RESET_PASSWORD_URL = "https://identitytoolkit.googleapis.com/v1/accounts:sendOobCode?key=";
+
     /**
      * Authenticates a user with Firebase using their email and password.
      * Sends a POST request to Firebase's Authentication REST API and retrieves
@@ -102,7 +105,7 @@ public class ClientFirebase {
 
     public static HttpResponse resetPassword(String email) throws AuthenticationException {
 
-        String url = "https://identitytoolkit.googleapis.com/v1/accounts:sendOobCode?key=" + PUBLIC_FIREBASE_API_KEY;
+        String url = FIREBASE_RESET_PASSWORD_URL + PUBLIC_FIREBASE_API_KEY;
 
         String payload = String.format("{\"requestType\":\"PASSWORD_RESET\",\"email\":\"%s\"}", email);
 

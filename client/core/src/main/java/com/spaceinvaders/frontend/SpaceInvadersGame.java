@@ -23,8 +23,8 @@ public class SpaceInvadersGame extends Game {
     public SoundManager soundManager;
 
     public String token;
-
     public String email;
+    public String killCount;
 
     private class CommandClass implements Command {
 

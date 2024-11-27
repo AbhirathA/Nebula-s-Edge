@@ -128,7 +128,7 @@ public final class Firebase {
         Map<String, Object> userData = new HashMap<>();
         userData.put("email", email);
         userData.put("level", 1);
-        userData.put("points", 500);
+        userData.put("killCount", 0);
 
         // Save the data in the Firestore users collection
         DocumentReference docRef = db.collection("users").document(userId);

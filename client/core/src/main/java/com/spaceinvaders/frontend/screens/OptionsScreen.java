@@ -268,7 +268,7 @@ public class OptionsScreen implements Screen {
 
         // Create labels for player profile section
         Label playerProfile = LabelUtils.createLabel("Player Profile", game.assetManager.get("fonts/minecraft.fnt", BitmapFont.class));
-        Label highscore = LabelUtils.createLabel("Highscore: ", game.assetManager.get("fonts/minecraft.fnt", BitmapFont.class));
+        Label killCount = LabelUtils.createLabel("Kill Count: " + game.killCount, game.assetManager.get("fonts/minecraft.fnt", BitmapFont.class));
         Label email = LabelUtils.createLabel("Email: " + game.email, game.assetManager.get("fonts/minecraft.fnt", BitmapFont.class));
 
         // Create buttons for user interactions
@@ -296,7 +296,7 @@ public class OptionsScreen implements Screen {
         table.row(); // Move to the next row in the table
 
         // Add highscore and email labels to the table with defined width, height, and padding
-        table.add(highscore).width(95).height(10).pad(1);
+        table.add(killCount).width(95).height(10).pad(1);
         table.add(email).width(95).height(10).pad(1);
         table.row(); // Move to the next row
 
