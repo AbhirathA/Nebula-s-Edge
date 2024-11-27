@@ -31,9 +31,7 @@ class Lifetime {
       void start();
       void end();
       void resetAge();
-      virtual ~Lifetime(){
-          instances.erase(find(v.begin(), v.end(), this));
-      }
+      virtual ~Lifetime(){ instances.erase(std::find(instances.begin(), instances.end(), this));}
 };
 
 
