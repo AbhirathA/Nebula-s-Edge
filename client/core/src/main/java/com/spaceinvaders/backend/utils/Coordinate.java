@@ -24,4 +24,12 @@ public class Coordinate implements Serializable
     public String toString() {
         return "Type: " + type + ", x: " + x + ", y: " + y;
     }
+
+    public float getX() { return this.x / 10f; }
+
+    public float getY() { return (this.y + 4050) / 10f; }
+
+    public float getAngle() { return this.angle / 10f; }
+
+    public int getId() { return this.id;}
 }

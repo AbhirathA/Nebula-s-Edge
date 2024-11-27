@@ -8,7 +8,7 @@ import java.util.HashMap;
 
 public class GameEngine {
 
-    private final int WORLD_WIDTH = 720, WORLD_HEIGHT = 405;
+    private final int WORLD_WIDTH = 7200, WORLD_HEIGHT = -4050;
 
     public int count = 0;
     private HashMap<Integer, String> idToState;
@@ -31,7 +31,7 @@ public class GameEngine {
         this.bulletIds = new ArrayList<>();
         this.blackholeIds = new ArrayList<>();
 
-        this.gameEngineManager = new Manager(0, 0, 0, 7200, 4050, 0, 1);
+        this.gameEngineManager = new Manager(0, 0, 0, 7200, 0, -4050, 1);
     }
 
     // Only adds a spaceShip for now
@@ -121,6 +121,6 @@ public class GameEngine {
 
     private void fixCoords(Coordinate coords) {
         coords.x = Math.min(Math.max(coords.x, 0), this.WORLD_WIDTH - 21);
-        coords.y = Math.min(Math.max(0, coords.y), this.WORLD_HEIGHT - 21);
+        coords.y = Math.max(Math.min(0, coords.y), this.WORLD_HEIGHT + 21);
     }
 }

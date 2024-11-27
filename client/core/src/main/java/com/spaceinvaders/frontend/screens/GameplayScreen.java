@@ -9,12 +9,15 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import com.spaceinvaders.backend.UDPClient;
+import com.spaceinvaders.backend.utils.Coordinate;
+import com.spaceinvaders.backend.utils.UDPPacket;
 import com.spaceinvaders.frontend.SpaceInvadersGame;
 import com.spaceinvaders.frontend.background.StarsBackground;
 import com.spaceinvaders.frontend.gameplay.GameplayStage;
 import com.spaceinvaders.frontend.ui.UIStage;
 
-public class GameplaySingleplayerScreen implements Screen {
+public class GameplayScreen implements Screen {
     private final SpaceInvadersGame game;
 
     private final OrthographicCamera camera;
@@ -30,14 +33,20 @@ public class GameplaySingleplayerScreen implements Screen {
 
     private GameplayStage gameplayStage;
 
-    InputMultiplexer multiplexer;
+    private UDPClient udpClient;
+    private final UDPPacket udpPacket;
 
-    public GameplaySingleplayerScreen(SpaceInvadersGame game, float CAMERA_WIDTH, float CAMERA_HEIGHT, float WORLD_WIDTH, float WORLD_HEIGHT) {
+    private InputMultiplexer multiplexer;
+
+    private final boolean isMulti;
+
+    public GameplayScreen(SpaceInvadersGame game, float CAMERA_WIDTH, float CAMERA_HEIGHT, float WORLD_WIDTH, float WORLD_HEIGHT, boolean isMulti) {
         this.game = game;
         this.CAMERA_WIDTH = CAMERA_WIDTH;
         this.CAMERA_HEIGHT = CAMERA_HEIGHT;
         this.WORLD_WIDTH = WORLD_WIDTH;
         this.WORLD_HEIGHT = WORLD_HEIGHT;
+        this.isMulti = isMulti;
 
         camera = new OrthographicCamera();
         viewport = new FitViewport(CAMERA_WIDTH, CAMERA_HEIGHT, camera);
@@ -47,8 +56,11 @@ public class GameplaySingleplayerScreen implements Screen {
         camera.position.set(WORLD_WIDTH/2, WORLD_HEIGHT/2, 0);
         camera.update();
 
-        uiStage = new UIStage(game, new FitViewport(CAMERA_WIDTH, CAMERA_HEIGHT), false);
-        gameplayStage = new GameplayStage(game, viewport, WORLD_WIDTH, WORLD_HEIGHT, false);
+        uiStage = new UIStage(game, new FitViewport(CAMERA_WIDTH, CAMERA_HEIGHT), isMulti);
+        gameplayStage = new GameplayStage(game, viewport, WORLD_WIDTH, WORLD_HEIGHT, isMulti);
+
+        this.udpPacket = new UDPPacket();
+        this.udpClient = new UDPClient(udpPacket);
 
         multiplexer = new InputMultiplexer();
         multiplexer.addProcessor(uiStage); // UI input comes first
@@ -69,8 +81,9 @@ public class GameplaySingleplayerScreen implements Screen {
     @Override
     public void show() {
         Gdx.input.setInputProcessor(multiplexer);
-        game.musicManager.play("gameplay");
         uiStage.setPaused(false);
+
+        this.udpClient.startReceiveThread(); // start thread to receive packets
     }
 
     @Override
@@ -83,6 +96,48 @@ public class GameplaySingleplayerScreen implements Screen {
         this.game.batch.setProjectionMatrix(this.camera.combined);
         this.game.shapeRenderer.setProjectionMatrix(this.camera.combined);
 
+        String state = "";
+        if (Gdx.input.isKeyPressed(Input.Keys.W)) {
+            state += "FORWARD";
+        }
+        else if (Gdx.input.isKeyPressed(Input.Keys.S)) {
+            state += "BACKWARD";
+        }
+        if (Gdx.input.isKeyPressed(Input.Keys.A)) {
+            state += "LEFT";
+        }
+        else if (Gdx.input.isKeyPressed(Input.Keys.D)) {
+            state += "RIGHT";
+        }
+
+//        try {
+//            Thread.sleep(Math.max((int)(100/3) - ((int) delta * 1000L), 0));
+//        } catch (Exception e)  {
+//            e.printStackTrace();
+//        }
+
+        this.udpClient.send(state, this.game.token);
+
+        // use this object to render objects on screen
+        UDPPacket tempUdpPacket = new UDPPacket();
+        synchronized (this.udpPacket) {
+            tempUdpPacket.update(this.udpPacket);
+        }
+
+        // set positions based on this.udpPacket
+        // for now just implemented myShip,
+        // TODO: need to implement for other ships
+//        this.gameplayStage.getRocketSprite().setPosition(tempUdpPacket.myShip.x, tempUdpPacket.myShip.y);
+//        this.gameplayStage.getRocketSprite().setRotation(tempUdpPacket.myShip.angle);
+
+        for(Coordinate coordinate : tempUdpPacket.spaceShips) {
+            if(coordinate.getId() == tempUdpPacket.id) {
+                this.gameplayStage.getRocketSprite().setPosition(coordinate.getX(), coordinate.getY());
+                this.gameplayStage.getRocketSprite().setRotation(coordinate.getAngle());
+                break;
+            }
+        }
+        gameplayStage.setUdpPacket(tempUdpPacket);
         updateCamera();
 
         Gdx.gl.glEnable(GL20.GL_BLEND); // Enable blending
@@ -103,7 +158,12 @@ public class GameplaySingleplayerScreen implements Screen {
     @Override
     public void pause() {
         game.musicManager.pause();
-        game.screenManager.setScreen(ScreenState.SINGLEPLAYER_PAUSE);
+        if(isMulti) {
+            game.screenManager.setScreen(ScreenState.MULTIPLAYER_PAUSE);
+        }
+        else {
+            game.screenManager.setScreen(ScreenState.SINGLEPLAYER_PAUSE);
+        }
         uiStage.setPaused(true);
     }
 
@@ -118,11 +178,11 @@ public class GameplaySingleplayerScreen implements Screen {
     public void hide() {
         Gdx.input.setInputProcessor(null);
         uiStage.setPaused(true);
+        this.udpClient.receiveThread.interrupt();
     }
 
     @Override
     public void dispose() {
-
     }
 
     private void updateCamera() {
