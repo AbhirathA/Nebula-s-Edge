@@ -36,6 +36,7 @@ public class Server {
         try {
             HttpServer server = HttpServer.create(new InetSocketAddress(ServerInfo.HTTP_PORT), BACKLOG_LIMIT);
             UDPServer udpServer = new UDPServer();
+            //noinspection ResultOfMethodCallIgnored
             Firebase.getInstance();
             server.createContext("/signup", new SignUpHandler());
             server.createContext("/getData", new GetDataHandler());

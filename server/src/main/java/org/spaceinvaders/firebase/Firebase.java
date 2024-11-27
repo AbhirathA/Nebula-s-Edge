@@ -10,7 +10,7 @@
  * @author Ibrahim
  * @author Jayant
  * @author Dedeepya
- * @version 1.0
+ * @version 1.2
  * @since 11/13/2024
  */
 
@@ -39,10 +39,21 @@ import java.util.HashMap;
 import java.util.Map;
 
 public final class Firebase {
+    /**
+     * The filename of the service account key JSON file used for authentication
+     * with Firebase services.
+     */
     public static final String SERVICE_ACCOUNT_KEY = "serviceAccountKey.json";
+
+    /**
+     * The URL of the Firebase Realtime Database associated with the application.
+     */
     public static final String FIREBASE_DATABASE = "https://nebula-s-edge-6e33d-default-rtdb.firebaseio.com";
 
     /**
+     * Initializes the Firebase Instance and updates the Firebase Realtime Database with the
+     * Server IP Address and related info.
+     *
      * @throws IOException              If the firebase could not be initialized
      * @throws NetworkNotFoundException If there is no network connection
      */

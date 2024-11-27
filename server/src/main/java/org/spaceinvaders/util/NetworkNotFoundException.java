@@ -17,6 +17,7 @@ package org.spaceinvaders.util;
 public class NetworkNotFoundException extends RuntimeException
 {
     /**
+     * Creates a new NetworkNotFound Exception with the given message
      * @param message       the message to display
      */
     public NetworkNotFoundException(String message)

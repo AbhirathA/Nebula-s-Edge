@@ -29,7 +29,6 @@ import java.io.OutputStream;
 import java.nio.charset.StandardCharsets;
 
 public abstract class BaseHandler implements HttpHandler {
-
     /**
      * Handles incoming HTTP requests. Only accepts POST requests and parses the request body as JSON.
      * Delegates processing to the {@link #processRequest(HttpExchange, JsonObject)} method.

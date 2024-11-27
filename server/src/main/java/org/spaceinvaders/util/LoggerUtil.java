@@ -29,18 +29,7 @@ public class LoggerUtil
      */
     public static void logInfo(String message)
     {
-        System.out.println(message);
         logger.info(message);
-    }
-
-    /**
-     * Logs a warning message to the log file
-     * @param message       the message to log
-     */
-    public static void logWarning(String message)
-    {
-        System.out.println(message);
-        logger.warn(message);
     }
 
     /**
@@ -49,7 +38,6 @@ public class LoggerUtil
      */
     public static void logError(String message)
     {
-        System.out.println(message);
         logger.error(message);
     }
 
@@ -60,7 +48,6 @@ public class LoggerUtil
      */
     public static void logException(String message, Exception e)
     {
-        System.out.println(message);
         logger.error(message, e);
     }
 }
