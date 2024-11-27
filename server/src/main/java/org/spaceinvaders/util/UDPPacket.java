@@ -32,12 +32,15 @@ public class UDPPacket implements Serializable {
     }
 
     public UDPPacket clone() {
-        try {
-            return (UDPPacket) super.clone();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        UDPPacket other = new UDPPacket();
+        other.id = this.id;
+        other.spaceShips = (ArrayList<Coordinate>) this.spaceShips.clone();
+        other.asteroids = (ArrayList<Coordinate>) this.asteroids.clone();
+        other.bullets = (ArrayList<Coordinate>) this.bullets.clone();
+        other.blackholes = (ArrayList<Coordinate>) this.blackholes.clone();
+        other.packetNumber = this.packetNumber;
 
-        return new UDPPacket(this.id);
+
+        return other;
     }
 }

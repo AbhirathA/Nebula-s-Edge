@@ -56,7 +56,7 @@ public class GameplayMultiplayerScreen implements Screen {
         uiStage = new UIStage(game, new FitViewport(CAMERA_WIDTH, CAMERA_HEIGHT), ScreenState.MULTIPLAYER_PAUSE);
         gameplayStage = new GameplayStage(game, viewport, WORLD_WIDTH, WORLD_HEIGHT);
 
-        this.udpPacket = new UDPPacket(gameplayStage.getRocketSprite().getX(), gameplayStage.getRocketSprite().getY(), gameplayStage.getRocketSprite().getRotation());
+        this.udpPacket = new UDPPacket();
         this.udpClient = new UDPClient(udpPacket);
 
         multiplexer = new InputMultiplexer();
@@ -134,6 +134,7 @@ public class GameplayMultiplayerScreen implements Screen {
                 break;
             }
         }
+        gameplayStage.setUdpPacket(tempUdpPacket);
         updateCamera();
 
         Gdx.gl.glEnable(GL20.GL_BLEND); // Enable blending

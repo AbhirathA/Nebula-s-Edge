@@ -48,7 +48,7 @@ public class Server {
             server.createContext("/signup", new SignUpHandler());
             server.setExecutor(null);
             server.start();
-            udpServer.server();
+            udpServer.startThreads();
             LoggerUtil.logInfo("Server started at http://localhost:" + PORT);
         } catch (IOException e) {
             LoggerUtil.logException("Cannot create a localhost server on port " + PORT, e);

@@ -58,12 +58,12 @@ public class GameplayStage extends Stage {
     public void act(float delta) {
         // Render background
         starsBackground.render(game.shapeRenderer, delta);
-//        if(udpPacket != null) {
+        if(udpPacket != null) {
             getBatch().begin();
-            spaceships.renderSpaceships(getBatch(), coordinates, -1);
-//            spaceships.renderSpaceships(getBatch(), udpPacket.spaceShips, udpPacket.id);
+//            spaceships.renderSpaceships(getBatch(), coordinates, -1);
+            spaceships.renderSpaceships(getBatch(), udpPacket.spaceShips, udpPacket.id);
             getBatch().end();
-//        }
+        }
         super.act(delta);
     }
 

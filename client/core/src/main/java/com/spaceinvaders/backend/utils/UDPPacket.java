@@ -18,11 +18,8 @@ public class UDPPacket implements Serializable {
         blackholes = new ArrayList<>();
     }
 
-    public UDPPacket(float x, float y, float angle) {
-        spaceShips = new ArrayList<>();
-        asteroids = new ArrayList<>();
-        bullets = new ArrayList<>();
-        blackholes = new ArrayList<>();
+    public UDPPacket(int id) {
+        this.id = id;
     }
 
     public void update(UDPPacket udpPacket) {
@@ -32,5 +29,18 @@ public class UDPPacket implements Serializable {
         this.asteroids = udpPacket.asteroids;
         this.blackholes = udpPacket.blackholes;
         this.packetNumber = udpPacket.packetNumber;
+    }
+
+    public UDPPacket clone() {
+        UDPPacket other = new UDPPacket();
+        other.id = this.id;
+        other.spaceShips = (ArrayList<Coordinate>) this.spaceShips.clone();
+        other.asteroids = (ArrayList<Coordinate>) this.asteroids.clone();
+        other.bullets = (ArrayList<Coordinate>) this.bullets.clone();
+        other.blackholes = (ArrayList<Coordinate>) this.blackholes.clone();
+        other.packetNumber = this.packetNumber;
+
+
+        return other;
     }
 }

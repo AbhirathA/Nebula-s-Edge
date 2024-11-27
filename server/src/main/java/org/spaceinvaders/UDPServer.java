@@ -58,27 +58,9 @@ public class UDPServer
         this.gameLogicThread.start();
     }
 
-    private void moveInDirection(float speed, Coordinate coords) {
-        double angleRad = Math.toRadians(coords.angle) + 1.571f;
-
-        double deltaX = Math.cos(angleRad) * speed;
-        double deltaY = Math.sin(angleRad) * speed;
-
-        coords.x += (float) deltaX;
-        coords.y += (float) deltaY;
-
-        this.fixCoords(coords);
-    }
-
-    private void fixCoords(Coordinate coords) {
-        coords.x = Math.min(Math.max(coords.x, 0), this.WORLD_WIDTH - 21);
-        coords.y = Math.min(Math.max(0, coords.y), this.WORLD_HEIGHT - 21);
-    }
-
     private class GameThreadClass extends Thread {
         @Override
         public void run() {
-
             while (true) {
                 HashMap<Integer, String> idToState = new HashMap<>();
                 synchronized (UDPServer.this.tokenToState) {
@@ -98,8 +80,10 @@ public class UDPServer
                     UDPServer.this.gameEngine.updateState(id, idToState.get(id));
                 }
 
+                // continue the game
                 UDPServer.this.gameEngine.update();
 
+                // time to send data to clients
                 UDPPacket packet = new UDPPacket();
                 packet.spaceShips = UDPServer.this.gameEngine.display("SHIP");
                 packet.asteroids = UDPServer.this.gameEngine.display("ASTERIOD");
@@ -156,7 +140,7 @@ public class UDPServer
                     UDPServer.this.inputBuffer.set(true);
 
                     // check if output buffer is filled
-                    if (UDPServer.this.outputBuffer.get()) {
+                    if (UDPServer.this.outputBuffer.compareAndExchange(true, false)) {
                         // copy all data to a local variable
                         HashMap<InetSocketAddress, UDPPacket> sendDataTemp = new HashMap<>();
                         synchronized (UDPServer.this.inetSocketAddressToToken) {

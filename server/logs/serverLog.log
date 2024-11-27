@@ -201,3 +201,10 @@ POST https://identitytoolkit.googleapis.com/v1/projects/nebula-s-edge-6e33d/acco
 2024-11-26 22:00:49 [HTTP-Dispatcher] INFO  o.s.firebase.util.LoggerUtil - User Created
 2024-11-27 00:26:45 [HTTP-Dispatcher] INFO  o.s.firebase.util.LoggerUtil - Created user: dSGRYecgoEO6MMamAHLJC6Bt4952
 2024-11-27 00:26:45 [HTTP-Dispatcher] INFO  o.s.firebase.util.LoggerUtil - User Created
+2024-11-27 04:47:26 [main] INFO  org.spaceinvaders.util.LoggerUtil - Server started at http://localhost:8080
+2024-11-27 04:52:01 [main] INFO  org.spaceinvaders.util.LoggerUtil - Server started at http://localhost:8080
+2024-11-27 04:53:39 [main] INFO  org.spaceinvaders.util.LoggerUtil - Server started at http://localhost:8080
+2024-11-27 05:38:31 [main] INFO  org.spaceinvaders.util.LoggerUtil - Server started at http://localhost:8080
+2024-11-27 05:43:22 [main] INFO  org.spaceinvaders.util.LoggerUtil - Server started at http://localhost:8080
+2024-11-27 05:46:35 [main] INFO  org.spaceinvaders.util.LoggerUtil - Server started at http://localhost:8080
+2024-11-27 05:47:21 [main] INFO  org.spaceinvaders.util.LoggerUtil - Server started at http://localhost:8080

@@ -3,7 +3,7 @@ plugins {
 }
 
 application {
-    mainClass = 'org.spaceinvaders.firebase.Server'
+    mainClass = 'org.spaceinvaders.Server'
 }
 
 group = 'org.spaceinvaders'
