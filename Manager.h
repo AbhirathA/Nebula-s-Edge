@@ -8,6 +8,8 @@
 #include "Lifetime.h"
 #include <tuple>
 #include <iostream>
+
+#include "UserObj.h"
 // #include "Flare.h"
 // #include "ObjectLauncher.h"
 // #include "PowerUp.h"
@@ -56,24 +58,21 @@ public:
 
 		void update();
 		std::vector<std::vector<int>> display(int lowerX, int lowerY, int upperX, int upperY);
-		void forward() {
-			this->player->moveForward();
-		}
-		void stop() {
-			this->player->stopForward();
-		}
-		void thrust() {
-			this->player->startThrust();
-		}
-		void left() {
-			this->player->turnLeft(5);
-		}
-		void right() {
-			this->player->turnRight(5);
-		}
 
-		double angle() {
-			return this->player->getAngle();
+		void forward(int id) {
+			this->playerMap[id]->moveForward();
+		}
+		void stop(int id) {
+			this->playerMap[id]->stopForward();
+		}
+		void thrust(int id) {
+			this->playerMap[id]->startThrust();
+		}
+		void left(int id) {
+			this->playerMap[id]->turnLeft(5);
+		}
+		void right(int id) {
+			this->playerMap[id]->turnRight(5);
 		}
 
 		int xForce();
@@ -91,7 +90,7 @@ public:
 	int dropBlackHole(int x, int y, int vX, int vY, int accX, int accY, int innerRad, int outerRad, int mass);
 	int dropEnemy(int x, int y, int vX, int vY, int accX, int accY, int innerRad, int outerRad, int mass);
 	int dropMeteor(int x, int y, int vX, int vY, int accX, int accY, int innerRad, int outerRad, int mass);
-	int dropUser(int x, int y, int vX, int vY, int accX, int accY, int innerRad, int outerRad, int mass);
+	int dropUser(int x, int y, int peakV, int driftV, int angle, int thrust, int thrustPersistance, int movePersistance, int coolDown, int accX, int accY, int innerRad, int outerRad, int mass);
 
 };
 
@@ -125,4 +124,4 @@ public:
 	// 		delete powerUp; // Clean up the power-up object
 	// 	}
 	// }
-};
+

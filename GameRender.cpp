@@ -107,7 +107,7 @@ void GameRender::pollEvents(){
             }
             else if (ev.key.code == sf::Keyboard::W) { // 
                 std::cout << "\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\n";
-                this->manager->up();
+                this->manager->forward();
             }
             else if (ev.key.code == sf::Keyboard::A) {
                 this->manager->left();
