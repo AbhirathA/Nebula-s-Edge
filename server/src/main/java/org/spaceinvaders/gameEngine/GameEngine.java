@@ -9,7 +9,7 @@ public class GameEngine {
 
     private final int WORLD_WIDTH = 720, WORLD_HEIGHT = 405;
 
-    private int count = 0;
+    public int count = 0;
     private HashMap<Integer, String> idToState;
     private ArrayList<Coordinate> coords;
 
@@ -31,7 +31,7 @@ public class GameEngine {
 
     // Only adds a spaceShip for now
     public int addElement(String type) {
-
+        this.coords.add(new Coordinate("SHIP", this.count, 0, 0, 90));
         switch (type) {
             case "SHIP":
                 this.spaceShipIds.add(count);
