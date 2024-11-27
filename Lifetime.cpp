@@ -4,6 +4,9 @@
 
 #include "Lifetime.h"
 
+std::vector<Lifetime*> Lifetime::instances = {};
+
+
 void Lifetime::incrementAge() {
     if(isUpdateable==false) {
         return;
@@ -16,7 +19,7 @@ void Lifetime::incrementAge() {
 }
 
 void Lifetime::updateInstances() {
-    for(auto ltObj:instances) {
+    for(auto ltObj:Lifetime::instances) {
         ltObj->incrementAge();
     }
 }
