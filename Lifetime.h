@@ -21,6 +21,9 @@ class Lifetime {
         this->onExpire = callback;
       }
       void incrementAge();
+      void resetAge(){
+          this->age = 0;
+      }
       virtual ~Lifetime();
 };
 
