@@ -64,7 +64,13 @@ bool Tracker::checkCollision(Obj* obj) {
 }
 
 bool Tracker::collisionCorrection(Obj* obj) {
-
+	if(target->getID() == obj->getID()) {
+		if(this->checkCollision(target)) {
+			this->selfDestruct();
+			obj->takeDamage();
+		}
+		return false;
+	}
 	// get the distance from the object.
 	int dx = (posX - obj->getX());
 	int dy = (posY - obj->getY());

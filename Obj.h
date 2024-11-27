@@ -66,6 +66,10 @@ public:
 		this->dead = false;
 	}
 
+	virtual void takeDamage() {
+		this->selfDestruct();
+	}
+
 	int getID()
 	{
 		return id;

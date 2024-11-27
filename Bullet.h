@@ -12,11 +12,11 @@
 class Bullet: public velVerlet {
 protected:
     Lifetime life;
-    int shooterId;
+    UserObj* shooter;
 public:
-    Bullet(int id, int x, int y, int vX, int vY, int accX, int accY, int innerRad, int outerRad, int mass, int maxLife, int shooterId): velVerlet(
-        id, x, y, vX, vY, accX, accY, innerRad, outerRad, mass), life(maxLife, [this]()-> void { return this->selfDestruct();}),  {
-            this->shooterId = shooterId;
+    Bullet(int id, int x, int y, int vX, int vY, int accX, int accY, int innerRad, int outerRad, int mass, int maxLife, UserObj* shooter): velVerlet(
+        id, x, y, vX, vY, accX, accY, innerRad, outerRad, mass), life(maxLife, [this]()-> void { return this->selfDestruct();})  {
+            this->shooter = shooter;
     }
 
     virtual bool checkCollision(Obj* obj) { return obj->checkCollision(this); }

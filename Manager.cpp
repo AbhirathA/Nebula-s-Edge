@@ -1,5 +1,8 @@
 #include "Manager.h"
 
+#include "Bullet.h"
+#include "UserObj.h"
+
 std::map<int, std::pair<int, int>> Manager::display() {
 	// Only Game Render
 	std::map<int, std::pair<int, int>> temp = {};
@@ -27,7 +30,6 @@ std::vector<std::vector<int>> Manager::display(int lowerX, int lowerY, int upper
 
 int Manager::drop1(int x, int y, int v, int angle, int acc, int accX, int accY, int innerRad, int outerRad, int mass){
 	Obj* temp = new AngleObj(count, x, y, v, angle, acc, accX, accY, innerRad, outerRad, mass);
-	objList.push_back(temp);
 	objMap[count] = temp;
 	tree.insert(temp->getObjBox(), count, temp->getStatus());
 	temp->updateAcc(gX, gY);
@@ -39,7 +41,6 @@ int Manager::drop1(int x, int y, int v, int angle, int acc, int accX, int accY, 
 
 int Manager::drop2(int x, int y, int vX, int vY, int accX, int accY, int innerRad, int outerRad, int mass) {
 	Obj* temp = new velVerlet(count, x, y, vX, vY, accX, accY, innerRad, outerRad, mass);
-	objList.push_back(temp);
 	objMap[count] = temp;
 	tree.insert(temp->getObjBox(), count, temp->getStatus());
 	temp->updateAcc(gX, gY);
@@ -53,7 +54,8 @@ void Manager::update() {
 	std::vector<int> deadObjs = tree.removeDead();
 	this->removeDead(deadObjs);
 	bool flag = true;
-	for (auto i : objList) {
+	for (auto [j, i] : objMap) {
+		
 		i->updatePos(t);
 		i->boundCorrection(lft, rt, tp, bt, t);
 	}
@@ -64,14 +66,23 @@ void Manager::update() {
 		flag = false;
 		std::vector<std::pair<int,int>> collisionPairs = tree.colliderPairs();
 		for(auto p: collisionPairs) {
-			objList[p.first]->collisionCorrection(objList[p.second]);
-			objList[p.first]->boundCorrection(lft, rt, tp, bt, t);
-			objList[p.second]->boundCorrection(lft, rt, tp, bt, t);
+			objMap[p.first]->collisionCorrection(objMap[p.second]);
+			objMap[p.first]->boundCorrection(lft, rt, tp, bt, t);
+			objMap[p.second]->boundCorrection(lft, rt, tp, bt, t);
 			flag = true;
 		}
 		tree.Update();
 	}
 }
+
+int Manager::shoot(int id, int innerRadius, int outerRadius, int mass){
+		UserObj* curUser = playerMap[id];
+		std::tuple<int, int, int, int, int> data = curUser->launchBullet();
+		Bullet* temp = new Bullet(count, std::get<0>(data), std::get<1>(data), std::get<2>(data), std::get<3>(data), 0, 0, innerRadius, outerRadius, mass, std::get<4>(data), curUser);
+		objMap[count] = temp;
+		count++;
+		return count-1;
+	}
 
 void Manager::removeDead(std::vector<int> ids) {
 	for (auto id : ids)

@@ -63,6 +63,8 @@ bool AngleObj::checkCollision(LinearObj* obj) {
     }
     return false;
 }
+
+
 bool AngleObj::checkCollision(AngleObj* obj){
     // Factor because of integer computation instead of floating point
     int temp = 100;
@@ -85,6 +87,8 @@ bool AngleObj::checkCollision(AngleObj* obj){
 bool AngleObj::collisionCorrection(Obj* other){
     return other->collisionCorrection(this);
 }
+
+
 bool AngleObj::collisionCorrection(LinearObj* obj){
     // Factor because of integer computation instead of floating point
     int temp = 100;
@@ -150,6 +154,7 @@ bool AngleObj::collisionCorrection(LinearObj* obj){
     }
     return false;
 }
+
 bool AngleObj::collisionCorrection(AngleObj* obj){
     // Factor because of integer computation instead of floating point
     int temp = 100;

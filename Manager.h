@@ -5,6 +5,7 @@
 #include <vector>
 #include<map>
 #include "Lifetime.h"
+#include <tuple>
 #include <iostream>
 // #include "Flare.h"
 // #include "ObjectLauncher.h"
@@ -28,6 +29,7 @@ class Manager
 
 	std::vector<Obj *> objList = {}; // list of created objects (make to map)
 	std::map<int, Obj *> objMap = {};
+	std::map<int, UserObj*> playerMap = {};
 	AABBtree tree;
 	// ObjectLauncher launcher;
 	// std::map<PowerUp*, Obj*> activePowerUps;
@@ -57,6 +59,8 @@ public:
 		}
 	}
 	void removeDead(std::vector<int> ids);
+
+	int Manager::shoot(int id, int innerRadius, int outerRadius, int mass);
 
 	int dropAsteroid(int x, int y, int vX, int vY, int accX, int accY, int innerRad, int outerRad, int mass);
 	int dropBlackHole(int x, int y, int vX, int vY, int accX, int accY, int innerRad, int outerRad, int mass);
