@@ -26,9 +26,12 @@ import com.google.firebase.auth.FirebaseAuthException;
 import com.google.firebase.auth.FirebaseToken;
 import com.google.firebase.auth.UserRecord;
 import com.google.firebase.cloud.FirestoreClient;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import org.spaceinvaders.firebase.util.DatabaseAccessException;
 import org.spaceinvaders.util.LoggerUtil;
 import org.spaceinvaders.util.NetworkNotFoundException;
+import org.spaceinvaders.util.ServerInfo;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -37,6 +40,7 @@ import java.util.Map;
 
 public final class Firebase {
     public static final String SERVICE_ACCOUNT_KEY = "serviceAccountKey.json";
+    public static final String FIREBASE_DATABASE = "https://nebula-s-edge-6e33d-default-rtdb.firebaseio.com";
 
     /**
      * @throws IOException              If the firebase could not be initialized
@@ -75,9 +79,21 @@ public final class Firebase {
             try {
                 FirebaseOptions options = FirebaseOptions.builder()
                         .setCredentials(GoogleCredentials.fromStream(serviceAccount))
+                        .setDatabaseUrl(FIREBASE_DATABASE)
                         .build();
 
                 FirebaseApp.initializeApp(options);
+
+                DatabaseReference databaseRef = FirebaseDatabase.getInstance().getReference("serverInfo");
+
+                Map<String, Object> data = new HashMap<>();
+                data.put("ip", ServerInfo.IP);
+                data.put("http-port", ServerInfo.HTTP_PORT);
+                data.put("udp-port", ServerInfo.UDP_PORT);
+
+                databaseRef.setValueAsync(data);
+
+                LoggerUtil.logInfo("Server Info Updated Successfully");
             } catch (IOException e) {
                 throw new NetworkNotFoundException("Cannot connect to the network.");
             }

@@ -1,0 +1,5 @@
+2024-11-27 16:14:11 [Thread-1] INFO  org.spaceinvaders.util.LoggerUtil - Server running on port 9090
+2024-11-27 16:14:11 [main] INFO  org.spaceinvaders.util.LoggerUtil - Server started at http://localhost:8080
+2024-11-27 16:21:02 [main] INFO  org.spaceinvaders.util.LoggerUtil - Server Info Updated Successfully
+2024-11-27 16:21:02 [main] INFO  org.spaceinvaders.util.LoggerUtil - Server started at http://localhost:8080
+2024-11-27 16:21:02 [Thread-1] INFO  org.spaceinvaders.util.LoggerUtil - Server running on port 9090

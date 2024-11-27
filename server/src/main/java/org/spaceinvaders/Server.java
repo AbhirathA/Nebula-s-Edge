@@ -20,6 +20,7 @@
 package org.spaceinvaders;
 
 import com.sun.net.httpserver.HttpServer;
+import org.spaceinvaders.firebase.Firebase;
 import org.spaceinvaders.handlers.GetDataHandler;
 import org.spaceinvaders.handlers.SignUpHandler;
 import org.spaceinvaders.util.LoggerUtil;
@@ -35,6 +36,7 @@ public class Server {
         try {
             HttpServer server = HttpServer.create(new InetSocketAddress(ServerInfo.HTTP_PORT), BACKLOG_LIMIT);
             UDPServer udpServer = new UDPServer();
+            Firebase.getInstance();
             server.createContext("/signup", new SignUpHandler());
             server.createContext("/getData", new GetDataHandler());
             server.setExecutor(null);
