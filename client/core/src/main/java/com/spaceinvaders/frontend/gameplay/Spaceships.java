@@ -52,24 +52,24 @@ public class Spaceships implements Player {
         // Iterate through the list of coordinates to render each spaceship
         for(Coordinate coordinate : coordinateList) {
             // Skip rendering if the spaceship's ID matches the provided ID (typically the player's spaceship)
-            if(coordinate.id == id) {
+            if(coordinate.getId() == id) {
                 continue;
             }
 
             // Check if the spaceship's ID is already in the map, if not, associate it with a sprite index
-            if(!entitySpriteMap.containsKey(coordinate.id)) {
+            if(!entitySpriteMap.containsKey(coordinate.getId())) {
                 // Use the modulo operator to cycle through the 3 available spaceship sprites
-                entitySpriteMap.put(coordinate.id, coordinate.id % 3);
+                entitySpriteMap.put(coordinate.getId(), coordinate.getId() % 3);
             }
 
             // Get the sprite corresponding to the spaceship's ID
-            Sprite sprite = spaceships[entitySpriteMap.get(coordinate.id)];
+            Sprite sprite = spaceships[entitySpriteMap.get(coordinate.getId())];
 
             // Set the position of the spaceship sprite based on the coordinate's x and y values
-            sprite.setPosition(coordinate.x, coordinate.y);
+            sprite.setPosition(coordinate.getX(), coordinate.getY());
 
             // Set the rotation of the spaceship sprite based on the coordinate's angle
-            sprite.setRotation(coordinate.angle);
+            sprite.setRotation(coordinate.getAngle());
 
             // Draw the spaceship sprite to the batch, rendering it to the screen
             sprite.draw(batch);
