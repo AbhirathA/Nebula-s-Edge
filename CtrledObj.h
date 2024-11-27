@@ -2,14 +2,14 @@
 #include "AngleObj.h"
 #include "Lifetime.h"
 class CtrledObj : public AngleObj {
-	private:
-		int direction = 0;
+	protected:
 		int peakV = 0;
 		int thrust = 0;
+
 		Lifetime* thrustCtrl = nullptr;
 		Lifetime* thrustReverse = nullptr;
-		Lifetime* moveCtrl = nullptr;
 		Lifetime* thrustBlock = nullptr;
+		Lifetime* moveCtrl = nullptr;
 
 		bool isThrustable = true;
 		bool isMovable = true;
@@ -28,9 +28,9 @@ class CtrledObj : public AngleObj {
 			this->isThrustable = true;	
 		}
 
-		void removeMove(){
+		void removeMove(){	
 			int t = this->v - this->peakV;
-			this->v = (t>0)?t:0;
+			this->v = (t>0)?t:0;		
 		}
 
 	public:
@@ -56,7 +56,40 @@ class CtrledObj : public AngleObj {
 			}
 		}
 
-		virtual ~CtrledObj() {}
+		void moveForward(){
+			if(this->isMovable){
+				this->v += this->peakV;
+				this->isMovable = false;
+				this->moveCtrl->start();
+			}
+			else{
+				this->moveCtrl->reset();
+				this->moveCtrl->start();
+			}
+		}
+
+		void stopForward(){
+			if(!this->isMovable){
+				this->moveCtrl->reset();
+				this->removeMove();
+			}
+		}
+
+		void turnRight(int d){
+			this->angleScaled -= d;
+			this->angleScaled = (this->angleScaled)%(360*ANGLE_SCALE);
+		}
+
+		void turnLeft(int d){
+			this->angleScaled += d;
+			this->angleScaled = (this->angleScaled)%(360*ANGLE_SCALE);
+		}
 
 
+		virtual ~CtrledObj() { 
+			delete this->thrustCtrl;
+			delete this->thrustReverse;
+			delete this->thrustBlock;
+			delete this->moveCtrl;
+		}
 };
