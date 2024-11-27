@@ -650,6 +650,12 @@
 2024-11-27 18:36:22 [Thread-1] INFO  org.spaceinvaders.util.LoggerUtil - {"id":0,"spaceShips":[{"type":"SHIP","x":110.61047,"y":357.57516,"angle":34.0,"id":0}],"asteroids":[],"bullets":[],"blackholes":[],"packetNumber":0}
 2024-11-27 18:36:22 [Thread-1] INFO  org.spaceinvaders.util.LoggerUtil - {"id":0,"spaceShips":[{"type":"SHIP","x":110.61047,"y":357.57516,"angle":34.0,"id":0}],"asteroids":[],"bullets":[],"blackholes":[],"packetNumber":0}
 2024-11-27 18:36:22 [Thread-1] INFO  org.spaceinvaders.util.LoggerUtil - {"id":0,"spaceShips":[{"type":"SHIP","x":110.61047,"y":357.57516,"angle":34.0,"id":0}],"asteroids":[],"bullets":[],"blackholes":[],"packetNumber":0}
+2024-11-27 18:55:49 [main] INFO  org.spaceinvaders.util.LoggerUtil - Server Info Updated Successfully
+2024-11-27 18:55:49 [main] INFO  org.spaceinvaders.util.LoggerUtil - Server started at http://localhost:8080
+2024-11-27 18:55:49 [Thread-1] INFO  org.spaceinvaders.util.LoggerUtil - Server running on port 9090
+2024-11-27 19:02:22 [main] INFO  org.spaceinvaders.util.LoggerUtil - Server Info Updated Successfully
+2024-11-27 19:02:22 [main] INFO  org.spaceinvaders.util.LoggerUtil - Server started at http://localhost:8080
+2024-11-27 19:02:22 [Thread-1] INFO  org.spaceinvaders.util.LoggerUtil - Server running on port 9090
 2024-11-27 18:59:07 [main] INFO  org.spaceinvaders.util.LoggerUtil - Server Info Updated Successfully
 2024-11-27 18:59:07 [main] INFO  org.spaceinvaders.util.LoggerUtil - Server started at http://localhost:8080
 2024-11-27 18:59:07 [Thread-1] INFO  org.spaceinvaders.util.LoggerUtil - Server running on port 9090
