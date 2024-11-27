@@ -27,21 +27,12 @@ private:
 		}
 
 
-		void heal(int points) {
-			this->healthBar->heal(points);
-		}
+		void heal(int points);;
 
-		virtual void takeDamage() override {
-			this->healthBar->takeDamage(1);
-		}
+		virtual void takeDamage() override final;
 
-		std::tuple<int,int,int,int,int> launchBullet() {
-			return std::make_tuple(this->posX, this->posY, (this->getvX()*bulletSpeed)/this->getV(), (this->getvY()*bulletSpeed)/this->getV(), this->bulletLife);
-		}
+		std::tuple<int,int,int,int,int> launchBullet();
 
-		void incrementKillCount() {
-			totalKills++;
-			totalPoints += pointFactor;
-		};
+		void incrementKillCount();
 };
 

@@ -19,6 +19,7 @@ void velVerlet::updatePos(int t){
     this->posX = this->getNextX(t);
     this->posY = this->getNextY(t);
 
+    this->updateBox();
     // Velocity is updated
     this->vX = this->vX + this->accX * t;
     this->vY = this->vY + this->accY * t;
@@ -65,6 +66,7 @@ bool velVerlet::boundCorrection(int lft, int rt, int tp, int bt, int t){
         posY = posY + tp - bt - 1;
         flag = true;
     }
+    this->updateBox();
     //std::cout << "in bound correction after:" << posX << " " << posY << std::endl;
     return flag;
 }
@@ -97,7 +99,7 @@ bool velVerlet::collisionCorrection(LinearObj* obj){
         obj->updateX(obj->getX() - adjustmentX);
         obj->updateY(obj->getY() - adjustmentY);
 
-
+        obj->updateBox();
         // Velocity Correction
         
         int nx = (dx*temp2)/ distance;

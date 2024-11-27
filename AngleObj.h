@@ -2,12 +2,11 @@
 #include "Obj.h"
 #include "LinearObj.h"
 #include <cmath>
-#define VALUE_SCALE 1000
-#define ANGLE_SCALE 10
+
 
 class AngleObj: public Obj{
-	
-	private:
+	protected:
+
 		int mod(int a, int b) {
 			while (a > b) {
 				a -= b;
@@ -18,7 +17,6 @@ class AngleObj: public Obj{
 			return a;
 		}
 
-	protected:
 		//Angle Computation Pre-requisites
 		static int SIN[3600];
 		static int COS[3600];
@@ -55,6 +53,10 @@ class AngleObj: public Obj{
 
 		virtual int getvY() {
 			return this->v * SIN[this->angleScaled];
+		}
+
+		virtual int getOri() {
+			return angleScaled;
 		}
 
 		virtual int getaccX() {

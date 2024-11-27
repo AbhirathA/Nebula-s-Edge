@@ -41,10 +41,10 @@ void Manager::update() {
 	std::vector<int> deadObjs = tree.removeDead();
 	this->removeDead(deadObjs);
 	bool flag = true;
-	for (auto [j, i] : objMap) {
+	for (auto p : objMap) {
 
-		i->updatePos(t);
-		i->boundCorrection(lft, rt, tp, bt, t);
+		p.second->updatePos(t);
+		p.second->boundCorrection(lft, rt, tp, bt, t);
 	}
 	tree.Update();
 	Lifetime::updateInstances();
@@ -84,3 +84,7 @@ void Manager::removeDead(std::vector<int> ids) {
 		objMap.erase(id);
 	}
 }
+
+// int main() {
+// 	std::cout<<"Gathik is a good boy"<<std::endl;
+// }

@@ -4,13 +4,12 @@
 int AngleObj::SIN[3600] = {};
 int AngleObj::COS[3600] = {};
 bool AngleObj::initialized = false;
-double AngleObj::PI = 3.14159265358979323846;
 
 void AngleObj::initializeTrig() {
     if (!initialized) {
         for (int i = 0; i < 3600; i++) {
-            SIN[i] = sinf((i * PI) / 180.0 / ANGLE_SCALE) * VALUE_SCALE;
-            COS[i] = cosf((i * PI)/180.0/ ANGLE_SCALE) * VALUE_SCALE;
+            SIN[i] = sinf((i * Obj::PI) / 180.0 / ANGLE_SCALE) * VALUE_SCALE;
+            COS[i] = cosf((i * Obj::PI)/180.0/ ANGLE_SCALE) * VALUE_SCALE;
         }
         initialized = true;
     }
@@ -33,11 +32,11 @@ void AngleObj::updateV(int vX, int vY, int scale){
     //std::cout << "big idiot: " << (int)((((t * 180) / PI)) * ANGLE_SCALE)%(360 * ANGLE_SCALE) << " " << v;
 
     if (vX >= 0) {
-        this->angleScaled = mod((int)((((t * 180) / PI)) * ANGLE_SCALE) , (360 * ANGLE_SCALE));
+        this->angleScaled = mod((int)((((t * 180) / Obj::PI)) * ANGLE_SCALE) , (360 * ANGLE_SCALE));
 
     }
     else {
-        this->angleScaled = mod((int)((180 - ((t * 180) / PI))  * ANGLE_SCALE),(360*ANGLE_SCALE));
+        this->angleScaled = mod((int)((180 - ((t * 180) / Obj::PI))  * ANGLE_SCALE),(360*ANGLE_SCALE));
     }
 
     this->v = v;
@@ -115,7 +114,7 @@ bool AngleObj::collisionCorrection(LinearObj* obj){
         obj->updateX(obj->getX() - adjustmentX);
         obj->updateY(obj->getY() - adjustmentY);
 
-
+        obj->updateBox();
         // Velocity Correction
 
         int nx = (dx * temp2) / distance;
@@ -179,7 +178,7 @@ bool AngleObj::collisionCorrection(AngleObj* obj){
         obj->updateX(obj->getX() - adjustmentX);
         obj->updateY(obj->getY() - adjustmentY);
 
-
+        obj->updateBox();
         // Velocity Correction
 
         int nx = (dx * temp2) / distance;
@@ -225,6 +224,8 @@ void AngleObj::updatePos(int t){
     printProp();
     this->posX = this->getNextX(t);
     this->posY = this->getNextY(t);
+
+    this->updateBox();
     //std::cout << "mid update: " << " v: " << v << " vX: " << this->getvX() << " vY: " << this->getvY() << " angle: " << angleScaled << std::endl;
     // Velocity is updated
     int vX = this->getvX() + this->getaccX() * t;
@@ -262,6 +263,7 @@ bool AngleObj::boundCorrection(int lft, int rt, int tp, int bt, int t) {
         flag = true;
     }
     //std::cout << "in bound correction after:" << posX << " " << posY << std::endl;
+    this->updateBox();
     return flag;
 
 }

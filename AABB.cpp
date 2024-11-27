@@ -1,6 +1,10 @@
 #include "AABB.h"
 
-AABB::AABB(Vector lowerBound, Vector upperBound) : lowerBound(lowerBound), upperBound(upperBound){}
+AABB::AABB(Vector lowerBound, Vector upperBound) : lowerBound(lowerBound), upperBound(upperBound) {
+    if(lowerBound.size() != 3 || upperBound.size() != 3) {
+        throw std::runtime_error("Invalid size");
+    }
+}
 
 AABB::AABB() = default;
 

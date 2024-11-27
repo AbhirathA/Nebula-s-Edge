@@ -84,7 +84,7 @@ public:
 		}
 	void removeDead(std::vector<int> ids);
 
-	int Manager::shoot(int id, int innerRadius, int outerRadius, int mass);
+	int shoot(int id, int innerRadius, int outerRadius, int mass);
 
 	int dropAsteroid(int x, int y, int vX, int vY, int accX, int accY, int innerRad, int outerRad, int mass);
 	int dropBlackHole(int x, int y, int vX, int vY, int accX, int accY, int innerRad, int outerRad, int mass);

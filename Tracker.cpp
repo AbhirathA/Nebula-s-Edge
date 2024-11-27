@@ -20,6 +20,8 @@ void Tracker::updatePos(int t) {
 
 	temp = posY;
 	posY = posY + vY * t + accY*t*t/2;
+
+	this->updateBox();
 }
 
 int Tracker::getNextX(int t) {
@@ -83,19 +85,35 @@ bool Tracker::collisionCorrection(Obj* obj) {
 
 		this->posX += (overlap*dx)/dist + overlap/100;
 		this->posY += (overlap*dy)/dist + overlap/200;
+
+		this->updateBox();
 	}
 	return false;
 }
 
-bool Tracker::boundCorrection(int lft, int rt, int tp, int bt, int t){
-    int x = (this->posX - rt)%(rt-lft+1) + lft;
-    int y = (this->posY - bt)%(bt-tp+1) + tp;
-    bool flag = (x==this->posX && y==this->posY)?false:true;
-    if(flag){
-        this->posX = x;
-        this->posY = y;
-    }
-    return flag;
+bool Tracker::boundCorrection(int lft, int rt, int tp, int bt, int t) {
+	bool flag = false;
+	//std::cout << "in bound correction before:" << posX << " " << posY << " Bounds are" << lft << " " << rt << " " << tp << " " << bt << std::endl;
+	while (posX > rt) {
+		posX = posX - rt + lft + 1;
+		flag = true;
+	}
+	while (posX < lft) {
+		posX = posX + rt - lft - 1;
+		flag = true;
+	}
+	while (posY > tp) {
+		posY = posY - tp + bt + 1;
+		flag = true;
+	}
+	while (posY < bt) {
+		posY = posY + tp - bt - 1;
+		flag = true;
+	}
+	//std::cout << "in bound correction after:" << posX << " " << posY << std::endl;
+	this->updateBox();
+	return flag;
+
 }
 
 #undef PRECISION

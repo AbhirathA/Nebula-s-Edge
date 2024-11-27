@@ -1,6 +1,8 @@
 #pragma once
 #include <cmath>
 #include "AABBtree.h"
+
+
 class Bullet;
 class Meteor;
 class Asteroid;
@@ -33,6 +35,10 @@ class AngleObj;
 class Obj
 {
 	protected:
+		static double const PI;
+		static int const VALUE_SCALE = 1000;
+		static int const ANGLE_SCALE = 10;
+
 		int id = 0;
 
 		//The X-Y coordinates of the object
@@ -92,7 +98,6 @@ public:
             posY = y;
         }
 
-		virtual double getOri() { return 0.0; };
 
 		int getOuterR(){
 			return outerRad;

@@ -4,6 +4,15 @@
 class LinearObj : public Obj {
 
 	protected:
+		int mod(int a, int b) {
+			while (a > b) {
+				a -= b;
+			}
+			while (a < 0) {
+				a += b;
+			}
+			return a;
+		}
 		//The velocity of the object in x-y form
 		int vX = 0;
 		int vY = 0;
@@ -50,9 +59,12 @@ class LinearObj : public Obj {
 			accX = x; accY = y;
 		}
 
-		// Sin of angle wrt x-axis
 		int getOri() {
-			return (vX) / std::sqrt(vX * vX + vY * vY);
+			double t = asin(vX/std::sqrt(vX * vX + vY * vY));
+			if (vX >= 0) {
+				return  mod((int)((((t * 180) / PI)) * ANGLE_SCALE) , (360 * ANGLE_SCALE));
+			}
+			return mod((int)((180 - ((t * 180) / PI))  * ANGLE_SCALE),(360*ANGLE_SCALE));
 		}
 
 		bool checkXTerminal() {
