@@ -55,22 +55,22 @@ public class Enemies implements Player {
         // Iterate through the list of coordinates for the enemies
         for (Coordinate coordinate : coordinateList) {
             // Skip rendering if the enemy's ID matches the provided ID (typically the player's spaceship)
-            if(coordinate.id == id) {
+            if(coordinate.getId() == id) {
                 continue;
             }
 
             // If the entity's ID hasn't been mapped to a sprite yet, do so
-            if (!entitySpriteMap.containsKey(coordinate.id)) {
+            if (!entitySpriteMap.containsKey(coordinate.getId())) {
                 // Use the entity's ID modulo 12 to determine the sprite index
-                entitySpriteMap.put(coordinate.id, coordinate.id % 12);
+                entitySpriteMap.put(coordinate.getId(), coordinate.getId() % 12);
             }
 
             // Get the sprite for this enemy using the mapped index
-            Sprite sprite = enemies[entitySpriteMap.get(coordinate.id)];
+            Sprite sprite = enemies[entitySpriteMap.get(coordinate.getId())];
 
             // Set the position and rotation of the sprite based on the coordinate
-            sprite.setPosition(coordinate.x, coordinate.y);
-            sprite.setRotation(coordinate.angle);
+            sprite.setPosition(coordinate.getX(), coordinate.getY());
+            sprite.setRotation(coordinate.getAngle());
 
             // Draw the sprite to the batch (render it to the screen)
             sprite.draw(batch);

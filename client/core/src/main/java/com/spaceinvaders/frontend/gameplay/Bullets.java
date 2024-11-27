@@ -39,8 +39,8 @@ public class Bullets implements Entity {
     public void render(Batch batch, ArrayList<Coordinate> coordinateList) {
         // Iterate through each coordinate in the list
         for (Coordinate coordinate : coordinateList) {
-            bullet.setPosition(coordinate.x, coordinate.y);
-            bullet.setRotation(coordinate.angle);
+            bullet.setPosition(coordinate.getX(), coordinate.getY());
+            bullet.setRotation(coordinate.getAngle());
 
             // Draw the bullet sprite to the batch, rendering it to the screen
             bullet.draw(batch);

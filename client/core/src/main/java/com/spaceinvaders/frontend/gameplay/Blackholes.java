@@ -35,8 +35,8 @@ public class Blackholes implements Entity {
     public void render(Batch batch, ArrayList<Coordinate> coordinateList) {
         // Iterate through the list of coordinates to render each blackhole
         for (Coordinate coordinate : coordinateList) {
-            blackhole.setPosition(coordinate.x, coordinate.y);
-            blackhole.setRotation(coordinate.angle);
+            blackhole.setPosition(coordinate.getX(), coordinate.getY());
+            blackhole.setRotation(coordinate.getAngle());
 
             // Draw the blackhole sprite to the batch, rendering it to the screen
             blackhole.draw(batch);

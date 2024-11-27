@@ -69,8 +69,8 @@ public class Asteroids implements Entity {
         // Iterate through each coordinate in the provided list
         for (Coordinate coordinate : coordinateList) {
             // If the asteroid ID is not already in the map, assign it a sprite index based on ID % 7
-            if (!entitySpriteMap.containsKey(coordinate.id)) {
-                entitySpriteMap.put(coordinate.id, coordinate.id % 7);
+            if (!entitySpriteMap.containsKey(coordinate.getId())) {
+                entitySpriteMap.put(coordinate.getId(), coordinate.getId() % 7);
             }
 
             Sprite sprite;
@@ -78,13 +78,13 @@ public class Asteroids implements Entity {
             // Determine the correct sprite based on the asteroid type
             switch (coordinate.type) {
                 case "B":  // Big asteroid
-                    sprite = bigAsteroids[entitySpriteMap.get(coordinate.id)];
+                    sprite = bigAsteroids[entitySpriteMap.get(coordinate.getId())];
                     break;
                 case "M":  // Medium asteroid
-                    sprite = mediumAsteroids[entitySpriteMap.get(coordinate.id)];
+                    sprite = mediumAsteroids[entitySpriteMap.get(coordinate.getId())];
                     break;
                 case "S":  // Small asteroid
-                    sprite = smallAsteroids[entitySpriteMap.get(coordinate.id)];
+                    sprite = smallAsteroids[entitySpriteMap.get(coordinate.getId())];
                     break;
                 default:
                     // If the asteroid type is invalid, throw an exception
@@ -92,8 +92,8 @@ public class Asteroids implements Entity {
             }
 
             // Set the position and rotation of the sprite based on the coordinate data
-            sprite.setPosition(coordinate.x, coordinate.y);
-            sprite.setRotation(coordinate.angle);
+            sprite.setPosition(coordinate.getX(), coordinate.getY());
+            sprite.setRotation(coordinate.getAngle());
 
             // Draw the sprite to the batch (which will render it to the screen)
             sprite.draw(batch);

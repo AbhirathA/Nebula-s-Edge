@@ -123,9 +123,9 @@ public class ScreenManager implements Disposable {
             case MULTIPLAYER_PAUSE:
                 return new PauseScreen(this.game, WORLD_WIDTH, WORLD_HEIGHT, STAGE_WIDTH, STAGE_HEIGHT, starsBackground, ScreenState.MULTIPLAYER_GAMEPLAY);
             case SINGLEPLAYER_GAMEPLAY:
-                return new GameplaySingleplayerScreen(this.game, WORLD_WIDTH, WORLD_HEIGHT, 720, 405);
+                return new GameplayScreen(this.game, WORLD_WIDTH, WORLD_HEIGHT, 720, 405, false);
             case MULTIPLAYER_GAMEPLAY:
-                return new GameplayMultiplayerScreen(this.game, WORLD_WIDTH, WORLD_HEIGHT, 720, 405);
+                return new GameplayScreen(this.game, WORLD_WIDTH, WORLD_HEIGHT, 720, 405, true);
             case OPTIONS:
                 return new OptionsScreen(this.game, WORLD_WIDTH, WORLD_HEIGHT, STAGE_WIDTH, STAGE_HEIGHT, starsBackground, planetsBackground);
             case RESET_PASSWORD:
