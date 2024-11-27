@@ -44,7 +44,7 @@ class Manager
 		int drop1(int x, int y, int v, int angle, int acc, int accX, int accY, int innerRad, int outerRad, int mass); // add an object
 		int drop2(int x, int y, int vX, int vY, int accX, int accY, int innerRad, int outerRad, int mass); // add an object
 		void update();
-		void up() {
+		void forward() {
 			this->player->moveForward();
 		}
 		void stop() {
