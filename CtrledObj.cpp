@@ -15,8 +15,10 @@ void CtrledObj::freeThrust() {
 }
 
 void CtrledObj::removeMove() {
+	std::cout << "hi";
+	this->isMovable = true;
 	int t = this->v - this->peakV;
-	this->v = (t > 0) ? t : 0;
+	this->v = (t > driftV) ? t : driftV;
 }
 
 
@@ -29,15 +31,19 @@ void  CtrledObj::startThrust() {
 }
 
 void  CtrledObj::moveForward() {
+	printProp();
 	if (this->isMovable) {
+		std::cout << "first";
 		this->v += this->peakV;
 		this->isMovable = false;
 		this->moveCtrl->start();
 	}
 	else {
+		std::cout << "running";
 		this->moveCtrl->resetAge();
 		this->moveCtrl->start();
 	}
+	printProp();
 }
 
 void  CtrledObj::stopForward() {
