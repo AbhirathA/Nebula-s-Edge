@@ -7,9 +7,6 @@
  * - Validates user credentials against a data source (e.g., database or external API).
  * - Generates and validates authentication tokens.
  * - Provides support for session management (e.g., login, logout).
- * Dependencies:
- * - Java SE 8 or higher
- * - External library (optional): JWT for token generation and validation
  * Usage example:
  * ```
  * AuthenticationManager authManager = new AuthenticationManager();
@@ -81,7 +78,7 @@ public class AuthenticationManager {
                 case INVALID_JSON:
                     throw new AuthenticationException("Error in sending information to server");
 
-                case INVALID_ID_PASS:
+                case INVALID_INPUT:
                     throw new AuthenticationException("Invalid Id or password");
 
                 case CANNOT_CONNECT:
@@ -143,7 +140,7 @@ public class AuthenticationManager {
                 case INVALID_JSON:
                     throw new AuthenticationException("Error in sending information to server");
 
-                case INVALID_ID_PASS:
+                case INVALID_INPUT:
                     throw new AuthenticationException("Invalid id or password");
 
                 case CANNOT_CONNECT:
@@ -199,7 +196,7 @@ public class AuthenticationManager {
                 case INVALID_JSON:
                     throw new AuthenticationException("Error in sending information to server");
 
-                case INVALID_ID_PASS:
+                case INVALID_INPUT:
                     throw new AuthenticationException("Invalid id or password");
 
                 case CANNOT_CONNECT:

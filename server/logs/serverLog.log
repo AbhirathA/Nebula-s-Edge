@@ -236,3 +236,8 @@ POST https://identitytoolkit.googleapis.com/v1/projects/nebula-s-edge-6e33d/acco
 2024-11-27 11:45:24 [HTTP-Dispatcher] INFO  org.spaceinvaders.util.LoggerUtil - User Created
 2024-11-27 11:48:11 [HTTP-Dispatcher] INFO  org.spaceinvaders.util.LoggerUtil - {"level":1,"email":"test123@gmail.com","points":500}
 2024-11-27 11:50:48 [HTTP-Dispatcher] INFO  org.spaceinvaders.util.LoggerUtil - {"level":1,"email":"test123@gmail.com","points":500}
+2024-11-27 11:53:24 [main] INFO  org.spaceinvaders.util.LoggerUtil - Server started at http://localhost:8080
+2024-11-27 11:53:24 [Thread-1] INFO  org.spaceinvaders.util.LoggerUtil - Server running on port 9876
+2024-11-27 11:55:50 [HTTP-Dispatcher] INFO  org.spaceinvaders.util.LoggerUtil - Created user: uYQbGACz8MW3UTR27TygsjC1MaJ3
+2024-11-27 11:55:50 [HTTP-Dispatcher] INFO  org.spaceinvaders.util.LoggerUtil - User Created
+2024-11-27 11:56:03 [HTTP-Dispatcher] INFO  org.spaceinvaders.util.LoggerUtil - {"level":1,"killCount":0,"email":"test123@gmail.com"}

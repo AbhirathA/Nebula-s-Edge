@@ -14,13 +14,15 @@
 
 package com.spaceinvaders.backend.firebase.utils;
 
-public enum HTTPCode {
+public enum HTTPCode
+{
     SUCCESS(200),
     INVALID_JSON(400),
-    INVALID_ID_PASS(401),
+    INVALID_INPUT(401),
     EMAIL_EXISTS(402),
     WEAK_PASSWORD(403),
     EMAIL_NOT_FOUND(404),
+    UNAUTHORIZED(405),
     TOO_MANY_ATTEMPTS(429),
     CANNOT_CONNECT(500),
     DATABASE_ERROR(501),
@@ -29,28 +31,33 @@ public enum HTTPCode {
 
     private final int code;
 
-    private HTTPCode(int code) {
+    private HTTPCode(int code)
+    {
         this.code = code;
     }
 
     /**
      * Returns the code of this HTTPCode
-     * 
+     *
      * @return the code of this HTTPCode
      */
-    public int getCode() {
+    public int getCode()
+    {
         return this.code;
     }
 
     /**
      * Returns an HTTPCode from the given code
-     * 
+     *
      * @param code the given code
      * @return HTTPCode corresponding to the given code
      */
-    public static HTTPCode fromCode(int code) {
-        for (HTTPCode httpCode : HTTPCode.values()) {
-            if (httpCode.getCode() == code) {
+    public static HTTPCode fromCode(int code)
+    {
+        for (HTTPCode httpCode : HTTPCode.values())
+        {
+            if (httpCode.getCode() == code)
+            {
                 return httpCode;
             }
         }
