@@ -1,6 +1,7 @@
 #pragma once
 #include "AngleObj.h"
 #include "Lifetime.h"
+
 class CtrledObj : public AngleObj {
 	protected:
 		int peakV = 0;
@@ -33,28 +34,28 @@ class CtrledObj : public AngleObj {
 			this->v = (t>0)?t:0;		
 		}
 
+		void reverseThrust();
+		void blockThrust();
+		void freeThrust();
+		void removeMove();
+
 	public:
-		CtrledObj(int id, int x, int y, int peakV, int driftV, int angle, int thrust, int thrustPersistance, int movePersistance, int coolDown, int accX, int accY, int innerRad, int outerRad, int mass):AngleObj(id, x, y, driftV, angle, 0, accX, accY, innerRad, outerRad, mass) {
+		CtrledObj(int id, int x, int y, int peakV, int driftV, int angle, int thrust, int thrustPersistance, int movePersistance, int coolDown, int accX, int accY, int innerRad, int outerRad, int mass) :AngleObj(id, x, y, driftV, angle, 0, accX, accY, innerRad, outerRad, mass) {
 			thrustCtrl = new Lifetime(thrustPersistance, [this]()-> void {this->reverseThrust();
-		});
+				});
 			thrustReverse = new Lifetime(thrustPersistance, [this]()-> void {this->blockThrust();
-		});
+				});
 			moveCtrl = new Lifetime(movePersistance, [this]()-> void {this->removeMove();
-		});
+				});
 			thrustBlock = new Lifetime(coolDown, [this]()-> void {this->freeThrust();
-		});
+				});
 
 			this->peakV = peakV;
 			this->thrust = thrust;
 		}
 
-		void startThrust(){
-			if(isThrustable){
-				this->acc = thrust;
-				thrustCtrl->start();
-				this->isThrustable = false;
-			}
-		}
+		void startThrust();
+
 
 		void moveForward(){
 			if(this->isMovable){
@@ -87,6 +88,15 @@ class CtrledObj : public AngleObj {
 
 
 		virtual ~CtrledObj() { 
+
+		void moveForward();
+		void stopForward();
+
+		void turnRight(int d);
+		void turnLeft(int d);
+
+		virtual ~CtrledObj() {
+
 			delete this->thrustCtrl;
 			delete this->thrustReverse;
 			delete this->thrustBlock;

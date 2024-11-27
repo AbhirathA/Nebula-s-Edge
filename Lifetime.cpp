@@ -32,5 +32,10 @@ void Lifetime::end() {
     isUpdateable = false;
 }
 
+void Lifetime::resetAge(){
+    this->age = 0;
+    this->isUpdateable = false;
+}
+
 
 
