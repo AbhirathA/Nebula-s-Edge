@@ -16,6 +16,9 @@ class CtrledObj : public AngleObj {
 			thrustReverse = new Lifetime(thrustPersistance, blockThrust());
 			moveCtrl = new Lifetime(movePersistance, removeMove());
 			thrustBlocker = new Lifetime(coolDown, freeThrust());
+
+			this->peakV = peakV;
+			this->thrust = thrust;
 		}
 
 
