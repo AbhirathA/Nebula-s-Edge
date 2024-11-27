@@ -83,6 +83,7 @@ public class ClientFirebase {
             return new HttpResponse(HTTPCode.SUCCESS.getCode(), parseIdToken(output.getMessage()));
         } catch (Exception e) {
             // Handles exceptions and rethrows as an AuthenticationException
+            System.out.println("check");
             throw new AuthenticationException("Failed to authenticate the user.");
         }
     }

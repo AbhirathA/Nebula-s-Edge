@@ -35,6 +35,7 @@ package com.spaceinvaders.backend.firebase;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import com.spaceinvaders.backend.UDPClient;
 import com.spaceinvaders.backend.firebase.utils.AuthenticationException;
 import com.spaceinvaders.backend.firebase.utils.HTTPCode;
 import com.spaceinvaders.backend.firebase.utils.HTTPRequest;
@@ -46,7 +47,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class AuthenticationManager {
-    public static final String SERVER_URL = "http://localhost:8080/";
+    public static final String SERVER_URL = "http://" + UDPClient.SERVER_ADDRESS + ":8080/";
 
     /**
      * Authenticates a user with Firebase using their email and password.

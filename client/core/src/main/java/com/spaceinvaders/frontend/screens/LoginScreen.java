@@ -177,7 +177,7 @@ public class LoginScreen implements Screen {
 
                 } catch (AuthenticationException e) {
                     // @TODO: Convert to logging
-                    System.out.println(e.getMessage());
+                    e.printStackTrace();
                     LoginScreen.this.errorMessage.setText(e.getMessage());
 
                     if (!LoginScreen.this.stage.getActors().contains(LoginScreen.this.successMessage, true)) {
@@ -190,8 +190,8 @@ public class LoginScreen implements Screen {
 
                 } catch (Exception e) {
                     // @TODO: Convert to logging
-                    System.err.println(e.getMessage());
-                    System.exit(1);
+                    e.printStackTrace();
+                    return  false;
                 }
                 return true;
             }
