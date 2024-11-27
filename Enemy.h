@@ -8,7 +8,11 @@
 
 
 class Enemy : public Tracker{
-
+public:
+    Enemy(int id, int x, int y, int v, int res, int innerRad, int outerRad, int mass, bool startX, int startSign,
+        Obj *aim)
+        : Tracker(id, x, y, v, res, innerRad, outerRad, mass, startX, startSign, aim) {
+    }
 };
 
 

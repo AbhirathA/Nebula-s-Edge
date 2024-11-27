@@ -233,6 +233,9 @@ std::vector<int> AABBtree::removeDead() {
 }
 
  void AABBtree::collectInvalidNodes(AABBnode* node, std::vector<AABBnode*>&invalidNodes) {
+    if(node==nullptr) {
+        return;
+    }
     if(node->isLeaf) {
         if(!node->box.Contains(*(node->objBox))) {
             invalidNodes.push_back(node);
@@ -246,6 +249,9 @@ std::vector<int> AABBtree::removeDead() {
 
 
 void AABBtree::collectDeadNodes(AABBnode* node, std::vector<AABBnode*>&deadNodes) {
+    if(node == nullptr) {
+        return;
+    }
     if(node->isLeaf) {
         if(*(node->dead)) {
             deadNodes.push_back(node);
@@ -345,17 +351,17 @@ void AABBtree::countLeaves(int &c) {
     }
 }
 
-void AABBtree::boxCollidersHelper(AABB *Box, AABBnode* st2, std::vector<int> &v) {
-        if(st2==nullptr) return;
-        if(st2->isLeaf) {
-            if(Box->collides(*(st2->objBox))) {
-                v.emplace_back(st2->id);
+void AABBtree::boxCollidersHelper(AABB *Box, AABBnode* st, std::vector<int> &v) {
+        if(st==nullptr) return;
+        if(st->isLeaf) {
+            if(Box->collides(*(st->objBox))) {
+                v.emplace_back(st->id);
                 return;
             }
         }
         else {
-            if(st2->child1->box.collides(*Box)) boxCollidersHelper(Box, st2->child1, v);
-            if(st2->child2->box.collides(*Box)) boxCollidersHelper(Box, st2->child2, v);
+            if(st->child1->box.collides(*Box)) boxCollidersHelper(Box, st->child1, v);
+            if(st->child2->box.collides(*Box)) boxCollidersHelper(Box, st->child2, v);
         }
 }
 

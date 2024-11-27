@@ -85,6 +85,6 @@ void Manager::removeDead(std::vector<int> ids) {
 	}
 }
 
-// int main() {
-// 	std::cout<<"Gathik is a good boy"<<std::endl;
-// }
+int main() {
+	std::cout<<"Gathik is a good boy"<<std::endl;
+}
