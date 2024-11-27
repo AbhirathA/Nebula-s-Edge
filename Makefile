@@ -7,7 +7,7 @@ CXXFLAGS = -std=c++17 -fPIC \
            -Iinclude \
            -Isrc/main/native
 LDFLAGS = -shared
-LIB_DIR = lib
+LIB_DIR = ./server/src/main/java/org/spaceinvaders/gameEngine/libs
 BUILD_DIR = build
 NATIVE_BUILD_DIR = $(BUILD_DIR)/native
 CLASS_BUILD_DIR = $(BUILD_DIR)/classes
