@@ -1,8 +1,9 @@
-JAVA_HOME ?= $(shell /usr/libexec/java_home)
+# JAVA_HOME ?= $(shell /usr/libexec/java_home)
 CXX = g++
 CXXFLAGS = -std=c++17 -fPIC \
            -I$(JAVA_HOME)/include \
            -I$(JAVA_HOME)/include/darwin \
+           -I$(JAVA_HOME)/include/linux \
            -Iinclude \
            -Isrc/main/native
 LDFLAGS = -shared
