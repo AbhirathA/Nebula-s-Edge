@@ -10186,3 +10186,18 @@
 2024-11-27 23:34:19 [main] INFO  org.spaceinvaders.util.LoggerUtil - Server Info Updated Successfully
 2024-11-27 23:34:19 [main] INFO  org.spaceinvaders.util.LoggerUtil - Server started at http://localhost:8080
 2024-11-27 23:34:19 [Thread-1] INFO  org.spaceinvaders.util.LoggerUtil - Server running on port 9090
+2024-11-27 23:37:53 [main] INFO  org.spaceinvaders.util.LoggerUtil - Server Info Updated Successfully
+2024-11-27 23:37:53 [main] INFO  org.spaceinvaders.util.LoggerUtil - Server started at http://localhost:8080
+2024-11-27 23:37:53 [Thread-1] INFO  org.spaceinvaders.util.LoggerUtil - Server running on port 9090
+2024-11-27 23:38:29 [main] INFO  org.spaceinvaders.util.LoggerUtil - Server Info Updated Successfully
+2024-11-27 23:38:29 [main] INFO  org.spaceinvaders.util.LoggerUtil - Server started at http://localhost:8080
+2024-11-27 23:38:29 [Thread-1] INFO  org.spaceinvaders.util.LoggerUtil - Server running on port 9090
+2024-11-27 23:38:59 [main] INFO  org.spaceinvaders.util.LoggerUtil - Server Info Updated Successfully
+2024-11-27 23:38:59 [main] INFO  org.spaceinvaders.util.LoggerUtil - Server started at http://localhost:8080
+2024-11-27 23:38:59 [Thread-1] INFO  org.spaceinvaders.util.LoggerUtil - Server running on port 9090
+2024-11-27 23:39:42 [main] INFO  org.spaceinvaders.util.LoggerUtil - Server Info Updated Successfully
+2024-11-27 23:39:42 [main] INFO  org.spaceinvaders.util.LoggerUtil - Server started at http://localhost:8080
+2024-11-27 23:39:42 [Thread-1] INFO  org.spaceinvaders.util.LoggerUtil - Server running on port 9090
+2024-11-27 23:40:15 [main] INFO  org.spaceinvaders.util.LoggerUtil - Server Info Updated Successfully
+2024-11-27 23:40:15 [main] INFO  org.spaceinvaders.util.LoggerUtil - Server started at http://localhost:8080
+2024-11-27 23:40:15 [Thread-1] INFO  org.spaceinvaders.util.LoggerUtil - Server running on port 9090

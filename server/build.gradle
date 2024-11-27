@@ -13,6 +13,13 @@ repositories {
     mavenCentral()
 }
 
+tasks.run {
+    doFirst {
+        jvmArgs = ["-Djava.library.path=src/main/java/org/spaceinvaders/gameEngine/libs"]
+    }
+}
+
+
 dependencies {
     implementation files('src/main/java/org/spaceinvaders/gameEngine/libs/PhysicsEngine.jar')
     testImplementation platform('org.junit:junit-bom:5.10.0')
