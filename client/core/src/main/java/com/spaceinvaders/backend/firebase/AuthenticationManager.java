@@ -47,7 +47,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class AuthenticationManager {
+<<<<<<< HEAD
     public static final String SERVER_URL = "http://" + UDPClient.SERVER_ADDRESS + ":8080/";
+=======
+    public static final String SERVER_URL = "http://192.168.99.196:8080/";
+>>>>>>> 54adbf0c6c0e508ef5d6e528bc5db9768b984bf5
 
     /**
      * Authenticates a user with Firebase using their email and password.
