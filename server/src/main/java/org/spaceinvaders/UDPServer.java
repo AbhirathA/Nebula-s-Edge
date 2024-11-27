@@ -2,6 +2,7 @@ package org.spaceinvaders;
 
 import java.net.*;
 import com.google.gson.Gson;
+import org.apache.commons.logging.Log;
 import org.spaceinvaders.gameEngine.GameEngine;
 import org.spaceinvaders.util.Coordinate;
 import org.spaceinvaders.util.LoggerUtil;
@@ -103,7 +104,7 @@ public class UDPServer
                 try {
                     Thread.sleep(1000 / 90);
                 } catch (Exception e) {
-                    e.printStackTrace();
+                    LoggerUtil.logError(e.getMessage());
                 }
             }
         }
@@ -114,7 +115,7 @@ public class UDPServer
         public void run() {
             try (DatagramSocket serverSocket = new DatagramSocket(SERVER_PORT))
             {
-                System.out.println("Server running on port " + SERVER_PORT);
+                LoggerUtil.logInfo("Server running on port " + SERVER_PORT);
 
                 byte[] receiveBuffer = new byte[BUFFER_SIZE];
 
@@ -165,7 +166,7 @@ public class UDPServer
                             byte[] sendData = UDPServer.this.gson.toJson(sendDataTemp.get(client)).getBytes();
                             DatagramPacket sendPacket = new DatagramPacket(sendData, sendData.length, client.getAddress(), client.getPort());
                             serverSocket.send(sendPacket);
-                            System.out.println(UDPServer.this.gson.toJson(sendDataTemp.get(client)));
+                            LoggerUtil.logInfo(UDPServer.this.gson.toJson(sendDataTemp.get(client)));
                         }
                     }
 
@@ -173,7 +174,7 @@ public class UDPServer
             }
             catch (Exception e)
             {
-                e.printStackTrace();
+                LoggerUtil.logError(e.getMessage());
             }
         }
     }

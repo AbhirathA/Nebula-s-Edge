@@ -14,12 +14,14 @@
 
 package org.spaceinvaders.util;
 
-public enum HTTPCode {
+public enum HTTPCode
+{
     SUCCESS(200),
     INVALID_JSON(400),
-    INVALID_ID_PASS(401),
+    INVALID_INPUT(401),
     EMAIL_EXISTS(402),
     WEAK_PASSWORD(403),
+    UNAUTHORIZED(405),
     CANNOT_CONNECT(500),
     DATABASE_ERROR(501),
     SERVER_ERROR(502),
@@ -30,16 +32,18 @@ public enum HTTPCode {
     /**
      * @param code the http code
      */
-    private HTTPCode(int code) {
+    private HTTPCode(int code)
+    {
         this.code = code;
     }
 
     /**
      * Returns the http code of this enum
-     * 
+     *
      * @return the http code
      */
-    public int getCode() {
+    public int getCode()
+    {
         return this.code;
     }
 }
