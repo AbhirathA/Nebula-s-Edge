@@ -60,6 +60,7 @@ public class Powerups {
             // Set the position and rotation of the powerup sprite based on the coordinate data
             sprite.setPosition(coordinate.x, coordinate.y);
             sprite.setRotation(coordinate.angle);
+
             // Draw the powerup sprite to the batch, rendering it to the screen
             sprite.draw(batch);
         }
