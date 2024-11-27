@@ -133,7 +133,9 @@ public:
 	{
 		state = (state+1)%stateCount;
 	}
-
+	virtual int getOri() {
+		return 0;
+	}
 	virtual bool checkCollision(Obj* obj) = 0;
 	virtual bool checkCollision(LinearObj* lo) = 0;
 	virtual bool checkCollision(AngleObj* ao) = 0;
