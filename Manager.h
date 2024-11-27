@@ -4,6 +4,7 @@
 #include "velVerlet.h"
 #include <vector>
 #include<map>
+#include "Lifetime.h"
 #include <iostream>
 // #include "Flare.h"
 // #include "ObjectLauncher.h"
@@ -43,19 +44,25 @@ public:
 		tree = AABBtree();
 	}
 
-		std::map<int, std::pair<int, int>>  display();
-		int drop1(int x, int y, int v, int angle, int acc, int accX, int accY, int innerRad, int outerRad, int mass); // add an object
-		int drop2(int x, int y, int vX, int vY, int accX, int accY, int innerRad, int outerRad, int mass); // add an object
-		void update();
-		int xForce();
-		int yForce();
-		std::vector<std::vector<int>> display(int lowerX, int lowerY, int upperX, int upperY);
-		~Manager() {
-			for (auto i : objList) {
-				delete i;
-			}
+	std::map<int, std::pair<int, int>>  display();
+	int drop1(int x, int y, int vX, int vY, int accX, int accY, int res, int innerRad, int outerRad, int mass); // add an object
+	int drop2(int x, int y, int vX, int vY, int accX, int accY, int innerRad, int outerRad, int mass); // add an object
+	void update();
+	int xForce();
+	int yForce();
+	std::vector<std::vector<int>> display(int lowerX, int lowerY, int upperX, int upperY);
+	~Manager() {
+		for (auto i : objList) {
+			delete i;
 		}
+	}
 	void removeDead(std::vector<int> ids);
+
+	int dropAsteroid(int x, int y, int vX, int vY, int accX, int accY, int innerRad, int outerRad, int mass);
+	int dropBlackHole(int x, int y, int vX, int vY, int accX, int accY, int innerRad, int outerRad, int mass);
+	int dropEnemy(int x, int y, int vX, int vY, int accX, int accY, int innerRad, int outerRad, int mass);
+	int dropMeteor(int x, int y, int vX, int vY, int accX, int accY, int innerRad, int outerRad, int mass);
+	int dropUser(int x, int y, int vX, int vY, int accX, int accY, int innerRad, int outerRad, int mass);
 
 	// to be done
 

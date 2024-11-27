@@ -16,7 +16,6 @@ std::vector<std::vector<int>> Manager::display(int lowerX, int lowerY, int upper
 	std::vector<std::vector<int>> m;
 	AABB box = AABB({lowerX, lowerY, 0}, {upperX, upperY, 0});
 	std::vector<int> v = tree.boxColliders(&box);
-
 	for(auto id: v) {
 		int x = objMap[id]->getX();
 		int y = objMap[id]->getY();
@@ -51,13 +50,15 @@ int Manager::drop2(int x, int y, int vX, int vY, int accX, int accY, int innerRa
 
 
 void Manager::update() {
-	tree.removeDead();
+	std::vector<int> deadObjs = tree.removeDead();
+	this->removeDead(deadObjs);
 	bool flag = true;
 	for (auto i : objList) {
 		i->updatePos(t);
 		i->boundCorrection(lft, rt, tp, bt, t);
 	}
 	tree.Update();
+	Lifetime::updateInstances();
 	int count = 0;
 	while(flag && count++ < precision){
 		flag = false;
