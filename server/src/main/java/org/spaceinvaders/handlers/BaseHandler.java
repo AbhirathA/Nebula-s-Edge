@@ -1,17 +1,3 @@
-/**
- * BaseHandler.java
- * Abstract base class for handling HTTP requests. Provides common functionality for handling
- * POST requests, parsing JSON input, and handling exceptions.
- * @author Aryan
- * @author Gathik
- * @author Abhirath
- * @author Ibrahim
- * @author Jayant
- * @author Dedeepya
- * @version 1.0
- * @since 11/27/2024
- */
-
 package org.spaceinvaders.handlers;
 
 import com.google.firebase.auth.FirebaseAuthException;
@@ -28,6 +14,20 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.nio.charset.StandardCharsets;
 
+/**
+ * BaseHandler.java
+ * <br>
+ * Abstract base class for handling HTTP requests. Provides common functionality for handling
+ * POST requests, parsing JSON input, and handling exceptions.
+ * @author Aryan
+ * @author Gathik
+ * @author Abhirath
+ * @author Ibrahim
+ * @author Jayant
+ * @author Dedeepya
+ * @version 1.0
+ * @since 11/27/2024
+ */
 public abstract class BaseHandler implements HttpHandler {
     /**
      * Handles incoming HTTP requests. Only accepts POST requests and parses the request body as JSON.

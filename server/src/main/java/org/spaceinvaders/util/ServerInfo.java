@@ -1,5 +1,11 @@
+package org.spaceinvaders.util;
+
+import java.net.InetAddress;
+import java.net.UnknownHostException;
+
 /**
  * ServerInfo.java
+ * <br>
  * The ServerInfo class initializes the server's IP and ports for http and udp services.
  * @author Aryan
  * @author Gathik
@@ -10,12 +16,6 @@
  * @version 1.0
  * @since 11/13/2024
  */
-
-package org.spaceinvaders.util;
-
-import java.net.InetAddress;
-import java.net.UnknownHostException;
-
 public class ServerInfo
 {
     /**

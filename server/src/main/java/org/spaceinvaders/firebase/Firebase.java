@@ -1,19 +1,3 @@
-/**
- * Firebase.java
- * This class facilitates communication between the server and a Firebase
- * database. It provides methods to manage user state, retrieve and update
- * stored data, and handle user authentication. The class supports CRUD
- * operations and handles common exceptions related to database access.
- * @author Aryan
- * @author Gathik
- * @author Abhirath
- * @author Ibrahim
- * @author Jayant
- * @author Dedeepya
- * @version 1.2
- * @since 11/13/2024
- */
-
 package org.spaceinvaders.firebase;
 
 import com.google.auth.oauth2.GoogleCredentials;
@@ -38,6 +22,22 @@ import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Firebase.java
+ * <br>
+ * This class facilitates communication between the server and a Firebase
+ * database. It provides methods to manage user state, retrieve and update
+ * stored data, and handle user authentication. The class supports CRUD
+ * operations and handles common exceptions related to database access.
+ * @author Aryan
+ * @author Gathik
+ * @author Abhirath
+ * @author Ibrahim
+ * @author Jayant
+ * @author Dedeepya
+ * @version 1.2
+ * @since 11/13/2024
+ */
 public final class Firebase {
     /**
      * The filename of the service account key JSON file used for authentication

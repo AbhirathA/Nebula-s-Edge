@@ -1,5 +1,8 @@
+package org.spaceinvaders.util;
+
 /**
  * HttpCode.java
+ * <br>
  * The HttpCode is a list of common HTTP Codes used by the server.
  *
  * @author Gathik
@@ -11,9 +14,6 @@
  * @version 1.0
  * @since 11/21/2024
  */
-
-package org.spaceinvaders.util;
-
 public enum HTTPCode
 {
     /** Request succeeded without issues (200). */

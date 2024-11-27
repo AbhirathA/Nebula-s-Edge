@@ -1,5 +1,11 @@
+package org.spaceinvaders.util;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  * LoggerUtil.java
+ * <br>
  * The LoggerUtil class represents a basic utility class that handles all the server
  * logging that is required.
  * @author Aryan
@@ -11,12 +17,6 @@
  * @version 1.0
  * @since 11/15/2024
  */
-
-package org.spaceinvaders.util;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 public class LoggerUtil
 {
     private static final Logger logger = LoggerFactory.getLogger(LoggerUtil.class);
