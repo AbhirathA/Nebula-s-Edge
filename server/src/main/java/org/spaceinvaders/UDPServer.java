@@ -101,7 +101,7 @@ public class UDPServer
 
                 // sleeping
                 try {
-                    Thread.sleep(1000 / 144);
+                    Thread.sleep(1000 / 90);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }

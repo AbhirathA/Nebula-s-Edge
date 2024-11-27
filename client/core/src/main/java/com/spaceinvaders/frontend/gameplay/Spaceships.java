@@ -52,7 +52,7 @@ public class Spaceships {
         for(Coordinate coordinate : coordinateList) {
             // Skip rendering if the spaceship's ID matches the provided ID (typically the player's spaceship)
             if(coordinate.id == id) {
-                break;  // Exit the loop if the spaceship's ID matches the excluded ID
+                continue;  // Exit the loop if the spaceship's ID matches the excluded ID
             }
 
             // Check if the spaceship's ID is already in the map, if not, associate it with a sprite index
@@ -63,9 +63,6 @@ public class Spaceships {
 
             // Get the sprite corresponding to the spaceship's ID
             Sprite sprite = spaceships[entitySpriteMap.get(coordinate.id)];
-
-            // Print the spaceship's ID (for debugging purposes)
-            System.out.println(coordinate.id);
 
             // Set the position of the spaceship sprite based on the coordinate's x and y values
             sprite.setPosition(coordinate.x, coordinate.y);

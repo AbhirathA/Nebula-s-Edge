@@ -222,3 +222,7 @@ POST https://identitytoolkit.googleapis.com/v1/projects/nebula-s-edge-6e33d/acco
 2024-11-27 06:20:58 [main] INFO  org.spaceinvaders.util.LoggerUtil - Server started at http://localhost:8080
 2024-11-27 06:23:03 [main] INFO  org.spaceinvaders.util.LoggerUtil - Server started at http://localhost:8080
 2024-11-27 06:28:02 [main] INFO  org.spaceinvaders.util.LoggerUtil - Server started at http://localhost:8080
+2024-11-27 06:29:46 [main] INFO  org.spaceinvaders.util.LoggerUtil - Server started at http://localhost:8080
+2024-11-27 06:39:02 [main] INFO  org.spaceinvaders.util.LoggerUtil - Server started at http://localhost:8080
+2024-11-27 06:42:51 [main] INFO  org.spaceinvaders.util.LoggerUtil - Server started at http://localhost:8080
+2024-11-27 06:46:36 [main] INFO  org.spaceinvaders.util.LoggerUtil - Server started at http://localhost:8080
