@@ -24,6 +24,8 @@ public class SpaceInvadersGame extends Game {
 
     public String token;
 
+    public String email;
+
     private class CommandClass implements Command {
 
         @Override
@@ -48,6 +50,7 @@ public class SpaceInvadersGame extends Game {
     @Override
     public void create() {
         token = "";
+        email = "";
         batch = new SpriteBatch();
         shapeRenderer = new ShapeRenderer();
         font = new BitmapFont();

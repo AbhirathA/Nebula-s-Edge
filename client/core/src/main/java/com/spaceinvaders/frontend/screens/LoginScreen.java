@@ -166,6 +166,7 @@ public class LoginScreen implements Screen {
                 String password = passwordField.getText();
                 try {
                     LoginScreen.this.game.token = AuthenticationManager.signIn(id, password);
+                    LoginScreen.this.game.email = id;
 
                     if (LoginScreen.this.stage.getActors().contains(LoginScreen.this.errorMessage, true)) {
                         LoginScreen.this.stage.getActors().removeValue(LoginScreen.this.errorMessage, true);
