@@ -13,13 +13,8 @@ repositories {
     mavenCentral()
 }
 
-tasks.named('run') {
-    doFirst {
-        jvmArgs = ["-Djava.library.path=~/Projects/Nebula-s-Edge/server/src/main/java/org/spaceinvaders/gameEngine/lib"]
-    }
-}
-
 dependencies {
+    implementation files('src/main/java/org/spaceinvaders/gameEngine/libs/PhysicsEngine.jar')
     testImplementation platform('org.junit:junit-bom:5.10.0')
     testImplementation 'org.junit.jupiter:junit-jupiter'
     implementation 'com.google.code.gson:gson:2.11.0'

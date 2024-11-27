@@ -1,5 +1,6 @@
 package org.spaceinvaders.gameEngine;
 
+import com.physics.Manager;
 import org.spaceinvaders.util.Coordinate;
 
 import java.util.ArrayList;
@@ -30,7 +31,7 @@ public class GameEngine {
         this.bulletIds = new ArrayList<>();
         this.blackholeIds = new ArrayList<>();
 
-        this.gameEngineManager = new Manager(0, 0, 0, 7200, 4050, 0, 1);
+//        this.gameEngineManager = new Manager(0, 0, 0, 7200, 4050, 0, 1);
     }
 
     // Only adds a spaceShip for now
