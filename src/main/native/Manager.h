@@ -24,6 +24,8 @@ class Manager
 	std::vector<Obj *> objList = {}; // list of created objects (make to map)
 	std::map<int, Obj *> objMap = {};
 	AABBtree tree;
+	// ObjectLauncher launcher;
+	// std::map<PowerUp*, Obj*> activePowerUps;
 
 public:
 	Manager(int accX = 0, int accY = 2, int lft = 0, int rt = 1000, int tp = 0, int bt = -1000, int t = 1)
@@ -38,9 +40,12 @@ public:
 		tree = AABBtree();
 	}
 
-	int drop1(int x, int y, int vX, int vY, int accX, int accY, int res, int innerRad, int outerRad, int mass); // add an object
-	int drop2(int x, int y, int vX, int vY, int accX, int accY, int innerRad, int outerRad, int mass);			// add an object
+	std::map<int, std::pair<int, int>> display();
+	int drop1(int x, int y, int v, int angle, int acc, int accX, int accY, int innerRad, int outerRad, int mass); // add an object
+	int drop2(int x, int y, int vX, int vY, int accX, int accY, int innerRad, int outerRad, int mass);			  // add an object
 	void update();
+	int xForce();
+	int yForce();
 	std::vector<std::vector<int>> display(int lowerX, int lowerY, int upperX, int upperY);
 	~Manager()
 	{

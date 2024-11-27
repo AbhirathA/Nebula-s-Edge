@@ -18,7 +18,10 @@ public class Manager {
 
     public native void update();
 
-    public native int drop1(int x, int y, int vX, int vY, int accX, int accY, int res, int innerRad, int outerRad,
+    // public native int drop1(int x, int y, int vX, int vY, int accX, int accY, int
+    // res, int innerRad, int outerRad,
+    // int mass);
+    public native int drop1(int x, int y, int v, int angle, int acc, int accX, int accY, int innerRad, int outerRad,
             int mass);
 
     public native int drop2(int x, int y, int vX, int vY, int accX, int accY, int innerRad, int outerRad, int mass);

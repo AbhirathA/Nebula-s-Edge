@@ -31,12 +31,12 @@ extern "C"
         }
     }
 
-    JNIEXPORT jint JNICALL Java_com_physics_Manager_drop1(JNIEnv *env, jobject obj, jint x, jint y, jint vX, jint vY, jint accX, jint accY, jint res, jint innerRad, jint outerRad, jint mass)
+    JNIEXPORT jint JNICALL Java_com_physics_Manager_drop1(JNIEnv *env, jobject obj, jint x, jint y, jint v, jint angle, jint acc, jint accX, jint accY, jint innerRad, jint outerRad, jint mass)
     {
         Manager *nativeManager = reinterpret_cast<Manager *>(getNativeHandle(env, obj));
         if (nativeManager != nullptr)
         {
-            int result = nativeManager->drop1(x, y, vX, vY, accX, accY, res, innerRad, outerRad, mass);
+            int result = nativeManager->drop1(x, y, v, angle, acc, accX, accY, innerRad, outerRad, mass);
             return static_cast<jint>(result);
         }
         return -1;

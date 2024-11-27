@@ -3,10 +3,10 @@
 std::vector<std::vector<int>> Manager::display(int lowerX, int lowerY, int upperX, int upperY)
 {
 	std::vector<std::vector<int>> m;
-	AABB box = AABB({lowerX, lowerY}, {upperX, upperY});
-	std::vector<int> ids = tree.boxColliders(&box); // check for collisions
+	AABB box = AABB({lowerX, lowerY, 0}, {upperX, upperY, 0});
+	std::vector<int> v = tree.boxColliders(&box);
 
-	for (auto id : ids)
+	for (auto id : v)
 	{
 		int x = objMap[id]->getX();
 		int y = objMap[id]->getY();
@@ -16,14 +16,12 @@ std::vector<std::vector<int>> Manager::display(int lowerX, int lowerY, int upper
 	return m;
 }
 
-int Manager::drop1(int x, int y, int vX, int vY, int accX, int accY, int res, int innerRad, int outerRad, int mass)
+int Manager::drop1(int x, int y, int v, int angle, int acc, int accX, int accY, int innerRad, int outerRad, int mass)
 {
-
-	Obj *temp = new stdVerlet(count, x, y, vX, vY, accX, accY, res, innerRad, outerRad, mass);
+	Obj *temp = new AngleObj(count, x, y, v, angle, acc, accX, accY, innerRad, outerRad, mass);
 	objList.push_back(temp);
 	objMap[count] = temp;
 	tree.insert(temp->getObjBox(), count, temp->getStatus());
-
 	temp->updateAcc(gX, gY);
 	count++;
 	return count - 1;
@@ -49,7 +47,7 @@ void Manager::update()
 		i->updatePos(t);
 		i->boundCorrection(lft, rt, tp, bt, t);
 	}
-
+	tree.Update();
 	int count = 0;
 	while (flag && count++ < precision)
 	{
