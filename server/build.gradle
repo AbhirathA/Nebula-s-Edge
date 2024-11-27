@@ -13,6 +13,12 @@ repositories {
     mavenCentral()
 }
 
+tasks.named('run') {
+    doFirst {
+        jvmArgs = ["-Djava.library.path=~/Projects/Nebula-s-Edge/server/src/main/java/org/spaceinvaders/gameEngine/lib"]
+    }
+}
+
 dependencies {
     testImplementation platform('org.junit:junit-bom:5.10.0')
     testImplementation 'org.junit.jupiter:junit-jupiter'

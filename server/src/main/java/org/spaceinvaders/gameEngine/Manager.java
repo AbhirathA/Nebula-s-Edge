@@ -1,9 +1,11 @@
-package com.physics;
+package org.spaceinvaders.gameEngine;
 
 public class Manager {
 
     static {
-        System.loadLibrary("PhysicsEngine");
+//        System.loadLibrary("PhysicsEngine");
+        System.load("/home/krishna/Projects/Nebula-s-Edge/server/src/main/java/org/spaceinvaders/gameEngine/lib/libPhysicsEngine.so");
+
     }
 
     private long nativeHandle;

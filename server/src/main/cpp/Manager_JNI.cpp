@@ -1,5 +1,5 @@
 #include "jni_helper.h"
-#include "com_physics_Manager.h"
+#include "org_spaceinvaders_gameEngine_Manager.h"
 #include "Manager.h"
 #include <jni.h>
 #include <vector>

@@ -18,6 +18,8 @@ public class GameEngine {
     private ArrayList<Integer> bulletIds;
     private ArrayList<Integer> blackholeIds;
 
+    private Manager gameEngineManager;
+
     public GameEngine() {
         // TODO: instantiate variables to save for someting ig
         this.idToState = new HashMap<>();
@@ -27,6 +29,8 @@ public class GameEngine {
         this.asteroidIds = new ArrayList<>();
         this.bulletIds = new ArrayList<>();
         this.blackholeIds = new ArrayList<>();
+
+        this.gameEngineManager = new Manager(0, 0, 0, 7200, 4050, 0, 1);
     }
 
     // Only adds a spaceShip for now
