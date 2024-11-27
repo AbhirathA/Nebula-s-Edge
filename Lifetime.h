@@ -29,9 +29,7 @@ class Lifetime {
       void incrementAge();
       void start();
       void end();
-      void resetAge(){
-          this->age = 0;
-      }
+      void resetAge();
       virtual ~Lifetime();
 };
 
