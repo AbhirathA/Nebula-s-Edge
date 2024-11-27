@@ -13,21 +13,17 @@ int velVerlet::getNextY(int t){
 
 // We are using Velocity Verlet Algorithm for this
 void velVerlet::updatePos(int t){
-
     //std::cout << "in update before:" << posX << " " << posY << std::endl;
 
     // Position is updated
     this->posX = this->getNextX(t);
     this->posY = this->getNextY(t);
 
-    //update aabb box;
-    this->updateBox();
-
     // Velocity is updated
     this->vX = this->vX + this->accX * t;
     this->vY = this->vY + this->accY * t;
 
-    std::cout << "in update after:" << posX << " " << posY << std::endl;
+    //std::cout << "in update after:" << posX << " " << posY << std::endl;
 }
 
 // Check if collision has occured
@@ -52,7 +48,7 @@ bool velVerlet::checkCollision(LinearObj* obj){ ////////////////////////////////
 // Ensures that the object is in bounds
 bool velVerlet::boundCorrection(int lft, int rt, int tp, int bt, int t){
     bool flag = false;
-    std::cout << "in bound correction before:" << posX << " " << posY << " Bounds are" << lft << " " << rt << " " << tp << " " << bt << std::endl;
+    //std::cout << "in bound correction before:" << posX << " " << posY << " Bounds are" << lft << " " << rt << " " << tp << " " << bt << std::endl;
     while (posX > rt) {
         posX = posX - rt + lft + 1;
         flag = true;
@@ -69,7 +65,7 @@ bool velVerlet::boundCorrection(int lft, int rt, int tp, int bt, int t){
         posY = posY + tp - bt - 1;
         flag = true;
     }
-    std::cout << "in bound correction after:" << posX << " " << posY << std::endl;
+    //std::cout << "in bound correction after:" << posX << " " << posY << std::endl;
     return flag;
 }
 
@@ -88,7 +84,7 @@ bool velVerlet::collisionCorrection(LinearObj* obj){
     
     // If the distance is less than the sum of radii, there is a collision.
     if (overlap > temp){
-        std::cout << "In collision before: " << this->posX << " " << this->posY << " velocity:" << this->vX << " " << this->vY << std::endl;
+        //std::cout << "In collision before: " << this->posX << " " << this->posY << " velocity:" << this->vX << " " << this->vY << std::endl;
 
         // Position Correction
         int adjustmentFactor = overlap / 2;
@@ -97,13 +93,10 @@ bool velVerlet::collisionCorrection(LinearObj* obj){
             
         this->updateX(this->getX() + adjustmentX);
         this->updateY(this->getY() + adjustmentY);
-
-        this->updateBox();
         
         obj->updateX(obj->getX() - adjustmentX);
         obj->updateY(obj->getY() - adjustmentY);
 
-        obj->updateBox();
 
         // Velocity Correction
         
@@ -135,7 +128,7 @@ bool velVerlet::collisionCorrection(LinearObj* obj){
         
         this->updateV(v1x/temp2, v1y/temp2);
         obj->updateV(v2x/temp2, v2y/temp2);
-        std::cout << "In collision after: " << this->posX << " " << this->posY << " velocity:" << this->vX << " " << this->vY << std::endl;
+        //std::cout << "In collision after: " << this->posX << " " << this->posY << " velocity:" << this->vX << " " << this->vY << std::endl;
 
         return true;
     }

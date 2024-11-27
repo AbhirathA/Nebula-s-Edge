@@ -29,7 +29,7 @@ class GameRender{
 		// Private functions
 		void initVariables();
 		void initWindow();
-		void initObj(int id, double posX, double posY);
+		void initObj(int id, double posX, double posY, double angle);
 		void initEnemy(int id, double posX, double posY);
 		void deleteShape(int id);
 

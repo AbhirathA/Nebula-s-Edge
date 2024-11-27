@@ -1,6 +1,5 @@
 #pragma once
 #include <cmath>
-#include "AABBtree.h"
 
 // Different the type of physics to be used for the simulation
 enum class TypeOfPhy{
@@ -16,6 +15,7 @@ enum class TypeOfPhy{
 
 class LinearObj;
 class AngleObj;
+
 /*
 	This class contains all the basic properties every object should have.
 	It also looks at basic functionality that every object should have.
@@ -39,117 +39,68 @@ class Obj
 		int innerRad = 0;
 		int outerRad = 0;
 
-	// The bounding box of the object
-	AABB *objBox = nullptr;
+	public:
+		Obj(int id, int x, int y, int innerRad, int outerRad, int mass) {
+			this->id = id;
+			this->posX = x;
+			this->posY = y;
+			this->innerRad = innerRad;
+			this->outerRad = outerRad;
+			this->mass = mass;
+		}
 
-	// Status of the object(Alive or dead)
-	bool dead = false;
+		int getX() {
+			return posX;
+		}
 
-public:
-	Obj(int id, int x, int y, int innerRad, int outerRad, int mass)
-	{
-		this->id = id;
-		this->posX = x;
-		this->posY = y;
-		this->innerRad = innerRad;
-		this->outerRad = outerRad;
-		this->mass = mass;
-		this->objBox = new AABB({x - outerRad, y - outerRad, 0}, {x + outerRad, y + outerRad, 0});
-		this->dead = false;
-	}
+		int getY() {
+			return posY;
+		}
 
-	int getID()
-	{
-		return id;
-	}
+		virtual void updateX(int x) {
+			posX = x;
+        }
 
-	int getX()
-	{
-		return posX;
-	}
+		virtual void updateY(int y) {
+            posY = y;
+        }
 
-	int getY()
-	{
-		return posY;
-	}
+		virtual double getOri() { return 0.0; };
 
-	virtual void updateX(int x)
-	{
-		posX = x;
-	}
+		int getOuterR(){
+			return outerRad;
+		}
 
-	virtual void updateY(int y)
-	{
-		posY = y;
-	}
+		int getInnerR(){
+            return innerRad;
+        }
 
-	int getOuterR()
-	{
-		return outerRad;
-	}
+		int getState(){
+			return state;
+		}
 
-	int getInnerR()
-	{
-		return innerRad;
-	}
+		int getMass() {
+			return mass;
+		}
 
-	int getState()
-	{
-		return state;
-	}
+		void changeState() {
+			state = (state+1)%stateCount;
+		}
 
-	int getMass()
-	{
-		return mass;
-	}
+		virtual bool checkCollision(Obj* obj) = 0;
+		virtual bool checkCollision(LinearObj* lo) = 0;
+		virtual bool checkCollision(AngleObj* ao) = 0;
 
-	AABB *getObjBox()
-	{
-		return objBox;
-	}
+		virtual bool collisionCorrection(Obj* other) = 0;
+		virtual bool collisionCorrection(LinearObj* other) = 0;
+		virtual bool collisionCorrection(AngleObj* other) = 0;
 
-	bool *getStatus()
-	{
-		return &dead;
-	}
+		virtual void updatePos(int t) = 0;
+		virtual void updateAcc(int ax, int ay) = 0;
 
-	void selfDestruct()
-	{
-		dead = true;
-	}
+		virtual int getNextX(int t) = 0;
+		virtual int getNextY(int t) = 0;
+		virtual bool boundCorrection(int lft, int rt, int tp, int bt, int t) = 0;
 
-	void updateBox()
-	{
-		objBox->setLowerBound({posX - outerRad, posY - outerRad, 0});
-		objBox->setUpperBound({posX + outerRad, posY + outerRad, 0});
-	}
-
-	void updateMass(int m)
-	{
-		mass = m;
-	}
-
-	void changeState()
-	{
-		state = (state+1)%stateCount;
-	}
-	virtual int getOri() {
-		return 0;
-	}
-	virtual bool checkCollision(Obj* obj) = 0;
-	virtual bool checkCollision(LinearObj* lo) = 0;
-	virtual bool checkCollision(AngleObj* ao) = 0;
-
-	virtual bool collisionCorrection(Obj* other) = 0;
-	virtual bool collisionCorrection(LinearObj* other) = 0;
-	virtual bool collisionCorrection(AngleObj* other) = 0;
-
-	virtual void updatePos(int t) = 0;
-	virtual void updateAcc(int ax, int ay) = 0;
-
-	virtual int getNextX(int t) = 0;
-	virtual int getNextY(int t) = 0;
-	virtual bool boundCorrection(int lft, int rt, int tp, int bt, int t) = 0;
-
-	virtual ~Obj() {};
+		virtual ~Obj() {};
 };

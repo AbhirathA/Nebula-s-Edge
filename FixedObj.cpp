@@ -4,7 +4,6 @@
 int FixedObj::getNextX(int t) {
     return this->posX;
 }
-
 int FixedObj::getNextY(int t) {
     return this->posY;
 }
@@ -29,7 +28,6 @@ bool FixedObj::checkCollision(Obj* obj) {
         return true;
     }
     return false;
-
 }
 
 // Ensures that the object is in bounds

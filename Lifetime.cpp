@@ -8,18 +8,18 @@ std::vector<Lifetime*> Lifetime::instances = {};
 
 
 void Lifetime::incrementAge() {
-    if(isUpdateable==false) {
+    if (isUpdateable == false) {
         return;
     }
     age++;
-    if(age>=maxLife) {
+    if (age >= maxLife) {
         this->end();
         onExpire();
     }
 }
 
 void Lifetime::updateInstances() {
-    for(auto ltObj:Lifetime::instances) {
+    for (auto ltObj : Lifetime::instances) {
         ltObj->incrementAge();
     }
 }
@@ -32,10 +32,7 @@ void Lifetime::end() {
     isUpdateable = false;
 }
 
-void Lifetime::resetAge(){
+void Lifetime::resetAge() {
     this->age = 0;
     this->isUpdateable = false;
 }
-
-
-

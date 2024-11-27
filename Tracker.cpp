@@ -77,7 +77,6 @@ bool Tracker::collisionCorrection(Obj* obj) {
 
 		this->posX += (overlap*dx)/dist + overlap/100;
 		this->posY += (overlap*dy)/dist + overlap/200;
-		this->updateBox();
 	}
 	return false;
 }
@@ -89,7 +88,6 @@ bool Tracker::boundCorrection(int lft, int rt, int tp, int bt, int t){
     if(flag){
         this->posX = x;
         this->posY = y;
-    	this->updateBox();
     }
     return flag;
 }
