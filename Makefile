@@ -31,9 +31,6 @@ NATIVE_OBJECTS = $(patsubst src/main/native/%.cpp,$(NATIVE_BUILD_DIR)/%.o,$(NATI
 
 all: $(LIB_DIR)/$(LIB_NAME)
 
-	
-
-
 # javac -h $(INCLUDE_DIR) -d $(CLASS_BUILD_DIR) $^ put after mkdir -p $(INCLUDE_DIR) if you want to generate header files mkdir -p $(INCLUDE_DIR)
 
 jni: src/main/java/com/physics/Manager.java
@@ -41,7 +38,6 @@ jni: src/main/java/com/physics/Manager.java
 	mkdir -p $(INCLUDE_DIR)
 	javac -h $(INCLUDE_DIR) -d $(CLASS_BUILD_DIR) $^
 
-	
 
 $(NATIVE_BUILD_DIR)/%.o: src/main/native/%.cpp
 	mkdir -p $(NATIVE_BUILD_DIR)

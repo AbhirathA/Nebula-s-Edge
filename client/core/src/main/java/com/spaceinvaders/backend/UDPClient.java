@@ -6,7 +6,7 @@ import com.google.gson.JsonObject;
 import com.spaceinvaders.backend.utils.UDPPacket;
 
 public class UDPClient {
-    public static final String SERVER_ADDRESS = "192.168.99.196";
+    public static final String SERVER_ADDRESS = "localhost";
     private static final int SERVER_PORT = 9876;
     private static final int CLIENT_PORT = 9877; // Change this for each client
     private static final int BUFFER_SIZE = 10000;
