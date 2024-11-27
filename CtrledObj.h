@@ -34,11 +34,15 @@ class CtrledObj : public AngleObj {
 		}
 
 	public:
-		CtrledObj(int id, int x, int y, int peakV, int driftV, int angle, int thrust, int thrustPersistance, int movePersistance, int coolDown, int accX, int accY, int innerRad, int outerRad, int mass):AngleObj(id, x, y, driftV, angle, 0, accX, accY, innerRad, outerRad, mass){
-			thrustCtrl = new Lifetime(thrustPersistance, []()->reverseThrust());
-			thrustReverse = new Lifetime(thrustPersistance, blockThrust());
-			moveCtrl = new Lifetime(movePersistance, removeMove());
-			thrustBlocker = new Lifetime(coolDown, freeThrust());
+		CtrledObj(int id, int x, int y, int peakV, int driftV, int angle, int thrust, int thrustPersistance, int movePersistance, int coolDown, int accX, int accY, int innerRad, int outerRad, int mass):AngleObj(id, x, y, driftV, angle, 0, accX, accY, innerRad, outerRad, mass) {
+			thrustCtrl = new Lifetime(thrustPersistance, [this]()-> void {this->reverseThrust();
+		});
+			thrustReverse = new Lifetime(thrustPersistance, [this]()-> void {this->blockThrust();
+		});
+			moveCtrl = new Lifetime(movePersistance, [this]()-> void {this->removeMove();
+		});
+			thrustBlock = new Lifetime(coolDown, [this]()-> void {this->freeThrust();
+		});
 
 			this->peakV = peakV;
 			this->thrust = thrust;
@@ -47,7 +51,7 @@ class CtrledObj : public AngleObj {
 		void startThrust(){
 			if(isThrustable){
 				this->acc = thrust;
-				thrustCtrl.start();
+				thrustCtrl->start();
 				this->isThrustable = false;
 			}
 		}
