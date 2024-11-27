@@ -26,8 +26,8 @@ std::vector<std::vector<int>> Manager::display(int lowerX, int lowerY, int upper
 	return m;
 }
 
-int Manager::drop1(int x, int y, int vX, int vY, int accX, int accY, int res, int innerRad, int outerRad, int mass) {
-	Obj* temp = new stdVerlet(count, x, y, vX, vY, accX, accY, res, innerRad, outerRad, mass);
+int Manager::drop1(int x, int y, int v, int angle, int acc, int accX, int accY, int innerRad, int outerRad, int mass){
+	Obj* temp = new AngleObj(count, x, y, v, angle, acc, accX, accY, innerRad, outerRad, mass);
 	objList.push_back(temp);
 	objMap[count] = temp;
 	tree.insert(temp->getObjBox(), count, temp->getStatus());
