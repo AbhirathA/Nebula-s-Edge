@@ -34,19 +34,19 @@ public class Rocket extends Actor {
     public void draw(Batch batch, float parentAlpha) {
         super.draw(batch, parentAlpha);
 
-        if (Gdx.input.isKeyPressed(Input.Keys.A)) {
-            rocketSprite.rotate(1);
-        }
-        else if (Gdx.input.isKeyPressed(Input.Keys.D)) {
-            rocketSprite.rotate(-1);
-        }
-
-        if (Gdx.input.isKeyPressed(Input.Keys.W)) {
-            moveInDirection(1);
-        }
-        else if (Gdx.input.isKeyPressed(Input.Keys.S)) {
-            moveInDirection(-1);
-        }
+//        if (Gdx.input.isKeyPressed(Input.Keys.A)) {
+//            rocketSprite.rotate(1);
+//        }
+//        else if (Gdx.input.isKeyPressed(Input.Keys.D)) {
+//            rocketSprite.rotate(-1);
+//        }
+//
+//        if (Gdx.input.isKeyPressed(Input.Keys.W)) {
+//            moveInDirection(1);
+//        }
+//        else if (Gdx.input.isKeyPressed(Input.Keys.S)) {
+//            moveInDirection(-1);
+//        }
 
         rocketSprite.draw(batch);
     }

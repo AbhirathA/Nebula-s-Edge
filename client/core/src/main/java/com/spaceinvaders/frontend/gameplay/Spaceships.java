@@ -35,7 +35,7 @@ public class Spaceships {
             }
 
             Sprite sprite = spaceships[entitySpriteMap.get(coordinate.id)];
-
+            System.out.println(coordinate.id);
             sprite.setPosition(coordinate.x, coordinate.y);
             sprite.setRotation(coordinate.angle);
             sprite.draw(batch);
