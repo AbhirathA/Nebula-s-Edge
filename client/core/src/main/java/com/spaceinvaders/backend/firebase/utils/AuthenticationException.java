@@ -17,8 +17,7 @@ package com.spaceinvaders.backend.firebase.utils;
  * @version 1.0
  * @since 11/21/2024
  */
-public class AuthenticationException extends Exception
-{
+public class AuthenticationException extends Exception {
     /**
      * Constructs a new {@code AuthenticationException} with the specified detail message.
      * The message provides additional information about the cause of the authentication failure.

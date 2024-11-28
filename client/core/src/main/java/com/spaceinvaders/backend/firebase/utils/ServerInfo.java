@@ -1,18 +1,3 @@
-/**
- * ServerConfig.java
- * The {@code ServerConfig} class is responsible for retrieving server configuration
- * and constants (serverInfo, clientConstants, serverConstants) from a Firebase Realtime Database.
- * It uses Firebase's REST API to fetch and parse data dynamically for better scalability.
- * @author Aryan
- * @author Gathik
- * @author Abhirath
- * @author Ibrahim
- * @author Jayant
- * @author Dedeepya
- * @version 2.0
- * @since 11/27/2024
- */
-
 package com.spaceinvaders.backend.firebase.utils;
 
 import com.google.gson.Gson;
@@ -23,6 +8,21 @@ import java.net.HttpURLConnection;
 import java.net.URI;
 import java.net.URL;
 
+/**
+ * ServerInfo.java
+ * <br>
+ * The {@code ServerInfo} class is responsible for retrieving server configuration
+ * and constants (serverInfo, clientConstants) from a Firebase Realtime Database.
+ * It uses Firebase's REST API to fetch and parse data dynamically for better scalability.
+ * @author Aryan
+ * @author Gathik
+ * @author Abhirath
+ * @author Ibrahim
+ * @author Jayant
+ * @author Dedeepya
+ * @version 2.0
+ * @since 11/27/2024
+ */
 public class ServerInfo {
 
     /**
@@ -83,13 +83,10 @@ public class ServerInfo {
      *
      * @return A {@code JsonObject} containing client constants.
      */
-    private static JsonObject fetchClientConstants()
-    {
-        try
-        {
+    private static JsonObject fetchClientConstants() {
+        try {
             return fetchData("clientConstants");
-        } catch (Exception e)
-        {
+        } catch (Exception e) {
             System.out.println("Error fetching clientConstants: " + e.getMessage());
             return null;
         }
@@ -101,7 +98,13 @@ public class ServerInfo {
      * @return the IP address of the server as a {@code String}.
      */
     public static String getIP() {
-        return SERVER_INFO.get("ip").getAsString();
+        if (SERVER_INFO != null)
+        {
+            return SERVER_INFO.get("ip").getAsString();
+        }
+        System.out.println("Could not find IP");
+        System.exit(0);
+        return null;
     }
 
     /**
@@ -110,7 +113,13 @@ public class ServerInfo {
      * @return the HTTP port of the server as an {@code int}.
      */
     public static int getHttpPort() {
-        return SERVER_INFO.get("http-port").getAsInt();
+        if (SERVER_INFO != null)
+        {
+            return SERVER_INFO.get("http-port").getAsInt();
+        }
+        System.out.println("Could not find http port");
+        System.exit(0);
+        return 0;
     }
 
     /**
@@ -119,9 +128,20 @@ public class ServerInfo {
      * @return the UDP port of the server as an {@code int}.
      */
     public static int getUdpPort() {
-        return SERVER_INFO.get("udp-port").getAsInt();
+        if (SERVER_INFO != null)
+        {
+            return SERVER_INFO.get("udp-port").getAsInt();
+        }
+        System.out.println("Could not find http port");
+        System.exit(0);
+        return 0;
     }
 
+    /**
+     * Returns the client constants
+     *
+     * @return  the client constants
+     */
     public static JsonObject getClientConstants()
     {
         return CLIENT_CONSTANTS;
