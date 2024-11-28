@@ -45,6 +45,7 @@ public class MyAssetManager {
         assetManager.load("textures/gameOver.png", Texture.class);
         assetManager.load("textures/halfHeart.png", Texture.class);
         assetManager.load("textures/heart.png", Texture.class);
+        assetManager.load("textures/loadingSpriteSheet.png", Texture.class);
         assetManager.load("textures/menu.png", Texture.class);
         assetManager.load("textures/midAst1.png", Texture.class);
         assetManager.load("textures/midAst2.png", Texture.class);
