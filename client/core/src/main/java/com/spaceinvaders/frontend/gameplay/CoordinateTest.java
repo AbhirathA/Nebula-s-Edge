@@ -18,7 +18,7 @@ public class CoordinateTest {
             float y = random.nextFloat() * 405; // Random y between 0 and 405
             float angle = random.nextFloat() * 360; // Random angle between 0 and 360 degrees
 
-            coordinates.add(new Coordinate(type, id, x, y, angle));
+            coordinates.add(new Coordinate(type, id, (int)x, (int)y, (int)angle));
         }
 
         return coordinates;

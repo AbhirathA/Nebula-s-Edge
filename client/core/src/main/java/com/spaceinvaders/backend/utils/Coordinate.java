@@ -8,10 +8,10 @@ public class Coordinate implements Serializable
     @Serial
     private static final long serialVersionUID = 1L; // For serialization
     public String type; // Coordinate type (e.g., "Point", "Circle")
-    public float x, y, angle;
+    public int x, y, angle;
     public int id;
 
-    public Coordinate(String type, int id, float x, float y, float angle)
+    public Coordinate(String type, int id, int x, int y, int angle)
     {
         this.type = type;
         this.id = id;

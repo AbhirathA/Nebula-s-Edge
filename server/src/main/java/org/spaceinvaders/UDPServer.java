@@ -20,10 +20,6 @@ public class UDPServer
 {
     private static final int BUFFER_SIZE = 10000;
 
-    private final float WORLD_WIDTH = 720;
-    private final float WORLD_HEIGHT = 405;
-
-    private final Coordinate coords;
     private final Gson gson;
 
     private final Map<InetSocketAddress, String> inetSocketAddressToToken;
@@ -40,7 +36,6 @@ public class UDPServer
 
     public UDPServer()
     {
-        this.coords = new Coordinate("spaceship", -1, WORLD_WIDTH / 2 - 21f / 2f, WORLD_HEIGHT / 2 - 21f / 2f, 0);
         this.gson = new Gson();
         this.inetSocketAddressToToken = new HashMap<>();
         this.tokenToUdpPacket = new HashMap<>();
