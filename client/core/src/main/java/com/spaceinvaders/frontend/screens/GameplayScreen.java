@@ -34,6 +34,9 @@ public class GameplayScreen implements Screen {
 
     private final boolean isMulti;
 
+    private float bulletCooldown = 1.0f; // Cooldown in seconds
+    private float bulletTimer = 0;       // Timer to track elapsed time
+
     public GameplayScreen(SpaceInvadersGame game, boolean isMulti) {
         this.game = game;
         this.isMulti = isMulti;
@@ -99,8 +102,14 @@ public class GameplayScreen implements Screen {
         else if (Gdx.input.isKeyPressed(Input.Keys.D)) {
             state += "RIGHT";
         }
-        if (Gdx.input.isKeyPressed(Input.Keys.SPACE)) {
+
+        // Update the bullet timer
+        bulletTimer += delta;
+
+        // Add BULLET state only if cooldown has passed
+        if (Gdx.input.isKeyPressed(Input.Keys.SPACE) && bulletTimer >= bulletCooldown) {
             state += "BULLET";
+            bulletTimer = 0; // Reset the timer
         }
 
         try {
