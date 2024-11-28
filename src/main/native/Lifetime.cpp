@@ -29,6 +29,7 @@ void Lifetime::start() {
 }
 
 void Lifetime::end() {
+    this->age = 0;
     isUpdateable = false;
 }
 

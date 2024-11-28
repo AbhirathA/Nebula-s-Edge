@@ -188,29 +188,7 @@ bool Enemy::collisionCorrection(Asteroid *obj) {
 
 
 bool Enemy::collisionCorrection(BlackholeObject *obj) {
-    if(target->getID() == obj->getID()) {
-        if(this->checkCollision(target)) {
-            this->selfDestruct();
-            obj->takeDamage();
-        }
-        return false;
-    }
-    // get the distance from the object.
-    int dx = (posX - obj->getX());
-    int dy = (posY - obj->getY());
-    int dist = std::sqrt(dx * dx + dy * dy);
-
-    if (dist < innerRad + obj->getOuterR() - PRECISION) {
-
-        // calculate new position.
-        int overlap = innerRad + obj->getOuterR() - dist + PRECISION;
-
-        this->posX += (overlap*dx)/dist + overlap/100;
-        this->posY += (overlap*dy)/dist + overlap/200;
-
-        this->updateBox();
-    }
-    return false;
+    return obj->checkCollision(this);
 }
 
 

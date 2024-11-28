@@ -2,37 +2,26 @@
 #include <vector>
 #include <set>
 #include <cmath>
+#include <algorithm>
 #include "FixedObj.h"
+#include "Utilities.h"
+#include "Obj.h"
 #include <set>
 
 class BlackholeObject : public FixedObj
 {
 private:
     int innerRadius;
-    static constexpr int G = 10000;
+    static constexpr int G = 100000;
     static constexpr int FLOATING_ERROR = 1;
     static constexpr int GROWTH_FACTOR = 1; // fidn a good value maybe 0.0001
-    std::set<FixedObj *> objects;
 
 public:
     BlackholeObject(int id, int x, int y, int innerRad, int outerRad, int mass) : FixedObj(id, x, y, innerRad, outerRad, mass), innerRadius(innerRad) {
                                                                                   };
 
-    void addObject(FixedObj *obj)
+    bool interactWith(Obj *obj)
     {
-        objects.insert(obj);
-    }
-    void absorb(FixedObj *obj)
-    {
-        this->mass += obj->getMass();
-        this->outerRad += obj->getMass() * GROWTH_FACTOR;
-        this->updateBox();
-    }
-    void interactWith(FixedObj *obj)
-    {
-        if (dynamic_cast<BlackholeObject *>(obj))
-            return;
-
         int dx = this->getX() - obj->getX();
         int dy = this->getY() - obj->getY();
         int distanceSquared = dx * dx + dy * dy;
@@ -40,44 +29,32 @@ public:
         if (distanceSquared < (this->innerRadius + obj->getInnerR()) * (this->innerRadius + obj->getInnerR()))
         {
             obj->selfDestruct();
-            this->absorb(obj);
+            return true;
         }
-        else if (distanceSquared < (this->outerRad + obj->getOuterR()) * (this->outerRad + obj->getOuterR()))
+        else if (distanceSquared < (this->outerRad + obj->getInnerR()) * (this->outerRad + obj->getInnerR()))
         {
             applyGravitationalForce(obj, dx, dy, distanceSquared);
+            return true;
+        }
+        else
+        {
+            obj->updateAcc(0, 0);
+            return false;
         }
     }
-    void applyGravitationalForce(FixedObj *obj, int dx, int dy, int distanceSquared)
+    void applyGravitationalForce(Obj *obj, int dx, int dy, int distanceSquared)
     {
         double distance = std::sqrt(static_cast<double>(distanceSquared));
-        int force = static_cast<int>(G * this->getMass() * obj->getMass() / distanceSquared);
+        int force = static_cast<int>(G * obj->getMass() / distanceSquared);
 
         int accX = static_cast<int>(force * (dx / distance));
         int accY = static_cast<int>(force * (dy / distance));
 
-        obj->updateV(accX, accY);
-    }
-
-    void update()
-    {
-        std::vector<FixedObj *> toRemove;
-        for (FixedObj *obj : objects)
-        {
-            interactWith(obj);
-
-            if (*obj->getStatus())
-            {
-                toRemove.push_back(obj);
-            }
-        }
-        for (FixedObj *obj : toRemove)
-        {
-            objects.erase(obj);
-        }
+        obj->updateAcc(accX, accY);
     }
 
     virtual bool checkCollision(Obj* obj) override {
-        return obj->checkCollision(this);
+        return false;
     }
     virtual bool checkCollision(Asteroid *obj) override {
         return false;
@@ -104,6 +81,7 @@ public:
         return false;
     }
 
+
     virtual bool collisionCorrection(Obj* obj) override{
         return obj->collisionCorrection(this);
     }
@@ -113,7 +91,7 @@ public:
     virtual bool collisionCorrection(BlackholeObject* obj) override{
         return false;
     }
-    virtual bool collisionCorrection(Meteor* obj) override{
+    virtual bool collisionCorrection(Meteor *obj) override{
         return false;
     }
     virtual bool collisionCorrection(PowerUp* obj) override{

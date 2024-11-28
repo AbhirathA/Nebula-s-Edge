@@ -10,14 +10,6 @@ public class TestPhysicsEngine {
 
         Manager manager = new Manager(0, 2, 0, 1000, 0, -1000, 1);
 
-        int id = this.gameEngineManager.dropUser(0, 0, 25, 5, 900, 10, 10, 25, 144, 0, 0, 10, 10, 100);
-
-        manager.update();
-
-        manager.forward(id);
-
-        System.out.println(", ID2: " + id2);
-
         int c = 5;
         while (c != 0) {
             c--;
