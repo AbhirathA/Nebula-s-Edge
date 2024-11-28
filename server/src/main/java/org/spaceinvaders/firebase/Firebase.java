@@ -12,13 +12,20 @@ import com.google.firebase.auth.UserRecord;
 import com.google.firebase.cloud.FirestoreClient;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import org.spaceinvaders.firebase.util.DatabaseAccessException;
 import org.spaceinvaders.util.LoggerUtil;
 import org.spaceinvaders.util.NetworkNotFoundException;
 import org.spaceinvaders.util.ServerInfo;
 
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URI;
+import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -49,6 +56,17 @@ public final class Firebase {
      * The URL of the Firebase Realtime Database associated with the application.
      */
     public static final String FIREBASE_DATABASE = "https://nebula-s-edge-6e33d-default-rtdb.firebaseio.com";
+
+    /**
+     * The default Firebase Realtime Database URL.
+     * Update this URL to point to the correct database location.
+     */
+    private static final String DATABASE_URL = "https://nebula-s-edge-6e33d-default-rtdb.firebaseio.com/";
+
+    /**
+     * Json containing all the server constants required by the server.
+     */
+    public static final JsonObject serverConstants = fetchServerConstants();
 
     /**
      * Initializes the Firebase Instance and updates the Firebase Realtime Database with the
@@ -191,5 +209,36 @@ public final class Firebase {
             LoggerUtil.logException("Error retrieving data for user: " + userId, e);
             throw new DatabaseAccessException("Error accessing data for user: " + userId);
         }
+    }
+
+    private static JsonObject fetchServerConstants() {
+        try {
+            URI uri = URI.create(DATABASE_URL + "serverConstants.json");
+            URL url = uri.toURL();
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            connection.setRequestMethod("GET");
+            connection.setRequestProperty("Content-Type", "application/json");
+
+            Gson gson = new Gson();
+
+            int responseCode = connection.getResponseCode();
+            if (responseCode == HttpURLConnection.HTTP_OK) {
+                BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+                StringBuilder response = new StringBuilder();
+                String inputLine;
+                while ((inputLine = in.readLine()) != null) {
+                    response.append(inputLine);
+                }
+                in.close();
+                return gson.fromJson(response.toString(), JsonObject.class);
+            } else {
+                throw new Exception("GET request failed. Response Code: " + responseCode);
+            }
+        } catch (Exception e) {
+            LoggerUtil.logException("Error fetching server constants", e);
+            System.exit(1);
+        }
+
+        return null;
     }
 }

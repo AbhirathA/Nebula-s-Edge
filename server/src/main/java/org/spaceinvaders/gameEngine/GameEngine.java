@@ -2,6 +2,7 @@ package org.spaceinvaders.gameEngine;
 
 import com.physics.Manager;
 import org.checkerframework.checker.units.qual.C;
+import org.spaceinvaders.firebase.Firebase;
 import org.spaceinvaders.util.Coordinate;
 
 import java.util.ArrayList;
@@ -9,7 +10,18 @@ import java.util.HashMap;
 
 public class GameEngine {
 
-    private final int WORLD_WIDTH = 7200, WORLD_HEIGHT = -4050;
+    public static final int BIG_ASTEROID_RADIUS = Firebase.serverConstants.get("BIG_ASTEROID_RADIUS").getAsInt();
+    public static final int BLACKHOLE_INNER_RADIUS = Firebase.serverConstants.get("BLACKHOLE_INNER_RADIUS").getAsInt();
+    public static final int BLACKHOLE_OUTER_RADIUS = Firebase.serverConstants.get("BLACKHOLE_OUTER_RADIUS").getAsInt();
+    public static final int BULLET_RADIUS = Firebase.serverConstants.get("BULLET_RADIUS").getAsInt();
+    public static final int CAMERA_HEIGHT = Firebase.serverConstants.get("CAMERA_HEIGHT").getAsInt();
+    public static final int CAMERA_WIDTH = Firebase.serverConstants.get("CAMERA_WIDTH").getAsInt();
+    public static final int ENEMY_RADIUS = Firebase.serverConstants.get("ENEMY_RADIUS").getAsInt();
+    public static final int GAME_HEIGHT = Firebase.serverConstants.get("GAME_HEIGHT").getAsInt();
+    public static final int GAME_WIDTH = Firebase.serverConstants.get("GAME_WIDTH").getAsInt();
+    public static final int MEDIUM_ASTEROID_RADIUS = Firebase.serverConstants.get("MEDIUM_ASTEROID_RADIUS").getAsInt();
+    public static final int SMALL_ASTEROID_RADIUS = Firebase.serverConstants.get("SMALL_ASTEROID_RADIUS").getAsInt();
+    public static final int SPACESHIP_RADIUS = Firebase.serverConstants.get("SPACESHIP_RADIUS").getAsInt();
 
     private ArrayList<Coordinate> coords;
 
