@@ -95,6 +95,8 @@ bool velVerlet::collisionCorrection(LinearObj* obj){
             
         this->updateX(this->getX() + adjustmentX);
         this->updateY(this->getY() + adjustmentY);
+
+        this->updateBox();
         
         obj->updateX(obj->getX() - adjustmentX);
         obj->updateY(obj->getY() - adjustmentY);

@@ -8,18 +8,27 @@ import java.util.ArrayList;
 
 public class GameEngine {
 
-    public static final int BIG_ASTEROID_RADIUS = Firebase.serverConstants.get("BIG_ASTEROID_RADIUS").getAsInt();
     public static final int BLACKHOLE_INNER_RADIUS = Firebase.serverConstants.get("BLACKHOLE_INNER_RADIUS").getAsInt();
     public static final int BLACKHOLE_OUTER_RADIUS = Firebase.serverConstants.get("BLACKHOLE_OUTER_RADIUS").getAsInt();
+    public static final int BLACKHOLE_MASS = 100;
     public static final int BULLET_RADIUS = Firebase.serverConstants.get("BULLET_RADIUS").getAsInt();
+    public static final int BULLET_LIFE = 5000;
+    public static final int BULLET_SPEED = 30;
+    public static final int BULLET_MASS = 1;
     public static final int CAMERA_HEIGHT = Firebase.serverConstants.get("CAMERA_HEIGHT").getAsInt();
     public static final int CAMERA_WIDTH = Firebase.serverConstants.get("CAMERA_WIDTH").getAsInt();
     public static final int ENEMY_RADIUS = Firebase.serverConstants.get("ENEMY_RADIUS").getAsInt();
     public static final int GAME_HEIGHT = Firebase.serverConstants.get("GAME_HEIGHT").getAsInt();
     public static final int GAME_WIDTH = Firebase.serverConstants.get("GAME_WIDTH").getAsInt();
+    public static final int BIG_ASTEROID_RADIUS = Firebase.serverConstants.get("BIG_ASTEROID_RADIUS").getAsInt();
+    public static final int BIG_ASTEROID_MASS = 150;
     public static final int MEDIUM_ASTEROID_RADIUS = Firebase.serverConstants.get("MEDIUM_ASTEROID_RADIUS").getAsInt();
     public static final int SMALL_ASTEROID_RADIUS = Firebase.serverConstants.get("SMALL_ASTEROID_RADIUS").getAsInt();
     public static final int SPACESHIP_RADIUS = Firebase.serverConstants.get("SPACESHIP_RADIUS").getAsInt();
+    public static final int SPACESHIP_MASS = 100;
+    public static final int SPACESHIP_HEALTH = 100;
+    public static final int PEAK_USER_VEL = 20;
+    public static final int DRIFT_USER_VEL = 5;
 
     private ArrayList<Coordinate> coords;
 
@@ -39,7 +48,7 @@ public class GameEngine {
         this.bulletIds = new ArrayList<>();
         this.blackholeIds = new ArrayList<>();
 
-        this.gameEngineManager = new Manager(0, 0, 0, this.WORLD_WIDTH, 0, this.WORLD_HEIGHT, 1);
+        this.gameEngineManager = new Manager(0, 0, 0, GAME_WIDTH, 0, GAME_HEIGHT, 1);
     }
 
     /**
@@ -57,26 +66,26 @@ public class GameEngine {
      * @param angle angle*10 of that element
      * @return id of the element
      */
-    public int addElement(String type, float x, float y, float angle) {
+    public int addElement(String type, int x, int y, int angle) {
         int id = 0;
         switch (type) {
             case "SHIP":
-//                id = this.gameEngineManager.dropUser()
+                id = this.gameEngineManager.dropUser(x, y, PEAK_USER_VEL, DRIFT_USER_VEL, angle, 10, 10, 25, 144, 0, 0, SPACESHIP_RADIUS, SPACESHIP_RADIUS, SPACESHIP_MASS, SPACESHIP_HEALTH, BULLET_SPEED, BULLET_LIFE);
                 this.spaceShipIds.add(id);
                 break;
 
             case "ASTERIOD":
-//                id = this.gameEngineManager.dropAsteroid();
+                id = this.gameEngineManager.dropAsteroid(x, y, BIG_ASTEROID_RADIUS, BIG_ASTEROID_RADIUS, BIG_ASTEROID_MASS);
                 this.asteroidIds.add(id);
                 break;
 
             case "METEOR":
-//                id = this.gameEngineManager.dropMeteor();
+                id = this.gameEngineManager.dropMeteor(x, y, 0, 0, 0, 0, BIG_ASTEROID_RADIUS, BIG_ASTEROID_RADIUS, BIG_ASTEROID_MASS);
                 this.asteroidIds.add(id);
                 break;
 
             case "BLACKHOLE":
-//                id = this.gameEngineManager.dropBlackHole();
+                id = this.gameEngineManager.dropBlackHole(x, y, BLACKHOLE_INNER_RADIUS, BLACKHOLE_OUTER_RADIUS, BLACKHOLE_MASS);
                 this.blackholeIds.add(id);
                 break;
         }
@@ -94,8 +103,7 @@ public class GameEngine {
         else if (state.contains("RIGHT")) this.gameEngineManager.right(id);
         if (state.contains("FORWARD")) this.gameEngineManager.forward(id);
         else if (state.contains("BACKWARD")) this.gameEngineManager.stop(id);
-//         TODO: add constants
-//        if (state.contains(("BULLET"))) this.gameEngineManager.shoot(id, )
+        if (state.contains(("BULLET"))) this.gameEngineManager.shoot(id, BULLET_RADIUS, BULLET_RADIUS, BULLET_MASS);
     }
 
     /**
@@ -110,7 +118,7 @@ public class GameEngine {
      */
     public void getAllCoords() {
         this.coords = new ArrayList<>();
-        int[][] tempCoords = this.gameEngineManager.display(0, WORLD_HEIGHT, WORLD_WIDTH, 0);
+        int[][] tempCoords = this.gameEngineManager.display(0, GAME_HEIGHT, GAME_WIDTH, 0);
         
         for (int[] element : tempCoords) {
             this.coords.add(new Coordinate("B", element[0], element[1], element[2], element[3]));
@@ -162,6 +170,6 @@ public class GameEngine {
      * @return id of object
      */
     public int addShip() {
-        return this.addElement("SHIP", 0, this.WORLD_HEIGHT, 900);
+        return this.addElement("SHIP", 0, GAME_HEIGHT, 900);
     }
 }

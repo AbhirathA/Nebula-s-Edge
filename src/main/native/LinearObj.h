@@ -59,7 +59,7 @@ class LinearObj : public Obj {
 			accX = x; accY = y;
 		}
 
-		int getOri() {
+		int getOri() override {
 			double t = asin(vX/std::sqrt(vX * vX + vY * vY));
 			if (vX >= 0) {
 				return  mod((int)((((t * 180) / PI)) * ANGLE_SCALE) , (360 * ANGLE_SCALE));
@@ -76,12 +76,8 @@ class LinearObj : public Obj {
 		}
 
 		virtual bool checkCollision(Obj* obj) = 0;
-		virtual bool checkCollision(LinearObj* lo) = 0;
-		virtual bool checkCollision(AngleObj* ao) = 0;
 
 		virtual bool collisionCorrection(Obj* other) = 0;
-		virtual bool collisionCorrection(LinearObj* other) = 0;
-		virtual bool collisionCorrection(AngleObj* other) = 0;
 
 		virtual void updatePos(int t) = 0;
 
