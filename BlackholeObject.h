@@ -2,6 +2,7 @@
 #include <vector>
 #include <set>
 #include <cmath>
+#include <algorithm>
 #include "FixedObj.h"
 #include <set>
 
@@ -9,7 +10,7 @@ class BlackholeObject : public FixedObj
 {
 private:
     int innerRadius;
-    static constexpr int G = 10000;
+    static constexpr int G = 100000;
     static constexpr int FLOATING_ERROR = 1;
     static constexpr int GROWTH_FACTOR = 1; // fidn a good value maybe 0.0001
     std::set<FixedObj *> objects;
@@ -24,8 +25,6 @@ public:
     }
     void absorb(FixedObj *obj)
     {
-        this->mass += obj->getMass();
-        this->outerRad += obj->getMass() * GROWTH_FACTOR;
         this->updateBox();
     }
     void interactWith(FixedObj *obj)
@@ -46,16 +45,21 @@ public:
         {
             applyGravitationalForce(obj, dx, dy, distanceSquared);
         }
+        else
+        {
+            obj->updateAcc(0, 0);
+            objects.erase(find(objects.begin(), objects.end(), obj));
+        }
     }
     void applyGravitationalForce(FixedObj *obj, int dx, int dy, int distanceSquared)
     {
         double distance = std::sqrt(static_cast<double>(distanceSquared));
-        int force = static_cast<int>(G * this->getMass() * obj->getMass() / distanceSquared);
+        int force = static_cast<int>(G * obj->getMass() / distanceSquared);
 
         int accX = static_cast<int>(force * (dx / distance));
         int accY = static_cast<int>(force * (dy / distance));
 
-        obj->updateV(accX, accY);
+        obj->updateAcc(accX, accY);
     }
 
     void update()
