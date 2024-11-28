@@ -2,21 +2,12 @@
 #include "Obj.h"
 #include "LinearObj.h"
 #include <cmath>
-
+#define VALUE_SCALE 1000
+#define ANGLE_SCALE 10
 
 class AngleObj: public Obj{
+	
 	protected:
-
-		int mod(int a, int b) {
-			while (a > b) {
-				a -= b;
-			}
-			while (a < 0) {
-				a += b;
-			}
-			return a;
-		}
-
 		//Angle Computation Pre-requisites
 		static int SIN[3600];
 		static int COS[3600];
@@ -34,11 +25,28 @@ class AngleObj: public Obj{
 		int accX = 0;
 		int accY = 0;
 
+		int mod(double a, double b) {
+			while (a >= b) {
+				a -= b;
+			}
+			while (a < 0) {
+				a += b;
+			}
+			return a;
+		}
+
+		int near(double a, double b, double confidence) {
+			if ((a - b) <= confidence || (a - b )>= confidence) {
+				return true;
+			}
+			return false;
+		}
+
 	public:
 
 		AngleObj(int id, int x, int y, int v, int angle, int acc, int accX, int accY, int innerRad, int outerRad, int mass):Obj(id,x,y,innerRad,outerRad, mass) {
 			this->v = v;
-			this->angleScaled = (angle*ANGLE_SCALE)%(360*ANGLE_SCALE);
+			this->angleScaled = mod((angle*ANGLE_SCALE),(360*ANGLE_SCALE));
 			this->acc = acc;
 			this->accX = accX;
 			this->accY = accY;
@@ -53,10 +61,6 @@ class AngleObj: public Obj{
 
 		virtual int getvY() {
 			return this->v * SIN[this->angleScaled];
-		}
-
-		virtual int getOri() {
-			return angleScaled;
 		}
 
 		virtual int getaccX() {
@@ -115,6 +119,6 @@ class AngleObj: public Obj{
 		virtual ~AngleObj() {};
 
 		virtual void printProp() {
-			std::cout << "x: " << posX << " y: " << posY << " v rad" << v << " a rad " << acc << " angle " << angleScaled << std::endl;
+			std::cout << "x: " << posX << " y: " << posY << " v rad" << v << " a rad " << acc << " angle " << angleScaled << " vX: " << this->getvX() << " vY: " << this->getvY() << std::endl;
 		}
 };

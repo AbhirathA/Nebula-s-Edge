@@ -4,15 +4,6 @@
 class LinearObj : public Obj {
 
 	protected:
-		int mod(int a, int b) {
-			while (a > b) {
-				a -= b;
-			}
-			while (a < 0) {
-				a += b;
-			}
-			return a;
-		}
 		//The velocity of the object in x-y form
 		int vX = 0;
 		int vY = 0;
@@ -59,12 +50,9 @@ class LinearObj : public Obj {
 			accX = x; accY = y;
 		}
 
-		int getOri() override {
-			double t = asin(vX/std::sqrt(vX * vX + vY * vY));
-			if (vX >= 0) {
-				return  mod((int)((((t * 180) / PI)) * ANGLE_SCALE) , (360 * ANGLE_SCALE));
-			}
-			return mod((int)((180 - ((t * 180) / PI))  * ANGLE_SCALE),(360*ANGLE_SCALE));
+		// Sin of angle wrt x-axis
+		double getOri() {
+			return ((double)vX) / std::sqrt(vX * vX + vY * vY);
 		}
 
 		bool checkXTerminal() {
@@ -76,8 +64,12 @@ class LinearObj : public Obj {
 		}
 
 		virtual bool checkCollision(Obj* obj) = 0;
+		virtual bool checkCollision(LinearObj* lo) = 0;
+		virtual bool checkCollision(AngleObj* ao) = 0;
 
 		virtual bool collisionCorrection(Obj* other) = 0;
+		virtual bool collisionCorrection(LinearObj* other) = 0;
+		virtual bool collisionCorrection(AngleObj* other) = 0;
 
 		virtual void updatePos(int t) = 0;
 

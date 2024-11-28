@@ -1,16 +1,5 @@
 #pragma once
 #include <cmath>
-#include "AABBtree.h"
-
-
-class Bullet;
-class Meteor;
-class Asteroid;
-class Flare;
-class PowerUp;
-class UserObj;
-class Enemy;
-class BlackholeObject;
 
 // Different the type of physics to be used for the simulation
 enum class TypeOfPhy{
@@ -35,12 +24,6 @@ class AngleObj;
 class Obj
 {
 	protected:
-		static double const PI;
-		static int const VALUE_SCALE = 1000;
-		static int const ANGLE_SCALE = 10;
-		static int const SCALE = 1000;
-		static int const PRECISION = 1;
-
 		int id = 0;
 
 		//The X-Y coordinates of the object
@@ -56,33 +39,15 @@ class Obj
 		int innerRad = 0;
 		int outerRad = 0;
 
-	// The bounding box of the object
-	AABB *objBox = nullptr;
-
-	// Status of the object(Alive or dead)
-	bool dead = false;
-
-public:
-	Obj(int id, int x, int y, int innerRad, int outerRad, int mass)
-	{
-		this->id = id;
-		this->posX = x;
-		this->posY = y;
-		this->innerRad = innerRad;
-		this->outerRad = outerRad;
-		this->mass = mass;
-		this->objBox = new AABB({x - outerRad, y - outerRad, 0}, {x + outerRad, y + outerRad, 0});
-		this->dead = false;
-	}
-
-	virtual void takeDamage() {
-		this->selfDestruct();
-	}
-
-	int getID()
-	{
-		return id;
-	}
+	public:
+		Obj(int id, int x, int y, int innerRad, int outerRad, int mass) {
+			this->id = id;
+			this->posX = x;
+			this->posY = y;
+			this->innerRad = innerRad;
+			this->outerRad = outerRad;
+			this->mass = mass;
+		}
 
 		int getX() {
 			return posX;
@@ -100,6 +65,7 @@ public:
             posY = y;
         }
 
+		virtual double getOri() { return 0.0; };
 
 		int getOuterR(){
 			return outerRad;
@@ -117,67 +83,24 @@ public:
 			return mass;
 		}
 
-	AABB *getObjBox()
-	{
-		return objBox;
-	}
+		void changeState() {
+			state = (state+1)%stateCount;
+		}
 
-	bool *getStatus()
-	{
-		return &dead;
-	}
+		virtual bool checkCollision(Obj* obj) = 0;
+		virtual bool checkCollision(LinearObj* lo) = 0;
+		virtual bool checkCollision(AngleObj* ao) = 0;
 
-	void selfDestruct()
-	{
-		dead = true;
-	}
+		virtual bool collisionCorrection(Obj* other) = 0;
+		virtual bool collisionCorrection(LinearObj* other) = 0;
+		virtual bool collisionCorrection(AngleObj* other) = 0;
 
-	void updateBox()
-	{
-		objBox->setLowerBound({posX - outerRad, posY - outerRad, 0});
-		objBox->setUpperBound({posX + outerRad, posY + outerRad, 0});
-	}
+		virtual void updatePos(int t) = 0;
+		virtual void updateAcc(int ax, int ay) = 0;
 
-	void updateMass(int m)
-	{
-		mass = m;
-	}
+		virtual int getNextX(int t) = 0;
+		virtual int getNextY(int t) = 0;
+		virtual bool boundCorrection(int lft, int rt, int tp, int bt, int t) = 0;
 
-	void changeState()
-	{
-		state = (state+1)%stateCount;
-	}
-	virtual int getOri() {
-		return 0;
-	}
-	virtual bool checkCollision(Obj* obj) = 0;
-
-	virtual bool checkCollision(Asteroid *obj) = 0;
-	virtual bool checkCollision(BlackholeObject * obj) = 0;
-	virtual bool checkCollision(Meteor* obj) = 0;
-	virtual bool checkCollision(Flare* obj) = 0;
-	virtual bool checkCollision(PowerUp* obj) = 0;
-	virtual bool checkCollision(UserObj* obj) = 0;
-	virtual bool checkCollision(Enemy* obj) = 0;
-	virtual bool checkCollision(Bullet* obj) = 0;
-
-	virtual bool collisionCorrection(Obj* other) = 0;
-
-	virtual void updatePos(int t) = 0;
-	virtual void updateAcc(int ax, int ay) = 0;
-
-	virtual int getNextX(int t) = 0;
-	virtual int getNextY(int t) = 0;
-	virtual bool boundCorrection(int lft, int rt, int tp, int bt, int t) = 0;
-
-	virtual bool collisionCorrection(Asteroid* obj) = 0;
-	virtual bool collisionCorrection(BlackholeObject* obj) = 0;
-	virtual bool collisionCorrection(Meteor* obj) = 0;
-	virtual bool collisionCorrection(PowerUp* obj) = 0;
-	virtual bool collisionCorrection(Bullet* obj) = 0;
-	virtual bool collisionCorrection(Flare* obj) = 0;
-	virtual bool collisionCorrection(UserObj* obj) = 0;
-	virtual bool collisionCorrection(Enemy* obj) = 0;
-
-	virtual ~Obj() {};
+		virtual ~Obj() {};
 };

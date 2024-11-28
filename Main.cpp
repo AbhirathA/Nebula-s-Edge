@@ -27,7 +27,7 @@ int main()
     GameRender game = GameRender();
     int l = 0;
     int t = 0;
-	int flag = 100000;
+	int flag = 30000;
     while (game.isRunning()) {
 
         game.update(); // generate the next frame in GUI form

@@ -1,13 +1,13 @@
 #include "GameRender.h"
 
-#define DISPLAY_SCALE 100
+#define DISPLAY_SCALE 30
 
 void GameRender::initVariables() {
     this->videoMode.height = 780;
     this->videoMode.width = 880;
 
     manager = new Manager(0, 0, 0, this->videoMode.width * DISPLAY_SCALE, 0, (-1) * (this->videoMode.height) * DISPLAY_SCALE, 1);
-    manager->dropP(300, -300, 200, 5, 0, 2, 30, 30, 100, 0, 0, 40 * DISPLAY_SCALE, 45 * DISPLAY_SCALE, 100);
+    manager->dropP(300, -300, 20, 5, 80, 2, 50, 1000, 1000, 0, 0, 40 * DISPLAY_SCALE, 45 * DISPLAY_SCALE, 100);
     //manager->drop1(100 * DISPLAY_SCALE, -10 * DISPLAY_SCALE, 20, 0, 0, 0, 0, 40 * DISPLAY_SCALE, 45 * DISPLAY_SCALE, 100);
     //manager->drop2(100 * DISPLAY_SCALE, -600 * DISPLAY_SCALE, -10, 30, 0, 0, 40 * DISPLAY_SCALE, 45 * DISPLAY_SCALE, 100);
     //manager->drop2(100 * DISPLAY_SCALE, -100 * DISPLAY_SCALE, 20, 90, 0, 0, 40 * DISPLAY_SCALE, 45 * DISPLAY_SCALE, 100);
@@ -27,6 +27,7 @@ void GameRender::initObj(int id, double posX, double posY, double angle) {
         temp->setOutlineThickness(2.f);
         temp->rotate(angle);
         this->shapeList[id] = temp;
+        return;
     }
     sf::CircleShape* temp = nullptr;
     if ((this->shapeList).find(id) != (this->shapeList).end()) {
@@ -74,8 +75,14 @@ bool GameRender::isRunning(){
 }
 
 void GameRender::update(){
+    static int idiota = 0;
     this->pollEvents();
     this->manager->update();
+    idiota++;
+    //std::cout << "\n\n" << idiota << std::endl;
+    if (idiota % 10000 == 0) {
+        std::cout<<idiota;
+    }
 }
 
 void GameRender::render(){
@@ -106,8 +113,8 @@ void GameRender::pollEvents(){
                 this->manager->thrust();
             }
             else if (ev.key.code == sf::Keyboard::W) { // 
-                std::cout << "\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\n";
-                this->manager->forward();
+                //std::cout << "\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\n";
+                this->manager->up();
             }
             else if (ev.key.code == sf::Keyboard::A) {
                 this->manager->left();
