@@ -78,10 +78,6 @@ void Manager::removeDead(std::vector<int> ids)
 	}
 }
 
-// int main() {
-// 	std::cout<<"Gathik is a good boy"<<std::endl;
-// }
-
 int Manager::dropP(int x, int y, int peakV, int driftV, int angle, int thrust, int thrustPersistence, int movePersistence, int coolDown, int accX, int accY, int innerRad, int outerRad, int mass)
 {
 	return 42;
