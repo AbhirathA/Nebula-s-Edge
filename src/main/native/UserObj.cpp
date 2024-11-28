@@ -3,24 +3,29 @@
 #include "Enemy.h"
 #include "Meteor.h"
 
-void UserObj::heal(int points) {
+void UserObj::heal(int points)
+{
     this->healthBar->heal(points);
 }
 
-void UserObj::takeDamage() {
+void UserObj::takeDamage()
+{
     this->healthBar->takeDamage(1);
 }
 
-std::tuple<int,int,int,int,int> UserObj::launchBullet() {
-    return std::make_tuple(this->posX, this->posY, (this->getvX()*bulletSpeed)/this->getV(), (this->getvY()*bulletSpeed)/this->getV(), this->bulletLife);
+std::tuple<int, int, int, int, int> UserObj::launchBullet()
+{
+    return std::make_tuple(this->posX, this->posY, (bulletSpeed * COS[this->angleScaled] / VALUE_SCALE), (bulletSpeed * COS[this->angleScaled] / VALUE_SCALE), this->bulletLife);
 }
 
-void UserObj::incrementKillCount() {
+void UserObj::incrementKillCount()
+{
     totalKills++;
     totalPoints += pointFactor;
 };
 
-bool UserObj::checkCollision(Asteroid *obj) {
+bool UserObj::checkCollision(Asteroid *obj)
+{
     // Factor because of integer computation instead of floating point
     int temp = 100;
     int temp2 = temp * temp;
@@ -32,13 +37,15 @@ bool UserObj::checkCollision(Asteroid *obj) {
     int overlap = this->getInnerR() * temp + obj->getInnerR() * temp - distance;
 
     // If the distance is less than the sum of radii, there is a collision.
-    if (overlap > temp) {
+    if (overlap > temp)
+    {
         return true;
     }
     return false;
 }
 
-bool UserObj::checkCollision(BlackholeObject *obj) {
+bool UserObj::checkCollision(BlackholeObject *obj)
+{
     // Factor because of integer computation instead of floating point
     int temp = 100;
     int temp2 = temp * temp;
@@ -50,13 +57,15 @@ bool UserObj::checkCollision(BlackholeObject *obj) {
     int overlap = this->getInnerR() * temp + obj->getInnerR() * temp - distance;
 
     // If the distance is less than the sum of radii, there is a collision.
-    if (overlap > temp) {
+    if (overlap > temp)
+    {
         return true;
     }
     return false;
 }
 
-bool UserObj::checkCollision(Meteor *obj) {
+bool UserObj::checkCollision(Meteor *obj)
+{
     // Factor because of integer computation instead of floating point
     int temp = 100;
     int temp2 = temp * temp;
@@ -68,13 +77,15 @@ bool UserObj::checkCollision(Meteor *obj) {
     int overlap = this->getInnerR() * temp + obj->getInnerR() * temp - distance;
 
     // If the distance is less than the sum of radii, there is a collision.
-    if (overlap > temp) {
+    if (overlap > temp)
+    {
         return true;
     }
     return false;
 }
 
-bool UserObj::checkCollision(Flare *obj) {
+bool UserObj::checkCollision(Flare *obj)
+{
     // Factor because of integer computation instead of floating point
     int temp = 100;
     int temp2 = temp * temp;
@@ -86,13 +97,15 @@ bool UserObj::checkCollision(Flare *obj) {
     int overlap = this->getInnerR() * temp + obj->getInnerR() * temp - distance;
 
     // If the distance is less than the sum of radii, there is a collision.
-    if (overlap > temp) {
+    if (overlap > temp)
+    {
         return true;
     }
     return false;
 }
 
-bool UserObj::checkCollision(PowerUp *obj) {
+bool UserObj::checkCollision(PowerUp *obj)
+{
     // Factor because of integer computation instead of floating point
     int temp = 100;
     int temp2 = temp * temp;
@@ -104,13 +117,15 @@ bool UserObj::checkCollision(PowerUp *obj) {
     int overlap = this->getInnerR() * temp + obj->getInnerR() * temp - distance;
 
     // If the distance is less than the sum of radii, there is a collision.
-    if (overlap > temp) {
+    if (overlap > temp)
+    {
         return true;
     }
     return false;
 }
 
-bool UserObj::checkCollision(UserObj *obj) {
+bool UserObj::checkCollision(UserObj *obj)
+{
     // Factor because of integer computation instead of floating point
     int temp = 100;
     int temp2 = temp * temp;
@@ -122,13 +137,15 @@ bool UserObj::checkCollision(UserObj *obj) {
     int overlap = this->getInnerR() * temp + obj->getInnerR() * temp - distance;
 
     // If the distance is less than the sum of radii, there is a collision.
-    if (overlap > temp) {
+    if (overlap > temp)
+    {
         return true;
     }
     return false;
 }
 
-bool UserObj::checkCollision(Enemy *obj) {
+bool UserObj::checkCollision(Enemy *obj)
+{
     // Factor because of integer computation instead of floating point
     int temp = 100;
     int temp2 = temp * temp;
@@ -140,14 +157,15 @@ bool UserObj::checkCollision(Enemy *obj) {
     int overlap = this->getInnerR() * temp + obj->getInnerR() * temp - distance;
 
     // If the distance is less than the sum of radii, there is a collision.
-    if (overlap > temp) {
+    if (overlap > temp)
+    {
         return true;
     }
     return false;
 }
 
-
-bool UserObj::checkCollision(Bullet *obj) {
+bool UserObj::checkCollision(Bullet *obj)
+{
     // Factor because of integer computation instead of floating point
     int temp = 100;
     int temp2 = temp * temp;
@@ -159,14 +177,15 @@ bool UserObj::checkCollision(Bullet *obj) {
     int overlap = this->getInnerR() * temp + obj->getInnerR() * temp - distance;
 
     // If the distance is less than the sum of radii, there is a collision.
-    if (overlap > temp) {
+    if (overlap > temp)
+    {
         return true;
     }
     return false;
 }
 
-
-bool UserObj::collisionCorrection(Asteroid *obj) {
+bool UserObj::collisionCorrection(Asteroid *obj)
+{
     // Factor because of integer computation instead of floating point
     int temp = 100;
     int temp2 = temp * temp;
@@ -178,71 +197,73 @@ bool UserObj::collisionCorrection(Asteroid *obj) {
     int overlap = this->getInnerR() * temp + obj->getInnerR() * temp - distance;
 
     // If the distance is less than the sum of radii, there is a collision.
-    if (overlap > temp) {
-        this->takeDamage();
-        return true;
-    }
-    return false;
-
-}
-
-
-bool UserObj::collisionCorrection(BlackholeObject *obj) {
-    // Factor because of integer computation instead of floating point
-    int temp = 100;
-    int temp2 = temp * temp;
-
-    // Get the distance from the object and overlap.
-    int dx = this->getX() - obj->getX();
-    int dy = this->getY() - obj->getY();
-    int distance = sqrt(dx * dx + dy * dy) * temp;
-    int overlap = this->getInnerR() * temp + obj->getInnerR() * temp - distance;
-
-    // If the distance is less than the sum of radii, there is a collision.
-    if (overlap > temp) {
-        return true;
-    }
-    return false;
-}
-
-
-bool UserObj::collisionCorrection(Meteor *obj) {
-    // Factor because of integer computation instead of floating point
-    int temp = 100;
-    int temp2 = temp * temp;
-
-    // Get the distance from the object and overlap.
-    int dx = this->getX() - obj->getX();
-    int dy = this->getY() - obj->getY();
-    int distance = sqrt(dx * dx + dy * dy) * temp;
-    int overlap = this->getInnerR() * temp + obj->getInnerR() * temp - distance;
-
-    // If the distance is less than the sum of radii, there is a collision.
-    if (overlap > temp) {
+    if (overlap > temp)
+    {
         this->takeDamage();
         return true;
     }
     return false;
 }
 
+bool UserObj::collisionCorrection(BlackholeObject *obj)
+{
+    // Factor because of integer computation instead of floating point
+    int temp = 100;
+    int temp2 = temp * temp;
 
-bool UserObj::collisionCorrection(PowerUp *obj) {
+    // Get the distance from the object and overlap.
+    int dx = this->getX() - obj->getX();
+    int dy = this->getY() - obj->getY();
+    int distance = sqrt(dx * dx + dy * dy) * temp;
+    int overlap = this->getInnerR() * temp + obj->getInnerR() * temp - distance;
+
+    // If the distance is less than the sum of radii, there is a collision.
+    if (overlap > temp)
+    {
+        return true;
+    }
     return false;
 }
 
+bool UserObj::collisionCorrection(Meteor *obj)
+{
+    // Factor because of integer computation instead of floating point
+    int temp = 100;
+    int temp2 = temp * temp;
 
-bool UserObj::collisionCorrection(Bullet *obj) {
+    // Get the distance from the object and overlap.
+    int dx = this->getX() - obj->getX();
+    int dy = this->getY() - obj->getY();
+    int distance = sqrt(dx * dx + dy * dy) * temp;
+    int overlap = this->getInnerR() * temp + obj->getInnerR() * temp - distance;
+
+    // If the distance is less than the sum of radii, there is a collision.
+    if (overlap > temp)
+    {
+        this->takeDamage();
+        return true;
+    }
+    return false;
+}
+
+bool UserObj::collisionCorrection(PowerUp *obj)
+{
+    return false;
+}
+
+bool UserObj::collisionCorrection(Bullet *obj)
+{
     return obj->collisionCorrection(this);
 }
 
-
-bool UserObj::collisionCorrection(Flare *obj) {
+bool UserObj::collisionCorrection(Flare *obj)
+{
     return false;
 }
 
-
-bool UserObj::collisionCorrection(UserObj *obj) {
-// Factor because of integer computation instead of floating point
+bool UserObj::collisionCorrection(UserObj *obj)
+{
+    // Factor because of integer computation instead of floating point
     int temp = 100;
     int temp2 = temp * temp;
 
@@ -253,8 +274,9 @@ bool UserObj::collisionCorrection(UserObj *obj) {
     int overlap = this->getInnerR() * temp + obj->getInnerR() * temp - distance;
 
     // If the distance is less than the sum of radii, there is a collision.
-    if (overlap > temp) {
-        //std::cout << "In collision before: " << this->posX << " " << this->posY << " velocity:" << this->getvX() / VALUE_SCALE << " " << this->getvY() / VALUE_SCALE << std::endl;
+    if (overlap > temp)
+    {
+        // std::cout << "In collision before: " << this->posX << " " << this->posY << " velocity:" << this->getvX() / VALUE_SCALE << " " << this->getvY() / VALUE_SCALE << std::endl;
 
         // Position Correction
         int adjustmentFactor = overlap / 2;
@@ -266,7 +288,6 @@ bool UserObj::collisionCorrection(UserObj *obj) {
 
         obj->updateX(obj->getX() - adjustmentX);
         obj->updateY(obj->getY() - adjustmentY);
-
 
         // Velocity Correction
 
@@ -298,7 +319,7 @@ bool UserObj::collisionCorrection(UserObj *obj) {
 
         this->updateV(v1x / temp2, v1y / temp2, 1);
         obj->updateV(v2x / temp2, v2y / temp2, 1);
-        //std::cout << "In collision after: " << this->posX << " " << this->posY << " velocity:" << this->getvX() / VALUE_SCALE << " " << this->getvY() / VALUE_SCALE << std::endl;
+        // std::cout << "In collision after: " << this->posX << " " << this->posY << " velocity:" << this->getvX() / VALUE_SCALE << " " << this->getvY() / VALUE_SCALE << std::endl;
         obj->updateBox();
         obj->takeDamage();
         this->takeDamage();
@@ -307,7 +328,7 @@ bool UserObj::collisionCorrection(UserObj *obj) {
     return false;
 }
 
-
-bool UserObj::collisionCorrection(Enemy *obj) {
+bool UserObj::collisionCorrection(Enemy *obj)
+{
     return obj->collisionCorrection(this);
 }

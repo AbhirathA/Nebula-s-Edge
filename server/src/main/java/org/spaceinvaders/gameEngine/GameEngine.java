@@ -103,7 +103,7 @@ public class GameEngine {
         else if (state.contains("RIGHT")) this.gameEngineManager.right(id);
         if (state.contains("FORWARD")) this.gameEngineManager.forward(id);
         else if (state.contains("BACKWARD")) this.gameEngineManager.stop(id);
-        if (state.contains(("BULLET"))) this.gameEngineManager.shoot(id, BULLET_RADIUS, BULLET_RADIUS, BULLET_MASS);
+        if (state.contains(("BULLET"))) this.bulletIds.add(this.gameEngineManager.shoot(id, BULLET_RADIUS, BULLET_RADIUS, BULLET_MASS));
     }
 
     /**

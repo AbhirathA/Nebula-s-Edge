@@ -29,7 +29,7 @@ public class Coordinate implements Serializable
 
     public float getY() { return (this.y + 4050) / 10f; }
 
-    public float getAngle() { return this.angle / 10f; }
+    public float getAngle() { return this.angle / 10f - 90; }
 
     public int getId() { return this.id;}
 }

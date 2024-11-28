@@ -61,6 +61,7 @@ public class UDPClient {
                     DatagramPacket receivePacket = new DatagramPacket(receiveBuffer, receiveBuffer.length);
                     UDPClient.this.clientSocket.receive(receivePacket);
                     String receivedData = new String(receivePacket.getData(), 0, receivePacket.getLength());
+                    System.out.println(receivedData);
 
                     synchronized (UDPClient.this.udpPacket) {
                         UDPClient.this.udpPacket.update(UDPClient.this.gson.fromJson(receivedData, UDPPacket.class));
