@@ -137,6 +137,7 @@ public:
 
 	void selfDestruct()
 	{
+		std::cout<<this->innerRad+this->posX<<", "<<this->innerRad-this->posX<<" "<<this->innerRad+this->posY<<", "<<this->innerRad-this->posY<<std::endl;
 		*dead = true;
 	}
 

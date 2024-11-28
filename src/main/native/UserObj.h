@@ -59,5 +59,13 @@ private:
 	virtual bool collisionCorrection(UserObj* obj) override;
 	virtual bool collisionCorrection(Enemy* obj) override;
 
+	int getHealth() {
+		return this->healthBar->getHealth();
+	}
+
+	int getPoints() {
+		return this->totalPoints;
+	}
+
 };
 

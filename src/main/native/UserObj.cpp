@@ -179,6 +179,42 @@ bool UserObj::collisionCorrection(Asteroid *obj) {
 
     // If the distance is less than the sum of radii, there is a collision.
     if (overlap > temp) {
+// Factor because of integer computation instead of floating point
+        //std::cout << "In collision before: " << this->posX << " " << this->posY << " velocity:" << this->getvX() / VALUE_SCALE << " " << this->getvY() / VALUE_SCALE << std::endl;
+
+        // Position Correction
+        int adjustmentFactor = overlap;
+        int adjustmentX = (dx * adjustmentFactor) / distance;
+        int adjustmentY = (dy * adjustmentFactor) / distance;
+
+        this->updateX(this->getX() + adjustmentX);
+        this->updateY(this->getY() + adjustmentY);
+
+        obj->updateX(obj->getX() - adjustmentX);
+        obj->updateY(obj->getY() - adjustmentY);
+
+
+        // Velocity Correction
+
+        int nx = (dx * temp2) / distance;
+        int ny = (dy * temp2) / distance;
+
+        int v1x = this->getvX() / VALUE_SCALE, v1y = this->getvY() / VALUE_SCALE;
+
+        int v1Along = v1x * nx + v1y * ny;
+
+        int v1PerpX = v1x * temp2 - v1Along * nx;
+        int v1PerpY = v1y * temp2 - v1Along * ny;
+
+        int v1NewAlong = -v1Along*5;
+
+        v1x = v1NewAlong * nx + v1PerpX;
+        v1y = v1NewAlong * ny + v1PerpY;
+
+        this->updateV(v1x / temp2, v1y / temp2, 1);
+
+        //std::cout << "In collision after: " << this->posX << " " << this->posY << " velocity:" << this->getvX() / VALUE_SCALE << " " << this->getvY() / VALUE_SCALE << std::endl;
+        this->updateBox();
         this->takeDamage();
         return true;
     }

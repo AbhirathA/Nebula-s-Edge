@@ -115,7 +115,7 @@ public class LoginGatewayScreen implements Screen {
         mainMenuButton.addListener(new InputListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                game.token = "ijk";
+                game.token = "ijk3";
                 game.screenManager.setScreen(ScreenState.MAIN_MENU);
                 return true;
             }

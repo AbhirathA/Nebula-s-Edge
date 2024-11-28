@@ -4,8 +4,18 @@
 #include <cmath>
 #include <algorithm>
 #include "FixedObj.h"
-#include "Utilities.h"
 #include "Obj.h"
+
+#include "Asteroid.h"
+#include "BlackholeObject.h"
+#include "Meteor.h"
+#include "Flare.h"
+#include "Bullet.h"
+#include "PowerUp.h"
+#include "UserObj.h"
+#include "Lifetime.h"
+#include "Enemy.h"
+#include "Health.h"
 #include <set>
 
 class BlackholeObject : public FixedObj
@@ -20,7 +30,7 @@ public:
     BlackholeObject(int id, int x, int y, int innerRad, int outerRad, int mass) : FixedObj(id, x, y, innerRad, outerRad, mass), innerRadius(innerRad) {
                                                                                   };
 
-    bool interactWith(Obj *obj)
+    bool interactWith(Bullet *obj)
     {
         int dx = this->getX() - obj->getX();
         int dy = this->getY() - obj->getY();
@@ -42,6 +52,95 @@ public:
             return false;
         }
     }
+    bool interactWith(Meteor *obj)
+    {
+        int dx = this->getX() - obj->getX();
+        int dy = this->getY() - obj->getY();
+        int distanceSquared = dx * dx + dy * dy;
+
+        if (distanceSquared < (this->innerRadius + obj->getInnerR()) * (this->innerRadius + obj->getInnerR()))
+        {
+            obj->selfDestruct();
+            return true;
+        }
+        else if (distanceSquared < (this->outerRad + obj->getInnerR()) * (this->outerRad + obj->getInnerR()))
+        {
+            applyGravitationalForce(obj, dx, dy, distanceSquared);
+            return true;
+        }
+        else
+        {
+            obj->updateAcc(0, 0);
+            return false;
+        }
+    }
+    bool interactWith(Flare *obj)
+    {
+        int dx = this->getX() - obj->getX();
+        int dy = this->getY() - obj->getY();
+        int distanceSquared = dx * dx + dy * dy;
+
+        if (distanceSquared < (this->innerRadius + obj->getInnerR()) * (this->innerRadius + obj->getInnerR()))
+        {
+            obj->selfDestruct();
+            return true;
+        }
+        else if (distanceSquared < (this->outerRad + obj->getInnerR()) * (this->outerRad + obj->getInnerR()))
+        {
+            applyGravitationalForce(obj, dx, dy, distanceSquared);
+            return true;
+        }
+        else
+        {
+            obj->updateAcc(0, 0);
+            return false;
+        }
+    }
+    bool interactWith(UserObj *obj)
+    {
+        int dx = this->getX() - obj->getX();
+        int dy = this->getY() - obj->getY();
+        int distanceSquared = dx * dx + dy * dy;
+
+        if (distanceSquared < (this->innerRadius + obj->getInnerR()) * (this->innerRadius + obj->getInnerR()))
+        {
+            obj->selfDestruct();
+            return true;
+        }
+        else if (distanceSquared < (this->outerRad + obj->getInnerR()) * (this->outerRad + obj->getInnerR()))
+        {
+            applyGravitationalForce(obj, dx, dy, distanceSquared);
+            return true;
+        }
+        else
+        {
+            obj->updateAcc(0, 0);
+            return false;
+        }
+    }
+    bool interactWith(Enemy *obj)
+    {
+        int dx = this->getX() - obj->getX();
+        int dy = this->getY() - obj->getY();
+        int distanceSquared = dx * dx + dy * dy;
+
+        if (distanceSquared < (this->innerRadius + obj->getInnerR()) * (this->innerRadius + obj->getInnerR()))
+        {
+            obj->selfDestruct();
+            return true;
+        }
+        else if (distanceSquared < (this->outerRad + obj->getInnerR()) * (this->outerRad + obj->getInnerR()))
+        {
+            applyGravitationalForce(obj, dx, dy, distanceSquared);
+            return true;
+        }
+        else
+        {
+            obj->updateAcc(0, 0);
+            return false;
+        }
+    }
+
     void applyGravitationalForce(Obj *obj, int dx, int dy, int distanceSquared)
     {
         double distance = std::sqrt(static_cast<double>(distanceSquared));
@@ -52,62 +151,77 @@ public:
 
         obj->updateAcc(accX, accY);
     }
-
-    virtual bool checkCollision(Obj* obj) override {
+    virtual bool checkCollision(Obj *obj) override
+    {
         return obj->checkCollision(this);
     }
-    virtual bool checkCollision(Asteroid *obj) override {
+    virtual bool checkCollision(Asteroid *obj) override
+    {
         return false;
     }
-    virtual bool checkCollision(BlackholeObject * obj) override{
+    virtual bool checkCollision(BlackholeObject *obj) override
+    {
         return false;
     }
-    virtual bool checkCollision(Meteor* obj) override{
+    virtual bool checkCollision(Meteor *obj) override
+    {
         return false;
     }
-    virtual bool checkCollision(Flare* obj) override{
+    virtual bool checkCollision(Flare *obj) override
+    {
         return false;
     }
-    virtual bool checkCollision(PowerUp* obj) override{
+    virtual bool checkCollision(PowerUp *obj) override
+    {
         return false;
     }
-    virtual bool checkCollision(UserObj* obj) override{
+    virtual bool checkCollision(UserObj *obj) override
+    {
         return false;
     }
-    virtual bool checkCollision(Enemy* obj) override{
+    virtual bool checkCollision(Enemy *obj) override
+    {
         return false;
     }
-    virtual bool checkCollision(Bullet* obj) override{
+    virtual bool checkCollision(Bullet *obj) override
+    {
         return false;
     }
 
-
-    virtual bool collisionCorrection(Obj* obj) override{
+    virtual bool collisionCorrection(Obj *obj) override
+    {
         return obj->collisionCorrection(this);
     }
-    virtual bool collisionCorrection(Asteroid* obj) override{
+    virtual bool collisionCorrection(Asteroid *obj) override
+    {
         return false;
     }
-    virtual bool collisionCorrection(BlackholeObject* obj) override{
+    virtual bool collisionCorrection(BlackholeObject *obj) override
+    {
         return false;
     }
-    virtual bool collisionCorrection(Meteor *obj) override{
+    virtual bool collisionCorrection(Meteor *obj) override
+    {
+        return this->interactWith(obj);
+    }
+    virtual bool collisionCorrection(PowerUp *obj) override
+    {
         return false;
     }
-    virtual bool collisionCorrection(PowerUp* obj) override{
-        return false;
+    virtual bool collisionCorrection(Bullet *obj) override
+    {
+        return this->interactWith(obj);
     }
-    virtual bool collisionCorrection(Bullet* obj) override{
-        return false;
+    virtual bool collisionCorrection(Flare *obj) override
+    {
+        return this->interactWith(obj);
     }
-    virtual bool collisionCorrection(Flare* obj) override{
-        return false;
+    virtual bool collisionCorrection(UserObj *obj) override
+    {
+        return this->interactWith(obj);
     }
-    virtual bool collisionCorrection(UserObj* obj) override{
-        return false;
+    virtual bool collisionCorrection(Enemy *obj) override
+    {
+        return this->interactWith(obj);
     }
-    virtual bool collisionCorrection(Enemy* obj) override{
-        return false;
-    }
-
 };

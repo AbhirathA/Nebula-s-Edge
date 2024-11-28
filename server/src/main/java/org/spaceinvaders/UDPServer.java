@@ -76,7 +76,9 @@ public class UDPServer
                             {
                                 if (tokenToId.get(token) == null)
                                 {
-                                    UDPServer.this.tokenToId.put(token, UDPServer.this.gameEngine.addShip());
+                                    int id = UDPServer.this.gameEngine.addShip();
+                                    UDPServer.this.tokenToId.put(token, id);
+                                    UDPServer.this.gameEngine.instantiateGameEngine(id);
                                 }
 
                                 idToState.put(UDPServer.this.tokenToId.get(token), UDPServer.this.tokenToState.get(token));
@@ -91,15 +93,15 @@ public class UDPServer
                 }
 
                 // continue the game
-                UDPServer.this.gameEngine.update();
                 UDPServer.this.count++;
                 System.out.println(count);
+                UDPServer.this.gameEngine.update();
 
                 // time to send data to clients
                 UDPServer.this.gameEngine.getAllCoords();
                 UDPPacket packet = new UDPPacket();
                 packet.spaceShips = UDPServer.this.gameEngine.display("SHIP");
-                packet.asteroids = UDPServer.this.gameEngine.display("ASTERIOD");
+                packet.asteroids = UDPServer.this.gameEngine.display("ASTEROID");
                 packet.bullets = UDPServer.this.gameEngine.display("BULLET");
                 packet.blackholes = UDPServer.this.gameEngine.display("BLACKHOLES");
 

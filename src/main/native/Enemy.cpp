@@ -4,7 +4,7 @@
 
 #include "Enemy.h"
 
-#include <PowerUp.h>
+#include "PowerUp.h"
 
 #include "BlackholeObject.h"
 
@@ -31,7 +31,6 @@ bool Enemy::checkCollision(Asteroid *obj) {
     }
     return false;
 }
-
 bool Enemy::checkCollision(BlackholeObject *obj) {
     // Factor because of integer computation instead of floating point
     int temp = 100;
@@ -49,7 +48,6 @@ bool Enemy::checkCollision(BlackholeObject *obj) {
     }
     return false;
 }
-
 bool Enemy::checkCollision(Meteor *obj) {
     // Factor because of integer computation instead of floating point
     int temp = 100;
@@ -67,7 +65,6 @@ bool Enemy::checkCollision(Meteor *obj) {
     }
     return false;
 }
-
 bool Enemy::checkCollision(Flare *obj) {
     // Factor because of integer computation instead of floating point
     int temp = 100;
@@ -85,7 +82,6 @@ bool Enemy::checkCollision(Flare *obj) {
     }
     return false;
 }
-
 bool Enemy::checkCollision(PowerUp *obj) {
     // Factor because of integer computation instead of floating point
     int temp = 100;
@@ -103,7 +99,6 @@ bool Enemy::checkCollision(PowerUp *obj) {
     }
     return false;
 }
-
 bool Enemy::checkCollision(UserObj *obj) {
     // Factor because of integer computation instead of floating point
     int temp = 100;
@@ -121,7 +116,6 @@ bool Enemy::checkCollision(UserObj *obj) {
     }
     return false;
 }
-
 bool Enemy::checkCollision(Enemy *obj) {
     // Factor because of integer computation instead of floating point
     int temp = 100;
@@ -139,8 +133,6 @@ bool Enemy::checkCollision(Enemy *obj) {
     }
     return false;
 }
-
-
 bool Enemy::checkCollision(Bullet *obj) {
     // Factor because of integer computation instead of floating point
     int temp = 100;
@@ -160,6 +152,7 @@ bool Enemy::checkCollision(Bullet *obj) {
 }
 
 
+
 bool Enemy::collisionCorrection(Asteroid *obj) {
     if(target->getID() == obj->getID()) {
         if(this->checkCollision(target)) {
@@ -169,29 +162,47 @@ bool Enemy::collisionCorrection(Asteroid *obj) {
         return false;
     }
     // get the distance from the object.
-    int dx = (posX - obj->getX());
-    int dy = (posY - obj->getY());
+    int dx = (posX - obj->getX()) * 100;
+    int dy = (posY - obj->getY()) * 100 ;
     int dist = std::sqrt(dx * dx + dy * dy);
 
-    if (dist < innerRad + obj->getOuterR() - PRECISION) {
+    if (dist < innerRad*100 + obj->getOuterR()*100 - PRECISION) {
 
         // calculate new position.
-        int overlap = innerRad + obj->getOuterR() - dist + PRECISION;
+        int overlap = innerRad*100 + obj->getOuterR()*100 - dist + PRECISION;
 
-        this->posX += (overlap*dx)/dist + overlap/100;
-        this->posY += (overlap*dy)/dist + overlap/200;
+        this->posX += (overlap*dx)/dist/100 + PRECISION;
+        this->posY += (overlap*dy)/dist/100 + PRECISION;
 
         this->updateBox();
     }
     return false;
 }
-
-
 bool Enemy::collisionCorrection(BlackholeObject *obj) {
-    return obj->checkCollision(this);
+    if(target->getID() == obj->getID()) {
+        if(this->checkCollision(target)) {
+            this->selfDestruct();
+            obj->takeDamage();
+        }
+        return false;
+    }
+    // get the distance from the object.
+    int dx = (posX - obj->getX()) * 100;
+    int dy = (posY - obj->getY()) * 100 ;
+    int dist = std::sqrt(dx * dx + dy * dy);
+
+    if (dist < innerRad*100 + obj->getOuterR()*100 - PRECISION) {
+
+        // calculate new position.
+        int overlap = innerRad*100 + obj->getOuterR()*100 - dist + PRECISION;
+
+        this->posX += (overlap*dx)/dist/100 + PRECISION;
+        this->posY += (overlap*dy)/dist/100 + PRECISION;
+
+        this->updateBox();
+    }
+    return false;
 }
-
-
 bool Enemy::collisionCorrection(Meteor *obj) {
     if(target->getID() == obj->getID()) {
         if(this->checkCollision(target)) {
@@ -201,39 +212,31 @@ bool Enemy::collisionCorrection(Meteor *obj) {
         return false;
     }
     // get the distance from the object.
-    int dx = (posX - obj->getX());
-    int dy = (posY - obj->getY());
+    int dx = (posX - obj->getX()) * 100;
+    int dy = (posY - obj->getY()) * 100 ;
     int dist = std::sqrt(dx * dx + dy * dy);
 
-    if (dist < innerRad + obj->getOuterR() - PRECISION) {
+    if (dist < innerRad*100 + obj->getOuterR()*100 - PRECISION) {
 
         // calculate new position.
-        int overlap = innerRad + obj->getOuterR() - dist + PRECISION;
+        int overlap = innerRad*100 + obj->getOuterR()*100 - dist + PRECISION;
 
-        this->posX += (overlap*dx)/dist + overlap/100;
-        this->posY += (overlap*dy)/dist + overlap/200;
+        this->posX += (overlap*dx)/dist/100 + PRECISION;
+        this->posY += (overlap*dy)/dist/100 + PRECISION;
 
         this->updateBox();
     }
     return false;
 }
-
-
 bool Enemy::collisionCorrection(PowerUp *obj) {
     return false;
 }
-
-
 bool Enemy::collisionCorrection(Bullet *obj) {
     return obj->collisionCorrection(this);
 }
-
-
 bool Enemy::collisionCorrection(Flare *obj) {
-    return false;
+    return obj->collisionCorrection(this);
 }
-
-
 bool Enemy::collisionCorrection(UserObj *obj) {
     if(target->getID() == obj->getID()) {
         if(this->checkCollision(target)) {
@@ -243,24 +246,22 @@ bool Enemy::collisionCorrection(UserObj *obj) {
         return false;
     }
     // get the distance from the object.
-    int dx = (posX - obj->getX());
-    int dy = (posY - obj->getY());
+    int dx = (posX - obj->getX()) * 100;
+    int dy = (posY - obj->getY()) * 100 ;
     int dist = std::sqrt(dx * dx + dy * dy);
 
-    if (dist < innerRad + obj->getOuterR() - PRECISION) {
+    if (dist < innerRad*100 + obj->getOuterR()*100 - PRECISION) {
 
         // calculate new position.
-        int overlap = innerRad + obj->getOuterR() - dist + PRECISION;
+        int overlap = innerRad*100 + obj->getOuterR()*100 - dist + PRECISION;
 
-        this->posX += (overlap*dx)/dist + overlap/100;
-        this->posY += (overlap*dy)/dist + overlap/200;
+        this->posX += (overlap*dx)/dist/100 + PRECISION;
+        this->posY += (overlap*dy)/dist/100 + PRECISION;
 
         this->updateBox();
     }
     return false;
 }
-
-
 bool Enemy::collisionCorrection(Enemy *obj) {
     return false;
 }

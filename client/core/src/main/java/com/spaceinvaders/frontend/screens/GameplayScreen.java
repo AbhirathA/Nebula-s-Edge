@@ -34,7 +34,7 @@ public class GameplayScreen implements Screen {
 
     private final boolean isMulti;
 
-    private float bulletCooldown = 1.0f; // Cooldown in seconds
+    private float bulletCooldown = 0.25f; // Cooldown in seconds
     private float bulletTimer = 0;       // Timer to track elapsed time
 
     public GameplayScreen(SpaceInvadersGame game, boolean isMulti) {

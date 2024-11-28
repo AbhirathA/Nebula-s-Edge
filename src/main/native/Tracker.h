@@ -12,10 +12,7 @@ class Tracker : public LinearObj
         virtual int getNextX(int t) override final;
         virtual int getNextY(int t) override final;
 
-        virtual bool checkCollision(Obj* obj);
         virtual bool boundCorrection(int lft, int rt, int tp, int bt, int t);
-        virtual bool collisionCorrection(Obj* other);
 
         virtual ~Tracker() {}
 };
-

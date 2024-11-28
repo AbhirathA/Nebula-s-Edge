@@ -29,10 +29,14 @@ public class Manager {
         public native int dropBlackHole(int x, int y, int innerRad, int outerRad, int mass);
 
         public native int dropEnemy(int x, int y, int v, int res, int innerRad, int outerRad, int mass, boolean startX,
-                        int startSign, long aim);
+                        int startSign, int aim);
 
         public native int dropMeteor(int x, int y, int vX, int vY, int accX, int accY, int innerRad, int outerRad,
                         int mass);
+
+        public native int getHealth(int id);
+
+        public native int getPoints(int id);
 
         public native int[][] display(int lowerX, int lowerY, int upperX, int upperY);
 
