@@ -12,7 +12,7 @@ void UserObj::takeDamage() {
 }
 
 std::tuple<int,int,int,int,int> UserObj::launchBullet() {
-    return std::make_tuple(this->posX, this->posY, (this->getvX()*bulletSpeed)/this->getV(), (this->getvY()*bulletSpeed)/this->getV(), this->bulletLife);
+    return std::make_tuple(this->posX, this->posY, (COS[this->angleScaled]*bulletSpeed)/VALUE_SCALE, (SIN[this->angleScaled]*bulletSpeed)/VALUE_SCALE, this->bulletLife);
 }
 
 void UserObj::incrementKillCount() {

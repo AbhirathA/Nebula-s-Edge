@@ -11,10 +11,6 @@ public class GameEngine {
     public static final int BLACKHOLE_INNER_RADIUS = Firebase.serverConstants.get("BLACKHOLE_INNER_RADIUS").getAsInt();
     public static final int BLACKHOLE_OUTER_RADIUS = Firebase.serverConstants.get("BLACKHOLE_OUTER_RADIUS").getAsInt();
     public static final int BLACKHOLE_MASS = 100;
-    public static final int BULLET_RADIUS = Firebase.serverConstants.get("BULLET_RADIUS").getAsInt();
-    public static final int BULLET_LIFE = 50;
-    public static final int BULLET_SPEED = 5;
-    public static final int BULLET_MASS = 1;
     public static final int CAMERA_HEIGHT = Firebase.serverConstants.get("CAMERA_HEIGHT").getAsInt();
     public static final int CAMERA_WIDTH = Firebase.serverConstants.get("CAMERA_WIDTH").getAsInt();
     public static final int ENEMY_RADIUS = Firebase.serverConstants.get("ENEMY_RADIUS").getAsInt();
@@ -29,6 +25,10 @@ public class GameEngine {
     public static final int SPACESHIP_HEALTH = 100;
     public static final int PEAK_USER_VEL = 20;
     public static final int DRIFT_USER_VEL = 5;
+    public static final int BULLET_RADIUS = Firebase.serverConstants.get("BULLET_RADIUS").getAsInt();
+    public static final int BULLET_LIFE = 500 ;
+    public static final int BULLET_SPEED = 10 + PEAK_USER_VEL;
+    public static final int BULLET_MASS = 1;
 
     private ArrayList<Coordinate> coords;
 

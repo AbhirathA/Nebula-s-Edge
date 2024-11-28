@@ -230,6 +230,8 @@ std::vector<int> AABBtree::removeDead() {
         ids.push_back(node->id);
         delete node;
     }
+
+    return ids;
 }
 
  void AABBtree::collectInvalidNodes(AABBnode* node, std::vector<AABBnode*>&invalidNodes) {

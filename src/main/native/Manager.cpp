@@ -1,6 +1,6 @@
 #include "Manager.h"
 
-#include <BlackholeObject.h>
+#include "BlackholeObject.h"
 
 #include "Asteroid.h"
 #include "Bullet.h"
@@ -53,24 +53,17 @@ int Manager::dropUser(int x, int y, int peakV, int driftV, int angle, int thrust
 // }
 
 void Manager::update() {
-	std::cout << 1 << std::endl;
 	std::vector<int> deadObjs = tree.removeDead();
 	this->removeDead(deadObjs);
-	std::cout << 1 << std::endl;
 	bool flag = true;
 	for (auto p : objMap) {
 		p.second->updatePos(t);
-	std::cout << 1 << std::endl;
 		p.second->boundCorrection(lft, rt, tp, bt, t);
-	std::cout << 1 << std::endl;
 		p.second->updateBox();
-	std::cout << 1 << std::endl;
 	}
 	tree.Update();
-	std::cout << 1 << std::endl;
 	Lifetime::updateInstances();
 
-	std::cout << 1 << std::endl;
 	int count = 0;
 	while(flag && count++ < precision){
 		flag = false;
