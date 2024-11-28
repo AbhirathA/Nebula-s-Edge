@@ -37,7 +37,7 @@ int Manager::dropUser(int x, int y, int peakV, int driftV, int angle, int thrust
 	UserObj* temp = new UserObj(count, x, y, peakV, driftV, angle, thrust, thrustPersistance, movePersistance, coolDown, accX, accY, innerRad, outerRad, mass, health, bulletSpeed, bulletLife);
 	this->playerMap[count] = temp;
 	this->playerMap[count]->updateAcc(gX,gY);
-	objMap[count] = this->playerMap[count];
+	this->objMap[count] = this->playerMap[count];
 	tree.insert(temp->getObjBox(), count, temp->getStatus());
 	count++;
 	return count-1;
@@ -57,9 +57,9 @@ void Manager::update() {
 	this->removeDead(deadObjs);
 	bool flag = true;
 	for (auto p : objMap) {
-
 		p.second->updatePos(t);
 		p.second->boundCorrection(lft, rt, tp, bt, t);
+		p.second->updateBox();
 	}
 	tree.Update();
 	Lifetime::updateInstances();
@@ -72,6 +72,8 @@ void Manager::update() {
 			objMap[p.first]->collisionCorrection(objMap[p.second]);
 			objMap[p.first]->boundCorrection(lft, rt, tp, bt, t);
 			objMap[p.second]->boundCorrection(lft, rt, tp, bt, t);
+			objMap[p.first]->updateBox();
+			objMap[p.second]->updateBox();
 			flag = true;
 		}
 		tree.Update();
