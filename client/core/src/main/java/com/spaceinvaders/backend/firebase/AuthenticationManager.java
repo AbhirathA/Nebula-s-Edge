@@ -1,3 +1,15 @@
+package com.spaceinvaders.backend.firebase;
+
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+import com.spaceinvaders.backend.firebase.utils.*;
+import com.spaceinvaders.backend.firebase.utils.HTTPRequest;
+
+import java.io.IOException;
+import java.net.URISyntaxException;
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * AuthenticationManager.java
  * This class handles user authentication and session management.
@@ -30,19 +42,6 @@
  * @version 1.0
  * @since 11/21/2024
  */
-
-package com.spaceinvaders.backend.firebase;
-
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
-import com.spaceinvaders.backend.firebase.utils.*;
-import com.spaceinvaders.backend.firebase.utils.HTTPRequest;
-
-import java.io.IOException;
-import java.net.URISyntaxException;
-import java.util.HashMap;
-import java.util.Map;
-
 public class AuthenticationManager {
     public static final String SERVER_URL = "http://" + ServerInfo.getIP() + ":" + ServerInfo.getHttpPort() + "/";
 

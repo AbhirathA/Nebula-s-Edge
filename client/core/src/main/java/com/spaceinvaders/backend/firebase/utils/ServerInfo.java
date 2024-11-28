@@ -2,6 +2,8 @@ package com.spaceinvaders.backend.firebase.utils;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
+import com.spaceinvaders.util.LoggerUtil;
+
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
@@ -73,7 +75,7 @@ public class ServerInfo {
         try {
             return fetchData("serverInfo");
         } catch (Exception e) {
-            System.out.println("Error fetching serverInfo: " + e.getMessage());
+            LoggerUtil.logError("Error fetching serverInfo: " + e.getMessage());
             return null;
         }
     }
@@ -87,7 +89,7 @@ public class ServerInfo {
         try {
             return fetchData("clientConstants");
         } catch (Exception e) {
-            System.out.println("Error fetching clientConstants: " + e.getMessage());
+            LoggerUtil.logError("Error fetching clientConstants: " + e.getMessage());
             return null;
         }
     }
@@ -102,7 +104,7 @@ public class ServerInfo {
         {
             return SERVER_INFO.get("ip").getAsString();
         }
-        System.out.println("Could not find IP");
+        LoggerUtil.logInfo("Could not find IP");
         System.exit(0);
         return null;
     }
@@ -117,7 +119,7 @@ public class ServerInfo {
         {
             return SERVER_INFO.get("http-port").getAsInt();
         }
-        System.out.println("Could not find http port");
+        LoggerUtil.logInfo("Could not find http port");
         System.exit(0);
         return 0;
     }
@@ -132,7 +134,7 @@ public class ServerInfo {
         {
             return SERVER_INFO.get("udp-port").getAsInt();
         }
-        System.out.println("Could not find udp port");
+        LoggerUtil.logInfo("Could not find udp port");
         System.exit(0);
         return 0;
     }

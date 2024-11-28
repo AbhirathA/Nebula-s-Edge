@@ -1,5 +1,7 @@
 package com.spaceinvaders.backend.firebase.utils;
 
+import com.spaceinvaders.util.LoggerUtil;
+
 import java.io.IOException;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
@@ -41,7 +43,7 @@ public class HTTPRequest {
      * @param payload               Data to send with the request (required for POST/PUT methods, optional for others).
      * @param method                The HTTP method to use (e.g., GET, POST, PUT, DELETE).
      * @param headers               Additional HTTP headers for the request (e.g., Authorization, Content-Type).
-     * @return                      An HttpResponse object containing the HTTP response code and response body.
+     * @return  An HttpResponse object containing the HTTP response code and response body.
      * @throws IOException          If there’s an issue with input/output (e.g., connection failure).
      * @throws URISyntaxException   If the provided URL string is not valid.
      */
@@ -68,7 +70,7 @@ public class HTTPRequest {
             try (OutputStream os = connection.getOutputStream()) {
                 os.write(payload.getBytes(StandardCharsets.UTF_8));
             } catch (IOException e) {
-                System.out.println("Error: Unable to connect to server: " + e);
+                LoggerUtil.logInfo("Error: Unable to connect to server: " + e);
                 return new HttpResponse(HTTPCode.ERROR.getCode(), e.toString());
             }
         }
