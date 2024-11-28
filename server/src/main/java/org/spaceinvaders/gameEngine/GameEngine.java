@@ -12,6 +12,9 @@ public class GameEngine {
     public static final int BLACKHOLE_OUTER_RADIUS = Firebase.serverConstants.get("BLACKHOLE_OUTER_RADIUS").getAsInt();
     public static final int BLACKHOLE_MASS = 100;
     public static final int BULLET_RADIUS = Firebase.serverConstants.get("BULLET_RADIUS").getAsInt();
+    public static final int BULLET_LIFE = 5000;
+    public static final int BULLET_SPEED = 30;
+    public static final int BULLET_MASS = 1;
     public static final int CAMERA_HEIGHT = Firebase.serverConstants.get("CAMERA_HEIGHT").getAsInt();
     public static final int CAMERA_WIDTH = Firebase.serverConstants.get("CAMERA_WIDTH").getAsInt();
     public static final int ENEMY_RADIUS = Firebase.serverConstants.get("ENEMY_RADIUS").getAsInt();
@@ -23,6 +26,7 @@ public class GameEngine {
     public static final int SMALL_ASTEROID_RADIUS = Firebase.serverConstants.get("SMALL_ASTEROID_RADIUS").getAsInt();
     public static final int SPACESHIP_RADIUS = Firebase.serverConstants.get("SPACESHIP_RADIUS").getAsInt();
     public static final int SPACESHIP_MASS = 100;
+    public static final int SPACESHIP_HEALTH = 100;
     public static final int PEAK_USER_VEL = 20;
     public static final int DRIFT_USER_VEL = 5;
 
@@ -66,12 +70,12 @@ public class GameEngine {
         int id = 0;
         switch (type) {
             case "SHIP":
-                id = this.gameEngineManager.dropUser(x, y, PEAK_USER_VEL, DRIFT_USER_VEL, angle, 10, 10, 25, 144, 0, 0, SPACESHIP_RADIUS, SPACESHIP_RADIUS, SPACESHIP_MASS);
+                id = this.gameEngineManager.dropUser(x, y, PEAK_USER_VEL, DRIFT_USER_VEL, angle, 10, 10, 25, 144, 0, 0, SPACESHIP_RADIUS, SPACESHIP_RADIUS, SPACESHIP_MASS, SPACESHIP_HEALTH, BULLET_SPEED, BULLET_LIFE);
                 this.spaceShipIds.add(id);
                 break;
 
             case "ASTERIOD":
-                id = this.gameEngineManager.dropAsteroid(x, y, 0, 0, 0, 0, BIG_ASTEROID_RADIUS, BIG_ASTEROID_RADIUS, BIG_ASTEROID_MASS);
+                id = this.gameEngineManager.dropAsteroid(x, y, BIG_ASTEROID_RADIUS, BIG_ASTEROID_RADIUS, BIG_ASTEROID_MASS);
                 this.asteroidIds.add(id);
                 break;
 
@@ -81,7 +85,7 @@ public class GameEngine {
                 break;
 
             case "BLACKHOLE":
-                id = this.gameEngineManager.dropBlackHole(x, y, 0, 0, 0, 0, BLACKHOLE_INNER_RADIUS, BLACKHOLE_OUTER_RADIUS, BLACKHOLE_MASS);
+                id = this.gameEngineManager.dropBlackHole(x, y, BLACKHOLE_INNER_RADIUS, BLACKHOLE_OUTER_RADIUS, BLACKHOLE_MASS);
                 this.blackholeIds.add(id);
                 break;
         }
@@ -99,8 +103,7 @@ public class GameEngine {
         else if (state.contains("RIGHT")) this.gameEngineManager.right(id);
         if (state.contains("FORWARD")) this.gameEngineManager.forward(id);
         else if (state.contains("BACKWARD")) this.gameEngineManager.stop(id);
-//         TODO: add constants
-//        if (state.contains(("BULLET"))) this.gameEngineManager.shoot(id, )
+        if (state.contains(("BULLET"))) this.gameEngineManager.shoot(id, BULLET_RADIUS, BULLET_RADIUS, BULLET_MASS);
     }
 
     /**
