@@ -141,7 +141,28 @@ int Manager::dropMeteor(int x, int y, int vX, int vY, int accX, int accY, int in
 
 
 int main() {
-	std::cout<<"Gathik is a good boy"<<std::endl;
+	Manager manager = Manager(0, 0, 0, 1000, 0, -1000, 1);
+	int userId1 = manager.dropUser(100, -100, 20, 5, 0, 10, 100, 100, 100, 0, 0, 20, 20, 50, 50, 30, 5);
+	int bullet1 = manager.shoot(userId1, 5, 5, 1);
+	manager.shoot(userId1, 5, 5, 1);
+	manager.shoot(userId1, 5, 5, 1);
+	manager.shoot(userId1, 5, 5, 1);
+	manager.shoot(userId1, 5, 5, 1);
+	manager.shoot(userId1, 5, 5, 1);
+	manager.shoot(userId1, 5, 5, 1);
+	manager.shoot(userId1, 5, 5, 1);
+	manager.shoot(userId1, 5, 5, 1);
+	manager.shoot(userId1, 5, 5, 1);
+	manager.shoot(userId1, 5, 5, 1);
+	manager.shoot(userId1, 5, 5, 1);
+	manager.shoot(userId1, 5, 5, 1);
+	manager.shoot(userId1, 5, 5, 1);
+	manager.shoot(userId1, 5, 5, 1);
+	manager.shoot(userId1, 5, 5, 1);
+	manager.shoot(userId1, 5, 5, 1);
+	while(true) {
+		manager.update();
+	}
 }
 
 
