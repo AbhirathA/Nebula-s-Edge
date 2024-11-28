@@ -13,6 +13,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import com.spaceinvaders.frontend.SpaceInvadersGame;
 import com.spaceinvaders.frontend.background.PlanetsBackground;
 import com.spaceinvaders.frontend.background.StarsBackground;
+import com.spaceinvaders.frontend.ui.LoadingRing;
 import com.spaceinvaders.frontend.utils.ButtonUtils;
 
 public class LoginGatewayScreen implements Screen {

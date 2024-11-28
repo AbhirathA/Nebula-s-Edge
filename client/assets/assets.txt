@@ -52,6 +52,7 @@ textures/enemy9.png
 textures/gameOver.png
 textures/halfHeart.png
 textures/heart.png
+textures/loadingSpriteSheet.png
 textures/menu.png
 textures/midAst1.png
 textures/midAst2.png

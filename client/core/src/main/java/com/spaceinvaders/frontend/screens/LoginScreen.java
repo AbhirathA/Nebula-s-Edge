@@ -16,6 +16,7 @@ import com.spaceinvaders.frontend.SpaceInvadersGame;
 import com.spaceinvaders.backend.firebase.utils.AuthenticationException;
 import com.spaceinvaders.frontend.background.PlanetsBackground;
 import com.spaceinvaders.frontend.background.StarsBackground;
+import com.spaceinvaders.frontend.ui.LoadingRing;
 import com.spaceinvaders.frontend.utils.ButtonUtils;
 import com.spaceinvaders.frontend.utils.LabelUtils;
 import com.spaceinvaders.frontend.utils.TextFieldUtils;
@@ -35,6 +36,7 @@ public class LoginScreen implements Screen {
 
     private Label errorMessage;
     private Label successMessage;
+    private LoadingRing loadingRing;
 
     public LoginScreen(SpaceInvadersGame game, StarsBackground starsBackground, PlanetsBackground planetsBackground) {
         this.game = game;
@@ -54,6 +56,7 @@ public class LoginScreen implements Screen {
         this.planetsBackground = planetsBackground;
 
         this.title = game.assetManager.get("textures/title.png", Texture.class);
+        this.loadingRing = new LoadingRing(game.assetManager, SpaceInvadersGame.STAGE_WIDTH / 2 - 10, SpaceInvadersGame.STAGE_HEIGHT / 2 - 30);
     }
 
     @Override
