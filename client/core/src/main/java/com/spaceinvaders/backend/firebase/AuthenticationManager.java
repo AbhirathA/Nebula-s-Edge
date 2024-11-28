@@ -12,6 +12,7 @@ import java.util.Map;
 
 /**
  * AuthenticationManager.java
+ * <br>
  * This class handles user authentication and session management.
  * It provides methods for validating credentials, generating authentication tokens,
  * and managing user sessions. This can be integrated with services like Firebase, JWT, or a database.
