@@ -66,7 +66,7 @@ public class Spaceships implements Player {
             Sprite sprite = spaceships[entitySpriteMap.get(coordinate.getId())];
 
             // Set the position of the spaceship sprite based on the coordinate's x and y values
-            sprite.setPosition(coordinate.getX(), coordinate.getY());
+            sprite.setPosition(coordinate.getX() - sprite.getWidth() / 2f, coordinate.getY() - sprite.getHeight() / 2f);
 
             // Set the rotation of the spaceship sprite based on the coordinate's angle
             sprite.setRotation(coordinate.getAngle());

@@ -26,6 +26,14 @@ public class SpaceInvadersGame extends Game {
     public String email;
     public String killCount;
 
+    // Constants for the world and stage dimensions
+    public static final float WORLD_WIDTH = 240;
+    public static final float WORLD_HEIGHT = 135;
+    public static final float STAGE_WIDTH = 480;
+    public static final float STAGE_HEIGHT = 270;
+    public static final float GAME_WIDTH = 720;
+    public static final float GAME_HEIGHT = 405;
+
     private class CommandClass implements Command {
 
         @Override

@@ -69,7 +69,7 @@ public class Enemies implements Player {
             Sprite sprite = enemies[entitySpriteMap.get(coordinate.getId())];
 
             // Set the position and rotation of the sprite based on the coordinate
-            sprite.setPosition(coordinate.getX(), coordinate.getY());
+            sprite.setPosition(coordinate.getX() - sprite.getWidth() / 2f, coordinate.getY() - sprite.getHeight() / 2f);
             sprite.setRotation(coordinate.getAngle());
 
             // Draw the sprite to the batch (render it to the screen)

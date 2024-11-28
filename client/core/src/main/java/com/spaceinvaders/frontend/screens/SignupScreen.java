@@ -23,8 +23,6 @@ import com.spaceinvaders.frontend.utils.TextFieldUtils;
 public class SignupScreen implements Screen {
     private final SpaceInvadersGame game;
 
-    private final float STAGE_WIDTH;
-
     private final OrthographicCamera camera;
     private final Viewport viewport;
 
@@ -38,19 +36,17 @@ public class SignupScreen implements Screen {
     private Label errorMessage;
     private Label successMessage;
 
-    public SignupScreen(SpaceInvadersGame game, float WORLD_WIDTH, float WORLD_HEIGHT, float STAGE_WIDTH,
-            float STAGE_HEIGHT, StarsBackground starsBackground, PlanetsBackground planetsBackground) {
+    public SignupScreen(SpaceInvadersGame game, StarsBackground starsBackground, PlanetsBackground planetsBackground) {
         this.game = game;
 
         camera = new OrthographicCamera();
-        viewport = new FitViewport(WORLD_WIDTH, WORLD_HEIGHT, camera);
-        Viewport stageViewport = new FitViewport(STAGE_WIDTH, STAGE_HEIGHT);
+        viewport = new FitViewport(SpaceInvadersGame.WORLD_WIDTH, SpaceInvadersGame.WORLD_HEIGHT, camera);
+        Viewport stageViewport = new FitViewport(SpaceInvadersGame.STAGE_WIDTH, SpaceInvadersGame.STAGE_HEIGHT);
 
-        camera.position.set(WORLD_WIDTH / 2, WORLD_HEIGHT / 2, 0);
+        camera.position.set(SpaceInvadersGame.WORLD_WIDTH / 2, SpaceInvadersGame.WORLD_HEIGHT / 2, 0);
         camera.update();
 
         stage = new Stage(stageViewport);
-        this.STAGE_WIDTH = STAGE_WIDTH;
 
         initialiseActors();
 
@@ -126,32 +122,32 @@ public class SignupScreen implements Screen {
                 minecraftFont, 0, 0);
 
         Label enterId = LabelUtils.createLabel("Id:", minecraftFont,
-                (STAGE_WIDTH - 143) / 2f, 101);
+                (SpaceInvadersGame.STAGE_WIDTH - 143) / 2f, 101);
 
         Label enterPassword = LabelUtils.createLabel("Password:",
-                minecraftFont, (STAGE_WIDTH - 143) / 2f, 85);
+                minecraftFont, (SpaceInvadersGame.STAGE_WIDTH - 143) / 2f, 85);
 
         Label confirmPassword = LabelUtils.createLabel("Confirm:",
-                minecraftFont, (STAGE_WIDTH - 143) / 2f, 68);
+                minecraftFont, (SpaceInvadersGame.STAGE_WIDTH - 143) / 2f, 68);
 
-        TextField idField = TextFieldUtils.createTextField("", game.assetManager, 95, 15, (STAGE_WIDTH - 95) / 2f + 22,
+        TextField idField = TextFieldUtils.createTextField("", game.assetManager, 95, 15, (SpaceInvadersGame.STAGE_WIDTH - 95) / 2f + 22,
                 99);
         idField.setMessageText("Enter id");
         // Placeholder text will look gray without the following line
         idField.getStyle().messageFontColor = idField.getStyle().fontColor;
 
         TextField passwordField = TextFieldUtils.createPasswordField(game.assetManager, 95, 15,
-                (STAGE_WIDTH - 95) / 2f + 22, 83);
+                (SpaceInvadersGame.STAGE_WIDTH - 95) / 2f + 22, 83);
         passwordField.setMessageText("Enter password");
         passwordField.getStyle().messageFontColor = passwordField.getStyle().fontColor;
 
         TextField confirmField = TextFieldUtils.createPasswordField(game.assetManager, 95, 15,
-                (STAGE_WIDTH - 95) / 2f + 22, 66);
+                (SpaceInvadersGame.STAGE_WIDTH - 95) / 2f + 22, 66);
         confirmField.setMessageText("Confirm password");
         confirmField.getStyle().messageFontColor = confirmField.getStyle().fontColor;
 
         ImageTextButton submitButton = ButtonUtils.createButton(game, "Submit", "textures/button.png",
-                "textures/button.png", 95, 15, (STAGE_WIDTH - 95) / 2f, 49);
+                "textures/button.png", 95, 15, (SpaceInvadersGame.STAGE_WIDTH - 95) / 2f, 49);
 
         ImageButton backButton = ButtonUtils.createBackButton(this.game, "textures/back-button.png",
                 "textures/back-button.png", 28, 15, 10, 245, game.screenManager.getRecentScreen());

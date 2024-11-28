@@ -59,7 +59,7 @@ public class Powerups implements Entity {
             }
 
             // Set the position and rotation of the powerup sprite based on the coordinate data
-            sprite.setPosition(coordinate.getX(), coordinate.getY());
+            sprite.setPosition(coordinate.getX() - sprite.getWidth() / 2f, coordinate.getY() - sprite.getHeight() / 2f);
             sprite.setRotation(coordinate.getAngle());
 
             // Draw the powerup sprite to the batch, rendering it to the screen
