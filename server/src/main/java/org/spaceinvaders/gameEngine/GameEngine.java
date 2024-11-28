@@ -1,11 +1,9 @@
 package org.spaceinvaders.gameEngine;
 
 import com.physics.Manager;
-import org.checkerframework.checker.units.qual.C;
 import org.spaceinvaders.util.Coordinate;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 public class GameEngine {
 
