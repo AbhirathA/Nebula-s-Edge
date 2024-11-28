@@ -6,6 +6,13 @@
 
 #include "velVerlet.h"
 #include "Lifetime.h"
+#include "Asteroid.h"
+#include "BlackholeObject.h"
+#include "Meteor.h"
+#include "Flare.h"
+#include "PowerUp.h"
+#include "UserObj.h"
+#include "Enemy.h"
 
 class Bullet : public velVerlet
 {
@@ -26,24 +33,24 @@ public:
 
     virtual bool checkCollision(Asteroid *obj);
     virtual bool checkCollision(BlackholeObject *obj);
-    virtual bool checkCollision(Meteor *obj);
+    virtual bool checkCollision(Meteor *obj) override;
     virtual bool checkCollision(Flare *obj);
     virtual bool checkCollision(PowerUp *obj);
     virtual bool checkCollision(UserObj *obj);
-    virtual bool checkCollision(Enemy *obj);
-    bool checkCollision(Bullet *obj);
+    virtual bool checkCollision(Enemy *obj) override;
+    bool checkCollision(Bullet *obj) override;
 
     bool collisionCorrection(Obj *obj)
     {
         return obj->collisionCorrection(this);
     }
 
-    virtual bool collisionCorrection(Asteroid *obj);
-    virtual bool collisionCorrection(BlackholeObject *obj);
-    virtual bool collisionCorrection(Meteor *obj);
-    virtual bool collisionCorrection(PowerUp *obj);
-    bool collisionCorrection(Bullet *obj);
-    virtual bool collisionCorrection(Flare *obj);
-    virtual bool collisionCorrection(UserObj *obj);
-    virtual bool collisionCorrection(Enemy *obj);
+    virtual bool collisionCorrection(Asteroid *obj) override;
+    virtual bool collisionCorrection(BlackholeObject *obj) override;
+    virtual bool collisionCorrection(Meteor *obj) override;
+    virtual bool collisionCorrection(PowerUp *obj) override;
+    bool collisionCorrection(Bullet *obj) override;
+    virtual bool collisionCorrection(Flare *obj) override;
+    virtual bool collisionCorrection(UserObj *obj) override;
+    virtual bool collisionCorrection(Enemy *obj) override;
 };

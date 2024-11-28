@@ -33,6 +33,14 @@ JNIEXPORT void JNICALL Java_com_physics_Manager_update
 
 /*
  * Class:     com_physics_Manager
+ * Method:    dropP
+ * Signature: (IIIIIIIIIIIIII)I
+ */
+JNIEXPORT jint JNICALL Java_com_physics_Manager_dropP
+  (JNIEnv *, jobject, jint, jint, jint, jint, jint, jint, jint, jint, jint, jint, jint, jint, jint, jint);
+
+/*
+ * Class:     com_physics_Manager
  * Method:    drop1
  * Signature: (IIIIIIIIII)I
  */
@@ -49,11 +57,115 @@ JNIEXPORT jint JNICALL Java_com_physics_Manager_drop2
 
 /*
  * Class:     com_physics_Manager
+ * Method:    forward
+ * Signature: (I)V
+ */
+JNIEXPORT void JNICALL Java_com_physics_Manager_forward
+  (JNIEnv *, jobject, jint);
+
+/*
+ * Class:     com_physics_Manager
+ * Method:    stop
+ * Signature: (I)V
+ */
+JNIEXPORT void JNICALL Java_com_physics_Manager_stop
+  (JNIEnv *, jobject, jint);
+
+/*
+ * Class:     com_physics_Manager
+ * Method:    thrust
+ * Signature: (I)V
+ */
+JNIEXPORT void JNICALL Java_com_physics_Manager_thrust
+  (JNIEnv *, jobject, jint);
+
+/*
+ * Class:     com_physics_Manager
+ * Method:    left
+ * Signature: (I)V
+ */
+JNIEXPORT void JNICALL Java_com_physics_Manager_left
+  (JNIEnv *, jobject, jint);
+
+/*
+ * Class:     com_physics_Manager
+ * Method:    right
+ * Signature: (I)V
+ */
+JNIEXPORT void JNICALL Java_com_physics_Manager_right
+  (JNIEnv *, jobject, jint);
+
+/*
+ * Class:     com_physics_Manager
+ * Method:    xForce
+ * Signature: ()I
+ */
+JNIEXPORT jint JNICALL Java_com_physics_Manager_xForce
+  (JNIEnv *, jobject);
+
+/*
+ * Class:     com_physics_Manager
+ * Method:    yForce
+ * Signature: ()I
+ */
+JNIEXPORT jint JNICALL Java_com_physics_Manager_yForce
+  (JNIEnv *, jobject);
+
+/*
+ * Class:     com_physics_Manager
  * Method:    removeDead
  * Signature: ([I)V
  */
 JNIEXPORT void JNICALL Java_com_physics_Manager_removeDead
   (JNIEnv *, jobject, jintArray);
+
+/*
+ * Class:     com_physics_Manager
+ * Method:    shoot
+ * Signature: (IIII)I
+ */
+JNIEXPORT jint JNICALL Java_com_physics_Manager_shoot
+  (JNIEnv *, jobject, jint, jint, jint, jint);
+
+/*
+ * Class:     com_physics_Manager
+ * Method:    dropAsteroid
+ * Signature: (IIIIIIIII)I
+ */
+JNIEXPORT jint JNICALL Java_com_physics_Manager_dropAsteroid
+  (JNIEnv *, jobject, jint, jint, jint, jint, jint, jint, jint, jint, jint);
+
+/*
+ * Class:     com_physics_Manager
+ * Method:    dropBlackHole
+ * Signature: (IIIIIIIII)I
+ */
+JNIEXPORT jint JNICALL Java_com_physics_Manager_dropBlackHole
+  (JNIEnv *, jobject, jint, jint, jint, jint, jint, jint, jint, jint, jint);
+
+/*
+ * Class:     com_physics_Manager
+ * Method:    dropEnemy
+ * Signature: (IIIIIIIII)I
+ */
+JNIEXPORT jint JNICALL Java_com_physics_Manager_dropEnemy
+  (JNIEnv *, jobject, jint, jint, jint, jint, jint, jint, jint, jint, jint);
+
+/*
+ * Class:     com_physics_Manager
+ * Method:    dropMeteor
+ * Signature: (IIIIIIIII)I
+ */
+JNIEXPORT jint JNICALL Java_com_physics_Manager_dropMeteor
+  (JNIEnv *, jobject, jint, jint, jint, jint, jint, jint, jint, jint, jint);
+
+/*
+ * Class:     com_physics_Manager
+ * Method:    dropUser
+ * Signature: (IIIIIIIIIIIIII)I
+ */
+JNIEXPORT jint JNICALL Java_com_physics_Manager_dropUser
+  (JNIEnv *, jobject, jint, jint, jint, jint, jint, jint, jint, jint, jint, jint, jint, jint, jint, jint);
 
 /*
  * Class:     com_physics_Manager

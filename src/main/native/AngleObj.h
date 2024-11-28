@@ -2,129 +2,119 @@
 #include "Obj.h"
 #include "LinearObj.h"
 #include <cmath>
-#define VALUE_SCALE 1000
-#define ANGLE_SCALE 10
 
-class AngleObj : public Obj
-{
 
-private:
-	int mod(int a, int b)
-	{
-		while (a > b)
-		{
-			a -= b;
+class AngleObj: public Obj{
+	protected:
+
+		int mod(int a, int b) {
+			while (a > b) {
+				a -= b;
+			}
+			while (a < 0) {
+				a += b;
+			}
+			return a;
 		}
-		while (a < 0)
-		{
-			a += b;
+
+		//Angle Computation Pre-requisites
+		static int SIN[3600];
+		static int COS[3600];
+		static double PI;
+		static bool initialized;
+
+		// Orientation
+		int angleScaled = 0;
+
+		//The velocity of the object
+		int v = 0;
+
+		//The acceleration of the object
+		int acc = 0;
+		int accX = 0;
+		int accY = 0;
+
+	public:
+
+		AngleObj(int id, int x, int y, int v, int angle, int acc, int accX, int accY, int innerRad, int outerRad, int mass):Obj(id,x,y,innerRad,outerRad, mass) {
+			this->v = v;
+			this->angleScaled = (angle*ANGLE_SCALE)%(360*ANGLE_SCALE);
+			this->acc = acc;
+			this->accX = accX;
+			this->accY = accY;
+
+			std::cout << "Created AO: " << "id" << id << "x:" << x << " y: " << y << " v: " << v << " angle: " << angle << std::endl;
+			this->initializeTrig();
 		}
-		return a;
-	}
 
-protected:
-	// Angle Computation Pre-requisites
-	static int SIN[3600];
-	static int COS[3600];
-	static double PI;
-	static bool initialized;
+		virtual int getvX() {
+			return this->v * COS[this->angleScaled];
+		}
 
-	// Orientation
-	int angleScaled = 0;
+		virtual int getvY() {
+			return this->v * SIN[this->angleScaled];
+		}
 
-	// The velocity of the object
-	int v = 0;
+		virtual int getOri() {
+			return angleScaled;
+		}
 
-	// The acceleration of the object
-	int acc = 0;
-	int accX = 0;
-	int accY = 0;
+		virtual int getaccX() {
+			return this->acc * COS[this->angleScaled] + this->accX * VALUE_SCALE;
+		}
 
-public:
-	AngleObj(int id, int x, int y, int v, int angle, int acc, int accX, int accY, int innerRad, int outerRad, int mass) : Obj(id, x, y, innerRad, outerRad, mass)
-	{
-		this->v = v;
-		this->angleScaled = (angle * ANGLE_SCALE) % (360 * ANGLE_SCALE);
-		this->acc = acc;
-		this->accX = accX;
-		this->accY = accY;
+		virtual int getaccY() {
+			return this->acc * SIN[this->angleScaled] + this->accY * VALUE_SCALE;
+		}
 
-		std::cout << "Created AO: " << v << " " << angle << std::endl;
-		this->initializeTrig();
-	}
+		virtual int getV() {
+			return this->v;
+		}
 
-	virtual int getvX()
-	{
-		return this->v * COS[this->angleScaled];
-	}
+		virtual void updateV(int v) {
+			this->v = v;
+		}
 
-	virtual int getvY()
-	{
-		return this->v * SIN[this->angleScaled];
-	}
+		virtual void updateV(int vX, int vY, int scale);
 
-	virtual int getaccX()
-	{
-		return this->acc * COS[this->angleScaled] + this->accX * VALUE_SCALE;
-	}
+		virtual int getXacc() {
+			return accX;
+		}
 
-	virtual int getaccY()
-	{
-		return this->acc * SIN[this->angleScaled] + this->accY * VALUE_SCALE;
-	}
+		virtual int getYacc() {
+			return accY;
+		}
 
-	virtual int getV()
-	{
-		return this->v;
-	}
+		virtual void updateAcc(int x, int y) {
+			accX = x; accY = y;
+		}
 
-	virtual void updateV(int v)
-	{
-		this->v = v;
-	}
+		virtual void updateRadialAcc(int a) {
+			this->acc = a;
+		}
 
-	virtual void updateV(int vX, int vY, int scale);
+		double getAngle() {
+			return ((double)this->angleScaled) / ANGLE_SCALE;
+		}
 
-	virtual int getXacc()
-	{
-		return accX;
-	}
+		virtual bool checkCollision(Obj* obj);
+		virtual bool checkCollision(LinearObj* lo);
+		virtual bool checkCollision(AngleObj* ao);
 
-	virtual int getYacc()
-	{
-		return accY;
-	}
+		virtual bool collisionCorrection(Obj* other);
+		virtual bool collisionCorrection(LinearObj* other);
+		virtual bool collisionCorrection(AngleObj* other);
 
-	virtual void updateAcc(int x, int y)
-	{
-		accX = x;
-		accY = y;
-	}
+		virtual void updatePos(int t);
+		virtual int getNextX(int t);
+		virtual int getNextY(int t);
 
-	virtual void updateRadialAcc(int a)
-	{
-		this->acc = a;
-	}
+		virtual void initializeTrig();
 
-	double getAngle()
-	{
-		return ((double)this->angleScaled) / ANGLE_SCALE;
-	}
+		virtual bool boundCorrection(int lft, int rt, int tp, int bt, int t);
+		virtual ~AngleObj() {};
 
-	virtual bool checkCollision(Obj *obj);
-	virtual bool checkCollision(LinearObj *lo);
-	virtual bool checkCollision(AngleObj *ao);
-
-	virtual bool collisionCorrection(Obj *other);
-	virtual bool collisionCorrection(LinearObj *other);
-	virtual bool collisionCorrection(AngleObj *other);
-
-	virtual void updatePos(int t);
-	virtual int getNextX(int t);
-	virtual int getNextY(int t);
-
-	virtual void initializeTrig();
-
-	virtual bool boundCorrection(int lft, int rt, int tp, int bt, int t);
-	virtual ~AngleObj() {};
+		virtual void printProp() {
+			std::cout << "x: " << posX << " y: " << posY << " v rad" << v << " a rad " << acc << " angle " << angleScaled << std::endl;
+		}
 };

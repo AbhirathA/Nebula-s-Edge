@@ -9,7 +9,9 @@ public class TestPhysicsEngine {
         System.out.println("Physics Engine loaded successfully!");
 
         Manager manager = new Manager(0, 2, 0, 1000, 0, -1000, 1);
-        int id2 = manager.drop2(150, -250, 5, -4, 0, 0, 10, 10, 100);
+        int id1 = manager.drop2(150, -250, 5, -4, 0, 0, 10, 10, 100);
+        int id2 = manager.drop1(150, 250, 5, 0, 0, 0, 0, 10, 10, 100);
+        int id3 = manager.drop1(150, 0, 5, 0, 0, 0, 0, 10, 10, 100);
 
         System.out.println(", ID2: " + id2);
 

@@ -1,3 +1,4 @@
+
 #include "jni_helper.h"
 #include "com_physics_Manager.h"
 #include "Manager.h"
@@ -31,7 +32,21 @@ extern "C"
         }
     }
 
-    JNIEXPORT jint JNICALL Java_com_physics_Manager_drop1(JNIEnv *env, jobject obj, jint x, jint y, jint v, jint angle, jint acc, jint accX, jint accY, jint innerRad, jint outerRad, jint mass)
+    JNIEXPORT jint JNICALL Java_com_physics_Manager_dropP(JNIEnv *env, jobject obj, jint x, jint y, jint peakV, jint driftV, jint angle, jint thrust, jint thrustPersistance,
+                                                          jint movePersistance, jint coolDown, jint accX, jint accY, jint innerRad, jint outerRad, jint mass)
+    {
+        Manager *nativeManager = reinterpret_cast<Manager *>(getNativeHandle(env, obj));
+        if (nativeManager != nullptr)
+        {
+            int result = nativeManager->dropP(x, y, peakV, driftV, angle, thrust, thrustPersistance,
+                                              movePersistance, coolDown, accX, accY, innerRad, outerRad, mass);
+            return static_cast<jint>(result);
+        }
+        return -1;
+    }
+
+    JNIEXPORT jint JNICALL Java_com_physics_Manager_drop1(JNIEnv *env, jobject obj, jint x, jint y, jint v, jint angle, jint acc, jint accX, jint accY,
+                                                          jint innerRad, jint outerRad, jint mass)
     {
         Manager *nativeManager = reinterpret_cast<Manager *>(getNativeHandle(env, obj));
         if (nativeManager != nullptr)
@@ -42,7 +57,8 @@ extern "C"
         return -1;
     }
 
-    JNIEXPORT jint JNICALL Java_com_physics_Manager_drop2(JNIEnv *env, jobject obj, jint x, jint y, jint vX, jint vY, jint accX, jint accY, jint innerRad, jint outerRad, jint mass)
+    JNIEXPORT jint JNICALL Java_com_physics_Manager_drop2(JNIEnv *env, jobject obj, jint x, jint y, jint vX, jint vY, jint accX, jint accY,
+                                                          jint innerRad, jint outerRad, jint mass)
     {
         Manager *nativeManager = reinterpret_cast<Manager *>(getNativeHandle(env, obj));
         if (nativeManager != nullptr)
@@ -51,6 +67,73 @@ extern "C"
             return static_cast<jint>(result);
         }
         return -1;
+    }
+
+    JNIEXPORT void JNICALL Java_com_physics_Manager_forward(JNIEnv *env, jobject obj, jint id)
+    {
+        Manager *nativeManager = reinterpret_cast<Manager *>(getNativeHandle(env, obj));
+        if (nativeManager != nullptr)
+        {
+            nativeManager->forward(id);
+        }
+    }
+
+    JNIEXPORT void JNICALL Java_com_physics_Manager_stop(JNIEnv *env, jobject obj, jint id)
+    {
+        Manager *nativeManager = reinterpret_cast<Manager *>(getNativeHandle(env, obj));
+        if (nativeManager != nullptr)
+        {
+            nativeManager->stop(id);
+        }
+    }
+
+    JNIEXPORT void JNICALL Java_com_physics_Manager_thrust(JNIEnv *env, jobject obj, jint id)
+    {
+        Manager *nativeManager = reinterpret_cast<Manager *>(getNativeHandle(env, obj));
+        if (nativeManager != nullptr)
+        {
+            nativeManager->thrust(id);
+        }
+    }
+
+    JNIEXPORT void JNICALL Java_com_physics_Manager_left(JNIEnv *env, jobject obj, jint id)
+    {
+        Manager *nativeManager = reinterpret_cast<Manager *>(getNativeHandle(env, obj));
+        if (nativeManager != nullptr)
+        {
+            nativeManager->left(id);
+        }
+    }
+
+    JNIEXPORT void JNICALL Java_com_physics_Manager_right(JNIEnv *env, jobject obj, jint id)
+    {
+        Manager *nativeManager = reinterpret_cast<Manager *>(getNativeHandle(env, obj));
+        if (nativeManager != nullptr)
+        {
+            nativeManager->right(id);
+        }
+    }
+
+    JNIEXPORT jint JNICALL Java_com_physics_Manager_xForce(JNIEnv *env, jobject obj)
+    {
+        Manager *nativeManager = reinterpret_cast<Manager *>(getNativeHandle(env, obj));
+        if (nativeManager != nullptr)
+        {
+            int result = nativeManager->xForce();
+            return static_cast<jint>(result);
+        }
+        return 0;
+    }
+
+    JNIEXPORT jint JNICALL Java_com_physics_Manager_yForce(JNIEnv *env, jobject obj)
+    {
+        Manager *nativeManager = reinterpret_cast<Manager *>(getNativeHandle(env, obj));
+        if (nativeManager != nullptr)
+        {
+            int result = nativeManager->yForce();
+            return static_cast<jint>(result);
+        }
+        return 0;
     }
 
     JNIEXPORT void JNICALL Java_com_physics_Manager_removeDead(JNIEnv *env, jobject obj, jintArray idsArray)
@@ -64,6 +147,84 @@ extern "C"
             env->ReleaseIntArrayElements(idsArray, ids, 0);
             nativeManager->removeDead(idsVector);
         }
+    }
+
+    JNIEXPORT jint JNICALL Java_com_physics_Manager_shoot(JNIEnv *env, jobject obj, jint id, jint innerRadius, jint outerRadius, jint mass)
+    {
+        Manager *nativeManager = reinterpret_cast<Manager *>(getNativeHandle(env, obj));
+        if (nativeManager != nullptr)
+        {
+            int result = nativeManager->shoot(id, innerRadius, outerRadius, mass);
+            return static_cast<jint>(result);
+        }
+        return -1;
+    }
+
+    JNIEXPORT jint JNICALL Java_com_physics_Manager_dropAsteroid(JNIEnv *env, jobject obj, jint x, jint y, jint vX, jint vY, jint accX, jint accY,
+                                                                 jint innerRad, jint outerRad, jint mass)
+    {
+        Manager *nativeManager = reinterpret_cast<Manager *>(getNativeHandle(env, obj));
+        if (nativeManager != nullptr)
+        {
+            int result = nativeManager->dropAsteroid(x, y, vX, vY, accX, accY,
+                                                     innerRad, outerRad, mass);
+            return static_cast<jint>(result);
+        }
+        return -1;
+    }
+
+    JNIEXPORT jint JNICALL Java_com_physics_Manager_dropBlackHole(JNIEnv *env, jobject obj, jint x, jint y, jint vX, jint vY, jint accX, jint accY,
+                                                                  jint innerRad, jint outerRad, jint mass)
+    {
+        Manager *nativeManager = reinterpret_cast<Manager *>(getNativeHandle(env, obj));
+        if (nativeManager != nullptr)
+        {
+            int result = nativeManager->dropBlackHole(x, y, vX, vY, accX, accY,
+                                                      innerRad, outerRad, mass);
+            return static_cast<jint>(result);
+        }
+        return -1;
+    }
+
+    JNIEXPORT jint JNICALL Java_com_physics_Manager_dropEnemy(JNIEnv *env, jobject obj, jint x, jint y, jint vX, jint vY, jint accX, jint accY,
+                                                              jint innerRad, jint outerRad, jint mass)
+    {
+        Manager *nativeManager = reinterpret_cast<Manager *>(getNativeHandle(env, obj));
+        if (nativeManager != nullptr)
+        {
+            int result = nativeManager->dropEnemy(x, y, vX, vY, accX, accY,
+                                                  innerRad, outerRad, mass);
+            return static_cast<jint>(result);
+        }
+        return -1;
+    }
+
+    JNIEXPORT jint JNICALL Java_com_physics_Manager_dropMeteor(JNIEnv *env, jobject obj, jint x, jint y, jint vX, jint vY, jint accX, jint accY,
+                                                               jint innerRad, jint outerRad, jint mass)
+    {
+        Manager *nativeManager = reinterpret_cast<Manager *>(getNativeHandle(env, obj));
+        if (nativeManager != nullptr)
+        {
+            int result = nativeManager->dropMeteor(x, y, vX, vY, accX, accY,
+                                                   innerRad, outerRad, mass);
+            return static_cast<jint>(result);
+        }
+        return -1;
+    }
+
+    JNIEXPORT jint JNICALL Java_com_physics_Manager_dropUser(JNIEnv *env, jobject obj, jint x, jint y, jint peakV, jint driftV, jint angle, jint thrust,
+                                                             jint thrustPersistance, jint movePersistance, jint coolDown, jint accX, jint accY,
+                                                             jint innerRad, jint outerRad, jint mass)
+    {
+        Manager *nativeManager = reinterpret_cast<Manager *>(getNativeHandle(env, obj));
+        if (nativeManager != nullptr)
+        {
+            int result = nativeManager->dropUser(x, y, peakV, driftV, angle, thrust,
+                                                 thrustPersistance, movePersistance, coolDown,
+                                                 accX, accY, innerRad, outerRad, mass);
+            return static_cast<jint>(result);
+        }
+        return -1;
     }
 
     JNIEXPORT jobjectArray JNICALL Java_com_physics_Manager_display(JNIEnv *env, jobject obj, jint lowerX, jint lowerY, jint upperX, jint upperY)

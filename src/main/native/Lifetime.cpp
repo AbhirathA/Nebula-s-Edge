@@ -4,9 +4,35 @@
 
 #include "Lifetime.h"
 
+std::vector<Lifetime*> Lifetime::instances = {};
+
+
 void Lifetime::incrementAge() {
+    if (isUpdateable == false) {
+        return;
+    }
     age++;
-    if(age>=maxLife) {
+    if (age >= maxLife) {
+        this->end();
         onExpire();
     }
+}
+
+void Lifetime::updateInstances() {
+    for (auto ltObj : Lifetime::instances) {
+        ltObj->incrementAge();
+    }
+}
+
+void Lifetime::start() {
+    isUpdateable = true;
+}
+
+void Lifetime::end() {
+    isUpdateable = false;
+}
+
+void Lifetime::resetAge() {
+    this->age = 0;
+    this->isUpdateable = false;
 }
