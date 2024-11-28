@@ -79,15 +79,6 @@ public:
 				delete i.second;
 			}
 		}
-
-	int dropBullet(int x, int y,  int vX, int vY, int innerRad, int outerRad, int mass){ // Only Debug
-		Bullet* temp = new Bullet(count, x, y, vX, vY, 0, 0, innerRadius, outerRadius, mass, 1000, nullptr);
-		tree.insert(temp->getObjBox(), count, temp->getStatus());
-		temp->updateAcc(gX, gY);
-		objMap[count] = temp;
-		count++;
-		return count-1;
-	}
 	void removeDead(std::vector<int> ids);
 
 	int shoot(int id, int innerRadius, int outerRadius, int mass);

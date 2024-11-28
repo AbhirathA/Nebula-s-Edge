@@ -226,8 +226,8 @@ bool AngleObj::collisionCorrection(AngleObj* obj){
 void AngleObj::updatePos(int t){
 
     // Position is updated
-    std::cout << "Before update: ";
-    printProp();
+    // std::cout << "Before update: ";
+    // printProp();
     this->posX = this->getNextX(t);
     this->posY = this->getNextY(t);
 
@@ -239,8 +239,8 @@ void AngleObj::updatePos(int t){
 
     //this->v = sqrt(vX * vX + vY * vY) / VALUE_SCALE;
     this->updateV(vX, vY, VALUE_SCALE);
-    std::cout << "after update: ";
-    printProp();
+    // std::cout << "after update: ";
+    // printProp();
     this->updateBox();
 }
 int AngleObj::getNextX(int t) {

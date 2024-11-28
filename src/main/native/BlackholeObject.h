@@ -54,7 +54,7 @@ public:
     }
 
     virtual bool checkCollision(Obj* obj) override {
-        return false;
+        return obj->checkCollision(this);
     }
     virtual bool checkCollision(Asteroid *obj) override {
         return false;
