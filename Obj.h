@@ -149,8 +149,6 @@ public:
 		return 0;
 	}
 	virtual bool checkCollision(Obj* obj) = 0;
-	virtual bool checkCollision(LinearObj* lo) = 0;
-	virtual bool checkCollision(AngleObj* ao) = 0;
 
 	virtual bool checkCollision(Asteroid *obj) = 0;
 	virtual bool checkCollision(BlackholeObject * obj) = 0;
@@ -162,8 +160,6 @@ public:
 	virtual bool checkCollision(Bullet* obj) = 0;
 
 	virtual bool collisionCorrection(Obj* other) = 0;
-	virtual bool collisionCorrection(LinearObj* other) = 0;
-	virtual bool collisionCorrection(AngleObj* other) = 0;
 
 	virtual void updatePos(int t) = 0;
 	virtual void updateAcc(int ax, int ay) = 0;

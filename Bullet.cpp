@@ -4,8 +4,14 @@
 
 #include "Bullet.h"
 
+#include <BlackholeObject.h>
+#include <PowerUp.h>
+
 #include "Asteroid.h"
+#include "Enemy.h"
+#include "Flare.h"
 #include "Meteor.h"
+#include "UserObj.h"
 
 bool Bullet::checkCollision(Asteroid *obj) {
     // Factor because of integer computation instead of floating point
@@ -26,6 +32,7 @@ bool Bullet::checkCollision(Asteroid *obj) {
 }
 
 bool Bullet::checkCollision(BlackholeObject *obj) {
+    return obj->checkCollision(this);
 }
 
 bool Bullet::checkCollision(Meteor *obj) {

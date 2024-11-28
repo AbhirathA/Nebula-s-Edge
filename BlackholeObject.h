@@ -75,4 +75,61 @@ public:
             objects.erase(obj);
         }
     }
+
+    virtual bool checkCollision(Obj* obj) override {
+        return obj->checkCollision(this);
+    }
+    virtual bool checkCollision(Asteroid *obj) override {
+        return false;
+    }
+    virtual bool checkCollision(BlackholeObject * obj) override{
+        return false;
+    }
+    virtual bool checkCollision(Meteor* obj) override{
+        return false;
+    }
+    virtual bool checkCollision(Flare* obj) override{
+        return false;
+    }
+    virtual bool checkCollision(PowerUp* obj) override{
+        return false;
+    }
+    virtual bool checkCollision(UserObj* obj) override{
+        return false;
+    }
+    virtual bool checkCollision(Enemy* obj) override{
+        return false;
+    }
+    virtual bool checkCollision(Bullet* obj) override{
+        return false;
+    }
+
+    virtual bool collisionCorrection(Obj* obj) override{
+        return obj->collisionCorrection(this);
+    }
+    virtual bool collisionCorrection(Asteroid* obj) override{
+        return false;
+    }
+    virtual bool collisionCorrection(BlackholeObject* obj) override{
+        return false;
+    }
+    virtual bool collisionCorrection(Meteor* obj) override{
+        return false;
+    }
+    virtual bool collisionCorrection(PowerUp* obj) override{
+        return false;
+    }
+    virtual bool collisionCorrection(Bullet* obj) override{
+        return false;
+    }
+    virtual bool collisionCorrection(Flare* obj) override{
+        return false;
+    }
+    virtual bool collisionCorrection(UserObj* obj) override{
+        return false;
+    }
+    virtual bool collisionCorrection(Enemy* obj) override{
+        return false;
+    }
+
 };

@@ -1,6 +1,11 @@
 #include "Manager.h"
 
+#include <BlackholeObject.h>
+
+#include "Asteroid.h"
 #include "Bullet.h"
+#include "Enemy.h"
+#include "Meteor.h"
 #include "UserObj.h"
 
 std::map<int, std::pair<int, int>> Manager::display() {
@@ -28,13 +33,23 @@ std::vector<std::vector<int>> Manager::display(int lowerX, int lowerY, int upper
 	return m;
 }
 
+int Manager::dropUser(int x, int y, int peakV, int driftV, int angle, int thrust, int thrustPersistance, int movePersistance, int coolDown, int accX, int accY, int innerRad, int outerRad, int mass, int health, int bulletSpeed, int bulletLife) {
+	UserObj* temp = new UserObj(count, x, y, peakV, driftV, angle, thrust, thrustPersistance, movePersistance, coolDown, accX, accY, innerRad, outerRad, mass, health, bulletSpeed, bulletLife);
+	this->playerMap[count] = temp;
+	this->playerMap[count]->updateAcc(gX,gY);
+	objMap[count] = this->playerMap[count];
+	tree.insert(temp->getObjBox(), count, temp->getStatus());
+	count++;
+	return count-1;
+}
+
 // int Manager::drop1(int x, int y, int v, int angle, int acc, int accX, int accY, int innerRad, int outerRad, int mass){
-// 	Obj* temp = new AngleObj(count, x, y, v, angle, acc, accX, accY, innerRad, outerRad, mass);
-// 	objMap[count] = temp;
-// 	tree.insert(temp->getObjBox(), count, temp->getStatus());
-// 	temp->updateAcc(gX, gY);
-// 	count++;
-// 	return count-1;
+	// Obj* temp = new AngleObj(count, x, y, v, angle, acc, accX, accY, innerRad, outerRad, mass);
+	// objMap[count] = temp;
+	// tree.insert(temp->getObjBox(), count, temp->getStatus());
+	// temp->updateAcc(gX, gY);
+	// count++;
+	// return count-1;
 // }
 
 void Manager::update() {
@@ -85,6 +100,46 @@ void Manager::removeDead(std::vector<int> ids) {
 	}
 }
 
+int Manager::dropAsteroid(int x, int y, int innerRad, int outerRad, int mass) {
+	Obj* temp = new Asteroid(count, x, y, innerRad, outerRad, mass);
+	objMap[count] = temp;
+	tree.insert(temp->getObjBox(), count, temp->getStatus());
+	temp->updateAcc(gX, gY);
+	count++;
+	return count-1;
+}
+
+int Manager::dropBlackHole(int x, int y, int innerRad, int outerRad, int mass) {
+	Obj* temp = new BlackholeObject(count, x, y, innerRad, outerRad, mass);
+	objMap[count] = temp;
+	tree.insert(temp->getObjBox(), count, temp->getStatus());
+	temp->updateAcc(gX, gY);
+	count++;
+	return count-1;
+
+}
+
+int Manager::dropEnemy(int x, int y, int v, int res, int innerRad, int outerRad, int mass, bool startX, int startSign, Obj* aim) {
+	Obj* temp = new Enemy(count, x, y, v, res, innerRad, outerRad, mass, startX, startSign, aim);
+	objMap[count] = temp;
+	tree.insert(temp->getObjBox(), count, temp->getStatus());
+	temp->updateAcc(gX, gY);
+	count++;
+	return count-1;
+}
+
+int Manager::dropMeteor(int x, int y, int vX, int vY, int accX, int accY, int innerRad, int outerRad, int mass) {
+	Obj* temp = new Meteor(count, x, y, vX, vY, accX, accY, innerRad, outerRad, mass);
+	objMap[count] = temp;
+	tree.insert(temp->getObjBox(), count, temp->getStatus());
+	temp->updateAcc(gX, gY);
+	count++;
+	return count-1;
+}
+
+
 int main() {
 	std::cout<<"Gathik is a good boy"<<std::endl;
 }
+
+

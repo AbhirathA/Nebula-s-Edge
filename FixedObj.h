@@ -10,5 +10,10 @@ public:
 	virtual bool checkCollision(Obj* obj) override;
 	virtual bool boundCorrection(int lft, int rt, int tp, int bt, int t);
 	virtual bool collisionCorrection(LinearObj* other);
+	virtual void takeDamage() override {
+	}
+
+
+
 };
 

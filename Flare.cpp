@@ -4,8 +4,12 @@
 
 #include "Flare.h"
 
+#include <BlackholeObject.h>
+
 #include "Asteroid.h"
+#include "Enemy.h"
 #include "Meteor.h"
+#include "UserObj.h"
 
 bool Flare::checkCollision(Asteroid *obj) {
     // Factor because of integer computation instead of floating point
@@ -164,5 +168,5 @@ bool Flare::collisionCorrection(Enemy *obj) {
         return true;
     }
     return false;
-
 }
+

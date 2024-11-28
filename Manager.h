@@ -52,7 +52,6 @@ public:
 
 		std::map<int, std::pair<int, int>>  display();
 
-		int dropP(int x, int y, int peakV, int driftV, int angle, int thrust, int thrustPersistance, int movePersistance, int coolDown, int accX, int accY, int innerRad, int outerRad, int mass);
 		// int drop1(int x, int y, int v, int angle, int acc, int accX, int accY, int innerRad, int outerRad, int mass); // add an object
 		// int drop2(int x, int y, int vX, int vY, int accX, int accY, int innerRad, int outerRad, int mass); // add an object
 
@@ -75,8 +74,6 @@ public:
 			this->playerMap[id]->turnRight(5);
 		}
 
-		int xForce();
-		int yForce();
 		~Manager() {
 			for (auto i : objMap) {
 				delete i.second;
@@ -86,11 +83,11 @@ public:
 
 	int shoot(int id, int innerRadius, int outerRadius, int mass);
 
-	int dropAsteroid(int x, int y, int vX, int vY, int accX, int accY, int innerRad, int outerRad, int mass);
-	int dropBlackHole(int x, int y, int vX, int vY, int accX, int accY, int innerRad, int outerRad, int mass);
-	int dropEnemy(int x, int y, int vX, int vY, int accX, int accY, int innerRad, int outerRad, int mass);
+	int dropAsteroid(int x, int y, int innerRad, int outerRad, int mass);
+	int dropBlackHole(int x, int y, int innerRad, int outerRad, int mass);
+	int dropEnemy(int x, int y, int v, int res, int innerRad, int startSign, int outerRad, bool startX, int mass, Obj *aim);
 	int dropMeteor(int x, int y, int vX, int vY, int accX, int accY, int innerRad, int outerRad, int mass);
-	int dropUser(int x, int y, int peakV, int driftV, int angle, int thrust, int thrustPersistance, int movePersistance, int coolDown, int accX, int accY, int innerRad, int outerRad, int mass);
+	int dropUser(int x, int y, int peakV, int driftV, int angle, int thrust, int thrustPersistance, int movePersistance, int coolDown, int accX, int accY, int innerRad, int outerRad, int mass, int health, int bulletSpeed, int bulletLife);
 
 };
 
