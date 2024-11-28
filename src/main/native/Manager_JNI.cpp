@@ -1,4 +1,3 @@
-
 #include "jni_helper.h"
 #include "com_physics_Manager.h"
 #include "Manager.h"
@@ -32,24 +31,12 @@ extern "C"
         }
     }
 
-    JNIEXPORT jint JNICALL Java_com_physics_Manager_dropP(JNIEnv *env, jobject obj, jint x, jint y, jint peakV, jint driftV, jint angle, jint thrust, jint thrustPersistance,
-                                                          jint movePersistance, jint coolDown, jint accX, jint accY, jint innerRad, jint outerRad, jint mass)
-    {
-        Manager *nativeManager = reinterpret_cast<Manager *>(getNativeHandle(env, obj));
-        if (nativeManager != nullptr)
-        {
-            int result = nativeManager->dropP(x, y, peakV, driftV, angle, thrust, thrustPersistance,
-                                              movePersistance, coolDown, accX, accY, innerRad, outerRad, mass);
-            return static_cast<jint>(result);
-        }
-        return -1;
-    }
-
     JNIEXPORT void JNICALL Java_com_physics_Manager_forward(JNIEnv *env, jobject obj, jint id)
     {
         Manager *nativeManager = reinterpret_cast<Manager *>(getNativeHandle(env, obj));
         if (nativeManager != nullptr)
         {
+            std::cout << id << std::endl;
             nativeManager->forward(id);
         }
     }
@@ -88,28 +75,6 @@ extern "C"
         {
             nativeManager->right(id);
         }
-    }
-
-    JNIEXPORT jint JNICALL Java_com_physics_Manager_xForce(JNIEnv *env, jobject obj)
-    {
-        Manager *nativeManager = reinterpret_cast<Manager *>(getNativeHandle(env, obj));
-        if (nativeManager != nullptr)
-        {
-            int result = nativeManager->xForce();
-            return static_cast<jint>(result);
-        }
-        return 0;
-    }
-
-    JNIEXPORT jint JNICALL Java_com_physics_Manager_yForce(JNIEnv *env, jobject obj)
-    {
-        Manager *nativeManager = reinterpret_cast<Manager *>(getNativeHandle(env, obj));
-        if (nativeManager != nullptr)
-        {
-            int result = nativeManager->yForce();
-            return static_cast<jint>(result);
-        }
-        return 0;
     }
 
     JNIEXPORT void JNICALL Java_com_physics_Manager_removeDead(JNIEnv *env, jobject obj, jintArray idsArray)
