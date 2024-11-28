@@ -4,12 +4,13 @@
 int AngleObj::SIN[3600] = {};
 int AngleObj::COS[3600] = {};
 bool AngleObj::initialized = false;
+double AngleObj::PI = 3.14159265358979323846;
 
 void AngleObj::initializeTrig() {
     if (!initialized) {
         for (int i = 0; i < 3600; i++) {
-            SIN[i] = sinf((i * Obj::PI) / 180.0 / ANGLE_SCALE) * VALUE_SCALE;
-            COS[i] = cosf((i * Obj::PI)/180.0/ ANGLE_SCALE) * VALUE_SCALE;
+            SIN[i] = sinf((i * PI) / 180.0 / ANGLE_SCALE) * VALUE_SCALE;
+            COS[i] = cosf((i * PI)/180.0/ ANGLE_SCALE) * VALUE_SCALE;
         }
         initialized = true;
     }
@@ -68,8 +69,6 @@ bool AngleObj::checkCollision(LinearObj* obj) {
     }
     return false;
 }
-
-
 bool AngleObj::checkCollision(AngleObj* obj){
     // Factor because of integer computation instead of floating point
     int temp = 100;
@@ -92,8 +91,6 @@ bool AngleObj::checkCollision(AngleObj* obj){
 bool AngleObj::collisionCorrection(Obj* other){
     return other->collisionCorrection(this);
 }
-
-
 bool AngleObj::collisionCorrection(LinearObj* obj){
     // Factor because of integer computation instead of floating point
     int temp = 100;
@@ -152,12 +149,11 @@ bool AngleObj::collisionCorrection(LinearObj* obj){
         this->updateV(v1x / temp2, v1y / temp2, 1);
         obj->updateV(v2x / temp2, v2y / temp2);
         //std::cout << "In collision after: " << this->posX << " " << this->posY << " velocity:" << this->getvX() / VALUE_SCALE << " " << this->getvY() / VALUE_SCALE << std::endl;
-        obj->updateBox();
+
         return true;
     }
     return false;
 }
-
 bool AngleObj::collisionCorrection(AngleObj* obj){
     // Factor because of integer computation instead of floating point
     int temp = 100;
@@ -216,7 +212,7 @@ bool AngleObj::collisionCorrection(AngleObj* obj){
         this->updateV(v1x / temp2, v1y / temp2, 1);
         obj->updateV(v2x / temp2, v2y / temp2, 1);
         //std::cout << "In collision after: " << this->posX << " " << this->posY << " velocity:" << this->getvX() / VALUE_SCALE << " " << this->getvY() / VALUE_SCALE << std::endl;
-        obj->updateBox();
+
         return true;
     }
     return false;
@@ -225,13 +221,15 @@ bool AngleObj::collisionCorrection(AngleObj* obj){
 
 void AngleObj::updatePos(int t){
 
+    if (this ->angleScaled < 3599 && this->angleScaled > 3590) {
+        //std::cout << "hitttttttt" << std::endl;
+    }
+
     // Position is updated
-    std::cout << "Before update: ";
+    //std::cout << "Before update: ";
     printProp();
     this->posX = this->getNextX(t);
     this->posY = this->getNextY(t);
-
-
     //std::cout << "mid update: " << " v: " << v << " vX: " << this->getvX() << " vY: " << this->getvY() << " angle: " << angleScaled << std::endl;
     // Velocity is updated
     int vX = this->getvX() + this->getaccX() * t;
@@ -239,9 +237,8 @@ void AngleObj::updatePos(int t){
 
     //this->v = sqrt(vX * vX + vY * vY) / VALUE_SCALE;
     this->updateV(vX, vY, VALUE_SCALE);
-    std::cout << "after update: ";
+    //std::cout << "after update: ";
     printProp();
-    this->updateBox();
 }
 int AngleObj::getNextX(int t) {
     return this->posX + (this->getvX() * t + (this->getaccX() * t * t) / 2) / VALUE_SCALE;
@@ -270,7 +267,6 @@ bool AngleObj::boundCorrection(int lft, int rt, int tp, int bt, int t) {
         flag = true;
     }
     //std::cout << "in bound correction after:" << posX << " " << posY << std::endl;
-    this->updateBox();
     return flag;
 
 }

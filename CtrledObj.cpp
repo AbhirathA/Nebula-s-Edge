@@ -15,7 +15,7 @@ void CtrledObj::freeThrust() {
 }
 
 void CtrledObj::removeMove() {
-	// std::cout << "hi";
+	//std::cout << "hi";
 	this->isMovable = true;
 	int t = this->v - this->peakV;
 	this->v = (t > driftV) ? t : driftV;
@@ -33,13 +33,13 @@ void  CtrledObj::startThrust() {
 void  CtrledObj::moveForward() {
 	printProp();
 	if (this->isMovable) {
-		// std::cout << "first";
+		//std::cout << "first";
 		this->v += this->peakV;
 		this->isMovable = false;
 		this->moveCtrl->start();
 	}
 	else {
-		// std::cout << "running";
+		//std::cout << "running";
 		this->moveCtrl->resetAge();
 		this->moveCtrl->start();
 	}
@@ -54,11 +54,19 @@ void  CtrledObj::stopForward() {
 }
 
 void  CtrledObj::turnRight(int d) {
+	//std::cout << "Stupid stuff start: ";
+	printProp();
 	this->angleScaled -= d;
-	this->angleScaled = mod((this->angleScaled), (360 * ANGLE_SCALE));
+	this->angleScaled = mod((this->angleScaled),(360 * ANGLE_SCALE));
+	//std::cout << "Stupid stuff end: ";
+	printProp();
 }
 
 void  CtrledObj::turnLeft(int d) {
+	//std::cout << "Stupid stuff start: ";
+	printProp();
 	this->angleScaled += d;
 	this->angleScaled = mod((this->angleScaled), (360 * ANGLE_SCALE));
+	//std::cout << "Stupid stuff left end: ";
+	printProp();
 }
