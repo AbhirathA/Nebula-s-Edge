@@ -79,11 +79,11 @@ public class ClientFirebase {
             // Sends the HTTP POST request to Firebase
             HttpResponse output = HTTPRequest.sendRequest(url, payload, "POST", headers);
 
+            //TODO: IMPORTANT THE OUTPUT MIGHT HAVE ERROR IN IT
             // Parses the response and extracts the ID token
             return new HttpResponse(HTTPCode.SUCCESS.getCode(), parseIdToken(output.getMessage()));
         } catch (Exception e) {
             // Handles exceptions and rethrows as an AuthenticationException
-            System.out.println("check");
             throw new AuthenticationException("Failed to authenticate the user.");
         }
     }
