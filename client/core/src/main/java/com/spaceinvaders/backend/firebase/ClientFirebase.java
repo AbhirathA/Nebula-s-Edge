@@ -73,17 +73,16 @@ public class ClientFirebase {
         Map<String, String> headers = new HashMap<>();
         headers.put("Content-Type", "application/json");
 
-        try
-        {
+        try {
             // Sends the HTTP POST request to Firebase
             HttpResponse output = HTTPRequest.sendRequest(url, payload, "POST", headers);
 
-            try
-            {
+            try {
                 handleFirebaseError(output.getMessage());
-            } catch (Exception e)
-            {
+            } catch (AuthenticationException e) {
                 throw new FirebaseAuthenticationException(e.getMessage());
+            } catch(Exception ignored) {
+
             }
 
             // Parses the response and extracts the ID token
