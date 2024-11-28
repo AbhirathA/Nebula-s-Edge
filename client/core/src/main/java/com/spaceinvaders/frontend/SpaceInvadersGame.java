@@ -4,6 +4,7 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.spaceinvaders.backend.firebase.utils.ServerInfo;
 import com.spaceinvaders.frontend.managers.MusicManager;
 import com.spaceinvaders.frontend.managers.ScreenManager;
 import com.spaceinvaders.frontend.managers.MyAssetManager;
@@ -27,12 +28,12 @@ public class SpaceInvadersGame extends Game {
     public String killCount;
 
     // Constants for the world and stage dimensions
-    public static final float WORLD_WIDTH = 240;
-    public static final float WORLD_HEIGHT = 135;
-    public static final float STAGE_WIDTH = 480;
-    public static final float STAGE_HEIGHT = 270;
-    public static final float GAME_WIDTH = 720;
-    public static final float GAME_HEIGHT = 405;
+    public static final float WORLD_WIDTH = ServerInfo.getClientConstants().get("WORLD_WIDTH").getAsFloat();
+    public static final float WORLD_HEIGHT = ServerInfo.getClientConstants().get("WORLD_HEIGHT").getAsFloat();
+    public static final float STAGE_WIDTH = ServerInfo.getClientConstants().get("STAGE_WIDTH").getAsFloat();
+    public static final float STAGE_HEIGHT = ServerInfo.getClientConstants().get("STAGE_HEIGHT").getAsFloat();
+    public static final float GAME_WIDTH = ServerInfo.getClientConstants().get("GAME_WIDTH").getAsFloat();
+    public static final float GAME_HEIGHT = ServerInfo.getClientConstants().get("GAME_HEIGHT").getAsFloat();
 
     private class CommandClass implements Command {
 
