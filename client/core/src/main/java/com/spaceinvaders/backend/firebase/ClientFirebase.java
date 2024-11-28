@@ -86,7 +86,7 @@ public class ClientFirebase {
             }
 
             // Parses the response and extracts the ID token
-            return new HttpResponse(HTTPCode.SUCCESS.getCode(), parseToken(output.getMessage(), "idToken"));
+            return new HttpResponse(HTTPCode.SUCCESS.getCode(), parseIdToken(output.getMessage()));
         } catch(FirebaseAuthenticationException e) {
             throw new AuthenticationException(e.getMessage());
         } catch (Exception e) {
@@ -102,12 +102,12 @@ public class ClientFirebase {
      * @throws IllegalStateException If an error occurs while parsing the JSON
      *                               response.
      */
-    private static String parseToken(String response, String token) throws IllegalStateException {
+    private static String parseIdToken(String response) throws IllegalStateException {
         // Parses the JSON response string into a JsonObject
         JsonObject jsonObject = JsonParser.parseString(response).getAsJsonObject();
 
         // Extracts and returns the ID token
-        return jsonObject.get(token).getAsString();
+        return jsonObject.get("idToken").getAsString();
     }
 
     /**

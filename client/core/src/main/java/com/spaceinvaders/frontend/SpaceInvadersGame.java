@@ -12,10 +12,6 @@ import com.spaceinvaders.frontend.managers.SoundManager;
 import com.spaceinvaders.frontend.screens.LoadingScreen;
 import com.spaceinvaders.frontend.screens.ScreenState;
 import com.spaceinvaders.frontend.utils.Command;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import java.io.File;
 
 public class SpaceInvadersGame extends Game {
     public SpriteBatch batch;
