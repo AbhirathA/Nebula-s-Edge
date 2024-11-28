@@ -132,7 +132,7 @@ public class ServerInfo {
         {
             return SERVER_INFO.get("udp-port").getAsInt();
         }
-        System.out.println("Could not find http port");
+        System.out.println("Could not find udp port");
         System.exit(0);
         return 0;
     }
