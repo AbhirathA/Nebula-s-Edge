@@ -1,5 +1,8 @@
+package com.spaceinvaders.backend.firebase.utils;
+
 /**
  * HttpResponse.java
+ * <br>
  * This class represents an HTTP response, encapsulating the HTTP response code and message body.
  * It is used as a return type for methods that handle HTTP requests, providing a structured way
  * to interpret and utilize server responses.
@@ -22,12 +25,8 @@
  * @version 1.0
  * @since 11/21/2024
  */
-
-package com.spaceinvaders.backend.firebase.utils;
-
-public class HttpResponse
-{
-    private final Integer code; // The HTTP response code (e.g., 200, 404)
+public class HttpResponse {
+    private final int code; // The HTTP response code (e.g., 200, 404)
     private final String message; // The HTTP response message body or error details
 
     /**
@@ -36,8 +35,7 @@ public class HttpResponse
      * @param code    The HTTP response code.
      * @param message The HTTP response message body or error details.
      */
-    public HttpResponse(Integer code, String message)
-    {
+    public HttpResponse(Integer code, String message) {
         this.code = code;
         this.message = message;
     }
