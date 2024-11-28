@@ -180,6 +180,9 @@ public class SignupScreen implements Screen {
 
                     if (!SignupScreen.this.stage.getActors().contains(SignupScreen.this.successMessage, true)) {
                         SignupScreen.this.stage.addActor(SignupScreen.this.successMessage);
+                        idField.setMessageText("Enter id");
+                        passwordField.setMessageText("Enter password");
+                        confirmField.setMessageText("Confirm password");
                         SignupScreen.this.game.screenManager.setScreen(ScreenState.LOGIN);
                     }
 

@@ -92,6 +92,8 @@ public class AuthenticationManager {
                     throw new AuthenticationException("Unknown error");
 
             }
+        } catch(AuthenticationException e) {
+            throw e;
         } catch (Exception e) {
             throw new AuthenticationException("Failed to authenticate the user.");
         }
