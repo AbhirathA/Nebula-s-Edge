@@ -18,10 +18,10 @@ void AngleObj::initializeTrig() {
 
 void AngleObj::updateV(int vX, int vY, int scale){
 
-    vX = vX / scale;
-    vY = vY / scale;
+    long long X = vX;
+    long long Y = vY;
 
-    double v = sqrt(vX * vX + vY * vY);
+    double v = sqrt(X*X + Y*Y);
     if (v <= 0.0001 && v>= -0.0001) {
         this->v = 0;
         return;
@@ -30,16 +30,22 @@ void AngleObj::updateV(int vX, int vY, int scale){
     double t = asin(vY / v);
 
     //std::cout << "big idiot: " << (int)((((t * 180) / PI)) * ANGLE_SCALE)%(360 * ANGLE_SCALE) << " " << v;
-
-    if (vX >= 0) {
-        this->angleScaled = mod((int)((((t * 180) / Obj::PI)) * ANGLE_SCALE) , (360 * ANGLE_SCALE));
-
+    if ((0 < (this->angleScaled - 900)) && ((this->angleScaled - 900) < 10)) {
+        //std::cout << "sfggd";
+    }
+    if (vX >= 0 && vY >= 0) {
+        this->angleScaled = (((t * 180) / PI) * ANGLE_SCALE);
+    }
+    else if(vX >= 0 && vY < 0) {
+        this->angleScaled = (((t * 180) / PI) * ANGLE_SCALE) + 3600;
+    }
+    else if (vX < 0 && vY >= 0) {
+        this->angleScaled = 1800 - (((t * 180) / PI) * ANGLE_SCALE);
     }
     else {
-        this->angleScaled = mod((int)((180 - ((t * 180) / Obj::PI))  * ANGLE_SCALE),(360*ANGLE_SCALE));
+        this->angleScaled = 1800 - (((t * 180) / PI) * ANGLE_SCALE);
     }
-
-    this->v = v;
+    this->v = (v+VALUE_SCALE-1)/VALUE_SCALE;
 }
 
 bool AngleObj::checkCollision(Obj* obj){ //////////////////////////////
