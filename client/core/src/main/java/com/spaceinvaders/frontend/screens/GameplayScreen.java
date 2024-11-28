@@ -109,12 +109,15 @@ public class GameplayScreen implements Screen {
         else if (Gdx.input.isKeyPressed(Input.Keys.D)) {
             state += "RIGHT";
         }
+        if (Gdx.input.isKeyPressed(Input.Keys.SPACE)) {
+            state += "BULLET";
+        }
 
-//        try {
-//            Thread.sleep(Math.max((int)(100/3) - ((int) delta * 1000L), 0));
-//        } catch (Exception e)  {
-//            e.printStackTrace();
-//        }
+        try {
+            Thread.sleep(Math.max((int)(1000/144f) - ((int) delta * 1000L), 0));
+        } catch (Exception e)  {
+            e.printStackTrace();
+        }
 
         this.udpClient.send(state, this.game.token);
 

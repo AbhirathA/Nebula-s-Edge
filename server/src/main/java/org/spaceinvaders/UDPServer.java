@@ -53,6 +53,9 @@ public class UDPServer
         this.gameEngine = new GameEngine();
     }
 
+    /**
+     * Starts all the threads, networkThread and gameLogicThread
+     */
     public void startThreads() {
         this.networkThread = new NetworkThreadClass();
         this.gameLogicThread = new GameThreadClass();
@@ -63,16 +66,24 @@ public class UDPServer
     private class GameThreadClass extends Thread {
         @Override
         public void run() {
-            while (true) {
-                HashMap<Integer, String> idToState = new HashMap<>();
-                synchronized (UDPServer.this.tokenToState) {
-                    synchronized (UDPServer.this.tokenToId) {
-                        for (String token : UDPServer.this.tokenToState.keySet()) {
-                            if (tokenToId.get(token) == null) {
-                                UDPServer.this.tokenToId.put(token, UDPServer.this.gameEngine.addElement("SHIP"));
-                            }
+            HashMap<Integer, String> idToState = new HashMap<>();
+            while (true)
+            {
+                // check if input is revieved
+                if (UDPServer.this.inputBuffer.compareAndSet(true, false))
+                {
+                    idToState = new HashMap<>();
+                    synchronized (UDPServer.this.tokenToState) {
+                        synchronized (UDPServer.this.tokenToId) {
+                            for (String token : UDPServer.this.tokenToState.keySet())
+                            {
+                                if (tokenToId.get(token) == null)
+                                {
+                                    UDPServer.this.tokenToId.put(token, UDPServer.this.gameEngine.addShip());
+                                }
 
-                            idToState.put(UDPServer.this.tokenToId.get(token), UDPServer.this.tokenToState.get(token));
+                                idToState.put(UDPServer.this.tokenToId.get(token), UDPServer.this.tokenToState.get(token));
+                            }
                         }
                     }
                 }
@@ -86,6 +97,7 @@ public class UDPServer
                 UDPServer.this.gameEngine.update();
 
                 // time to send data to clients
+                UDPServer.this.gameEngine.getAllCoords();
                 UDPPacket packet = new UDPPacket();
                 packet.spaceShips = UDPServer.this.gameEngine.display("SHIP");
                 packet.asteroids = UDPServer.this.gameEngine.display("ASTERIOD");
