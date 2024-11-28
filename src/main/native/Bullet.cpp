@@ -4,8 +4,8 @@
 
 #include "Bullet.h"
 
-#include <BlackholeObject.h>
-#include <PowerUp.h>
+#include "BlackholeObject.h"
+#include "PowerUp.h"
 
 #include "Asteroid.h"
 #include "Enemy.h"
