@@ -34,16 +34,16 @@ void AngleObj::updateV(int vX, int vY, int scale){
         //std::cout << "sfggd";
     }
     if (vX >= 0 && vY >= 0) {
-        this->angleScaled = (((t * 180) / PI) * ANGLE_SCALE);
+        this->angleScaled = (((t * 180) / Obj::PI) * ANGLE_SCALE);
     }
     else if(vX >= 0 && vY < 0) {
-        this->angleScaled = (((t * 180) / PI) * ANGLE_SCALE) + 3600;
+        this->angleScaled = (((t * 180) / Obj::PI) * ANGLE_SCALE) + 3600;
     }
     else if (vX < 0 && vY >= 0) {
-        this->angleScaled = 1800 - (((t * 180) / PI) * ANGLE_SCALE);
+        this->angleScaled = 1800 - (((t * 180) / Obj::PI) * ANGLE_SCALE);
     }
     else {
-        this->angleScaled = 1800 - (((t * 180) / PI) * ANGLE_SCALE);
+        this->angleScaled = 1800 - (((t * 180) / Obj::PI) * ANGLE_SCALE);
     }
     this->v = (v+VALUE_SCALE-1)/VALUE_SCALE;
 }

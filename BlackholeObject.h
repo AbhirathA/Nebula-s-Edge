@@ -92,22 +92,22 @@ public:
         return false;
     }
     virtual bool collisionCorrection(Meteor *obj) override{
-        return this->interactWith(obj);
+        return false;
     }
     virtual bool collisionCorrection(PowerUp* obj) override{
         return false;
     }
     virtual bool collisionCorrection(Bullet* obj) override{
-        return this->interactWith(obj);
+        return false;
     }
     virtual bool collisionCorrection(Flare* obj) override{
-        return this->interactWith(obj);
+        return false;
     }
     virtual bool collisionCorrection(UserObj* obj) override{
-        return this->interactWith(obj);
+        return false;
     }
     virtual bool collisionCorrection(Enemy* obj) override{
-        return obj->collisionCorrection(this);
+        return false;
     }
 
 };
