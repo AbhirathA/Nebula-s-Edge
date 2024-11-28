@@ -1,0 +1,7 @@
+com.physics
+org.spaceinvaders
+org.spaceinvaders.firebase
+org.spaceinvaders.firebase.util
+org.spaceinvaders.gameEngine
+org.spaceinvaders.handlers
+org.spaceinvaders.util
