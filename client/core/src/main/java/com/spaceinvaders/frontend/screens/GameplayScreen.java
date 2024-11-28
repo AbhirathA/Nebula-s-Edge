@@ -23,12 +23,6 @@ public class GameplayScreen implements Screen {
     private final OrthographicCamera camera;
     private final Viewport viewport;
 
-    private float CAMERA_WIDTH;
-    private float CAMERA_HEIGHT;
-
-    private float WORLD_WIDTH;
-    private float WORLD_HEIGHT;
-
     private UIStage uiStage;
 
     private GameplayStage gameplayStage;
@@ -40,24 +34,20 @@ public class GameplayScreen implements Screen {
 
     private final boolean isMulti;
 
-    public GameplayScreen(SpaceInvadersGame game, float CAMERA_WIDTH, float CAMERA_HEIGHT, float WORLD_WIDTH, float WORLD_HEIGHT, boolean isMulti) {
+    public GameplayScreen(SpaceInvadersGame game, boolean isMulti) {
         this.game = game;
-        this.CAMERA_WIDTH = CAMERA_WIDTH;
-        this.CAMERA_HEIGHT = CAMERA_HEIGHT;
-        this.WORLD_WIDTH = WORLD_WIDTH;
-        this.WORLD_HEIGHT = WORLD_HEIGHT;
         this.isMulti = isMulti;
 
         camera = new OrthographicCamera();
-        viewport = new FitViewport(CAMERA_WIDTH, CAMERA_HEIGHT, camera);
+        viewport = new FitViewport(SpaceInvadersGame.WORLD_WIDTH, SpaceInvadersGame.WORLD_HEIGHT, camera);
         viewport.apply();
 
         camera.setToOrtho(false);
-        camera.position.set(WORLD_WIDTH/2, WORLD_HEIGHT/2, 0);
+        camera.position.set(SpaceInvadersGame.GAME_WIDTH/2, SpaceInvadersGame.GAME_HEIGHT/2, 0);
         camera.update();
 
-        uiStage = new UIStage(game, new FitViewport(CAMERA_WIDTH, CAMERA_HEIGHT), isMulti);
-        gameplayStage = new GameplayStage(game, viewport, WORLD_WIDTH, WORLD_HEIGHT, isMulti);
+        uiStage = new UIStage(game, new FitViewport(SpaceInvadersGame.WORLD_WIDTH, SpaceInvadersGame.WORLD_HEIGHT), isMulti);
+        gameplayStage = new GameplayStage(game, viewport, SpaceInvadersGame.GAME_WIDTH, SpaceInvadersGame.GAME_HEIGHT, isMulti);
 
         this.udpPacket = new UDPPacket();
         this.udpClient = new UDPClient(udpPacket);
@@ -188,8 +178,8 @@ public class GameplayScreen implements Screen {
     private void updateCamera() {
         camera.position.set(gameplayStage.getRocketSprite().getX() + gameplayStage.getRocketSprite().getWidth() / 2, gameplayStage.getRocketSprite().getY() + gameplayStage.getRocketSprite().getHeight() / 2, 0);
 
-        camera.position.x = MathUtils.clamp(camera.position.x, CAMERA_WIDTH / 2, WORLD_WIDTH - CAMERA_WIDTH / 2);
-        camera.position.y = MathUtils.clamp(camera.position.y, CAMERA_HEIGHT / 2, WORLD_HEIGHT - CAMERA_HEIGHT / 2);
+        camera.position.x = MathUtils.clamp(camera.position.x, SpaceInvadersGame.WORLD_WIDTH / 2, SpaceInvadersGame.GAME_WIDTH - SpaceInvadersGame.WORLD_WIDTH / 2);
+        camera.position.y = MathUtils.clamp(camera.position.y, SpaceInvadersGame.WORLD_HEIGHT / 2, SpaceInvadersGame.GAME_HEIGHT - SpaceInvadersGame.WORLD_HEIGHT / 2);
 
         camera.update();
     }

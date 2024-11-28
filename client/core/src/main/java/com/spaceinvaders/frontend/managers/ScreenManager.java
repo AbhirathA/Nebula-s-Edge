@@ -25,17 +25,11 @@ public class ScreenManager implements Disposable {
 
     public final Stack<ScreenState> screenStateStack; // Stack to maintain the order of screens for implementation of back button
 
-    // Constants for the world and stage dimensions
-    private final float WORLD_WIDTH = 240;
-    private final float WORLD_HEIGHT = 135;
-    private final float STAGE_WIDTH = WORLD_WIDTH * 2; // 480
-    private final float STAGE_HEIGHT = WORLD_HEIGHT * 2; // 270
-
     // Private constructor for the ScreenManager
     public ScreenManager(SpaceInvadersGame game) {
         this.game = game;
         this.currentScreen = null;
-        this.starsBackground = new StarsBackground(WORLD_WIDTH, WORLD_HEIGHT, 50);
+        this.starsBackground = new StarsBackground(SpaceInvadersGame.WORLD_WIDTH, SpaceInvadersGame.WORLD_HEIGHT, 50);
         this.planetsBackground = new PlanetsBackground(game.assetManager);
         this.screenStateStack = new Stack<>();
     }
@@ -111,25 +105,25 @@ public class ScreenManager implements Disposable {
             case LOADING:
                 return new LoadingScreen(this.game, new CommandClass()); // Create and return a LoadingScreen
             case LOGIN:
-                return new LoginScreen(this.game, WORLD_WIDTH, WORLD_HEIGHT, STAGE_WIDTH, STAGE_HEIGHT, starsBackground, planetsBackground);
+                return new LoginScreen(this.game, starsBackground, planetsBackground);
             case SIGNUP:
-                return new SignupScreen(this.game, WORLD_WIDTH, WORLD_HEIGHT, STAGE_WIDTH, STAGE_HEIGHT, starsBackground, planetsBackground);
+                return new SignupScreen(this.game, starsBackground, planetsBackground);
             case MAIN_MENU:
-                return new MainMenuScreen(this.game, WORLD_WIDTH, WORLD_HEIGHT, STAGE_WIDTH, STAGE_HEIGHT, starsBackground, planetsBackground);
+                return new MainMenuScreen(this.game, starsBackground, planetsBackground);
             case LOGIN_GATEWAY:
-                return new LoginGatewayScreen(this.game, WORLD_WIDTH, WORLD_HEIGHT, STAGE_WIDTH, STAGE_HEIGHT, starsBackground, planetsBackground);
+                return new LoginGatewayScreen(this.game, starsBackground, planetsBackground);
             case SINGLEPLAYER_PAUSE:
-                return new PauseScreen(this.game, WORLD_WIDTH, WORLD_HEIGHT, STAGE_WIDTH, STAGE_HEIGHT, starsBackground, ScreenState.SINGLEPLAYER_GAMEPLAY);
+                return new PauseScreen(this.game, starsBackground, ScreenState.SINGLEPLAYER_GAMEPLAY);
             case MULTIPLAYER_PAUSE:
-                return new PauseScreen(this.game, WORLD_WIDTH, WORLD_HEIGHT, STAGE_WIDTH, STAGE_HEIGHT, starsBackground, ScreenState.MULTIPLAYER_GAMEPLAY);
+                return new PauseScreen(this.game, starsBackground, ScreenState.MULTIPLAYER_GAMEPLAY);
             case SINGLEPLAYER_GAMEPLAY:
-                return new GameplayScreen(this.game, WORLD_WIDTH, WORLD_HEIGHT, 720, 405, false);
+                return new GameplayScreen(this.game, false);
             case MULTIPLAYER_GAMEPLAY:
-                return new GameplayScreen(this.game, WORLD_WIDTH, WORLD_HEIGHT, 720, 405, true);
+                return new GameplayScreen(this.game, true);
             case OPTIONS:
-                return new OptionsScreen(this.game, WORLD_WIDTH, WORLD_HEIGHT, STAGE_WIDTH, STAGE_HEIGHT, starsBackground, planetsBackground);
+                return new OptionsScreen(this.game, starsBackground, planetsBackground);
             case RESET_PASSWORD:
-                return new ResetPasswordScreen(this.game, WORLD_WIDTH, WORLD_HEIGHT, STAGE_WIDTH, STAGE_HEIGHT, starsBackground, planetsBackground);
+                return new ResetPasswordScreen(this.game, starsBackground, planetsBackground);
             default:
                 throw new IllegalArgumentException("Unknown screen state: " + screenState); // Throw an error if the screen state is unknown
         }

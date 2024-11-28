@@ -28,8 +28,6 @@ import com.spaceinvaders.frontend.utils.TextFieldUtils;
 public class ResetPasswordScreen implements Screen {
     private final SpaceInvadersGame game;
 
-    private final float STAGE_WIDTH;
-
     private final OrthographicCamera camera;
     private final Viewport viewport;
 
@@ -43,19 +41,17 @@ public class ResetPasswordScreen implements Screen {
     private Label errorMessage;
     private Label successMessage;
 
-    public ResetPasswordScreen(SpaceInvadersGame game, float WORLD_WIDTH, float WORLD_HEIGHT, float STAGE_WIDTH,
-            float STAGE_HEIGHT, StarsBackground starsBackground, PlanetsBackground planetsBackground) {
+    public ResetPasswordScreen(SpaceInvadersGame game, StarsBackground starsBackground, PlanetsBackground planetsBackground) {
         this.game = game;
 
         camera = new OrthographicCamera();
-        viewport = new FitViewport(WORLD_WIDTH, WORLD_HEIGHT, camera);
-        Viewport stageViewport = new FitViewport(STAGE_WIDTH, STAGE_HEIGHT);
+        viewport = new FitViewport(SpaceInvadersGame.WORLD_WIDTH, SpaceInvadersGame.WORLD_HEIGHT, camera);
+        Viewport stageViewport = new FitViewport(SpaceInvadersGame.STAGE_WIDTH, SpaceInvadersGame.STAGE_HEIGHT);
 
-        camera.position.set(WORLD_WIDTH / 2, WORLD_HEIGHT / 2, 0);
+        camera.position.set(SpaceInvadersGame.WORLD_WIDTH / 2, SpaceInvadersGame.WORLD_HEIGHT / 2, 0);
         camera.update();
 
         stage = new Stage(stageViewport);
-        this.STAGE_WIDTH = STAGE_WIDTH;
 
         initialiseActors();
 
@@ -128,17 +124,17 @@ public class ResetPasswordScreen implements Screen {
         successMessage = LabelUtils.createLabel("Password reset email sent", minecraftFont, 0, 0);
 
         // Label for entering email
-        Label enterEmail = LabelUtils.createLabel("Email:", minecraftFont, (STAGE_WIDTH - 143) / 2f, 101);
+        Label enterEmail = LabelUtils.createLabel("Email:", minecraftFont, (SpaceInvadersGame.STAGE_WIDTH - 143) / 2f, 101);
 
         // TextField for email
         TextField emailField = TextFieldUtils.createTextField("", game.assetManager, 95, 15,
-                (STAGE_WIDTH - 95) / 2f + 22, 99);
+                (SpaceInvadersGame.STAGE_WIDTH - 95) / 2f + 22, 99);
         emailField.setMessageText("Enter email");
         emailField.getStyle().messageFontColor = emailField.getStyle().fontColor;
 
         // Submit button
         ImageTextButton submitButton = ButtonUtils.createButton(game, "Submit", "textures/button.png",
-                "textures/button.png", 95, 15, (STAGE_WIDTH - 95) / 2f, 49);
+                "textures/button.png", 95, 15, (SpaceInvadersGame.STAGE_WIDTH - 95) / 2f, 49);
 
         // Back button
         ImageButton backButton = ButtonUtils.createBackButton(this.game, "textures/back-button.png",

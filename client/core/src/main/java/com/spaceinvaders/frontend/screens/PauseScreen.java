@@ -21,26 +21,21 @@ public class PauseScreen implements Screen {
     private final OrthographicCamera camera;
     private final Viewport viewport;
 
-    private final float STAGE_WIDTH;
-
     private final Stage stage;
 
     private final StarsBackground starsBackground;
 
     private final ScreenState screenState;
 
-    public PauseScreen(SpaceInvadersGame game, float WORLD_WIDTH, float WORLD_HEIGHT, float STAGE_WIDTH,
-                       float STAGE_HEIGHT, StarsBackground starsBackground, ScreenState screenState) {
+    public PauseScreen(SpaceInvadersGame game, StarsBackground starsBackground, ScreenState screenState) {
         this.game = game;
         this.screenState = screenState;
 
         camera = new OrthographicCamera();
-        viewport = new FitViewport(WORLD_WIDTH, WORLD_HEIGHT, camera);
-        Viewport stageViewport = new FitViewport(STAGE_WIDTH, STAGE_HEIGHT);
+        viewport = new FitViewport(SpaceInvadersGame.WORLD_WIDTH, SpaceInvadersGame.WORLD_HEIGHT, camera);
+        Viewport stageViewport = new FitViewport(SpaceInvadersGame.STAGE_WIDTH, SpaceInvadersGame.STAGE_HEIGHT);
 
-        this.STAGE_WIDTH = STAGE_WIDTH;
-
-        camera.position.set(WORLD_WIDTH / 2, WORLD_HEIGHT / 2, 0);
+        camera.position.set(SpaceInvadersGame.WORLD_WIDTH / 2, SpaceInvadersGame.WORLD_HEIGHT / 2, 0);
         camera.update();
 
         stage = new Stage(stageViewport);
@@ -106,17 +101,17 @@ public class PauseScreen implements Screen {
     private void initializeActors() {
 
         ImageButton menuButton = ButtonUtils.createScreenNavigationButton(game, "textures/menu.png", "textures/menu.png", 38, 38,
-                (STAGE_WIDTH - 38) / 2f - 58, 80, ScreenState.MAIN_MENU);
+                (SpaceInvadersGame.STAGE_WIDTH - 38) / 2f - 58, 80, ScreenState.MAIN_MENU);
         ImageButton playButton = ButtonUtils.createScreenNavigationButton(game, "textures/play.png", "textures/play.png", 38, 38,
-                (STAGE_WIDTH - 38) / 2f, 80, screenState);
+                (SpaceInvadersGame.STAGE_WIDTH - 38) / 2f, 80, screenState);
         ImageButton restartButton = ButtonUtils.createImageButton(game, "textures/restart.png", "textures/restart.png",
-                38, 38, (STAGE_WIDTH - 38) / 2f + 58, 80);
+                38, 38, (SpaceInvadersGame.STAGE_WIDTH - 38) / 2f + 58, 80);
 
         Image musicIcon = new Image(game.assetManager.get("textures/music.png", Texture.class));
         musicIcon.setSize(20, 20);
-        musicIcon.setPosition((STAGE_WIDTH - 150) / 2f - 29, 155);
-        Slider musicSlider = SliderUtils.createSlider(game.assetManager, 150, 20, (STAGE_WIDTH - 150) / 2f, 155);
-        Label musicLabel = SliderUtils.getValueLabel(game.assetManager, musicSlider, 150, 20, (STAGE_WIDTH - 150) / 2f,
+        musicIcon.setPosition((SpaceInvadersGame.STAGE_WIDTH - 150) / 2f - 29, 155);
+        Slider musicSlider = SliderUtils.createSlider(game.assetManager, 150, 20, (SpaceInvadersGame.STAGE_WIDTH - 150) / 2f, 155);
+        Label musicLabel = SliderUtils.getValueLabel(game.assetManager, musicSlider, 150, 20, (SpaceInvadersGame.STAGE_WIDTH - 150) / 2f,
                 155);
 
         musicSlider.setValue(game.musicManager.getVolume() * 200);
@@ -127,9 +122,9 @@ public class PauseScreen implements Screen {
 
         Image soundIcon = new Image(game.assetManager.get("textures/sound.png", Texture.class));
         soundIcon.setSize(20, 20);
-        soundIcon.setPosition((STAGE_WIDTH - 150) / 2f - 29, 130);
-        Slider soundSlider = SliderUtils.createSlider(game.assetManager, 150, 20, (STAGE_WIDTH - 150) / 2f, 130);
-        Label soundLabel = SliderUtils.getValueLabel(game.assetManager, soundSlider, 150, 20, (STAGE_WIDTH - 150) / 2f,
+        soundIcon.setPosition((SpaceInvadersGame.STAGE_WIDTH - 150) / 2f - 29, 130);
+        Slider soundSlider = SliderUtils.createSlider(game.assetManager, 150, 20, (SpaceInvadersGame.STAGE_WIDTH - 150) / 2f, 130);
+        Label soundLabel = SliderUtils.getValueLabel(game.assetManager, soundSlider, 150, 20, (SpaceInvadersGame.STAGE_WIDTH - 150) / 2f,
                 130);
 
         soundSlider.setValue(game.soundManager.getVolume() * 200);

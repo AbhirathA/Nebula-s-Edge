@@ -21,8 +21,6 @@ public class LoginGatewayScreen implements Screen {
     private final OrthographicCamera camera;
     private final Viewport viewport;
 
-    private final float STAGE_WIDTH;
-
     private final Stage stage;
 
     private final StarsBackground starsBackground;
@@ -30,16 +28,14 @@ public class LoginGatewayScreen implements Screen {
 
     private final Texture title;
 
-    public LoginGatewayScreen(SpaceInvadersGame game, float WORLD_WIDTH, float WORLD_HEIGHT, float STAGE_WIDTH, float STAGE_HEIGHT, StarsBackground starsBackground, PlanetsBackground planetsBackground) {
+    public LoginGatewayScreen(SpaceInvadersGame game, StarsBackground starsBackground, PlanetsBackground planetsBackground) {
         this.game = game;
 
         camera = new OrthographicCamera();
-        viewport = new FitViewport(WORLD_WIDTH, WORLD_HEIGHT, camera);
-        Viewport stageViewport = new FitViewport(STAGE_WIDTH, STAGE_HEIGHT);
+        viewport = new FitViewport(SpaceInvadersGame.WORLD_WIDTH, SpaceInvadersGame.WORLD_HEIGHT, camera);
+        Viewport stageViewport = new FitViewport(SpaceInvadersGame.STAGE_WIDTH, SpaceInvadersGame.STAGE_HEIGHT);
 
-        this.STAGE_WIDTH = STAGE_WIDTH;
-
-        camera.position.set(WORLD_WIDTH / 2, WORLD_HEIGHT / 2, 0);
+        camera.position.set(SpaceInvadersGame.WORLD_WIDTH / 2, SpaceInvadersGame.WORLD_HEIGHT / 2, 0);
         camera.update();
 
         stage = new Stage(stageViewport);
@@ -108,8 +104,8 @@ public class LoginGatewayScreen implements Screen {
     }
 
     private void initializeActors() {
-        ImageTextButton loginButton = ButtonUtils.createScreenNavigationButton(game, "Login", "textures/button.png", "textures/button.png", 95, 15, (STAGE_WIDTH - 95) / 2, 98, ScreenState.LOGIN);
-        ImageTextButton signupButton = ButtonUtils.createScreenNavigationButton(game, "Signup", "textures/button.png", "textures/button.png", 95, 15, (STAGE_WIDTH - 95) / 2, 81, ScreenState.SIGNUP);
+        ImageTextButton loginButton = ButtonUtils.createScreenNavigationButton(game, "Login", "textures/button.png", "textures/button.png", 95, 15, (SpaceInvadersGame.STAGE_WIDTH - 95) / 2, 98, ScreenState.LOGIN);
+        ImageTextButton signupButton = ButtonUtils.createScreenNavigationButton(game, "Signup", "textures/button.png", "textures/button.png", 95, 15, (SpaceInvadersGame.STAGE_WIDTH - 95) / 2, 81, ScreenState.SIGNUP);
 
         stage.addActor(loginButton);
         stage.addActor(signupButton);
