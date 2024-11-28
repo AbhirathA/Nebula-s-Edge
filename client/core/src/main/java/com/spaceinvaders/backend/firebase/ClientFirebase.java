@@ -31,10 +31,8 @@ package com.spaceinvaders.backend.firebase;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import com.spaceinvaders.backend.firebase.utils.AuthenticationException;
-import com.spaceinvaders.backend.firebase.utils.HTTPCode;
+import com.spaceinvaders.backend.firebase.utils.*;
 import com.spaceinvaders.backend.firebase.utils.HTTPRequest;
-import com.spaceinvaders.backend.firebase.utils.HttpResponse;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -75,15 +73,24 @@ public class ClientFirebase {
         Map<String, String> headers = new HashMap<>();
         headers.put("Content-Type", "application/json");
 
-        try {
+        try
+        {
             // Sends the HTTP POST request to Firebase
             HttpResponse output = HTTPRequest.sendRequest(url, payload, "POST", headers);
 
-            //TODO: IMPORTANT THE OUTPUT MIGHT HAVE ERROR IN IT
+            try
+            {
+                handleFirebaseError(output.getMessage());
+            } catch (Exception e)
+            {
+                throw new FirebaseAuthenticationException(e.getMessage());
+            }
+
             // Parses the response and extracts the ID token
-            return new HttpResponse(HTTPCode.SUCCESS.getCode(), parseIdToken(output.getMessage()));
+            return new HttpResponse(HTTPCode.SUCCESS.getCode(), parseToken(output.getMessage(), "idToken"));
+        } catch(FirebaseAuthenticationException e) {
+            throw new AuthenticationException(e.getMessage());
         } catch (Exception e) {
-            // Handles exceptions and rethrows as an AuthenticationException
             throw new AuthenticationException("Failed to authenticate the user.");
         }
     }
@@ -96,12 +103,12 @@ public class ClientFirebase {
      * @throws IllegalStateException If an error occurs while parsing the JSON
      *                               response.
      */
-    private static String parseIdToken(String response) throws IllegalStateException {
+    private static String parseToken(String response, String token) throws IllegalStateException {
         // Parses the JSON response string into a JsonObject
         JsonObject jsonObject = JsonParser.parseString(response).getAsJsonObject();
 
         // Extracts and returns the ID token
-        return jsonObject.get("idToken").getAsString();
+        return jsonObject.get(token).getAsString();
     }
 
     public static HttpResponse resetPassword(String email) throws AuthenticationException {
@@ -140,20 +147,16 @@ public class ClientFirebase {
      *                                 error.
      */
     private static void handleFirebaseError(String responseMessage) throws AuthenticationException {
-        try {
-            JsonObject jsonObject = JsonParser.parseString(responseMessage).getAsJsonObject();
-            String errorCode = jsonObject.getAsJsonObject("error").get("message").getAsString();
+        JsonObject jsonObject = JsonParser.parseString(responseMessage).getAsJsonObject();
+        String errorCode = jsonObject.getAsJsonObject("error").get("message").getAsString();
 
-            switch (errorCode) {
-                case "EMAIL_NOT_FOUND":
-                    throw new AuthenticationException("The email address is not registered.");
-                case "INVALID_EMAIL":
-                    throw new AuthenticationException("The email address format is invalid.");
-                default:
-                    throw new AuthenticationException("Firebase error: " + errorCode);
-            }
-        } catch (Exception e) {
-            throw new AuthenticationException(e.getMessage());
+        switch (errorCode) {
+            case "EMAIL_NOT_FOUND":
+                throw new AuthenticationException("The email address is not registered.");
+            case "INVALID_EMAIL":
+                throw new AuthenticationException("The email address format is invalid.");
+            default:
+                throw new AuthenticationException("Firebase error: " + errorCode);
         }
     }
 
