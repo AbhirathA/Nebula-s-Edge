@@ -1,7 +1,6 @@
 package org.spaceinvaders.gameEngine;
 
 import com.physics.Manager;
-import org.checkerframework.checker.units.qual.C;
 import org.spaceinvaders.firebase.Firebase;
 import org.spaceinvaders.util.Coordinate;
 
