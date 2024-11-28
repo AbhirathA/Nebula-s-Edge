@@ -1,1 +1,0 @@
-packageSearchIndex = [{"l":"All Packages","u":"allpackages-index.html"},{"l":"com.physics"},{"l":"org.spaceinvaders"},{"l":"org.spaceinvaders.firebase"},{"l":"org.spaceinvaders.firebase.util"},{"l":"org.spaceinvaders.gameEngine"},{"l":"org.spaceinvaders.handlers"},{"l":"org.spaceinvaders.util"}];updateSearchResults();
