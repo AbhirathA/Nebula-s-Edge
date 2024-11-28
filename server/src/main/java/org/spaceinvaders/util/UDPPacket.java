@@ -18,10 +18,6 @@ public class UDPPacket implements Serializable {
         blackholes = new ArrayList<>();
     }
 
-    public UDPPacket(int id) {
-        this.id = id;
-    }
-
     public void update(UDPPacket udpPacket) {
         this.id = udpPacket.id;
         this.bullets = udpPacket.bullets;
