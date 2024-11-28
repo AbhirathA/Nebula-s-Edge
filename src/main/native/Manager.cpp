@@ -53,17 +53,24 @@ int Manager::dropUser(int x, int y, int peakV, int driftV, int angle, int thrust
 // }
 
 void Manager::update() {
+	std::cout << 1 << std::endl;
 	std::vector<int> deadObjs = tree.removeDead();
 	this->removeDead(deadObjs);
+	std::cout << 1 << std::endl;
 	bool flag = true;
 	for (auto p : objMap) {
 		p.second->updatePos(t);
+	std::cout << 1 << std::endl;
 		p.second->boundCorrection(lft, rt, tp, bt, t);
+	std::cout << 1 << std::endl;
 		p.second->updateBox();
+	std::cout << 1 << std::endl;
 	}
 	tree.Update();
+	std::cout << 1 << std::endl;
 	Lifetime::updateInstances();
 
+	std::cout << 1 << std::endl;
 	int count = 0;
 	while(flag && count++ < precision){
 		flag = false;
@@ -138,3 +145,31 @@ int Manager::dropMeteor(int x, int y, int vX, int vY, int accX, int accY, int in
 	count++;
 	return count-1;
 }
+
+
+int main() {
+	Manager manager = Manager(0, 0, 0, 1000, 0, -1000, 1);
+	int userId1 = manager.dropUser(100, -100, 20, 5, 0, 10, 100, 100, 100, 0, 0, 20, 20, 50, 50, 30, 5);
+	int bullet1 = manager.shoot(userId1, 5, 5, 1);
+	manager.shoot(userId1, 5, 5, 1);
+	manager.shoot(userId1, 5, 5, 1);
+	manager.shoot(userId1, 5, 5, 1);
+	manager.shoot(userId1, 5, 5, 1);
+	manager.shoot(userId1, 5, 5, 1);
+	manager.shoot(userId1, 5, 5, 1);
+	manager.shoot(userId1, 5, 5, 1);
+	manager.shoot(userId1, 5, 5, 1);
+	manager.shoot(userId1, 5, 5, 1);
+	manager.shoot(userId1, 5, 5, 1);
+	manager.shoot(userId1, 5, 5, 1);
+	manager.shoot(userId1, 5, 5, 1);
+	manager.shoot(userId1, 5, 5, 1);
+	manager.shoot(userId1, 5, 5, 1);
+	manager.shoot(userId1, 5, 5, 1);
+	manager.shoot(userId1, 5, 5, 1);
+	while(true) {
+		manager.update();
+	}
+}
+
+

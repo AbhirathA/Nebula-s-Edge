@@ -32,6 +32,8 @@ public class UDPServer
     private Thread gameLogicThread;
     private Thread networkThread;
 
+    private int count = 0;
+
     private AtomicBoolean inputBuffer, outputBuffer;
 
     public UDPServer()
@@ -90,6 +92,8 @@ public class UDPServer
 
                 // continue the game
                 UDPServer.this.gameEngine.update();
+                UDPServer.this.count++;
+                System.out.println(count);
 
                 // time to send data to clients
                 UDPServer.this.gameEngine.getAllCoords();

@@ -92,14 +92,14 @@ extern "C"
 
     JNIEXPORT void JNICALL Java_com_physics_Manager_removeDead(JNIEnv *env, jobject obj, jintArray idsArray)
     {
-        Manager *nativeManager = reinterpret_cast<Manager *>(getNativeHandle(env, obj));
-        if (nativeManager != nullptr)
+        // Manager *nativeManager = reinterpret_cast<Manager *>(getNativeHandle(env, obj));
+        // if (nativeManager != nullptr)
         {
-            jint *ids = env->GetIntArrayElements(idsArray, NULL);
-            jsize length = env->GetArrayLength(idsArray);
-            std::vector<int> idsVector(ids, ids + length);
-            env->ReleaseIntArrayElements(idsArray, ids, 0);
-            nativeManager->removeDead(idsVector);
+          //  jint *ids = env->GetIntArrayElements(idsArray, NULL);
+          //  jsize length = env->GetArrayLength(idsArray);
+          //  std::vector<int> idsVector(ids, ids + length);
+          //  env->ReleaseIntArrayElements(idsArray, ids, 0);
+          //  nativeManager->removeDead(idsVector);
         }
     }
 
