@@ -134,6 +134,20 @@ public class ScreenManager implements Disposable {
         return this.currentScreen;
     }
 
+    // Deletes a screen associated with the given ScreenState and reinstantiates it.
+    public void reinitializeScreen(ScreenState screenState) {
+        // Check if the screen exists in the map
+        if (this.screens.containsKey(screenState)) {
+            // Dispose of the current screen to free resources
+            this.screens.get(screenState).dispose();
+            // Remove the screen from the map
+            this.screens.remove(screenState);
+        }
+
+        // Recreate the screen and add it back to the map
+        this.screens.put(screenState, this.createScreen(screenState));
+    }
+
     // Dispose of all screens when the manager is disposed
     @Override
     public void dispose() {
