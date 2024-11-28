@@ -165,21 +165,7 @@ bool Meteor::collisionCorrection(Asteroid *obj) {
 
 
 bool Meteor::collisionCorrection(BlackholeObject *obj) {
-    // Factor because of integer computation instead of floating point
-    int temp = 100;
-    int temp2 = temp * temp;
-
-    // Get the distance from the object and overlap.
-    int dx = this->getX() - obj->getX();
-    int dy = this->getY() - obj->getY();
-    int distance = sqrt(dx * dx + dy * dy) * temp;
-    int overlap = this->getInnerR() * temp + obj->getInnerR() * temp - distance;
-
-    // If the distance is less than the sum of radii, there is a collision.
-    if (overlap > temp) {
-        return true;
-    }
-    return false;
+    return obj->collisionCorrection(this);
 }
 
 
