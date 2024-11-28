@@ -1,4 +1,0 @@
-#include "Obj.h"
-
-//internalUpdate()
-

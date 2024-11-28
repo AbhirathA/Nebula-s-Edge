@@ -78,27 +78,7 @@ void Manager::removeDead(std::vector<int> ids)
 	}
 }
 
-int Manager::dropP(int x, int y, int peakV, int driftV, int angle, int thrust, int thrustPersistence, int movePersistence, int coolDown, int accX, int accY, int innerRad, int outerRad, int mass)
-{
-	return 42;
-}
-
-int Manager::drop1(int x, int y, int v, int angle, int acc, int accX, int accY, int innerRad, int outerRad, int mass)
-{
-	return 42;
-}
-
-int Manager::drop2(int x, int y, int vX, int vY, int accX, int accY, int innerRad, int outerRad, int mass)
-{
-	return 42;
-}
-
-int Manager::xForce()
-{
-	return 42;
-}
-
-int Manager::yForce()
+int Manager::dropP(int x, int y, int peakV, int driftV, int angle, int thrust, int thrustPersistance, int movePersistance, int coolDown, int accX, int accY, int innerRad, int outerRad, int mass)
 {
 	return 42;
 }
@@ -123,7 +103,17 @@ int Manager::dropMeteor(int x, int y, int vX, int vY, int accX, int accY, int in
 	return 42;
 }
 
-int Manager::dropUser(int x, int y, int peakV, int driftV, int angle, int thrust, int thrustPersistence, int movePersistence, int coolDown, int accX, int accY, int innerRad, int outerRad, int mass)
+int Manager::dropUser(int x, int y, int peakV, int driftV, int angle, int thrust, int thrustPersistance, int movePersistance, int coolDown, int accX, int accY, int innerRad, int outerRad, int mass)
+{
+	return 42;
+}
+
+int Manager::xForce()
+{
+	return 42;
+}
+
+int Manager::yForce()
 {
 	return 42;
 }
