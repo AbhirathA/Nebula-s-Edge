@@ -132,7 +132,7 @@ public class GameplayScreen implements Screen {
 
         for(Coordinate coordinate : tempUdpPacket.spaceShips) {
             if(coordinate.getId() == tempUdpPacket.id) {
-                this.gameplayStage.getRocketSprite().setPosition(coordinate.getX(), coordinate.getY());
+                this.gameplayStage.getRocketSprite().setPosition(coordinate.getX() - this.gameplayStage.getRocketSprite().getWidth() / 2f, coordinate.getY() -  this.gameplayStage.getRocketSprite().getHeight() / 2f);
                 this.gameplayStage.getRocketSprite().setRotation(coordinate.getAngle());
                 break;
             }
