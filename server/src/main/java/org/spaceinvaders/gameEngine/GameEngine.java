@@ -6,7 +6,6 @@ import org.spaceinvaders.firebase.Firebase;
 import org.spaceinvaders.util.Coordinate;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 public class GameEngine {
 
