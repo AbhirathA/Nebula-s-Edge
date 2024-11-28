@@ -38,7 +38,7 @@ class AngleObj: public Obj{
 
 		AngleObj(int id, int x, int y, int v, int angle, int acc, int accX, int accY, int innerRad, int outerRad, int mass):Obj(id,x,y,innerRad,outerRad, mass) {
 			this->v = v;
-			this->angleScaled = this->angleScaled = mod((angle*ANGLE_SCALE),(360*ANGLE_SCALE));
+			this->angleScaled = mod((angle*ANGLE_SCALE),(360*ANGLE_SCALE));
 			this->acc = acc;
 			this->accX = accX;
 			this->accY = accY;
