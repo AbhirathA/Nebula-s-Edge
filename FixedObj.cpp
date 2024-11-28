@@ -59,6 +59,7 @@ bool FixedObj::collisionCorrection(LinearObj* obj) {
         obj->updateX(obj->getX() + adjustmentX);
         obj->updateY(obj->getY() + adjustmentY);
 
+        obj->updateBox();
 
         // Velocity Correction
         obj->updateV((-1)*(obj->getvX()), -1 * (obj->getY()));

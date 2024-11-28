@@ -38,6 +38,8 @@ class Obj
 		static double const PI;
 		static int const VALUE_SCALE = 1000;
 		static int const ANGLE_SCALE = 10;
+		static int const SCALE = 1000;
+		static int const PRECISION = 1;
 
 		int id = 0;
 
