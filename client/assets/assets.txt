@@ -60,9 +60,7 @@ textures/midAst4.png
 textures/midAst5.png
 textures/midAst6.png
 textures/midAst7.png
-textures/multiplayer.png
 textures/music.png
-textures/options.png
 textures/outline.png
 textures/pause.png
 textures/play.png

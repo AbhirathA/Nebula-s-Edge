@@ -1,7 +1,6 @@
 #include "Tracker.h"
 #include <cmath>
-#define PRECISION 1
-#define SCALE 1000
+
 
 void Tracker::updatePos(int t) {
 

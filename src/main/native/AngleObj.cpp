@@ -114,7 +114,7 @@ bool AngleObj::collisionCorrection(LinearObj* obj){
         obj->updateX(obj->getX() - adjustmentX);
         obj->updateY(obj->getY() - adjustmentY);
 
-        obj->updateBox();
+
         // Velocity Correction
 
         int nx = (dx * temp2) / distance;
@@ -146,7 +146,7 @@ bool AngleObj::collisionCorrection(LinearObj* obj){
         this->updateV(v1x / temp2, v1y / temp2, 1);
         obj->updateV(v2x / temp2, v2y / temp2);
         //std::cout << "In collision after: " << this->posX << " " << this->posY << " velocity:" << this->getvX() / VALUE_SCALE << " " << this->getvY() / VALUE_SCALE << std::endl;
-
+        obj->updateBox();
         return true;
     }
     return false;
@@ -178,7 +178,7 @@ bool AngleObj::collisionCorrection(AngleObj* obj){
         obj->updateX(obj->getX() - adjustmentX);
         obj->updateY(obj->getY() - adjustmentY);
 
-        obj->updateBox();
+
         // Velocity Correction
 
         int nx = (dx * temp2) / distance;
@@ -210,7 +210,7 @@ bool AngleObj::collisionCorrection(AngleObj* obj){
         this->updateV(v1x / temp2, v1y / temp2, 1);
         obj->updateV(v2x / temp2, v2y / temp2, 1);
         //std::cout << "In collision after: " << this->posX << " " << this->posY << " velocity:" << this->getvX() / VALUE_SCALE << " " << this->getvY() / VALUE_SCALE << std::endl;
-
+        obj->updateBox();
         return true;
     }
     return false;
@@ -225,7 +225,7 @@ void AngleObj::updatePos(int t){
     this->posX = this->getNextX(t);
     this->posY = this->getNextY(t);
 
-    this->updateBox();
+
     //std::cout << "mid update: " << " v: " << v << " vX: " << this->getvX() << " vY: " << this->getvY() << " angle: " << angleScaled << std::endl;
     // Velocity is updated
     int vX = this->getvX() + this->getaccX() * t;
@@ -235,6 +235,7 @@ void AngleObj::updatePos(int t){
     this->updateV(vX, vY, VALUE_SCALE);
     std::cout << "after update: ";
     printProp();
+    this->updateBox();
 }
 int AngleObj::getNextX(int t) {
     return this->posX + (this->getvX() * t + (this->getaccX() * t * t) / 2) / VALUE_SCALE;
