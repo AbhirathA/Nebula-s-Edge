@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageTextButton;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
@@ -108,7 +109,10 @@ public class LoginGatewayScreen implements Screen {
         ImageTextButton loginButton = ButtonUtils.createScreenNavigationButton(game, "Login", "textures/button.png", "textures/button.png", 95, 15, (SpaceInvadersGame.STAGE_WIDTH - 95) / 2, 98, ScreenState.LOGIN);
         ImageTextButton signupButton = ButtonUtils.createScreenNavigationButton(game, "Signup", "textures/button.png", "textures/button.png", 95, 15, (SpaceInvadersGame.STAGE_WIDTH - 95) / 2, 81, ScreenState.SIGNUP);
 
+        ImageButton mainMenuButton = ButtonUtils.createScreenNavigationButton(game, "textures/Planet7.png", "textures/Planet7.png",22, 22, 438, 8 , ScreenState.MAIN_MENU);
+
         stage.addActor(loginButton);
         stage.addActor(signupButton);
+        stage.addActor(mainMenuButton);
     }
 }
