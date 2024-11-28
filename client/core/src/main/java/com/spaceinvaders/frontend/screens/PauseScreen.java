@@ -5,6 +5,8 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.utils.ScreenUtils;
@@ -106,6 +108,14 @@ public class PauseScreen implements Screen {
                 (SpaceInvadersGame.STAGE_WIDTH - 38) / 2f, 80, screenState);
         ImageButton restartButton = ButtonUtils.createImageButton(game, "textures/restart.png", "textures/restart.png",
                 38, 38, (SpaceInvadersGame.STAGE_WIDTH - 38) / 2f + 58, 80);
+
+        restartButton.addListener(new InputListener() {
+           @Override
+           public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+               game.screenManager.reinitializeScreen(screenState);
+               return true;
+           }
+        });
 
         Image musicIcon = new Image(game.assetManager.get("textures/music.png", Texture.class));
         musicIcon.setSize(20, 20);
