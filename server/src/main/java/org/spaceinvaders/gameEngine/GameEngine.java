@@ -1,6 +1,7 @@
 package org.spaceinvaders.gameEngine;
 
 import com.physics.Manager;
+import org.checkerframework.checker.units.qual.C;
 import org.spaceinvaders.util.Coordinate;
 
 import java.util.ArrayList;
@@ -10,8 +11,6 @@ public class GameEngine {
 
     private final int WORLD_WIDTH = 7200, WORLD_HEIGHT = -4050;
 
-    public int count = 0;
-    private HashMap<Integer, String> idToState;
     private ArrayList<Coordinate> coords;
 
     private ArrayList<Integer> spaceShipIds;
@@ -22,8 +21,7 @@ public class GameEngine {
     private Manager gameEngineManager;
 
     public GameEngine() {
-        // TODO: instantiate variables to save for someting ig
-        this.idToState = new HashMap<>();
+//         TODO: instantiate variables to save for someting ig
         this.coords = new ArrayList<>();
 
         this.spaceShipIds = new ArrayList<>();
@@ -31,43 +29,92 @@ public class GameEngine {
         this.bulletIds = new ArrayList<>();
         this.blackholeIds = new ArrayList<>();
 
-        this.gameEngineManager = new Manager(0, 0, 0, 7200, 0, -4050, 1);
+        this.gameEngineManager = new Manager(0, 0, 0, this.WORLD_WIDTH, 0, this.WORLD_HEIGHT, 1);
     }
 
-    // Only adds a spaceShip for now
-    public int addElement(String type) {
-        this.coords.add(new Coordinate("SHIP", this.count, 0, -4050, 900));
+    /**
+     * This method should instantiate all non-user objects
+     */
+    public void instantiateGameEngine() {
+//        write code to spawn meteors and asteroids and blackholes
+    }
+
+    /**
+     * This adds an element. NOTE: for adding a spaceShip please use the function addShip()
+     * @param type type of element
+     * @param x x*10 coordinate of that element
+     * @param y y*10 coordinate of that element
+     * @param angle angle*10 of that element
+     * @return id of the element
+     */
+    public int addElement(String type, float x, float y, float angle) {
+        int id = 0;
         switch (type) {
             case "SHIP":
-                this.spaceShipIds.add(count);
+//                id = this.gameEngineManager.dropUser()
+                this.spaceShipIds.add(id);
                 break;
 
             case "ASTERIOD":
-                this.asteroidIds.add(count);
+//                id = this.gameEngineManager.dropAsteroid();
+                this.asteroidIds.add(id);
                 break;
 
-            case "BULLET":
-                this.bulletIds.add(count);
+            case "METEOR":
+//                id = this.gameEngineManager.dropMeteor();
+                this.asteroidIds.add(id);
                 break;
 
             case "BLACKHOLE":
-                this.blackholeIds.add(count);
+//                id = this.gameEngineManager.dropBlackHole();
+                this.blackholeIds.add(id);
                 break;
         }
 
-        return count++;
+        return id;
     }
 
+    /**
+     * This updates the states of any object whose id is known.
+     * @param id the id of the object you want to update
+     * @param state the new state you want to change it to
+     */
     public void updateState(int id, String state) {
-        this.idToState.put(id, state);
+        if (state.contains("LEFT")) this.gameEngineManager.left(id);
+        else if (state.contains("RIGHT")) this.gameEngineManager.right(id);
+        if (state.contains("FORWARD")) this.gameEngineManager.forward(id);
+        else if (state.contains("BACKWARD")) this.gameEngineManager.stop(id);
+//         TODO: add constants
+//        if (state.contains(("BULLET"))) this.gameEngineManager.shoot(id, )
     }
 
+    /**
+    * This method updates all the objects on the screen by one frame / one physics second.
+    */
     public void update() {
-        for (Coordinate coord : this.coords) {
-            this.math(this.idToState.get(coord.id), coord);
+        this.gameEngineManager.update();
+    }
+
+    /**
+     * method to get all coordinate in the private coords arraylist
+     */
+    public void getAllCoords() {
+        this.coords = new ArrayList<>();
+        int[][] tempCoords = this.gameEngineManager.display(0, WORLD_HEIGHT, WORLD_WIDTH, 0);
+        
+        for (int[] element : tempCoords) {
+            this.coords.add(new Coordinate("B", element[0], element[1], element[2], element[3]));
         }
     }
 
+    /**
+    * This is a helper function that helps one to divide all the Coordinates to different
+    * types.
+     *
+     * @param type this is the type of coordinates you want
+     *
+     * @return returns an ArrayList of those coordinates
+     */
     public ArrayList<Coordinate> display(String type) {
         ArrayList<Coordinate> retValue = new ArrayList<>();
 
@@ -100,27 +147,11 @@ public class GameEngine {
         return retValue;
     }
 
-    private void math(String state, Coordinate coords) {
-        if (state.contains("LEFT")) coords.angle += 10;
-        else if (state.contains("RIGHT")) coords.angle -= 10;
-        if (state.contains("FORWARD")) moveInDirection(10, coords);
-        else if (state.contains("BACKWARD")) moveInDirection(-10, coords);
-    }
-
-    private void moveInDirection(float speed, Coordinate coords) {
-        double angleRad = (Math.toRadians(coords.angle / 10f) + 1.571f);
-
-        double deltaX = Math.cos(angleRad) * speed;
-        double deltaY = Math.sin(angleRad) * speed;
-
-        coords.x += (float) deltaX;
-        coords.y += (float) deltaY;
-
-        this.fixCoords(coords);
-    }
-
-    private void fixCoords(Coordinate coords) {
-        coords.x = Math.min(Math.max(coords.x, 0), this.WORLD_WIDTH - 210);
-        coords.y = Math.max(Math.min(-210, coords.y), this.WORLD_HEIGHT);
+    /**
+     * wrapper to create a spaceShip
+     * @return id of object
+     */
+    public int addShip() {
+        return this.addElement("SHIP", 0, this.WORLD_HEIGHT, 900);
     }
 }
