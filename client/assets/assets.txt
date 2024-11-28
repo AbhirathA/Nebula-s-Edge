@@ -1,6 +1,7 @@
 .gitkeep
 fonts/minecraft.fnt
 fonts/minecraft.png
+logback.xml
 music/08 Easy Funkship 106.mp3
 music/10 - Continue.mp3
 sounds/game-over-38511.mp3
