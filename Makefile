@@ -1,4 +1,5 @@
-JAVA_HOME ?= $(shell /usr/libexec/java_home)
+# Detect JAVA_HOME (commented default setting for macOS, replace if needed)
+# JAVA_HOME ?= $(shell /usr/libexec/java_home)
 
 CXX = g++
 CXXFLAGS = -std=c++17 -fPIC \
@@ -30,7 +31,9 @@ endif
 NATIVE_SOURCES = $(wildcard src/main/native/*.cpp)
 NATIVE_OBJECTS = $(patsubst src/main/native/%.cpp,$(NATIVE_BUILD_DIR)/%.o,$(NATIVE_SOURCES))
 
-all: $(LIB_DIR)/$(LIB_NAME) $(LOCAL_LIB_DIR)/$(LIB_NAME)
+JAR_NAME = PhysicsEngine.jar
+
+all: clean $(LIB_DIR)/$(LIB_NAME) $(LOCAL_LIB_DIR)/$(LIB_NAME) $(LIB_DIR)/$(JAR_NAME) $(LOCAL_LIB_DIR)/$(JAR_NAME)
 
 jni: src/main/java/com/physics/Manager.java
 	mkdir -p $(CLASS_BUILD_DIR)
@@ -41,18 +44,26 @@ $(NATIVE_BUILD_DIR)/%.o: src/main/native/%.cpp
 	mkdir -p $(NATIVE_BUILD_DIR)
 	$(CXX) $(CXXFLAGS) -c $< -o $@
 
+# Compile and copy shared library to LIB_DIR and LOCAL_LIB_DIR
 $(LIB_DIR)/$(LIB_NAME): jni $(NATIVE_OBJECTS)
 	mkdir -p $(LIB_DIR)
-	mkdir -p $(LOCAL_LIB_DIR)
 	$(CXX) $(LDFLAGS) -o $(LIB_DIR)/$(LIB_NAME) $(NATIVE_OBJECTS)
-	cp $(LIB_DIR)/$(LIB_NAME) $(LOCAL_LIB_DIR)/$(LIB_NAME)
 
 $(LOCAL_LIB_DIR)/$(LIB_NAME): $(LIB_DIR)/$(LIB_NAME)
-	# This ensures the local lib directory also gets the library file
+	mkdir -p $(LOCAL_LIB_DIR)
+	cp $(LIB_DIR)/$(LIB_NAME) $(LOCAL_LIB_DIR)/$(LIB_NAME)
+
+# Create JAR file for Manager.java and copy it to LIB_DIR and LOCAL_LIB_DIR
+$(LIB_DIR)/$(JAR_NAME): jni
+	mkdir -p $(LIB_DIR)
+	jar cf $(LIB_DIR)/$(JAR_NAME) -C $(CLASS_BUILD_DIR) .
+
+$(LOCAL_LIB_DIR)/$(JAR_NAME): $(LIB_DIR)/$(JAR_NAME)
+	mkdir -p $(LOCAL_LIB_DIR)
+	cp $(LIB_DIR)/$(JAR_NAME) $(LOCAL_LIB_DIR)/$(JAR_NAME)
 
 clean:
 	rm -rf $(BUILD_DIR) $(LIB_DIR) $(INCLUDE_DIR) $(LOCAL_LIB_DIR)
-
 
 test: all
 	cd test && javac -cp .:../build/classes TestPhysicsEngine.java

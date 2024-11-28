@@ -166,7 +166,6 @@ public class UDPServer
                             byte[] sendData = UDPServer.this.gson.toJson(sendDataTemp.get(client)).getBytes();
                             DatagramPacket sendPacket = new DatagramPacket(sendData, sendData.length, client.getAddress(), client.getPort());
                             serverSocket.send(sendPacket);
-                            LoggerUtil.logInfo(UDPServer.this.gson.toJson(sendDataTemp.get(client)));
                         }
                     }
 

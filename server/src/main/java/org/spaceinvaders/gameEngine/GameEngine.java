@@ -36,7 +36,7 @@ public class GameEngine {
 
     // Only adds a spaceShip for now
     public int addElement(String type) {
-        this.coords.add(new Coordinate("SHIP", this.count, 0, 0, 90));
+        this.coords.add(new Coordinate("SHIP", this.count, 0, -4050, 900));
         switch (type) {
             case "SHIP":
                 this.spaceShipIds.add(count);
@@ -101,14 +101,14 @@ public class GameEngine {
     }
 
     private void math(String state, Coordinate coords) {
-        if (state.contains("LEFT")) coords.angle += 1;
-        else if (state.contains("RIGHT")) coords.angle -= 1;
-        if (state.contains("FORWARD")) moveInDirection(1, coords);
-        else if (state.contains("BACKWARD")) moveInDirection(-1, coords);
+        if (state.contains("LEFT")) coords.angle += 10;
+        else if (state.contains("RIGHT")) coords.angle -= 10;
+        if (state.contains("FORWARD")) moveInDirection(10, coords);
+        else if (state.contains("BACKWARD")) moveInDirection(-10, coords);
     }
 
     private void moveInDirection(float speed, Coordinate coords) {
-        double angleRad = Math.toRadians(coords.angle) + 1.571f;
+        double angleRad = (Math.toRadians(coords.angle / 10f) + 1.571f);
 
         double deltaX = Math.cos(angleRad) * speed;
         double deltaY = Math.sin(angleRad) * speed;
@@ -120,7 +120,7 @@ public class GameEngine {
     }
 
     private void fixCoords(Coordinate coords) {
-        coords.x = Math.min(Math.max(coords.x, 0), this.WORLD_WIDTH - 21);
-        coords.y = Math.max(Math.min(0, coords.y), this.WORLD_HEIGHT + 21);
+        coords.x = Math.min(Math.max(coords.x, 0), this.WORLD_WIDTH - 210);
+        coords.y = Math.max(Math.min(-210, coords.y), this.WORLD_HEIGHT);
     }
 }
