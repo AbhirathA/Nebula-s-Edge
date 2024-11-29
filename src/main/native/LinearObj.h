@@ -62,7 +62,9 @@ class LinearObj : public Obj {
 		int getOri() override {
 			double v = sqrt(vX * vX + vY * vY);
 			double t = asin(vY / v);
-
+			if (v <= 0.0001 && v>= -0.0001) {
+				return 0;
+			}
     		if (vX >= 0 && vY >= 0) {
 				return (((t * 180) / Obj::PI) * ANGLE_SCALE);
 			}

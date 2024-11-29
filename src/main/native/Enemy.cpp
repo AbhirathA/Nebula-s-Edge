@@ -152,7 +152,6 @@ bool Enemy::checkCollision(Bullet *obj) {
 }
 
 
-
 bool Enemy::collisionCorrection(Asteroid *obj) {
     if(target->getID() == obj->getID()) {
         if(this->checkCollision(target)) {

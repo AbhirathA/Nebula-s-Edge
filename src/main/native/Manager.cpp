@@ -1,3 +1,4 @@
+#pragma once
 #include "Manager.h"
 
 #include "BlackholeObject.h"
@@ -6,6 +7,7 @@
 #include "Bullet.h"
 #include "Enemy.h"
 #include "Meteor.h"
+#include "PowerUp.h"
 #include "UserObj.h"
 #include "PowerUp.h"
 
@@ -164,6 +166,7 @@ int Manager::dropIncreasePointsPowerUp(int x, int y, int radius, int pointScale,
 	count++;
 	return count - 1;
 }
+
 
 // int main()
 // {

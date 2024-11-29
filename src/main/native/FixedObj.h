@@ -6,7 +6,7 @@ public:
 	virtual void updatePos(int t) override;
 	virtual int getNextX(int t) override final;
 	virtual int getNextY(int t) override final;
-
+	virtual int getOri() override;
 	virtual bool checkCollision(Obj* obj) override;
 	virtual bool boundCorrection(int lft, int rt, int tp, int bt, int t);
 	virtual bool collisionCorrection(LinearObj* other);
