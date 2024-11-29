@@ -211,6 +211,12 @@ public final class Firebase {
         }
     }
 
+    /**
+     * Fetches server constants from a specified JSON file located at a remote server.
+     * The URL of the JSON file is constructed using the `DATABASE_URL` constant.
+     *
+     * @return a {@link JsonObject} containing the server constants if the request is successful.
+     */
     private static JsonObject fetchServerConstants() {
         try {
             URI uri = URI.create(DATABASE_URL + "serverConstants.json");
