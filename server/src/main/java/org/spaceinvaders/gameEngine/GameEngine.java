@@ -82,7 +82,7 @@ public class GameEngine {
     public void instantiateGameEngineObjects() {
 //        write code to spawn meteors and asteroids and blackholes
 
-        int asteroidId = this.addElement("ASTEROID", GAME_WIDTH/2 - 500, GAME_HEIGHT/2, 900);
+//        int asteroidId = this.addElement("ASTEROID", GAME_WIDTH/2 - 500, GAME_HEIGHT/2, 900);
         int meteorId1 = this.addMeteor(GAME_WIDTH/4, GAME_HEIGHT/2, 10, 0);
         int meteorId2 = this.addMeteor(3*GAME_WIDTH/4, GAME_HEIGHT/2, -20, 0);
     }
@@ -104,7 +104,7 @@ public class GameEngine {
                 break;
 
             case "ASTEROID":
-                id = this.gameEngineManager.dropAsteroid(x, y, BIG_ASTEROID_RADIUS*2, BIG_ASTEROID_RADIUS*2, BIG_ASTEROID_MASS);
+                id = this.gameEngineManager.dropAsteroid(x, y, BIG_ASTEROID_RADIUS, BIG_ASTEROID_RADIUS, BIG_ASTEROID_MASS);
                 this.asteroidIds.add(id);
                 break;
 
@@ -159,16 +159,59 @@ public class GameEngine {
     }
 
     /**
+     * This function removes all ids from all the mappings that are not part of totalIds
+     * Basically removes all the ids that are dead
+     * @param totalIds
+     */
+    private void removeUselessIds(ArrayList<Integer> totalIds) {
+        for (int id : this.spaceShipIds) {
+            if (!totalIds.contains(id)) {
+                this.meteorIds.remove((Integer) id);
+            }
+        }
+        for (int id : this.enemyIds) {
+            if (!totalIds.contains(id)) {
+                this.enemyIds.remove((Integer) id);
+            }
+        }
+        for (int id : this.asteroidIds) {
+            if (!totalIds.contains(id)) {
+                this.asteroidIds.remove((Integer) id);
+            }
+        }
+        for (int id : this.meteorIds) {
+            if (!totalIds.contains(id)) {
+                this.meteorIds.remove((Integer) id);
+            }
+        }
+        for (int id : this.bulletIds) {
+            if (!totalIds.contains(id)) {
+                this.bulletIds.remove((Integer) id);
+            }
+        }
+        for (int id : this.blackholeIds) {
+            if (!totalIds.contains(id)) {
+                this.blackholeIds.remove((Integer) id);
+            }
+        }
+    }
+
+    /**
      * method to get all coordinate in the private coords arraylist
      */
     public void getAllCoords() {
         this.coords = new ArrayList<>();
         int[][] tempCoords = this.gameEngineManager.display(0, GAME_HEIGHT, GAME_WIDTH, 0);
         System.out.println(tempCoords.length+"display");
-        
+
+        ArrayList<Integer> totalIds = new ArrayList<>();
         for (int[] element : tempCoords) {
             this.coords.add(new Coordinate("B", element[0], element[1], element[2], element[3]));
+            totalIds.add(element[0]);
         }
+
+        // remove ids that are not being used
+        removeUselessIds(totalIds);
     }
 
     /**

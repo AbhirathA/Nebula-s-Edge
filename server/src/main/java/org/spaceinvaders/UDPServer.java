@@ -3,6 +3,7 @@ package org.spaceinvaders;
 import java.net.*;
 import com.google.gson.Gson;
 import org.spaceinvaders.gameEngine.GameEngine;
+import org.spaceinvaders.util.Coordinate;
 import org.spaceinvaders.util.LoggerUtil;
 import org.spaceinvaders.util.ServerInfo;
 import org.spaceinvaders.util.UDPPacket;
@@ -120,6 +121,24 @@ public class UDPServer {
                 packet.asteroids.addAll(UDPServer.this.gameEngine.display("METEOR"));
                 packet.bullets = UDPServer.this.gameEngine.display("BULLET");
                 packet.blackholes = UDPServer.this.gameEngine.display("BLACKHOLES");
+
+                // Checking if any ships have died
+                synchronized (UDPServer.this.inetSocketAddressToState) {
+                    synchronized (UDPServer.this.inetSocketAddressToId) {
+                        for (InetSocketAddress connection : UDPServer.this.inetSocketAddressToId.keySet()) {
+                            boolean flag = false;
+                            for (Coordinate ship : packet.spaceShips) {
+                                if (ship.id == UDPServer.this.inetSocketAddressToId.get(connection)) {
+                                    flag = true;
+                                }
+                            }
+                            if (!flag) {
+                                UDPServer.this.inetSocketAddressToId.remove(connection);
+                                UDPServer.this.inetSocketAddressToState.remove(connection);
+                            }
+                        }
+                    }
+                }
 
                 // Store the data for each client to send later
                 synchronized (UDPServer.this.inetSocketAddressUDPPacket) {

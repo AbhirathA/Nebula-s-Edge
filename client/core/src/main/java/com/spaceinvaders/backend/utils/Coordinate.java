@@ -1,5 +1,7 @@
 package com.spaceinvaders.backend.utils;
 
+import com.spaceinvaders.frontend.SpaceInvadersGame;
+
 import java.io.Serial;
 import java.io.Serializable;
 
@@ -40,7 +42,7 @@ public class Coordinate implements Serializable
 
     public float getX() { return this.x / 10f; }
 
-    public float getY() { return (this.y + 4050) / 10f; }
+    public float getY() { return (this.y + SpaceInvadersGame.GAME_HEIGHT * 10) / 10f; }
 
     public float getAngle() { return this.angle / 10f - 90; }
 
