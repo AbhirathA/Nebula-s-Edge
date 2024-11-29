@@ -15,7 +15,7 @@ public class Victory extends Table {
         center();
 
         Image gameOver = new Image(game.assetManager.get("textures/victory.png", Texture.class));
-        add(gameOver).colspan(2).padBottom(5).size(176.4f, 28.8f);
+        add(gameOver).colspan(2).padBottom(5).size(264.6f, 43.2f);
         row();
 
         ImageButton menuButton = ButtonUtils.createScreenNavigationButton(game, "textures/menu.png", "textures/menu.png", 38, 38,

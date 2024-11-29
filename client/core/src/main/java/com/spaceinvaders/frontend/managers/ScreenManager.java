@@ -124,6 +124,10 @@ public class ScreenManager implements Disposable {
                 return new OptionsScreen(this.game, starsBackground, planetsBackground);
             case RESET_PASSWORD:
                 return new ResetPasswordScreen(this.game, starsBackground, planetsBackground);
+            case GAME_OVER:
+                return new GameOverScreen(this.game, starsBackground, planetsBackground);
+            case VICTORY:
+                return new VictoryScreen(this.game, starsBackground, planetsBackground);
             default:
                 throw new IllegalArgumentException("Unknown screen state: " + screenState); // Throw an error if the screen state is unknown
         }
