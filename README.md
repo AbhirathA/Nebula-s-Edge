@@ -1,9 +1,3 @@
-# Software Requirements Specification
-
-# (SRS)
-
-## Course: EGC 211, Programming 2
-
 ### Team Members:
 
 ### Gathik Jindal (089), Abhirath Adamane (029), Mohammed Ibrahim (112),
