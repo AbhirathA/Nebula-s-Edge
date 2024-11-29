@@ -125,6 +125,10 @@ public class GameEngine {
         return enemyId;
     }
 
+    public int addBlackhole(int x, int y){
+        int blackholeId = this.gameEngineManager.dropBlackHole();
+    }
+
     /**
      * This updates the states of any object whose id is known.
      * @param id the id of the object you want to update
