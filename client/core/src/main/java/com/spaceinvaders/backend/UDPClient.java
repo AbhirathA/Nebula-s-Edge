@@ -1,6 +1,8 @@
 package com.spaceinvaders.backend;
 
 import java.net.*;
+import java.util.concurrent.atomic.AtomicBoolean;
+
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.spaceinvaders.backend.firebase.utils.ServerInfo;
@@ -19,12 +21,15 @@ public class UDPClient {
     public Thread receiveThread;
     public boolean isThreadRunning = false;
 
-    public UDPClient(UDPPacket udpPacket) {
+    private AtomicBoolean hasReceivedPacket = new AtomicBoolean(false);
+
+    public UDPClient(UDPPacket udpPacket, AtomicBoolean hasReceivedPacket) {
         this.udpPacket = udpPacket;
         this.udpReceive = new UDPReceive();
+        this.hasReceivedPacket = hasReceivedPacket;
         try {
             this.clientSocket = new DatagramSocket(CLIENT_PORT);
-            this.clientSocket.setSoTimeout(1000);
+//            this.clientSocket.setSoTimeout(1000);
             this.serverAddress = InetAddress.getByName(ServerInfo.getIP());
         } catch (Exception e) {
             e.printStackTrace();
@@ -62,6 +67,8 @@ public class UDPClient {
                     UDPClient.this.clientSocket.receive(receivePacket);
                     String receivedData = new String(receivePacket.getData(), 0, receivePacket.getLength());
                     System.out.println(receivedData);
+
+                    UDPClient.this.hasReceivedPacket.set(true);
 
                     synchronized (UDPClient.this.udpPacket) {
                         UDPClient.this.udpPacket.update(UDPClient.this.gson.fromJson(receivedData, UDPPacket.class));

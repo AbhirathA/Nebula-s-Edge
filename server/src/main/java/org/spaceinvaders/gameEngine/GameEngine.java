@@ -1,6 +1,7 @@
 package org.spaceinvaders.gameEngine;
 
 import com.physics.Manager;
+import org.checkerframework.checker.units.qual.A;
 import org.spaceinvaders.firebase.Firebase;
 import org.spaceinvaders.util.Coordinate;
 
@@ -59,6 +60,7 @@ public class GameEngine {
     private ArrayList<Integer> meteorIds;
     private ArrayList<Integer> bulletIds;
     private ArrayList<Integer> blackholeIds;
+    private ArrayList<Integer> deadIds;
 
     private Manager gameEngineManager;
 
@@ -72,6 +74,7 @@ public class GameEngine {
         this.meteorIds = new ArrayList<>();
         this.bulletIds = new ArrayList<>();
         this.blackholeIds = new ArrayList<>();
+        this.deadIds = new ArrayList<>();
 
         this.gameEngineManager = new Manager(0, 0, 0, GAME_WIDTH, 0, GAME_HEIGHT, 1);
     }
@@ -84,8 +87,8 @@ public class GameEngine {
 
 //        int asteroidId = this.addElement("ASTEROID", GAME_WIDTH/2 - 500, GAME_HEIGHT/2, 900);
         int meteorId1 = this.addMeteor(GAME_WIDTH/4, GAME_HEIGHT/2, 10, 0);
-//        int meteorId2 = this.addMeteor(3*GAME_WIDTH/4, GAME_HEIGHT/2, -20, 0);
-        int blackhole = this.addBlackhole(GAME_WIDTH/4-1000, GAME_HEIGHT/2);
+        int meteorId2 = this.addMeteor(3*GAME_WIDTH/4, GAME_HEIGHT/2, -20, 0);
+//        int blackhole = this.addBlackhole(GAME_WIDTH/4-1000, GAME_HEIGHT/2);
     }
 
     /**
@@ -167,12 +170,21 @@ public class GameEngine {
      * @param totalIds  all the ids that are still alive
      */
     private void removeUselessIds(ArrayList<Integer> totalIds) {
-        spaceShipIds.removeIf(x -> !totalIds.contains(x));
-        enemyIds.removeIf(x -> !totalIds.contains(x));
-        asteroidIds.removeIf(x -> !totalIds.contains(x));
-        meteorIds.removeIf(x -> !totalIds.contains(x));
-        bulletIds.removeIf(x -> !totalIds.contains(x));
-        blackholeIds.removeIf(x -> !totalIds.contains(x));
+
+        // need to broadcast one last time
+        for (int i = 0; i < spaceShipIds.size(); i++) {
+            if (!totalIds.contains(spaceShipIds.get(i))) {
+                this.deadIds.add(spaceShipIds.get(i));
+                this.spaceShipIds.remove(i);
+                i--;
+            }
+        }
+
+        this.enemyIds.removeIf(x -> !totalIds.contains(x));
+        this.asteroidIds.removeIf(x -> !totalIds.contains(x));
+        this.meteorIds.removeIf(x -> !totalIds.contains(x));
+        this.bulletIds.removeIf(x -> !totalIds.contains(x));
+        this.blackholeIds.removeIf(x -> !totalIds.contains(x));
     }
 
     /**
