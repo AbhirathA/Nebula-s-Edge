@@ -1,7 +1,6 @@
 package org.spaceinvaders.gameEngine;
 
 import com.physics.Manager;
-import org.checkerframework.checker.units.qual.A;
 import org.spaceinvaders.firebase.Firebase;
 import org.spaceinvaders.util.Coordinate;
 
@@ -236,6 +235,13 @@ public class GameEngine {
         return enemyId;
     }
 
+    /**
+     * Adds a black hole to the game world.
+     *
+     * @param x     the x-coordinate of the black hole
+     * @param y     the y-coordinate of the black hole
+     * @return  the ID of the newly created black hole
+     */
     public int addBlackhole(int x, int y){
         int blackholeId = this.gameEngineManager.dropBlackHole(x, y, BLACKHOLE_INNER_RADIUS, BLACKHOLE_OUTER_RADIUS, BLACKHOLE_MASS);
         this.blackholeIds.add(blackholeId);
