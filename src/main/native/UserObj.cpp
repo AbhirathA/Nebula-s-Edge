@@ -206,13 +206,15 @@ bool UserObj::collisionCorrection(Asteroid *obj) {
         int v1PerpX = v1x * temp2 - v1Along * nx;
         int v1PerpY = v1y * temp2 - v1Along * ny;
 
-        int v1NewAlong = -v1Along*5;
+        int v1NewAlong = -v1Along;
 
         v1x = v1NewAlong * nx + v1PerpX;
         v1y = v1NewAlong * ny + v1PerpY;
 
-        this->updateV(v1x / temp2, v1y / temp2, 1);
+        std::cout << "v1x: " << v1x/temp2 << " v1y: " << v1y/temp2 << std::endl;
 
+        this->updateV(v1x , v1y , temp2);
+        std::cout << "v1x: " << this->getvX()/VALUE_SCALE << " v1y: " << this->getvY()/VALUE_SCALE << std::endl;
         //std::cout << "In collision after: " << this->posX << " " << this->posY << " velocity:" << this->getvX() / VALUE_SCALE << " " << this->getvY() / VALUE_SCALE << std::endl;
         this->updateBox();
         this->takeDamage();
@@ -241,6 +243,52 @@ bool UserObj::collisionCorrection(Meteor *obj) {
 
     // If the distance is less than the sum of radii, there is a collision.
     if (overlap > temp) {
+        //std::cout << "In collision before: " << this->posX << " " << this->posY << " velocity:" << this->getvX() / VALUE_SCALE << " " << this->getvY() / VALUE_SCALE << std::endl;
+
+        // Position Correction
+        int adjustmentFactor = overlap / 2;
+        int adjustmentX = (dx * adjustmentFactor) / distance;
+        int adjustmentY = (dy * adjustmentFactor) / distance;
+
+        this->updateX(this->getX() + adjustmentX);
+        this->updateY(this->getY() + adjustmentY);
+
+        obj->updateX(obj->getX() - adjustmentX);
+        obj->updateY(obj->getY() - adjustmentY);
+
+
+        // Velocity Correction
+
+        int nx = (dx * temp2) / distance;
+        int ny = (dy * temp2) / distance;
+
+        int v1x = this->getvX() / VALUE_SCALE, v1y = this->getvY() / VALUE_SCALE;
+        int v2x = obj->getvX() , v2y = obj->getvY();
+
+        int m1 = this->getMass();
+        int m2 = obj->getMass();
+
+        int v1Along = v1x * nx + v1y * ny;
+        int v2Along = v2x * nx + v2y * ny;
+
+        int v1PerpX = v1x * temp2 - v1Along * nx;
+        int v1PerpY = v1y * temp2 - v1Along * ny;
+        int v2PerpX = v2x * temp2 - v2Along * nx;
+        int v2PerpY = v2y * temp2 - v2Along * ny;
+
+        int v1NewAlong = ((m1 - m2) * v1Along + 2 * m2 * v2Along) / (m1 + m2);
+        int v2NewAlong = ((m2 - m1) * v2Along + 2 * m1 * v1Along) / (m1 + m2);
+
+        v1x = v1NewAlong * nx + v1PerpX;
+        v1y = v1NewAlong * ny + v1PerpY;
+
+        v2x = v2NewAlong * nx + v2PerpX;
+        v2y = v2NewAlong * ny + v2PerpY;
+
+        this->updateV(v1x, v1y, temp2);
+        obj->updateV(v2x / temp2, v2y / temp2);
+        //std::cout << "In collision after: " << this->posX << " " << this->posY << " velocity:" << this->getvX() / VALUE_SCALE << " " << this->getvY() / VALUE_SCALE << std::endl;
+        obj->updateBox();
         this->takeDamage();
         return true;
     }
@@ -322,8 +370,8 @@ bool UserObj::collisionCorrection(UserObj *obj) {
         obj->updateV(v2x / temp2, v2y / temp2, 1);
         //std::cout << "In collision after: " << this->posX << " " << this->posY << " velocity:" << this->getvX() / VALUE_SCALE << " " << this->getvY() / VALUE_SCALE << std::endl;
         obj->updateBox();
-        obj->takeDamage();
         this->takeDamage();
+        obj->takeDamage();
         return true;
     }
     return false;

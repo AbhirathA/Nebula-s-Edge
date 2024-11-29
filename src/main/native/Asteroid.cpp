@@ -183,17 +183,16 @@ bool Asteroid::collisionCorrection(Meteor *obj) {
 
         // Position Correction
         int adjustmentFactor = overlap;
-        int adjustmentX = (dx * adjustmentFactor) / distance / temp;
-        int adjustmentY = (dy * adjustmentFactor) / distance / temp;
+        int adjustmentX = (dx * adjustmentFactor) / distance;
+        int adjustmentY = (dy * adjustmentFactor) / distance;
 
-        obj->updateX(obj->getX() + adjustmentX);
-        obj->updateY(obj->getY() + adjustmentY);
+        obj->updateX(obj->getX() - (adjustmentX));
+        obj->updateY(obj->getY() - (adjustmentY));
 
         obj->updateBox();
 
         // Velocity Correction
-        obj->updateV((-1)*(obj->getvX()), -1 * (obj->getY()));
-
+        obj->updateV((-1)*(obj->getvX()), -1 * (obj->getvY()));
         return true;
     }
     return false;

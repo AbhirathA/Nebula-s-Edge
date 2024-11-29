@@ -8,32 +8,46 @@ import java.util.ArrayList;
 
 public class GameEngine {
 
+    // 1050
     public static final int BLACKHOLE_INNER_RADIUS = Firebase.serverConstants.get("BLACKHOLE_INNER_RADIUS").getAsInt()/10;
+    // 2550
     public static final int BLACKHOLE_OUTER_RADIUS = Firebase.serverConstants.get("BLACKHOLE_OUTER_RADIUS").getAsInt()/10;
     public static final int BLACKHOLE_MASS = 100;
+    // 1350
     public static final int CAMERA_HEIGHT = Firebase.serverConstants.get("CAMERA_HEIGHT").getAsInt();
+    // 7200
     public static final int CAMERA_WIDTH = Firebase.serverConstants.get("CAMERA_WIDTH").getAsInt();
+    // 500
     public static final int ENEMY_RADIUS = Firebase.serverConstants.get("ENEMY_RADIUS").getAsInt()/10;
+    // 7200
     public static final int GAME_HEIGHT = Firebase.serverConstants.get("GAME_HEIGHT").getAsInt();
+    // -4050
     public static final int GAME_WIDTH = Firebase.serverConstants.get("GAME_WIDTH").getAsInt();
+    // 1050
     public static final int BIG_ASTEROID_RADIUS = Firebase.serverConstants.get("BIG_ASTEROID_RADIUS").getAsInt()/10;
     public static final int BIG_ASTEROID_MASS = 150;
+    // 600
     public static final int MEDIUM_ASTEROID_RADIUS = Firebase.serverConstants.get("MEDIUM_ASTEROID_RADIUS").getAsInt()/10;
+    // 400
     public static final int SMALL_ASTEROID_RADIUS = Firebase.serverConstants.get("SMALL_ASTEROID_RADIUS").getAsInt()/10;
+    // 1200
     public static final int SPACESHIP_RADIUS = Firebase.serverConstants.get("SPACESHIP_RADIUS").getAsInt()/10;
     public static final int SPACESHIP_MASS = 100;
     public static final int SPACESHIP_HEALTH = 100;
-    public static final int PEAK_USER_VEL = 15;
+    public static final int PEAK_USER_VEL = 10;
     public static final int DRIFT_USER_VEL = 5;
+    // 100
     public static final int BULLET_RADIUS = Firebase.serverConstants.get("BULLET_RADIUS").getAsInt()/10;
-    public static final int BULLET_LIFE = 50 ;
+    public static final int BULLET_LIFE = 80 ;
     public static final int BULLET_SPEED = 10 + PEAK_USER_VEL;
     public static final int BULLET_MASS = 1;
 
     private ArrayList<Coordinate> coords;
 
     private ArrayList<Integer> spaceShipIds;
+    private ArrayList<Integer> enemyIds;
     private ArrayList<Integer> asteroidIds;
+    private ArrayList<Integer> meteorIds;
     private ArrayList<Integer> bulletIds;
     private ArrayList<Integer> blackholeIds;
 
@@ -44,7 +58,9 @@ public class GameEngine {
         this.coords = new ArrayList<>();
 
         this.spaceShipIds = new ArrayList<>();
+        this.enemyIds = new ArrayList<>();
         this.asteroidIds = new ArrayList<>();
+        this.meteorIds = new ArrayList<>();
         this.bulletIds = new ArrayList<>();
         this.blackholeIds = new ArrayList<>();
 
@@ -56,10 +72,10 @@ public class GameEngine {
      */
     public void instantiateGameEngine(int id) {
 //        write code to spawn meteors and asteroids and blackholes
-        int enemyId = this.gameEngineManager.dropEnemy(0, 0, 10, 1, ENEMY_RADIUS, ENEMY_RADIUS, SPACESHIP_MASS, false, 1, id);
-        this.spaceShipIds.add(enemyId);
-        int asteroidId = this.addElement("ASTEROID", GAME_WIDTH/2, GAME_HEIGHT/2, 900);
-        this.asteroidIds.add(asteroidId);
+        int enemyId = this.addEnemy(GAME_WIDTH/2-2000, GAME_HEIGHT/2, id);
+        int asteroidId = this.addElement("ASTEROID", GAME_WIDTH/2 - 500, GAME_HEIGHT/2, 900);
+        int meteorId1 = this.addMeteor(GAME_WIDTH/4, GAME_HEIGHT/2, 10, 0);
+        int meteorId2 = this.addMeteor(3*GAME_WIDTH/4, GAME_HEIGHT/2, -20, 0);
         System.out.println("############################################################# " + enemyId);
     }
 
@@ -80,13 +96,13 @@ public class GameEngine {
                 break;
 
             case "ASTEROID":
-                id = this.gameEngineManager.dropAsteroid(x, y, BIG_ASTEROID_RADIUS, BIG_ASTEROID_RADIUS, BIG_ASTEROID_MASS);
+                id = this.gameEngineManager.dropAsteroid(x, y, BIG_ASTEROID_RADIUS*2, BIG_ASTEROID_RADIUS*2, BIG_ASTEROID_MASS);
                 this.asteroidIds.add(id);
                 break;
 
             case "METEOR":
-                id = this.gameEngineManager.dropMeteor(x, y, 0, 0, 0, 0, BIG_ASTEROID_RADIUS, BIG_ASTEROID_RADIUS, BIG_ASTEROID_MASS);
-                this.asteroidIds.add(id);
+                id = this.gameEngineManager.dropMeteor(x, y, DRIFT_USER_VEL, DRIFT_USER_VEL, 0, 0, MEDIUM_ASTEROID_RADIUS, MEDIUM_ASTEROID_RADIUS, BIG_ASTEROID_MASS*10);
+                this.meteorIds.add(id);
                 break;
 
             case "BLACKHOLE":
@@ -96,6 +112,18 @@ public class GameEngine {
         }
 
         return id;
+    }
+
+    public int addMeteor(int x, int y, int vx, int vy) {
+        int id = this.gameEngineManager.dropMeteor(x, y, vx, vy, 0, 0, BIG_ASTEROID_RADIUS, BIG_ASTEROID_RADIUS, BIG_ASTEROID_MASS);
+        this.meteorIds.add(id);
+        return id;
+    }
+
+    public int addEnemy(int x, int y, int id) {
+        int enemyId = this.gameEngineManager.dropEnemy(x, y, 10, 1, ENEMY_RADIUS, ENEMY_RADIUS, SPACESHIP_MASS, false, -1, id);
+        this.enemyIds.add(enemyId);
+        return enemyId;
     }
 
     /**
@@ -145,14 +173,36 @@ public class GameEngine {
         switch (type) {
             case "SHIP":
                 for (Coordinate coord : this.coords) {
-                    if (this.spaceShipIds.contains(coord.id)) retValue.add(coord);
+                    if (this.spaceShipIds.contains(coord.id)) {
+                        coord.health = this.gameEngineManager.getHealth(coord.id);
+                        coord.point = this.gameEngineManager.getPoints(coord.id);
+                        retValue.add(coord);
+                    }
+                }
+                break;
+
+            case "ENEMY":
+                for (Coordinate coord : this.coords) {
+                    if (this.enemyIds.contains(coord.id)) {
+                        coord.angle -= 900;
+                        retValue.add(coord);
+                    }
                 }
                 break;
 
             case "ASTEROID":
                 for (Coordinate coord : this.coords) {
                     if (this.asteroidIds.contains(coord.id)) {
-                        System.out.println(type);
+                        retValue.add(coord);
+                    }
+                }
+                break;
+
+            case "METEOR":
+                for (Coordinate coord : this.coords) {
+                    if (this.meteorIds.contains(coord.id)) {
+                        coord.type = "M";
+                        System.out.println(coord.type);
                         retValue.add(coord);
                     }
                 }
@@ -179,6 +229,6 @@ public class GameEngine {
      * @return id of object
      */
     public int addShip() {
-        return this.addElement("SHIP", 0, GAME_HEIGHT, 900);
+        return this.addElement("SHIP", GAME_WIDTH/2 + 2*BIG_ASTEROID_RADIUS - 500, GAME_HEIGHT/2, 900);
     }
 }

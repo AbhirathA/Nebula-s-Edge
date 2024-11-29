@@ -29,10 +29,6 @@ void AngleObj::updateV(int vX, int vY, int scale){
     //std::cout << "\n\nvel :" << v << std::endl << std::endl;
     double t = asin(vY / v);
 
-    //std::cout << "big idiot: " << (int)((((t * 180) / PI)) * ANGLE_SCALE)%(360 * ANGLE_SCALE) << " " << v;
-    if ((0 < (this->angleScaled - 900)) && ((this->angleScaled - 900) < 10)) {
-        //std::cout << "sfggd";
-    }
     if (vX >= 0 && vY >= 0) {
         this->angleScaled = (((t * 180) / Obj::PI) * ANGLE_SCALE);
     }
@@ -45,7 +41,7 @@ void AngleObj::updateV(int vX, int vY, int scale){
     else {
         this->angleScaled = 1800 - (((t * 180) / Obj::PI) * ANGLE_SCALE);
     }
-    this->v = (v+VALUE_SCALE-1)/VALUE_SCALE;
+    this->v = (v+scale-1)/scale;
 }
 
 bool AngleObj::checkCollision(Obj* obj){ //////////////////////////////

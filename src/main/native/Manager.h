@@ -72,11 +72,11 @@ public:
 	}
 	void left(int id)
 	{
-		this->playerMap[id]->turnLeft(30);
+		this->playerMap[id]->turnLeft(25);
 	}
 	void right(int id)
 	{
-		this->playerMap[id]->turnRight(30);
+		this->playerMap[id]->turnRight(25);
 	}
 
 	~Manager()

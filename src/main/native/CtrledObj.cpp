@@ -18,7 +18,7 @@ void CtrledObj::removeMove() {
 	// std::cout << "hi";
 	this->isMovable = true;
 	int t = this->v - this->peakV;
-	this->v = (t > driftV) ? t : driftV;
+	this->v = (t > driftV) ? driftV : driftV;
 }
 
 

@@ -20,6 +20,7 @@ void Tracker::updatePos(int t) {
 	temp = posY;
 	posY = temp + vY * t + accY*t*t/2;
 	std::cout<<"hi"<<std::endl;
+	std::cout<<"Angle: " << this->getOri()<<std::endl;
 	this->updateBox();
 }
 

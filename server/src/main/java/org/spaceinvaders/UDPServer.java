@@ -101,7 +101,9 @@ public class UDPServer
                 UDPServer.this.gameEngine.getAllCoords();
                 UDPPacket packet = new UDPPacket();
                 packet.spaceShips = UDPServer.this.gameEngine.display("SHIP");
+                packet.spaceShips.addAll(UDPServer.this.gameEngine.display("ENEMY"));
                 packet.asteroids = UDPServer.this.gameEngine.display("ASTEROID");
+                packet.asteroids.addAll(UDPServer.this.gameEngine.display("METEOR"));
                 packet.bullets = UDPServer.this.gameEngine.display("BULLET");
                 packet.blackholes = UDPServer.this.gameEngine.display("BLACKHOLES");
 

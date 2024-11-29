@@ -8,8 +8,19 @@ public class Coordinate implements Serializable
     @Serial
     private static final long serialVersionUID = 1L; // For serialization
     public String type; // Coordinate type (e.g., "Point", "Circle")
-    public int x, y, angle;
+    public int x, y, angle, point, health;
     public int id;
+
+    public Coordinate(String type, int id, int x, int y, int angle, int point, int health)
+    {
+        this.type = type;
+        this.id = id;
+        this.x = x;
+        this.y = y;
+        this.angle = angle;
+        this.point = point;
+        this.health = health;
+    }
 
     public Coordinate(String type, int id, int x, int y, int angle)
     {
@@ -18,6 +29,8 @@ public class Coordinate implements Serializable
         this.x = x;
         this.y = y;
         this.angle = angle;
+        this.point = 0;
+        this.health = 0;
     }
 
     @Override
