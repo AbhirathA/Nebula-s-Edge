@@ -23,6 +23,74 @@ public:
     virtual void applyEffect(UserObj *target) = 0;
 
     virtual ~PowerUp() { delete this->lifetime; }
+
+    virtual bool checkCollision(Asteroid *obj) override {
+        return false;
+    }
+
+    virtual bool checkCollision(BlackholeObject *obj) override {
+        return false;
+    }
+
+    virtual bool checkCollision(Meteor *obj) override {
+        return false;
+    }
+
+    virtual bool checkCollision(Flare *obj) override {
+        return false;
+    }
+
+    virtual bool checkCollision(PowerUp *obj) override {
+        return false;
+    }
+
+    virtual bool checkCollision(UserObj *obj) override {
+        return false;
+    }
+
+    virtual bool checkCollision(Enemy *obj) override {
+        return false;
+    }
+
+    virtual bool checkCollision(Bullet *obj) override {
+        return false;
+    }
+
+    virtual bool collisionCorrection(Asteroid *obj) override {
+        return false;
+    }
+
+    virtual bool collisionCorrection(BlackholeObject *obj) override {
+        return false;
+    }
+
+    virtual bool collisionCorrection(Meteor *obj) override {
+        return false;
+    }
+
+    virtual bool collisionCorrection(PowerUp *obj) override {
+        return false;
+    }
+
+    virtual bool collisionCorrection(Bullet *obj) override {
+        return false;
+    }
+
+    virtual bool collisionCorrection(Flare *obj) override {
+        return false;
+    }
+
+    virtual bool collisionCorrection(UserObj *obj) override {
+        return obj->collisionCorrection(this);
+    }
+
+    virtual bool collisionCorrection(Enemy *obj) override {
+        return false;
+    }
+
+    virtual bool collisionCorrection(Obj *other) override {
+        return other->collisionCorrection(this);
+    }
 };
 
 class IncreaseHealthPowerUp : public PowerUp
@@ -95,4 +163,6 @@ public:
     }
 
     virtual ~IncreasePointsPowerUp() {}
+
+
 };
