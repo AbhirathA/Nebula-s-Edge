@@ -33,10 +33,16 @@ public class ServerInfo
     public static final int HTTP_PORT = 8080;
 
     /**
-     * The UDP Port of this server.
+     * The UDP Port of this server for multiplayer.
      * This is the port on which the server will listen for UDP packets.
      */
-    public static final int UDP_PORT = 9090;
+    public static final int UDP_MULTI_PLAYER_PORT = 9090;
+
+    /**
+     * The UDP Port of this server for multiplayer.
+     * This is the port on which the server will listen for UDP packets.
+     */
+    public static final int UDP_SINGLE_PLAYER_PORT = 9091;
 
     static {
         String ipAddress = "127.0.0.1";

@@ -208,10 +208,8 @@ public class AuthenticationManager {
                     throw new AuthenticationException("Server database error");
 
                 case SERVER_ERROR:
-                    throw new AuthenticationException("Server error");
-
                 default:
-                    throw new AuthenticationException("Unknown error");
+                    throw new AuthenticationException("Server error");
             }
         } catch (IOException | URISyntaxException e) {
             throw new AuthenticationException("Failed to authenticate the user.");

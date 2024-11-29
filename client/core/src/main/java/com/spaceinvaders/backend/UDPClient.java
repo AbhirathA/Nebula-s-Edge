@@ -34,7 +34,7 @@ public class UDPClient {
     public void send(String state, String token) {
         try {
             String sendData = generateData(state, token);
-            DatagramPacket sendPacket = new DatagramPacket(sendData.getBytes(), sendData.length(), this.serverAddress, ServerInfo.getUdpPort());
+            DatagramPacket sendPacket = new DatagramPacket(sendData.getBytes(), sendData.length(), this.serverAddress, ServerInfo.getUdpPortMultiPlayer());
             this.clientSocket.send(sendPacket);
         } catch (Exception e) {
             e.printStackTrace();

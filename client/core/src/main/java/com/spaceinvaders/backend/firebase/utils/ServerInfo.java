@@ -129,10 +129,25 @@ public class ServerInfo {
      *
      * @return the UDP port of the server as an {@code int}.
      */
-    public static int getUdpPort() {
+    public static int getUdpPortSinglePlayer() {
         if (SERVER_INFO != null)
         {
-            return SERVER_INFO.get("udp-port").getAsInt();
+            return SERVER_INFO.get("udp-single-port").getAsInt();
+        }
+        LoggerUtil.logInfo("Could not find udp port");
+        System.exit(0);
+        return 0;
+    }
+
+    /**
+     * Returns the UDP port of the server.
+     *
+     * @return the UDP port of the server as an {@code int}.
+     */
+    public static int getUdpPortMultiPlayer() {
+        if (SERVER_INFO != null)
+        {
+            return SERVER_INFO.get("udp-multi-port").getAsInt();
         }
         LoggerUtil.logInfo("Could not find udp port");
         System.exit(0);
