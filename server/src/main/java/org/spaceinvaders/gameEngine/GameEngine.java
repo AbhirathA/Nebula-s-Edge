@@ -6,49 +6,126 @@ import org.spaceinvaders.util.Coordinate;
 
 import java.util.ArrayList;
 
+/**
+ * GameEngine.java
+ * <br>
+ * The GameEngine class manages the game logic for a space invaders-like game.
+ * It is responsible for instantiating game objects (spaceships, enemies, asteroids, meteors, etc.)
+ * and updating their states. The game mechanics include movement, collisions, and physics.
+ * @author Dedeepya
+ * @author Gathik
+ * @author Aryan
+ * @author Abhirath
+ * @author Ibrahim
+ * @author Jayant
+ * @version 1.0
+ * @since 11/27/2024
+ */
 public class GameEngine {
 
-    // 105
+    /**
+     * The inner radius of the black hole's gravitational pull.
+     */
     public static final int BLACKHOLE_INNER_RADIUS = Firebase.serverConstants.get("BLACKHOLE_INNER_RADIUS").getAsInt();
-    // 255
+
+    /**
+     * The outer radius of the black hole's gravitational influence.
+     */
     public static final int BLACKHOLE_OUTER_RADIUS = Firebase.serverConstants.get("BLACKHOLE_OUTER_RADIUS").getAsInt();
-    // 100
+
+    /**
+     * The mass of the black hole.
+     */
     public static final int BLACKHOLE_MASS = Firebase.serverConstants.get("BLACKHOLE_MASS").getAsInt();
-    // 1350
+
+    /**
+     * The height of the camera's viewing area.
+     */
     public static final int CAMERA_HEIGHT = Firebase.serverConstants.get("CAMERA_HEIGHT").getAsInt();
-    // 2400
+
+    /**
+     * The width of the camera's viewing area.
+     */
     public static final int CAMERA_WIDTH = Firebase.serverConstants.get("CAMERA_WIDTH").getAsInt();
-    // 50
+
+    /**
+     * The radius of the enemy objects.
+     */
     public static final int ENEMY_RADIUS = Firebase.serverConstants.get("ENEMY_RADIUS").getAsInt();
-    // -6750
+
+    /**
+     * The height of the game world.
+     */
     public static final int GAME_HEIGHT = Firebase.serverConstants.get("GAME_HEIGHT").getAsInt();
-    // 12000
+
+    /**
+     * The width of the game world.
+     */
     public static final int GAME_WIDTH = Firebase.serverConstants.get("GAME_WIDTH").getAsInt();
-    // 105
+
+    /**
+     * The radius of a large asteroid.
+     */
     public static final int BIG_ASTEROID_RADIUS = Firebase.serverConstants.get("BIG_ASTEROID_RADIUS").getAsInt();
-    // 150
+
+    /**
+     * The mass of a large asteroid.
+     */
     public static final int BIG_ASTEROID_MASS = Firebase.serverConstants.get("BIG_ASTEROID_MASS").getAsInt();
-    // 60
+
+    /**
+     * The radius of a medium-sized asteroid.
+     */
     public static final int MEDIUM_ASTEROID_RADIUS = Firebase.serverConstants.get("MEDIUM_ASTEROID_RADIUS").getAsInt();
-    // 40
+
+    /**
+     * The radius of a small asteroid.
+     */
     public static final int SMALL_ASTEROID_RADIUS = Firebase.serverConstants.get("SMALL_ASTEROID_RADIUS").getAsInt();
-    // 120
+
+    /**
+     * The radius of a spaceship.
+     */
     public static final int SPACESHIP_RADIUS = Firebase.serverConstants.get("SPACESHIP_RADIUS").getAsInt();
-    // 100
+
+    /**
+     * The mass of a spaceship.
+     */
     public static final int SPACESHIP_MASS = Firebase.serverConstants.get("SPACESHIP_MASS").getAsInt();
-    // 10
+
+    /**
+     * The health points of the spaceship.
+     */
     public static final int SPACESHIP_HEALTH = Firebase.serverConstants.get("SPACESHIP_HEALTH").getAsInt();
-    // 15
+
+    /**
+     * The peak velocity of the user-controlled spaceship.
+     */
     public static final int PEAK_USER_VEL = Firebase.serverConstants.get("PEAK_USER_VEL").getAsInt();
-    // 5
+
+    /**
+     * The drifting velocity of the user-controlled spaceship.
+     */
     public static final int DRIFT_USER_VEL = Firebase.serverConstants.get("DRIFT_USER_VEL").getAsInt();
-    // 10
+
+    /**
+     * The radius of bullets fired by the spaceship.
+     */
     public static final int BULLET_RADIUS = Firebase.serverConstants.get("BULLET_RADIUS").getAsInt();
-    // 50
+
+    /**
+     * The lifetime of a bullet in the game (in seconds).
+     */
     public static final int BULLET_LIFE = Firebase.serverConstants.get("BULLET_LIFE").getAsInt();
-    // 10
+
+    /**
+     * The speed of the bullet, adjusted by the spaceship's peak velocity.
+     */
     public static final int BULLET_SPEED = Firebase.serverConstants.get("BULLET_SPEED").getAsInt() + PEAK_USER_VEL;
-    // 1
+
+    /**
+     * The mass of a bullet.
+     */
     public static final int BULLET_MASS = Firebase.serverConstants.get("BULLET_MASS").getAsInt();
 
     private ArrayList<Coordinate> coords;
@@ -62,8 +139,11 @@ public class GameEngine {
 
     private Manager gameEngineManager;
 
+    /**
+     * Constructor for the GameEngine class. Initializes the game objects' lists
+     * and sets up the game engine manager with the game world dimensions.
+     */
     public GameEngine() {
-//         TODO: instantiate variables to save for someting ig
         this.coords = new ArrayList<>();
 
         this.spaceShipIds = new ArrayList<>();
@@ -77,7 +157,7 @@ public class GameEngine {
     }
 
     /**
-     * This method should instantiate all non-user objects
+     * Instantiates the non-user objects (like asteroids, meteors, and blackholes) in the game world.
      */
     public void instantiateGameEngineObjects() {
 //        write code to spawn meteors and asteroids and blackholes
@@ -88,12 +168,13 @@ public class GameEngine {
     }
 
     /**
-     * This adds an element. NOTE: for adding a spaceShip please use the function addShip()
-     * @param type type of element
-     * @param x x*10 coordinate of that element
-     * @param y y*10 coordinate of that element
-     * @param angle angle*10 of that element
-     * @return id of the element
+     * Adds a game element (spaceship, asteroid, meteor, or blackhole) to the game world.
+     *
+     * @param type  the type of element to add (SHIP, ASTEROID, METEOR, BLACKHOLE)
+     * @param x     the x-coordinate of the element
+     * @param y     the y-coordinate of the element
+     * @param angle the angle of the element
+     * @return the ID of the newly created element
      */
     public int addElement(String type, int x, int y, int angle) {
         int id = 0;
@@ -122,12 +203,29 @@ public class GameEngine {
         return id;
     }
 
+    /**
+     * Adds a meteor to the game world.
+     *
+     * @param x  the x-coordinate of the meteor
+     * @param y  the y-coordinate of the meteor
+     * @param vx the x-velocity of the meteor
+     * @param vy the y-velocity of the meteor
+     * @return the ID of the newly created meteor
+     */
     public int addMeteor(int x, int y, int vx, int vy) {
         int id = this.gameEngineManager.dropMeteor(x, y, vx, vy, 0, 0, BIG_ASTEROID_RADIUS, BIG_ASTEROID_RADIUS, BIG_ASTEROID_MASS);
         this.meteorIds.add(id);
         return id;
     }
 
+    /**
+     * Adds an enemy to the game world.
+     *
+     * @param x   the x-coordinate of the enemy
+     * @param y   the y-coordinate of the enemy
+     * @param id the ID of the enemy
+     * @return the ID of the newly created enemy
+     */
     public int addEnemy(int x, int y, int id) {
         int enemyId = this.gameEngineManager.dropEnemy(x, y, 10, 1, ENEMY_RADIUS, ENEMY_RADIUS, SPACESHIP_MASS, false, -1, id);
         this.enemyIds.add(enemyId);
@@ -139,9 +237,10 @@ public class GameEngine {
 //    }
 
     /**
-     * This updates the states of any object whose id is known.
-     * @param id the id of the object you want to update
-     * @param state the new state you want to change it to
+     * Updates the state of an object in the game based on the given state string.
+     *
+     * @param id    the ID of the object to update
+     * @param state the new state for the object
      */
     public void updateState(int id, String state) {
         if (state.contains("LEFT")) this.gameEngineManager.left(id);
@@ -152,14 +251,14 @@ public class GameEngine {
     }
 
     /**
-    * This method updates all the objects on the screen by one frame / one physics second.
-    */
+     * Updates the game engine's state for one frame.
+     */
     public void update() {
         this.gameEngineManager.update();
     }
 
     /**
-     * method to get all coordinate in the private coords arraylist
+     * Retrieves all the coordinates of objects in the game.
      */
     public void getAllCoords() {
         this.coords = new ArrayList<>();
@@ -172,12 +271,10 @@ public class GameEngine {
     }
 
     /**
-    * This is a helper function that helps one to divide all the Coordinates to different
-    * types.
+     * Retrieves a filtered list of coordinates based on the provided object type.
      *
-     * @param type this is the type of coordinates you want
-     *
-     * @return returns an ArrayList of those coordinates
+     * @param type the type of objects to display (SHIP, ENEMY, ASTEROID, METEOR, BULLET, BLACKHOLE)
+     * @return an ArrayList of coordinates for the specified type
      */
     public ArrayList<Coordinate> display(String type) {
         ArrayList<Coordinate> retValue = new ArrayList<>();
@@ -236,8 +333,9 @@ public class GameEngine {
     }
 
     /**
-     * wrapper to create a spaceShip
-     * @return id of object
+     * Wrapper function to create a spaceship.
+     *
+     * @return the ID of the newly created spaceship
      */
     public int addShip() {
         return this.addElement("SHIP", GAME_WIDTH/2 + 2*BIG_ASTEROID_RADIUS - 500, GAME_HEIGHT/2, 900);
