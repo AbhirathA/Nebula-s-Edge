@@ -71,7 +71,7 @@ public abstract class BaseHandler implements HttpHandler {
      * @param e        the exception that occurred.
      * @throws IOException if an I/O error occurs while sending the response.
      */
-    private void handleException(HttpExchange exchange, Exception e) throws IOException {
+    void handleException(HttpExchange exchange, Exception e) throws IOException {
         if (e instanceof NullPointerException) {
             sendHTTPResponse(exchange, HTTPCode.INVALID_INPUT.getCode(), "Missing required data");
         } else if (e instanceof FirebaseAuthException) {

@@ -368,7 +368,7 @@ public class GameEngine {
      * Retrieves all the coordinates of objects in the game.
      */
     public void getAllCoords() {
-        this.coords = new ArrayList<>();
+        this.coords.clear();
         int[][] tempCoords = this.gameEngineManager.display(0, GAME_HEIGHT, GAME_WIDTH, 0);
         for(int i=0; i<tempCoords.length;i++) System.out.println(tempCoords[i][3]+" display");
 

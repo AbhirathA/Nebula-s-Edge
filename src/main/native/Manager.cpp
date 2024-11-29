@@ -99,6 +99,19 @@ int Manager::shoot(int id, int innerRadius, int outerRadius, int mass)
 	return count - 1;
 }
 
+// int Manager::shootFlare(int id, int innerRadius, int outerRadius, int mass, int maxLife)
+// {
+// 	UserObj *curUser = playerMap[id];
+// 	std::tuple<int, int, int, int> data = curUser->launchFlare();
+// 	Flare *temp = new Flare(count, std::get<0>(data), std::get<1>(data), std::get<2>(data),
+// 							std::get<3>(data), 0, 0, innerRadius, outerRadius, mass, maxLife, curUser);
+// 	tree.insert(temp->getObjBox(), count, temp->getStatus());
+// 	temp->updateAcc(gX, gY);
+// 	objMap[count] = temp;
+// 	count++;
+// 	return count - 1;
+// }
+
 void Manager::removeDead(std::vector<int> ids)
 {
 	for (auto id : ids)
@@ -172,7 +185,6 @@ int Manager::dropIncreasePointsPowerUp(int x, int y, int radius, int pointScale,
 	count++;
 	return count - 1;
 }
-
 
 // int main()
 // {

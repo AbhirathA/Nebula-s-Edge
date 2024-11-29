@@ -102,6 +102,8 @@ public:
 	int dropHealthPowerUp(int x, int y, int radius, int healthIncrease);
 	int dropBulletBoostPowerUp(int x, int y, int radius, int speedBoost, int lifeBoost, int duration);
 	int dropIncreasePointsPowerUp(int x, int y, int radius, int pointScale, int duration);
+
+	// int shootFlare(int id, int innerRadius, int outerRadius, int mass, int maxLife);
 };
 
 // void activatePowerUp(PowerUp* powerUp, Obj* target);

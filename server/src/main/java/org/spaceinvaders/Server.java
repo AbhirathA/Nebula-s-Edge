@@ -4,6 +4,7 @@ import com.sun.net.httpserver.HttpServer;
 import org.spaceinvaders.firebase.Firebase;
 import org.spaceinvaders.handlers.GetDataHandler;
 //import org.spaceinvaders.handlers.HandshakeHandler;
+import org.spaceinvaders.handlers.HandshakeHandler;
 import org.spaceinvaders.handlers.SignUpHandler;
 import org.spaceinvaders.util.LoggerUtil;
 import org.spaceinvaders.util.ServerInfo;
@@ -46,15 +47,13 @@ public class Server {
     public static void main(String[] args) {
         try {
             HttpServer server = HttpServer.create(new InetSocketAddress(ServerInfo.HTTP_PORT), BACKLOG_LIMIT);
-            UDPServer udpServer = new UDPServer();
             //noinspection ResultOfMethodCallIgnored
             Firebase.getInstance();
             server.createContext("/signup", new SignUpHandler());
             server.createContext("/getData", new GetDataHandler());
-//            server.createContext("/handshake", new HandshakeHandler());
+            server.createContext("/handshake", new HandshakeHandler());
             server.setExecutor(null);
             server.start();
-            udpServer.startThreads();
             LoggerUtil.logInfo("Server started at http://localhost:" + ServerInfo.HTTP_PORT);
         } catch (IOException e) {
             LoggerUtil.logException("Cannot create a localhost server on port " + ServerInfo.HTTP_PORT, e);
