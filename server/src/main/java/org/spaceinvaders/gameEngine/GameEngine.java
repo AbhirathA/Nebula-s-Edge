@@ -164,7 +164,7 @@ public class GameEngine {
     /**
      * This function removes all ids from all the mappings that are not part of totalIds
      * Basically removes all the ids that are dead
-     * @param totalIds
+     * @param totalIds  all the ids that are still alive
      */
     private void removeUselessIds(ArrayList<Integer> totalIds) {
         spaceShipIds.removeIf(x -> !totalIds.contains(x));
