@@ -70,13 +70,12 @@ public class GameEngine {
     /**
      * This method should instantiate all non-user objects
      */
-    public void instantiateGameEngine(int id) {
+    public void instantiateGameEngineObjects() {
 //        write code to spawn meteors and asteroids and blackholes
-        int enemyId = this.addEnemy(GAME_WIDTH/2-2000, GAME_HEIGHT/2, id);
+
         int asteroidId = this.addElement("ASTEROID", GAME_WIDTH/2 - 500, GAME_HEIGHT/2, 900);
         int meteorId1 = this.addMeteor(GAME_WIDTH/4, GAME_HEIGHT/2, 10, 0);
         int meteorId2 = this.addMeteor(3*GAME_WIDTH/4, GAME_HEIGHT/2, -20, 0);
-        System.out.println("############################################################# " + enemyId);
     }
 
     /**
@@ -184,7 +183,6 @@ public class GameEngine {
             case "ENEMY":
                 for (Coordinate coord : this.coords) {
                     if (this.enemyIds.contains(coord.id)) {
-                        coord.angle -= 900;
                         retValue.add(coord);
                     }
                 }

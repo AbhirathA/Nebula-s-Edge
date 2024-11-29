@@ -60,11 +60,21 @@ class LinearObj : public Obj {
 		}
 
 		int getOri() override {
-			double t = asin(vX/std::sqrt(vX * vX + vY * vY));
-			if (vX >= 0) {
-				return  mod((int)((((t * 180) / PI)) * ANGLE_SCALE) , (360 * ANGLE_SCALE));
+			double v = sqrt(vX * vX + vY * vY);
+			double t = asin(vY / v);
+
+    		if (vX >= 0 && vY >= 0) {
+				return (((t * 180) / Obj::PI) * ANGLE_SCALE);
 			}
-			return mod((int)((180 - ((t * 180) / PI))  * ANGLE_SCALE),(360*ANGLE_SCALE));
+			else if(vX >= 0 && vY < 0) {
+				return (((t * 180) / Obj::PI) * ANGLE_SCALE) + 3600;
+			}
+			else if (vX < 0 && vY >= 0) {
+				return 1800 - (((t * 180) / Obj::PI) * ANGLE_SCALE);
+			}
+			else {
+				return 1800 - (((t * 180) / Obj::PI) * ANGLE_SCALE);
+			}
 		}
 
 		bool checkXTerminal() {

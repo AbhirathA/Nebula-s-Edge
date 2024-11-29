@@ -33,10 +33,9 @@ public class UDPServer {
     private static final int BUFFER_SIZE = 10000;
 
     private final Gson gson;
-    private final Map<InetSocketAddress, String> inetSocketAddressToToken;
-    private final Map<String, UDPPacket> tokenToUdpPacket;
-    private final Map<String, Integer> tokenToId;
-    private final Map<String, String> tokenToState;
+    private final Map<InetSocketAddress, UDPPacket> inetSocketAddressUDPPacket;
+    private final Map<InetSocketAddress, Integer> inetSocketAddressToId;
+    private final Map<InetSocketAddress, String> inetSocketAddressToState;
 
     private final GameEngine gameEngine;
 
@@ -53,10 +52,9 @@ public class UDPServer {
      */
     public UDPServer() {
         this.gson = new Gson();
-        this.inetSocketAddressToToken = new HashMap<>();
-        this.tokenToUdpPacket = new HashMap<>();
-        this.tokenToId = new HashMap<>();
-        this.tokenToState = new HashMap<>();
+        this.inetSocketAddressUDPPacket = new HashMap<>();
+        this.inetSocketAddressToId = new HashMap<>();
+        this.inetSocketAddressToState = new HashMap<>();
 
         this.inputBuffer =  new AtomicBoolean(false);
         this.outputBuffer = new AtomicBoolean(false);
@@ -69,6 +67,7 @@ public class UDPServer {
      * and game state updates concurrently.
      */
     public void startThreads() {
+        this.gameEngine.instantiateGameEngineObjects();
         this.networkThread = new NetworkThreadClass();
         this.gameLogicThread = new GameThreadClass();
         this.networkThread.start();
@@ -87,17 +86,16 @@ public class UDPServer {
                 // check if input is received
                 if (UDPServer.this.inputBuffer.compareAndSet(true, false)) {
                     idToState = new HashMap<>();
-                    synchronized (UDPServer.this.tokenToState) {
-                        synchronized (UDPServer.this.tokenToId) {
+                    synchronized (UDPServer.this.inetSocketAddressToState) {
+                        synchronized (UDPServer.this.inetSocketAddressToId) {
                             // Process the state updates from clients
-                            for (String token : UDPServer.this.tokenToState.keySet()) {
-                                if (tokenToId.get(token) == null) {
+                            for (InetSocketAddress connection : UDPServer.this.inetSocketAddressToState.keySet()) {
+                                if (UDPServer.this.inetSocketAddressToId.get(connection) == null) {
                                     int id = UDPServer.this.gameEngine.addShip();
-                                    UDPServer.this.tokenToId.put(token, id);
-                                    UDPServer.this.gameEngine.instantiateGameEngine(id);
+                                    UDPServer.this.inetSocketAddressToId.put(connection, id);
                                 }
 
-                                idToState.put(UDPServer.this.tokenToId.get(token), UDPServer.this.tokenToState.get(token));
+                                idToState.put(UDPServer.this.inetSocketAddressToId.get(connection), UDPServer.this.inetSocketAddressToState.get(connection));
                             }
                         }
                     }
@@ -124,10 +122,10 @@ public class UDPServer {
                 packet.blackholes = UDPServer.this.gameEngine.display("BLACKHOLES");
 
                 // Store the data for each client to send later
-                synchronized (UDPServer.this.tokenToUdpPacket) {
-                    for (String token : UDPServer.this.tokenToId.keySet()) {
-                        packet.id = UDPServer.this.tokenToId.get(token);
-                        UDPServer.this.tokenToUdpPacket.put(token, packet.clone());
+                synchronized (UDPServer.this.inetSocketAddressUDPPacket) {
+                    for (InetSocketAddress connection : UDPServer.this.inetSocketAddressToId.keySet()) {
+                        packet.id = UDPServer.this.inetSocketAddressToId.get(connection);
+                        UDPServer.this.inetSocketAddressUDPPacket.put(connection, packet.clone());
                     }
                 }
                 UDPServer.this.outputBuffer.set(true);
@@ -149,8 +147,8 @@ public class UDPServer {
     private class NetworkThreadClass extends Thread {
         @Override
         public void run() {
-            try (DatagramSocket serverSocket = new DatagramSocket(ServerInfo.UDP_PORT)) {
-                LoggerUtil.logInfo("Server running on port " + ServerInfo.UDP_PORT);
+            try (DatagramSocket serverSocket = new DatagramSocket(ServerInfo.UDP_MULTI_PLAYER_PORT)) {
+                LoggerUtil.logInfo("Server running on port " + ServerInfo.UDP_MULTI_PLAYER_PORT);
 
                 byte[] receiveBuffer = new byte[BUFFER_SIZE];
 
@@ -169,14 +167,9 @@ public class UDPServer {
                     String token = data.get("token");
                     String state = data.get("state");
 
-                    synchronized (UDPServer.this.inetSocketAddressToToken) {
-                        // Map the client's address to the token
-                        UDPServer.this.inetSocketAddressToToken.put(clientAddress, token);
-                    }
-
-                    synchronized (UDPServer.this.tokenToState) {
-                        // Update the state of the client
-                        UDPServer.this.tokenToState.put(token, state);
+                    synchronized (UDPServer.this.inetSocketAddressToState) {
+                        // Map the client's address to the state
+                        UDPServer.this.inetSocketAddressToState.put(clientAddress, state);
                     }
 
                     // Indicate that input has been received
@@ -186,13 +179,11 @@ public class UDPServer {
                     if (UDPServer.this.outputBuffer.compareAndExchange(true, false)) {
                         // Prepare the data to send to clients
                         HashMap<InetSocketAddress, UDPPacket> sendDataTemp = new HashMap<>();
-                        synchronized (UDPServer.this.inetSocketAddressToToken) {
-                            synchronized (UDPServer.this.tokenToUdpPacket) {
-                                for (InetSocketAddress client : UDPServer.this.inetSocketAddressToToken.keySet()) {
-                                    // Get the updated packet for each client
-                                    UDPPacket sendData = UDPServer.this.tokenToUdpPacket.get(UDPServer.this.inetSocketAddressToToken.get(client));
-                                    sendDataTemp.put(client, sendData);
-                                }
+                        synchronized (UDPServer.this.inetSocketAddressUDPPacket) {
+                            for (InetSocketAddress client : UDPServer.this.inetSocketAddressUDPPacket.keySet()) {
+                                // Get the updated packet for each client
+                                UDPPacket sendData = UDPServer.this.inetSocketAddressUDPPacket.get(client);
+                                sendDataTemp.put(client, sendData);
                             }
                         }
                         // Send the data to the clients

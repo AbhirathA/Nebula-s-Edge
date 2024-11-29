@@ -8,11 +8,9 @@ protected:
     int remainingTime;
 
 public:
-    PowerUp(int id, int x, int y, int radius, int duration)
-        : FixedObj(id, x, y, radius, radius, 0), duration(duration), remainingTime(duration) {}
+    PowerUp(int id, int x, int y, int radius, int duration):FixedObj(id, x, y, radius, radius, 0), duration(duration), remainingTime(duration) {}
 
-    void setID(int id)
-    {
+    void setID(int id){
         this->id = id;
     }
 
