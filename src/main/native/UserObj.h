@@ -1,5 +1,6 @@
 #pragma once
 #include "CtrledObj.h"
+#include "Obj.h"
 #include "Health.h"
 #include <tuple>
 
@@ -29,7 +30,7 @@ private:
 
 		void heal(int points);;
 
-		virtual void takeDamage() override final;
+		virtual void takeDamage() final;
 
 		std::tuple<int,int,int,int,int> launchBullet();
 
@@ -66,6 +67,30 @@ private:
 	int getPoints() {
 		return this->totalPoints;
 	}
+
+	void scaleUpPoints(int newPoints) {
+		this->pointFactor *= newPoints;
+	}
+
+	void scaleDownPoints(int newPoints) {
+		this->pointFactor /= newPoints;
+    }
+
+	void incBulletSpeed(int newBulletSpeed) {
+		this->bulletSpeed += newBulletSpeed;
+    }
+
+	void decBulletSpeed(int newBulletSpeed) {
+        this->bulletSpeed -= newBulletSpeed;
+    }
+
+	void incBulletLife(int newBulletLife){
+		this->bulletLife += newBulletLife;
+    }
+
+	void decBulletLife(int newBulletLife){
+        this->bulletLife -= newBulletLife;
+    }
 
 };
 
