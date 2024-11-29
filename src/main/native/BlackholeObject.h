@@ -22,7 +22,7 @@ class BlackholeObject : public FixedObj
 {
 private:
     int innerRadius;
-    static constexpr int G = 100000;
+    static constexpr int G = 10000;
     static constexpr int FLOATING_ERROR = 1;
     static constexpr int GROWTH_FACTOR = 1; // fidn a good value maybe 0.0001
 

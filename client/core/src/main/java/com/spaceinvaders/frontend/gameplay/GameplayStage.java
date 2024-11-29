@@ -73,6 +73,9 @@ public class GameplayStage extends Stage {
             blackholes.render(getBatch(), udpPacket.blackholes);
             bullets.render(getBatch(), udpPacket.bullets);
             player.render(getBatch(), udpPacket.spaceShips, udpPacket.id);
+            powerups.render(getBatch(), udpPacket.powerUpH);
+            powerups.render(getBatch(), udpPacket.powerUpP);
+            powerups.render(getBatch(), udpPacket.powerUpB);
             getBatch().end();
         }
         super.act(delta);

@@ -44,7 +44,7 @@ public class Coordinate implements Serializable
 
     public float getY() { return (this.y + SpaceInvadersGame.GAME_HEIGHT * 10) / 10f; }
 
-    public float getAngle() { return this.angle / 10f - 90; }
+    public float getAngle() {System.out.println(this.angle); return this.angle / 10f - 90;  }
 
     public int getId() { return this.id;}
 }

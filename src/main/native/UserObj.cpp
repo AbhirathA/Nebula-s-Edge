@@ -310,6 +310,7 @@ bool UserObj::collisionCorrection(PowerUp *obj) {
     // If the distance is less than the sum of radii, there is a collision.
     if (overlap > temp) {
         obj->applyEffect(this);
+        obj->selfDestruct();
         return true;
     }
     return false;

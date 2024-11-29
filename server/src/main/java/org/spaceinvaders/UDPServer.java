@@ -125,6 +125,9 @@ public class UDPServer {
                 packet.asteroids.addAll(UDPServer.this.gameEngine.display("METEOR"));
                 packet.bullets = UDPServer.this.gameEngine.display("BULLET");
                 packet.blackholes = UDPServer.this.gameEngine.display("BLACKHOLES");
+                packet.powerUpH = UDPServer.this.gameEngine.display("POWERUPH");
+                packet.powerUpP = UDPServer.this.gameEngine.display("POWERUPP");
+                packet.powerUpB = UDPServer.this.gameEngine.display("POWERUPB");
 
                 // Checking if any ships have died
                 synchronized (UDPServer.this.inetSocketAddressToState) {

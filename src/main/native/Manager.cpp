@@ -15,14 +15,20 @@ std::vector<std::vector<int>> Manager::display(int lowerX, int lowerY, int upper
 {
 	std::vector<std::vector<int>> m;
 	AABB box = AABB({lowerX, lowerY, 0}, {upperX, upperY, 0});
+	// std::cout<<"Box colliders size:"<<v.size()<<std::endl;
 	std::vector<int> v = tree.boxColliders(&box);
+	std::cout<<"Box colliders size:"<<v.size()<<std::endl;
 	for (auto id : v)
 	{
 		int x = objMap[id]->getX();
 		int y = objMap[id]->getY();
 		std::cout << objMap[id]->getID() << " " << x << " " << y << std::endl;
 		int ori = objMap[id]->getOri();
+        std::cout<<ori<<"hi Ori"<<std::endl;
 		m.push_back({id, x, y, ori});
+	}
+	for(auto i: m) {
+		std::cout<<"m values: " << i[3] << std::endl;
 	}
 	return m;
 }
@@ -50,9 +56,9 @@ int Manager::dropUser(int x, int y, int peakV, int driftV, int angle, int thrust
 void Manager::update()
 {
 	std::vector<int> deadObjs = tree.removeDead();
-	std::cout << "Dead Objects: ";
+	// std::cout << "Dead Objects: ";/
 	this->removeDead(deadObjs);
-	std::cout << deadObjs.size() << std::endl;
+	// std::cout << deadObjs.size() << std::endl;
 	bool flag = true;
 	for (auto p : objMap)
 	{

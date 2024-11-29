@@ -31,7 +31,7 @@ public class GameEngine {
     /**
      * The outer radius of the black hole's gravitational influence.
      */
-    public static final int BLACKHOLE_OUTER_RADIUS = Firebase.serverConstants.get("BLACKHOLE_OUTER_RADIUS").getAsInt();
+    public static final int BLACKHOLE_OUTER_RADIUS = Firebase.serverConstants.get("BLACKHOLE_OUTER_RADIUS").getAsInt() * 30;
 
     /**
      * The mass of the black hole.
@@ -136,6 +136,9 @@ public class GameEngine {
     private ArrayList<Integer> meteorIds;
     private ArrayList<Integer> bulletIds;
     private ArrayList<Integer> blackholeIds;
+    private ArrayList<Integer> powerUpHIds;
+    private ArrayList<Integer> powerUpBIds;
+    private ArrayList<Integer> powerUpPIds;
     private ArrayList<Integer> deadIds;
 
     private Manager gameEngineManager;
@@ -153,6 +156,9 @@ public class GameEngine {
         this.meteorIds = new ArrayList<>();
         this.bulletIds = new ArrayList<>();
         this.blackholeIds = new ArrayList<>();
+        this.powerUpHIds = new ArrayList<>();
+        this.powerUpBIds = new ArrayList<>();
+        this.powerUpPIds = new ArrayList<>();
         this.deadIds = new ArrayList<>();
 
         this.gameEngineManager = new Manager(0, 0, 0, GAME_WIDTH, 0, GAME_HEIGHT, 1);
@@ -164,10 +170,55 @@ public class GameEngine {
     public void instantiateGameEngineObjects() {
 //        write code to spawn meteors and asteroids and blackholes
 
+        System.out.println(BLACKHOLE_INNER_RADIUS + " " + BLACKHOLE_OUTER_RADIUS+" " + "Gaaaaaathik");
+
 //        int asteroidId = this.addElement("ASTEROID", GAME_WIDTH/2 - 500, GAME_HEIGHT/2, 900);
-        int meteorId1 = this.addMeteor(GAME_WIDTH/4, GAME_HEIGHT/2, 10, 0);
-        int meteorId2 = this.addMeteor(3*GAME_WIDTH/4, GAME_HEIGHT/2, -20, 0);
-//        int blackhole = this.addBlackhole(GAME_WIDTH/4-1000, GAME_HEIGHT/2);
+        int meteorId1 = this.powerUpBullet(GAME_WIDTH/4, GAME_HEIGHT/2);
+        int meteorId2 = this.powerUpBullet(3*GAME_WIDTH/4, GAME_HEIGHT/2);
+        //int blackhole = this.addBlackhole(GAME_WIDTH/4-1000, GAME_HEIGHT/2);
+
+        int asteroidId = this.addElement("ASTEROID", 460, -360, 900);
+        asteroidId = this.addElement("ASTEROID", 2480, -2080, 900);
+        asteroidId = this.addElement("ASTEROID", 5040, -440, 900);
+        asteroidId = this.addElement("ASTEROID", 7590, -1120, 900);
+        asteroidId = this.addElement("ASTEROID", 10860, -1240, 900);
+        asteroidId = this.addElement("ASTEROID", 6960, -2830, 900);
+        asteroidId = this.addElement("ASTEROID", 9620, -3310, 900);
+        asteroidId = this.addElement("ASTEROID", 10340, -4760, 900);
+        asteroidId = this.addElement("ASTEROID", 1030, -3620, 900);
+        asteroidId = this.addElement("ASTEROID", 2030, -3810, 900);
+        asteroidId = this.addElement("ASTEROID", 1440, -4660, 900);
+        asteroidId = this.addElement("ASTEROID", 2360, -4610, 900);
+        asteroidId = this.addElement("ASTEROID", 1180, -5620, 900);
+        asteroidId = this.addElement("ASTEROID", 2800, -5530, 900);
+        asteroidId = this.addElement("ASTEROID", 5710, -5880, 900);
+        asteroidId = this.addElement("ASTEROID", 8240, -5590, 900);
+        asteroidId = this.addElement("ASTEROID", 9580, -5700, 900);
+        int PBId1 = this.powerUpBullet(7310, -3610);
+        PBId1 = this.powerUpBullet(1420, -840);
+        int PBId2 = this.powerUpHealth(1800, -830);
+        PBId2 = this.powerUpHealth(1630, -980);
+        PBId2 = this.powerUpHealth(7370, -1110);
+        PBId2 = this.powerUpHealth(8700, -6230);
+        PBId2 = this.powerUpHealth(1960, -6180);
+        int PBId3 = this.powerUpPoint(1370, -4060);
+        PBId3 = this.powerUpPoint(5380, -5800);
+        PBId3 = this.powerUpPoint(10990, -5730);
+        PBId3 = this.powerUpPoint(6360, -1010);
+        int blackholeId = this.addBlackhole(1640, -450);
+        blackholeId = this.addBlackhole(2500, -950);
+        blackholeId = this.addBlackhole(1660, -1580);
+        blackholeId = this.addBlackhole(6270, -1370);
+        blackholeId = this.addBlackhole(11310, -5970);
+        blackholeId = this.addBlackhole(850, -1100);
+        int meteorId = this.addMeteor(4020, -620, -DRIFT_USER_VEL, 2*DRIFT_USER_VEL);
+        meteorId = this.addMeteor(5880, -550, DRIFT_USER_VEL, 2*DRIFT_USER_VEL);
+        meteorId = this.addMeteor(10100, -530, DRIFT_USER_VEL, -DRIFT_USER_VEL);
+        meteorId = this.addMeteor(8890, -2140, -DRIFT_USER_VEL / 2, -2*DRIFT_USER_VEL);
+        meteorId = this.addMeteor(5210, -2110, 0*DRIFT_USER_VEL, -2*DRIFT_USER_VEL);
+        meteorId = this.addMeteor(3360, -2700, DRIFT_USER_VEL, -DRIFT_USER_VEL);
+        meteorId = this.addMeteor(560, -4360, -2*DRIFT_USER_VEL, 0*DRIFT_USER_VEL);
+        meteorId = this.addMeteor(9140, -4930, -2*DRIFT_USER_VEL, DRIFT_USER_VEL / 2);
     }
 
     /**
@@ -185,6 +236,7 @@ public class GameEngine {
             case "SHIP":
                 id = this.gameEngineManager.dropUser(x, y, PEAK_USER_VEL, DRIFT_USER_VEL, angle, 10, 10, 25, 144, 0, 0, SPACESHIP_RADIUS, SPACESHIP_RADIUS, SPACESHIP_MASS, SPACESHIP_HEALTH, BULLET_SPEED, BULLET_LIFE);
                 this.spaceShipIds.add(id);
+                this.addEnemy(3270, -1280, id);
                 break;
 
             case "ASTEROID":
@@ -197,7 +249,7 @@ public class GameEngine {
                 this.meteorIds.add(id);
                 break;
 
-            case "BLACKHOLE":
+            case "BLACKHOLES":
                 id = this.gameEngineManager.dropBlackHole(x, y, BLACKHOLE_INNER_RADIUS, BLACKHOLE_OUTER_RADIUS, BLACKHOLE_MASS);
                 this.blackholeIds.add(id);
                 break;
@@ -206,6 +258,23 @@ public class GameEngine {
         return id;
     }
 
+    public int powerUpHealth(int x, int y) {
+        int id = this.gameEngineManager.dropHealthPowerUp(x, y, BULLET_RADIUS*2, 2);
+        this.powerUpHIds.add(id);
+        return id;
+    }
+
+    public int powerUpBullet(int x, int y) {
+        int id = this.gameEngineManager.dropBulletBoostPowerUp(x, y, BULLET_RADIUS*2, BULLET_SPEED*2, BULLET_LIFE*2, 600);
+        this.powerUpBIds.add(id);
+        return id;
+    }
+
+    public int powerUpPoint(int x, int y) {
+        int id = this.gameEngineManager.dropIncreasePointsPowerUp(x, y, BULLET_RADIUS*2, 2, 1000);
+        this.powerUpPIds.add(id);
+        return id;
+    }
     /**
      * Adds a meteor to the game world.
      *
@@ -290,6 +359,9 @@ public class GameEngine {
         this.meteorIds.removeIf(x -> !totalIds.contains(x));
         this.bulletIds.removeIf(x -> !totalIds.contains(x));
         this.blackholeIds.removeIf(x -> !totalIds.contains(x));
+        this.powerUpBIds.removeIf(x -> !totalIds.contains(x));
+        this.powerUpHIds.removeIf(x -> !totalIds.contains(x));
+        this.powerUpPIds.removeIf(x -> !totalIds.contains(x));
     }
 
     /**
@@ -298,7 +370,7 @@ public class GameEngine {
     public void getAllCoords() {
         this.coords = new ArrayList<>();
         int[][] tempCoords = this.gameEngineManager.display(0, GAME_HEIGHT, GAME_WIDTH, 0);
-        System.out.println(tempCoords.length+"display");
+        for(int i=0; i<tempCoords.length;i++) System.out.println(tempCoords[i][3]+" display");
 
         ArrayList<Integer> totalIds = new ArrayList<>();
         for (int[] element : tempCoords) {
@@ -362,11 +434,36 @@ public class GameEngine {
                 }
                 break;
 
-            case "BLACKHOLE":
+            case "BLACKHOLES":
                 for (Coordinate coord : this.coords) {
                     if (this.blackholeIds.contains(coord.id)) retValue.add(coord);
                 }
                 break;
+            case "POWERUPH":
+                for (Coordinate coord : this.coords) {
+                    if (this.powerUpHIds.contains(coord.id)) {
+                        coord.type = "health";
+                        retValue.add(coord);
+                    }
+                }
+                break;
+            case "POWERUPP":
+                for (Coordinate coord : this.coords) {
+                    if (this.powerUpPIds.contains(coord.id)){
+                        coord.type = "bonus";
+                        retValue.add(coord);
+                    }
+                }
+                break;
+            case "POWERUPB":
+                for (Coordinate coord : this.coords) {
+                    if (this.powerUpBIds.contains(coord.id)) {
+                        coord.type = "attack";
+                        retValue.add(coord);
+                    }
+                }
+                break;
+
         }
 
         return retValue;

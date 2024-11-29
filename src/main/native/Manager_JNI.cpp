@@ -212,6 +212,7 @@ extern "C"
                 }
 
                 env->SetIntArrayRegion(innerArray, 0, innerSize, innerVector.data());
+
                 env->SetObjectArrayElement(outerArray, i, innerArray);
 
                 env->DeleteLocalRef(innerArray);
@@ -220,6 +221,7 @@ extern "C"
             return outerArray;
         }
         return NULL;
+
     }
 
     JNIEXPORT jint JNICALL Java_com_physics_Manager_dropHealthPowerUp(JNIEnv *env, jobject obj, jint x, jint y, jint radius, jint healthIncrease)

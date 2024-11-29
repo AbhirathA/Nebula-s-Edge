@@ -9,6 +9,9 @@ public class UDPPacket implements Serializable {
     public ArrayList<Coordinate> asteroids;
     public ArrayList<Coordinate> bullets;
     public ArrayList<Coordinate> blackholes;
+    public ArrayList<Coordinate> powerUpB;
+    public ArrayList<Coordinate> powerUpH;
+    public ArrayList<Coordinate> powerUpP;
     public long packetNumber;
 
     public UDPPacket() {
@@ -16,6 +19,9 @@ public class UDPPacket implements Serializable {
         asteroids = new ArrayList<>();
         bullets = new ArrayList<>();
         blackholes = new ArrayList<>();
+        powerUpB = new ArrayList<>();
+        powerUpH = new ArrayList<>();
+        powerUpP = new ArrayList<>();
     }
 
     public void update(UDPPacket udpPacket) {
@@ -24,6 +30,9 @@ public class UDPPacket implements Serializable {
         this.spaceShips = udpPacket.spaceShips;
         this.asteroids = udpPacket.asteroids;
         this.blackholes = udpPacket.blackholes;
+        this.powerUpB = udpPacket.powerUpB;
+        this.powerUpH = udpPacket.powerUpH;
+        this.powerUpP = udpPacket.powerUpP;
         this.packetNumber = udpPacket.packetNumber;
     }
 
@@ -34,6 +43,9 @@ public class UDPPacket implements Serializable {
         other.asteroids = (ArrayList<Coordinate>) this.asteroids.clone();
         other.bullets = (ArrayList<Coordinate>) this.bullets.clone();
         other.blackholes = (ArrayList<Coordinate>) this.blackholes.clone();
+        other.powerUpB = (ArrayList<Coordinate>) this.powerUpB.clone();
+        other.powerUpH = (ArrayList<Coordinate>) this.powerUpH.clone();
+        other.powerUpP = (ArrayList<Coordinate>) this.powerUpP.clone();
         other.packetNumber = this.packetNumber;
 
 

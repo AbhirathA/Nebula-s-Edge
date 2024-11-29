@@ -1,0 +1,61 @@
+cmake_minimum_required(VERSION 3.29)
+project(native)
+
+set(CMAKE_CXX_STANDARD 14)
+
+include_directories(.)
+
+add_executable(native
+    AABB.cpp
+    AABB.h
+    AABBtree.cpp
+    AABBtree.h
+    AccTracker.cpp
+    AccTracker.h
+    AngleObj.cpp
+    AngleObj.h
+    Asteroid.cpp
+    Asteroid.h
+    Beeman.cpp
+    Beeman.h
+    BlackholeObject.h
+    Bullet.cpp
+    Bullet.h
+    CtrledObj.cpp
+    CtrledObj.h
+    Enemy.cpp
+    Enemy.h
+    FixedObj.cpp
+    FixedObj.h
+    Flare.cpp
+    Flare.h
+    FlareLauncher.cpp
+    FlareLauncher.h
+    Health.cpp
+    Health.h
+    jni_helper.h
+    LeapFrog.cpp
+    LeapFrog.h
+    Lifetime.cpp
+    Lifetime.h
+    LinearObj.cpp
+    LinearObj.h
+    Manager.cpp
+    Manager.h
+    Manager_JNI.cpp
+    Meteor.cpp
+    Meteor.h
+    Obj.cpp
+    Obj.h
+    PowerUp.h
+    stdVerlet.cpp
+    stdVerlet.h
+    Tracker.cpp
+    Tracker.h
+    UserObj.cpp
+    UserObj.h
+    Utilities.h
+    Vector.cpp
+    Vector.h
+    velVerlet.cpp
+    velVerlet.h)
