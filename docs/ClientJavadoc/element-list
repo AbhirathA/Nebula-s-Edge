@@ -9,3 +9,4 @@ com.spaceinvaders.frontend.managers
 com.spaceinvaders.frontend.screens
 com.spaceinvaders.frontend.ui
 com.spaceinvaders.frontend.utils
+com.spaceinvaders.util
