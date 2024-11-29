@@ -84,7 +84,8 @@ public class GameEngine {
 
 //        int asteroidId = this.addElement("ASTEROID", GAME_WIDTH/2 - 500, GAME_HEIGHT/2, 900);
         int meteorId1 = this.addMeteor(GAME_WIDTH/4, GAME_HEIGHT/2, 10, 0);
-        int meteorId2 = this.addMeteor(3*GAME_WIDTH/4, GAME_HEIGHT/2, -20, 0);
+//        int meteorId2 = this.addMeteor(3*GAME_WIDTH/4, GAME_HEIGHT/2, -20, 0);
+        int blackhole = this.addBlackhole(GAME_WIDTH/4-1000, GAME_HEIGHT/2);
     }
 
     /**
@@ -134,9 +135,11 @@ public class GameEngine {
         return enemyId;
     }
 
-//    public int addBlackhole(int x, int y){
-//        int blackholeId = this.gameEngineManager.dropBlackHole();
-//    }
+    public int addBlackhole(int x, int y){
+        int blackholeId = this.gameEngineManager.dropBlackHole(x, y, BLACKHOLE_INNER_RADIUS, BLACKHOLE_OUTER_RADIUS, BLACKHOLE_MASS);
+        this.blackholeIds.add(blackholeId);
+        return blackholeId;
+    }
 
     /**
      * This updates the states of any object whose id is known.
@@ -164,36 +167,12 @@ public class GameEngine {
      * @param totalIds
      */
     private void removeUselessIds(ArrayList<Integer> totalIds) {
-        for (int id : this.spaceShipIds) {
-            if (!totalIds.contains(id)) {
-                this.meteorIds.remove((Integer) id);
-            }
-        }
-        for (int id : this.enemyIds) {
-            if (!totalIds.contains(id)) {
-                this.enemyIds.remove((Integer) id);
-            }
-        }
-        for (int id : this.asteroidIds) {
-            if (!totalIds.contains(id)) {
-                this.asteroidIds.remove((Integer) id);
-            }
-        }
-        for (int id : this.meteorIds) {
-            if (!totalIds.contains(id)) {
-                this.meteorIds.remove((Integer) id);
-            }
-        }
-        for (int id : this.bulletIds) {
-            if (!totalIds.contains(id)) {
-                this.bulletIds.remove((Integer) id);
-            }
-        }
-        for (int id : this.blackholeIds) {
-            if (!totalIds.contains(id)) {
-                this.blackholeIds.remove((Integer) id);
-            }
-        }
+        spaceShipIds.removeIf(x -> !totalIds.contains(x));
+        enemyIds.removeIf(x -> !totalIds.contains(x));
+        asteroidIds.removeIf(x -> !totalIds.contains(x));
+        meteorIds.removeIf(x -> !totalIds.contains(x));
+        bulletIds.removeIf(x -> !totalIds.contains(x));
+        blackholeIds.removeIf(x -> !totalIds.contains(x));
     }
 
     /**
