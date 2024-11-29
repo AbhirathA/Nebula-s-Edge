@@ -10,9 +10,7 @@
 #include <iostream>
 
 #include "UserObj.h"
-// #include "Flare.h"
-// #include "ObjectLauncher.h"
-// #include "PowerUp.h"
+#include "PowerUp.h"
 
 #define PRECISION 1
 
@@ -49,8 +47,6 @@ public:
 		this->t = t;
 		tree = AABBtree();
 	}
-
-	std::map<int, std::pair<int, int>> display();
 
 	// int drop1(int x, int y, int v, int angle, int acc, int accX, int accY, int innerRad, int outerRad, int mass); // add an object
 	// int drop2(int x, int y, int vX, int vY, int accX, int accY, int innerRad, int outerRad, int mass); // add an object
@@ -104,6 +100,9 @@ public:
 	int dropEnemy(int x, int y, int v, int res, int innerRad, int startSign, int outerRad, bool startX, int mass, int aim);
 	int dropMeteor(int x, int y, int vX, int vY, int accX, int accY, int innerRad, int outerRad, int mass);
 	int dropUser(int x, int y, int peakV, int driftV, int angle, int thrust, int thrustPersistance, int movePersistance, int coolDown, int accX, int accY, int innerRad, int outerRad, int mass, int health, int bulletSpeed, int bulletLife);
+	int dropHealthPowerUp(int x, int y, int radius, int healthIncrease);
+	int dropBulletBoostPowerUp(int x, int y, int radius, int speedBoost, int lifeBoost, int duration);
+	int dropIncreasePointsPowerUp(int x, int y, int radius, int pointScale, int duration);
 };
 
 // void activatePowerUp(PowerUp* powerUp, Obj* target);

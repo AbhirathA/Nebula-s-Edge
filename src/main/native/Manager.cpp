@@ -7,21 +7,7 @@
 #include "Enemy.h"
 #include "Meteor.h"
 #include "UserObj.h"
-
-std::map<int, std::pair<int, int>> Manager::display()
-{
-	// Only Game Render
-	std::map<int, std::pair<int, int>> temp = {};
-	for (auto i : this->objMap)
-	{
-		temp[i.first] = {(i.second)->getX(), (i.second)->getY()};
-	}
-	for (auto i : temp)
-	{
-		// std::cout << i.first << " " << (i.second).first << " " << (i.second).second << std::endl;
-	}
-	return temp;
-}
+#include "PowerUp.h"
 
 std::vector<std::vector<int>> Manager::display(int lowerX, int lowerY, int upperX, int upperY)
 {
@@ -150,6 +136,31 @@ int Manager::dropMeteor(int x, int y, int vX, int vY, int accX, int accY, int in
 	objMap[count] = temp;
 	tree.insert(temp->getObjBox(), count, temp->getStatus());
 	temp->updateAcc(gX, gY);
+	count++;
+	return count - 1;
+}
+
+int Manager::dropHealthPowerUp(int x, int y, int radius, int healthIncrease)
+{
+	PowerUp *temp = new IncreaseHealthPowerUp(count, x, y, radius, healthIncrease);
+	objMap[count] = temp;
+	tree.insert(temp->getObjBox(), count, temp->getStatus());
+	count++;
+	return count - 1;
+}
+int Manager::dropBulletBoostPowerUp(int x, int y, int radius, int speedBoost, int lifeBoost, int duration)
+{
+	PowerUp *temp = new BulletBoostPowerUp(count, x, y, radius, speedBoost, lifeBoost, duration);
+	objMap[count] = temp;
+	tree.insert(temp->getObjBox(), count, temp->getStatus());
+	count++;
+	return count - 1;
+}
+int Manager::dropIncreasePointsPowerUp(int x, int y, int radius, int pointScale, int duration)
+{
+	PowerUp *temp = new IncreasePointsPowerUp(count, x, y, radius, pointScale, duration);
+	objMap[count] = temp;
+	tree.insert(temp->getObjBox(), count, temp->getStatus());
 	count++;
 	return count - 1;
 }

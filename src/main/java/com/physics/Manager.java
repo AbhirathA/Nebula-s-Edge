@@ -34,6 +34,12 @@ public class Manager {
         public native int dropMeteor(int x, int y, int vX, int vY, int accX, int accY, int innerRad, int outerRad,
                         int mass);
 
+        public native int dropHealthPowerUp(int x, int y, int radius, int healthIncrease);
+
+        public native int dropBulletBoostPowerUp(int x, int y, int radius, int speedBoost, int lifeBoost, int duration);
+
+        public native int dropIncreasePointsPowerUp(int x, int y, int radius, int pointScale, int duration);
+
         public native int getHealth(int id);
 
         public native int getPoints(int id);
