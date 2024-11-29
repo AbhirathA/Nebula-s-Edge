@@ -17,7 +17,7 @@ public class SoundManager {
         sounds.put("gameOver", assetManager.get("sounds/game-over-38511.mp3", Sound.class));
         sounds.put("victory", assetManager.get("sounds/goodresult-82807.mp3", Sound.class));
         sounds.put("bonusHealth", assetManager.get("sounds/mixkit-unlock-new-item-game-notification-254.wav", Sound.class));
-        sounds.put("damageTaken", assetManager.get("sounds/mixkit-unlock-new-item-game-notification-254.wav", Sound.class));
+        sounds.put("damageTaken", assetManager.get("sounds/mixkit-martial-arts-fast-punch-2047.wav", Sound.class));
     }
 
     // Plays the sound associated with the provided key at the current volume
