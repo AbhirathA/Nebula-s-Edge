@@ -118,7 +118,8 @@ public final class Firebase {
                 Map<String, Object> data = new HashMap<>();
                 data.put("ip", ServerInfo.IP);
                 data.put("http-port", ServerInfo.HTTP_PORT);
-                data.put("udp-port", ServerInfo.UDP_PORT);
+                data.put("udp-multi-port", ServerInfo.UDP_MULTI_PLAYER_PORT);
+                data.put("udp-single-port", ServerInfo.UDP_SINGLE_PLAYER_PORT);
 
                 databaseRef.setValueAsync(data);
 
