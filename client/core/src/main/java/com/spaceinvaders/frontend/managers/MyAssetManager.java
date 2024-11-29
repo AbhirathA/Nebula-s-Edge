@@ -100,7 +100,7 @@ public class MyAssetManager {
         assetManager.load("sounds/mixkit-short-laser-gun-shot-1670.wav", Sound.class);
         assetManager.load("sounds/mixkit-winning-a-coin-video-game-2069.wav", Sound.class);
         assetManager.load("sounds/mixkit-unlock-new-item-game-notification-254.wav", Sound.class);
-        assetManager.load("sounds/mixkit-game-blood-pop-slide-2363.wav", Sound.class);
+//        assetManager.load("sounds/mixkit-game-blood-pop-slide-2363.wav", Sound.class);
 
     }
 

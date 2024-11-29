@@ -6,7 +6,9 @@ music/08 Easy Funkship 106.mp3
 music/10 - Continue.mp3
 sounds/game-over-38511.mp3
 sounds/goodresult-82807.mp3
+sounds/mixkit-game-blood-pop-slide-2363.wav
 sounds/mixkit-short-laser-gun-shot-1670.wav
+sounds/mixkit-unlock-new-item-game-notification-254.wav
 sounds/mixkit-winning-a-coin-video-game-2069.wav
 textures/Planet1.png
 textures/Planet10.png
