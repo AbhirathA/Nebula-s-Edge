@@ -10,6 +10,7 @@ import org.spaceinvaders.util.UDPPacket;
 
 import java.net.DatagramSocket;
 import java.net.InetSocketAddress;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -47,13 +48,17 @@ public class UDPServer {
 
     private int count = 0;
 
+    private ArrayList<InetSocketAddress> validInetSocketAddresses;
+
     private AtomicBoolean inputBuffer, outputBuffer;
+
+    private int port;
 
     /**
      * Constructs a new UDPServer instance, initializing necessary data structures
      * and the game engine.
      */
-    public UDPServer() {
+    public UDPServer(int port) {
         this.gson = new Gson();
         this.inetSocketAddressUDPPacket = new HashMap<>();
         this.inetSocketAddressToId = new HashMap<>();
@@ -61,10 +66,22 @@ public class UDPServer {
         this.inetSocketAddressUDPPacketDead = new HashMap<>();
         this.inetSocketAddressToState = new HashMap<>();
 
+        this.validInetSocketAddresses = new ArrayList<>();
+
         this.inputBuffer =  new AtomicBoolean(false);
         this.outputBuffer = new AtomicBoolean(false);
 
+        this.port = port;
+
         this.gameEngine = new GameEngine();
+    }
+
+    /**
+     * This method tells game engine to validate a new InetSocketAddress
+     * @param inetSocketAddress
+     */
+    public void addInetSocketAddress(InetSocketAddress inetSocketAddress) {
+        validInetSocketAddresses.add(inetSocketAddress);
     }
 
     /**
@@ -178,8 +195,8 @@ public class UDPServer {
     private class NetworkThreadClass extends Thread {
         @Override
         public void run() {
-            try (DatagramSocket serverSocket = new DatagramSocket(ServerInfo.UDP_MULTI_PLAYER_PORT)) {
-                LoggerUtil.logInfo("Server running on port " + ServerInfo.UDP_MULTI_PLAYER_PORT);
+            try (DatagramSocket serverSocket = new DatagramSocket(UDPServer.this.port)) {
+                LoggerUtil.logInfo("Server running on port " + UDPServer.this.port);
 
                 byte[] receiveBuffer = new byte[BUFFER_SIZE];
 
@@ -187,6 +204,9 @@ public class UDPServer {
                     // Receive data from a client
                     DatagramPacket receivePacket = new DatagramPacket(receiveBuffer, receiveBuffer.length);
                     serverSocket.receive(receivePacket);
+
+                    // skip packet if an invalid packet is received
+                    if (!UDPServer.this.validInetSocketAddresses.contains(new InetSocketAddress(receivePacket.getAddress(), receivePacket.getPort()))) continue;
 
                     InetSocketAddress clientAddress = new InetSocketAddress(receivePacket.getAddress(), receivePacket.getPort());
                     String receivedData = new String(receivePacket.getData(), 0, receivePacket.getLength());

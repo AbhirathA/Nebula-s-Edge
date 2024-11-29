@@ -191,7 +191,7 @@ public class GameEngine {
      * method to get all coordinate in the private coords arraylist
      */
     public void getAllCoords() {
-        this.coords = new ArrayList<>();
+        this.coords.clear();
         int[][] tempCoords = this.gameEngineManager.display(0, GAME_HEIGHT, GAME_WIDTH, 0);
         System.out.println(tempCoords.length+"display");
 
