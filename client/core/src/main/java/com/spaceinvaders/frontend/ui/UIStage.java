@@ -40,7 +40,7 @@ public class UIStage extends Stage {
         this.isMulti = isMulti;
 
         // Initialize health bar and add it to the stage
-        healthBar = new HealthBar(game.assetManager, 2, viewport.getWorldHeight() - 11, 10);
+        healthBar = new HealthBar(game, 2, viewport.getWorldHeight() - 11, 10);
         addActor(healthBar);
 
         // Initialize Game over screen
@@ -68,11 +68,6 @@ public class UIStage extends Stage {
 
     @Override
     public void act(float delta) {
-        if(Gdx.input.justTouched()) {
-//            healthBar.changeHealth(-1);
-            game.soundManager.play("shoot");
-        }
-
         if(!isMulti && healthBar.getCurrentHealth() == 0 && !isGameOver) {
             addGameOver();
             isPaused = true;
