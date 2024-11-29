@@ -109,6 +109,7 @@ public class GameplayScreen implements Screen {
         // Add BULLET state only if cooldown has passed
         if (Gdx.input.isKeyPressed(Input.Keys.SPACE) && bulletTimer >= bulletCooldown) {
             state += "BULLET";
+            game.soundManager.play("shoot");
             bulletTimer = 0; // Reset the timer
         }
 
@@ -129,13 +130,12 @@ public class GameplayScreen implements Screen {
         // set positions based on this.udpPacket
         // for now just implemented myShip,
         // TODO: need to implement for other ships
-//        this.gameplayStage.getRocketSprite().setPosition(tempUdpPacket.myShip.x, tempUdpPacket.myShip.y);
-//        this.gameplayStage.getRocketSprite().setRotation(tempUdpPacket.myShip.angle);
 
         for(Coordinate coordinate : tempUdpPacket.spaceShips) {
             if(coordinate.getId() == tempUdpPacket.id) {
                 this.gameplayStage.getRocketSprite().setPosition(coordinate.getX() - this.gameplayStage.getRocketSprite().getWidth() / 2f, coordinate.getY() -  this.gameplayStage.getRocketSprite().getHeight() / 2f);
                 this.gameplayStage.getRocketSprite().setRotation(coordinate.getAngle());
+                this.uiStage.getHealthBar().setHealth(coordinate.health);
                 break;
             }
         }

@@ -3,6 +3,7 @@ package com.spaceinvaders.frontend.ui;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.spaceinvaders.frontend.SpaceInvadersGame;
 import com.spaceinvaders.frontend.managers.MyAssetManager;
 
 /**
@@ -10,6 +11,7 @@ import com.spaceinvaders.frontend.managers.MyAssetManager;
  * using a series of heart icons (full, half, and empty).
  */
 public class HealthBar extends Actor {
+    private SpaceInvadersGame game;
     private float x, y;
     private Texture fullHeart;
     private Texture halfHeart;
@@ -21,21 +23,22 @@ public class HealthBar extends Actor {
     /**
      * Constructor to initialize the HealthBar.
      *
-     * @param assetManager The asset manager to load textures.
+     * @param game         The game.
      * @param x            The x-coordinate of the health bar.
      * @param y            The y-coordinate of the health bar.
      * @param maxHealth    The maximum health value.
      */
-    public HealthBar(MyAssetManager assetManager, float x, float y, int maxHealth) {
+    public HealthBar(SpaceInvadersGame game, float x, float y, int maxHealth) {
+        this.game = game;
         this.x = x;
         this.y = y;
         this.maxHealth = maxHealth;
         this.currentHealth = maxHealth; // Start with full health
 
         // Load heart textures from the asset manager
-        this.fullHeart = assetManager.get("textures/heart.png", Texture.class);
-        this.halfHeart = assetManager.get("textures/halfHeart.png", Texture.class);
-        this.emptyHeart = assetManager.get("textures/emptyHeart.png", Texture.class);
+        this.fullHeart = game.assetManager.get("textures/heart.png", Texture.class);
+        this.halfHeart = game.assetManager.get("textures/halfHeart.png", Texture.class);
+        this.emptyHeart = game.assetManager.get("textures/emptyHeart.png", Texture.class);
 
         // Set the bounds of the HealthBar based on the heart texture dimensions
         setBounds(x, y, fullHeart.getWidth(), fullHeart.getHeight());
@@ -83,6 +86,11 @@ public class HealthBar extends Actor {
 
     // Setter method for currentHealth
     public void setHealth(int health) {
+        if(health < currentHealth) {
+            game.soundManager.play("damageTaken");
+        } else if(health > currentHealth) {
+            game.soundManager.play("bonusHealth");
+        }
         this.currentHealth = Math.max(0, Math.min(health, maxHealth)); // Ensure health is within bounds
     }
 

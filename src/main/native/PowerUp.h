@@ -1,75 +1,98 @@
 #pragma once
+#include "Lifetime.h"
 #include "FixedObj.h"
+#include "UserObj.h"
 
 class PowerUp : public FixedObj
 {
 protected:
     int duration;
     int remainingTime;
+    Lifetime *lifetime = nullptr;
+    UserObj *target = nullptr;
+    virtual void revokeEffect() = 0;
 
 public:
-    PowerUp(int id, int x, int y, int radius, int duration):FixedObj(id, x, y, radius, radius, 0), duration(duration), remainingTime(duration) {}
-
-    void setID(int id){
-        this->id = id;
+    PowerUp(int id, int x, int y, int radius, int duration) : FixedObj(id, x, y, radius, radius, 0), duration(duration), remainingTime(duration)
+    {
+        lifetime = new Lifetime(duration, [this]() -> void
+                                { this->revokeEffect(); });
     }
 
     // look into what type of object goes here
-    virtual void applyEffect(LinearObj *target) = 0;
-    virtual void revokeEffect(LinearObj *target) = 0;
+    virtual void applyEffect(UserObj *target) = 0;
 
-    void updateTime()
-    {
-        if (remainingTime > 0)
-        {
-            remainingTime--;
-        }
-    }
-
-    bool isExpired() const
-    {
-        return remainingTime <= 0;
-    }
-
-    virtual ~PowerUp() {}
+    virtual ~PowerUp() { delete this->lifetime; }
 };
 
-class IncreaseMassPowerUp : public PowerUp
+class IncreaseHealthPowerUp : public PowerUp
 {
 private:
-    int massIncrease;
+    int healthIncrease;
 
 public:
-    IncreaseMassPowerUp(int id, int x, int y, int radius, int massIncrease, int duration)
-        : PowerUp(id, x, y, radius, duration), massIncrease(massIncrease) {}
+    IncreaseHealthPowerUp(int id, int x, int y, int radius, int healthIncrease) : PowerUp(id, x, y, radius, 1), healthIncrease(healthIncrease) {}
 
-    void applyEffect(LinearObj *target) override
+    void applyEffect(UserObj *target) override
     {
-        target->updateMass(target->getMass() + massIncrease);
+        target->heal(healthIncrease);
+        lifetime->start();
     }
 
-    void revokeEffect(LinearObj *target) override
+    void revokeEffect() override
     {
-        target->updateMass(target->getMass() - massIncrease);
+        return;
+    }
+
+    virtual ~IncreaseHealthPowerUp() {}
+};
+
+class BulletBoostPowerUp : public PowerUp
+{
+private:
+    int speedBoost, lifeBoost;
+
+public:
+    BulletBoostPowerUp(int id, int x, int y, int radius, int speedBoost, int lifeBoost, int duration) : PowerUp(id, x, y, radius, duration), speedBoost(speedBoost), lifeBoost(lifeBoost) {}
+
+    void applyEffect(UserObj *target) override
+    {
+        target->incBulletSpeed(speedBoost);
+        target->incBulletLife(lifeBoost);
+        this->target = target;
+        lifetime->start();
+    }
+
+    void revokeEffect() override
+    {
+        if (this->target == nullptr)
+            return;
+        target->decBulletSpeed(speedBoost);
+        target->decBulletLife(lifeBoost);
     }
 };
 
-class SpeedBoostPowerUp : public PowerUp
+class IncreasePointsPowerUp : public PowerUp
 {
 private:
-    int boostX, boostY;
+    int pointScale;
 
 public:
-    SpeedBoostPowerUp(int id, int x, int y, int radius, int boostX, int boostY, int duration)
-        : PowerUp(id, x, y, radius, duration), boostX(boostX), boostY(boostY) {}
+    IncreasePointsPowerUp(int id, int x, int y, int radius, int pointScale, int duration) : PowerUp(id, x, y, radius, duration), pointScale(pointScale) {}
 
-    void applyEffect(LinearObj *target) override
+    void applyEffect(UserObj *target) override
     {
-        target->updateV(target->getvX() + boostX, target->getvY() + boostY);
+        target->scaleUpPoints(pointScale);
+        this->target = target;
+        lifetime->start();
     }
 
-    void revokeEffect(LinearObj *target) override
+    void revokeEffect() override
     {
-        target->updateV(target->getvX() - boostX, target->getvY() - boostY);
+        if (this->target == nullptr)
+            return;
+        target->scaleDownPoints(pointScale);
     }
+
+    virtual ~IncreasePointsPowerUp() {}
 };
