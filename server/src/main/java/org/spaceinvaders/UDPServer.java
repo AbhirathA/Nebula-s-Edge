@@ -14,6 +14,8 @@ import java.util.Map;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
+ * UDPServer.java
+ * <br>
  * The UDPServer class handles communication between the game server and clients via UDP.
  * It receives state updates from clients, processes game logic, and sends game state updates
  * back to clients at a regular interval. The server operates in two separate threads:
@@ -27,8 +29,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
  * @version 1.0
  * @since 11/28/2024
  */
-public class UDPServer
-{
+public class UDPServer {
     private static final int BUFFER_SIZE = 10000;
 
     private final Gson gson;
@@ -50,8 +51,7 @@ public class UDPServer
      * Constructs a new UDPServer instance, initializing necessary data structures
      * and the game engine.
      */
-    public UDPServer()
-    {
+    public UDPServer() {
         this.gson = new Gson();
         this.inetSocketAddressToToken = new HashMap<>();
         this.tokenToUdpPacket = new HashMap<>();
@@ -83,19 +83,15 @@ public class UDPServer
         @Override
         public void run() {
             HashMap<Integer, String> idToState = new HashMap<>();
-            while (true)
-            {
+            while (true) {
                 // check if input is received
-                if (UDPServer.this.inputBuffer.compareAndSet(true, false))
-                {
+                if (UDPServer.this.inputBuffer.compareAndSet(true, false)) {
                     idToState = new HashMap<>();
                     synchronized (UDPServer.this.tokenToState) {
                         synchronized (UDPServer.this.tokenToId) {
                             // Process the state updates from clients
-                            for (String token : UDPServer.this.tokenToState.keySet())
-                            {
-                                if (tokenToId.get(token) == null)
-                                {
+                            for (String token : UDPServer.this.tokenToState.keySet()) {
+                                if (tokenToId.get(token) == null) {
                                     int id = UDPServer.this.gameEngine.addShip();
                                     UDPServer.this.tokenToId.put(token, id);
                                     UDPServer.this.gameEngine.instantiateGameEngine(id);
@@ -151,14 +147,12 @@ public class UDPServer
     private class NetworkThreadClass extends Thread {
         @Override
         public void run() {
-            try (DatagramSocket serverSocket = new DatagramSocket(ServerInfo.UDP_PORT))
-            {
+            try (DatagramSocket serverSocket = new DatagramSocket(ServerInfo.UDP_PORT)) {
                 LoggerUtil.logInfo("Server running on port " + ServerInfo.UDP_PORT);
 
                 byte[] receiveBuffer = new byte[BUFFER_SIZE];
 
-                while (true)
-                {
+                while (true) {
                     // Receive data from a client
                     DatagramPacket receivePacket = new DatagramPacket(receiveBuffer, receiveBuffer.length);
                     serverSocket.receive(receivePacket);
@@ -206,11 +200,9 @@ public class UDPServer
                             serverSocket.send(sendPacket);
                         }
                     }
-
                 }
             }
-            catch (Exception e)
-            {
+            catch (Exception e) {
                 LoggerUtil.logError(e.getMessage());
             }
         }
