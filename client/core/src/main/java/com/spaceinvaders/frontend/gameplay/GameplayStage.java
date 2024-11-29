@@ -49,7 +49,7 @@ public class GameplayStage extends Stage {
         spaceships = new Spaceships(game.assetManager);
         blackholes = new Blackholes(game.assetManager);
 
-        if(isMulti) {
+        if(!isMulti) {
             player = spaceships;
         } else {
             player = enemies;

@@ -237,6 +237,16 @@ public class GameEngine {
                 id = this.gameEngineManager.dropUser(x, y, PEAK_USER_VEL, DRIFT_USER_VEL, angle, 10, 10, 25, 144, 0, 0, SPACESHIP_RADIUS, SPACESHIP_RADIUS, SPACESHIP_MASS, SPACESHIP_HEALTH, BULLET_SPEED, BULLET_LIFE);
                 this.spaceShipIds.add(id);
                 this.addEnemy(3270, -1280, id);
+                this.addEnemy(9280, -380, id);
+                this.addEnemy(8500, -1530, id);
+                this.addEnemy(7460, -2030, id);
+                this.addEnemy(11190, -2240, id);
+                this.addEnemy(900, -2680, id);
+                this.addEnemy(3750, -4350, id);
+                this.addEnemy(4260, -5390, id);
+                this.addEnemy(6840, -5600, id);
+                this.addEnemy(7390, -5090, id);
+                this.addEnemy(11350, -4870, id);
                 break;
 
             case "ASTEROID":
