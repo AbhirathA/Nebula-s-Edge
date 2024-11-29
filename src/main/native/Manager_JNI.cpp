@@ -222,25 +222,37 @@ extern "C"
         return NULL;
     }
 
-    JNIEXPORT jint JNICALL
-    Java_com_physics_Manager_dropHealthPowerUp(JNIEnv *env, jobject obj, jlong nativeHandle, jint x, jint y, jint radius, jint healthIncrease)
+    JNIEXPORT jint JNICALL Java_com_physics_Manager_dropHealthPowerUp(JNIEnv *env, jobject obj, jint x, jint y, jint radius, jint healthIncrease)
     {
-        Manager *manager = reinterpret_cast<Manager *>(nativeHandle);
-        return manager->dropHealthPowerUp(x, y, radius, healthIncrease);
+        Manager *nativeManager = reinterpret_cast<Manager *>(getNativeHandle(env, obj));
+        if (nativeManager != nullptr)
+        {
+            int result = nativeManager->dropHealthPowerUp(x, y, radius, healthIncrease);
+            return static_cast<jint>(result);
+        }
+        return -1;
     }
 
-    JNIEXPORT jint JNICALL
-    Java_com_physics_Manager_dropBulletBoostPowerUp(JNIEnv *env, jobject obj, jlong nativeHandle, jint x, jint y, jint radius, jint speedBoost, jint lifeBoost, jint duration)
+    JNIEXPORT jint JNICALL Java_com_physics_Manager_dropBulletBoostPowerUp(JNIEnv *env, jobject obj, jint x, jint y, jint radius, jint speedBoost, jint lifeBoost, jint duration)
     {
-        Manager *manager = reinterpret_cast<Manager *>(nativeHandle);
-        return manager->dropBulletBoostPowerUp(x, y, radius, speedBoost, lifeBoost, duration);
+        Manager *nativeManager = reinterpret_cast<Manager *>(getNativeHandle(env, obj));
+        if (nativeManager != nullptr)
+        {
+            int result = nativeManager->dropBulletBoostPowerUp(x, y, radius, speedBoost, lifeBoost, duration);
+            return static_cast<jint>(result);
+        }
+        return -1;
     }
 
-    JNIEXPORT jint JNICALL
-    Java_com_physics_Manager_dropIncreasePointsPowerUp(JNIEnv *env, jobject obj, jlong nativeHandle, jint x, jint y, jint radius, jint pointScale, jint duration)
+    JNIEXPORT jint JNICALL Java_com_physics_Manager_dropIncreasePointsPowerUp(JNIEnv *env, jobject obj, jint x, jint y, jint radius, jint pointScale, jint duration)
     {
-        Manager *manager = reinterpret_cast<Manager *>(nativeHandle);
-        return manager->dropIncreasePointsPowerUp(x, y, radius, pointScale, duration);
+        Manager *nativeManager = reinterpret_cast<Manager *>(getNativeHandle(env, obj));
+        if (nativeManager != nullptr)
+        {
+            int result = nativeManager->dropIncreasePointsPowerUp(x, y, radius, pointScale, duration);
+            return static_cast<jint>(result);
+        }
+        return -1;
     }
 
 #ifdef __cplusplus
