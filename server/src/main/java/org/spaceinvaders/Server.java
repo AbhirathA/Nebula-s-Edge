@@ -3,6 +3,7 @@ package org.spaceinvaders;
 import com.sun.net.httpserver.HttpServer;
 import org.spaceinvaders.firebase.Firebase;
 import org.spaceinvaders.handlers.GetDataHandler;
+//import org.spaceinvaders.handlers.HandshakeHandler;
 import org.spaceinvaders.handlers.SignUpHandler;
 import org.spaceinvaders.util.LoggerUtil;
 import org.spaceinvaders.util.ServerInfo;
@@ -50,6 +51,7 @@ public class Server {
             Firebase.getInstance();
             server.createContext("/signup", new SignUpHandler());
             server.createContext("/getData", new GetDataHandler());
+//            server.createContext("/handshake", new HandshakeHandler());
             server.setExecutor(null);
             server.start();
             udpServer.startThreads();

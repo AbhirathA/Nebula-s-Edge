@@ -17,6 +17,8 @@ import com.spaceinvaders.frontend.background.StarsBackground;
 import com.spaceinvaders.frontend.gameplay.GameplayStage;
 import com.spaceinvaders.frontend.ui.UIStage;
 
+import java.util.concurrent.atomic.AtomicBoolean;
+
 public class GameplayScreen implements Screen {
     private final SpaceInvadersGame game;
 
@@ -37,6 +39,8 @@ public class GameplayScreen implements Screen {
     private float bulletCooldown = 0.25f; // Cooldown in seconds
     private float bulletTimer = 0;       // Timer to track elapsed time
 
+    private AtomicBoolean hasReceived = new AtomicBoolean(false);
+
     public GameplayScreen(SpaceInvadersGame game, boolean isMulti) {
         this.game = game;
         this.isMulti = isMulti;
@@ -53,7 +57,7 @@ public class GameplayScreen implements Screen {
         gameplayStage = new GameplayStage(game, viewport, SpaceInvadersGame.GAME_WIDTH, SpaceInvadersGame.GAME_HEIGHT, isMulti);
 
         this.udpPacket = new UDPPacket();
-        this.udpClient = new UDPClient(udpPacket);
+        this.udpClient = new UDPClient(this.udpPacket, this.hasReceived);
 
         multiplexer = new InputMultiplexer();
         multiplexer.addProcessor(uiStage); // UI input comes first
@@ -131,15 +135,24 @@ public class GameplayScreen implements Screen {
         // for now just implemented myShip,
         // TODO: need to implement for other ships
 
+        boolean found = false;
         for(Coordinate coordinate : tempUdpPacket.spaceShips) {
+            System.out.println(coordinate.id + " ");
             if(coordinate.getId() == tempUdpPacket.id) {
                 this.gameplayStage.getRocketSprite().setPosition(coordinate.getX() - this.gameplayStage.getRocketSprite().getWidth() / 2f, coordinate.getY() -  this.gameplayStage.getRocketSprite().getHeight() / 2f);
                 this.gameplayStage.getRocketSprite().setRotation(coordinate.getAngle());
                 this.uiStage.getHealthBar().setHealth(coordinate.health);
+                found = true;
                 break;
             }
         }
-        gameplayStage.setUdpPacket(tempUdpPacket);
+        System.out.println();
+
+        if (!found && this.hasReceived.get()) {
+            this.game.screenManager.setScreen(ScreenState.GAME_OVER);
+        }
+
+        this.gameplayStage.setUdpPacket(tempUdpPacket);
         updateCamera();
 
         Gdx.gl.glEnable(GL20.GL_BLEND); // Enable blending

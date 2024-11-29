@@ -3,6 +3,7 @@ package org.spaceinvaders;
 import java.net.*;
 import com.google.gson.Gson;
 import org.spaceinvaders.gameEngine.GameEngine;
+import org.spaceinvaders.util.Coordinate;
 import org.spaceinvaders.util.LoggerUtil;
 import org.spaceinvaders.util.ServerInfo;
 import org.spaceinvaders.util.UDPPacket;
@@ -35,6 +36,8 @@ public class UDPServer {
     private final Gson gson;
     private final Map<InetSocketAddress, UDPPacket> inetSocketAddressUDPPacket;
     private final Map<InetSocketAddress, Integer> inetSocketAddressToId;
+    private final Map<InetSocketAddress, Integer> inetSocketAddressToIdDead;
+    private final Map<InetSocketAddress, UDPPacket> inetSocketAddressUDPPacketDead;
     private final Map<InetSocketAddress, String> inetSocketAddressToState;
 
     private final GameEngine gameEngine;
@@ -54,6 +57,8 @@ public class UDPServer {
         this.gson = new Gson();
         this.inetSocketAddressUDPPacket = new HashMap<>();
         this.inetSocketAddressToId = new HashMap<>();
+        this.inetSocketAddressToIdDead = new HashMap<>();
+        this.inetSocketAddressUDPPacketDead = new HashMap<>();
         this.inetSocketAddressToState = new HashMap<>();
 
         this.inputBuffer =  new AtomicBoolean(false);
@@ -121,12 +126,38 @@ public class UDPServer {
                 packet.bullets = UDPServer.this.gameEngine.display("BULLET");
                 packet.blackholes = UDPServer.this.gameEngine.display("BLACKHOLES");
 
+                // Checking if any ships have died
+                synchronized (UDPServer.this.inetSocketAddressToState) {
+                    synchronized (UDPServer.this.inetSocketAddressToId) {
+                        for (InetSocketAddress connection : UDPServer.this.inetSocketAddressToId.keySet()) {
+                            boolean flag = false;
+                            for (Coordinate ship : packet.spaceShips) {
+                                if (ship.id == UDPServer.this.inetSocketAddressToId.get(connection)) {
+                                    flag = true;
+                                }
+                            }
+                            if (!flag) {
+                                UDPServer.this.inetSocketAddressToIdDead.put(connection, UDPServer.this.inetSocketAddressToId.get(connection));
+                                UDPServer.this.inetSocketAddressToId.remove(connection);
+                                UDPServer.this.inetSocketAddressToState.remove(connection);
+                            }
+                        }
+                    }
+                }
+
                 // Store the data for each client to send later
                 synchronized (UDPServer.this.inetSocketAddressUDPPacket) {
                     for (InetSocketAddress connection : UDPServer.this.inetSocketAddressToId.keySet()) {
                         packet.id = UDPServer.this.inetSocketAddressToId.get(connection);
                         UDPServer.this.inetSocketAddressUDPPacket.put(connection, packet.clone());
                     }
+                }
+                synchronized (UDPServer.this.inetSocketAddressUDPPacketDead) {
+                    for (InetSocketAddress connection : UDPServer.this.inetSocketAddressToIdDead.keySet()) {
+                        packet.id = UDPServer.this.inetSocketAddressToIdDead.get(connection);
+                        UDPServer.this.inetSocketAddressUDPPacketDead.put(connection, packet.clone());
+                    }
+                    UDPServer.this.inetSocketAddressToIdDead.clear();
                 }
                 UDPServer.this.outputBuffer.set(true);
 
@@ -185,6 +216,14 @@ public class UDPServer {
                                 UDPPacket sendData = UDPServer.this.inetSocketAddressUDPPacket.get(client);
                                 sendDataTemp.put(client, sendData);
                             }
+                        }
+                        synchronized (UDPServer.this.inetSocketAddressUDPPacketDead) {
+                            for (InetSocketAddress client : UDPServer.this.inetSocketAddressUDPPacketDead.keySet()) {
+                                // Get the updated packet for each client
+                                UDPPacket sendData = UDPServer.this.inetSocketAddressUDPPacketDead.get(client);
+                                sendDataTemp.put(client, sendData);
+                            }
+                            UDPServer.this.inetSocketAddressUDPPacketDead.clear();
                         }
                         // Send the data to the clients
                         for (InetSocketAddress client : sendDataTemp.keySet()) {

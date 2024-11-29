@@ -1,5 +1,4 @@
 #pragma once
-#include "Obj.h"
 #include "stdVerlet.h"
 #include "velVerlet.h"
 #include "CtrledObj.h"
@@ -8,7 +7,7 @@
 #include "Lifetime.h"
 #include <tuple>
 #include <iostream>
-
+#include "PowerUp.h"
 #include "UserObj.h"
 #include "PowerUp.h"
 

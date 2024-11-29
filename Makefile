@@ -7,7 +7,8 @@ CXXFLAGS = -g -std=c++17 -fPIC \
            -I$(JAVA_HOME)/include/darwin \
            -I$(JAVA_HOME)/include/linux \
            -Iinclude \
-           -Isrc/main/native
+           -Isrc/main/native \
+           -g
 LDFLAGS = -shared
 
 LIB_DIR = ./server/src/main/java/org/spaceinvaders/gameEngine/libs

@@ -8,6 +8,11 @@ int FixedObj::getNextY(int t) {
     return this->posY;
 }
 
+
+int FixedObj::getOri() {
+    std::cout<<"in fixed obj getOri"<<std::endl;
+    return 0;
+}
 // No change as fixed obj
 void FixedObj::updatePos(int t) {}
 

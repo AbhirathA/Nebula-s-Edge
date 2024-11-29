@@ -163,6 +163,7 @@ public:
     // Virtual method to get the orientation (can be overridden by subclasses)
     virtual int getOri()
     {
+
         return 0;  // Default implementation returns 0
     }
 

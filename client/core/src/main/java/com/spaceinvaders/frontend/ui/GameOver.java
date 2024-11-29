@@ -15,7 +15,7 @@ public class GameOver extends Table {
         center();
 
         Image gameOver = new Image(game.assetManager.get("textures/gameOver.png", Texture.class));
-        add(gameOver).colspan(2).padBottom(5).size(108.9f, 60.3f);
+        add(gameOver).colspan(2).padBottom(5).size(163.35f, 90.45f);
         row();
 
         ImageButton menuButton = ButtonUtils.createScreenNavigationButton(game, "textures/menu.png", "textures/menu.png", 38, 38,

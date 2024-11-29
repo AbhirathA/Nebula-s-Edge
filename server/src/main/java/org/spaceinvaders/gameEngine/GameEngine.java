@@ -1,6 +1,7 @@
 package org.spaceinvaders.gameEngine;
 
 import com.physics.Manager;
+import org.checkerframework.checker.units.qual.A;
 import org.spaceinvaders.firebase.Firebase;
 import org.spaceinvaders.util.Coordinate;
 
@@ -136,6 +137,7 @@ public class GameEngine {
     private ArrayList<Integer> meteorIds;
     private ArrayList<Integer> bulletIds;
     private ArrayList<Integer> blackholeIds;
+    private ArrayList<Integer> deadIds;
 
     private Manager gameEngineManager;
 
@@ -152,6 +154,7 @@ public class GameEngine {
         this.meteorIds = new ArrayList<>();
         this.bulletIds = new ArrayList<>();
         this.blackholeIds = new ArrayList<>();
+        this.deadIds = new ArrayList<>();
 
         this.gameEngineManager = new Manager(0, 0, 0, GAME_WIDTH, 0, GAME_HEIGHT, 1);
     }
@@ -162,9 +165,10 @@ public class GameEngine {
     public void instantiateGameEngineObjects() {
 //        write code to spawn meteors and asteroids and blackholes
 
-        int asteroidId = this.addElement("ASTEROID", GAME_WIDTH/2 - 500, GAME_HEIGHT/2, 900);
+//        int asteroidId = this.addElement("ASTEROID", GAME_WIDTH/2 - 500, GAME_HEIGHT/2, 900);
         int meteorId1 = this.addMeteor(GAME_WIDTH/4, GAME_HEIGHT/2, 10, 0);
         int meteorId2 = this.addMeteor(3*GAME_WIDTH/4, GAME_HEIGHT/2, -20, 0);
+//        int blackhole = this.addBlackhole(GAME_WIDTH/4-1000, GAME_HEIGHT/2);
     }
 
     /**
@@ -185,7 +189,7 @@ public class GameEngine {
                 break;
 
             case "ASTEROID":
-                id = this.gameEngineManager.dropAsteroid(x, y, BIG_ASTEROID_RADIUS*2, BIG_ASTEROID_RADIUS*2, BIG_ASTEROID_MASS);
+                id = this.gameEngineManager.dropAsteroid(x, y, BIG_ASTEROID_RADIUS, BIG_ASTEROID_RADIUS, BIG_ASTEROID_MASS);
                 this.asteroidIds.add(id);
                 break;
 
@@ -232,9 +236,11 @@ public class GameEngine {
         return enemyId;
     }
 
-//    public int addBlackhole(int x, int y){
-//        int blackholeId = this.gameEngineManager.dropBlackHole();
-//    }
+    public int addBlackhole(int x, int y){
+        int blackholeId = this.gameEngineManager.dropBlackHole(x, y, BLACKHOLE_INNER_RADIUS, BLACKHOLE_OUTER_RADIUS, BLACKHOLE_MASS);
+        this.blackholeIds.add(blackholeId);
+        return blackholeId;
+    }
 
     /**
      * Updates the state of an object in the game based on the given state string.
@@ -258,16 +264,44 @@ public class GameEngine {
     }
 
     /**
+     * This function removes all ids from all the mappings that are not part of totalIds
+     * Basically removes all the ids that are dead
+     * @param totalIds  all the ids that are still alive
+     */
+    private void removeUselessIds(ArrayList<Integer> totalIds) {
+
+        // need to broadcast one last time
+        for (int i = 0; i < spaceShipIds.size(); i++) {
+            if (!totalIds.contains(spaceShipIds.get(i))) {
+                this.deadIds.add(spaceShipIds.get(i));
+                this.spaceShipIds.remove(i);
+                i--;
+            }
+        }
+
+        this.enemyIds.removeIf(x -> !totalIds.contains(x));
+        this.asteroidIds.removeIf(x -> !totalIds.contains(x));
+        this.meteorIds.removeIf(x -> !totalIds.contains(x));
+        this.bulletIds.removeIf(x -> !totalIds.contains(x));
+        this.blackholeIds.removeIf(x -> !totalIds.contains(x));
+    }
+
+    /**
      * Retrieves all the coordinates of objects in the game.
      */
     public void getAllCoords() {
         this.coords = new ArrayList<>();
         int[][] tempCoords = this.gameEngineManager.display(0, GAME_HEIGHT, GAME_WIDTH, 0);
         System.out.println(tempCoords.length+"display");
-        
+
+        ArrayList<Integer> totalIds = new ArrayList<>();
         for (int[] element : tempCoords) {
             this.coords.add(new Coordinate("B", element[0], element[1], element[2], element[3]));
+            totalIds.add(element[0]);
         }
+
+        // remove ids that are not being used
+        removeUselessIds(totalIds);
     }
 
     /**
