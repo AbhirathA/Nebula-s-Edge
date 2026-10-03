@@ -1,10 +1,10 @@
 package org.spaceinvaders;
 
 import com.sun.net.httpserver.HttpServer;
-import org.spaceinvaders.firebase.Firebase;
+import org.spaceinvaders.accounts.AccountStore;
 import org.spaceinvaders.handlers.GetDataHandler;
-//import org.spaceinvaders.handlers.HandshakeHandler;
 import org.spaceinvaders.handlers.HandshakeHandler;
+import org.spaceinvaders.handlers.LoginHandler;
 import org.spaceinvaders.handlers.SignUpHandler;
 import org.spaceinvaders.util.LoggerUtil;
 import org.spaceinvaders.util.ServerInfo;
@@ -48,13 +48,16 @@ public class Server {
         try {
             HttpServer server = HttpServer.create(new InetSocketAddress(ServerInfo.HTTP_PORT), BACKLOG_LIMIT);
             //noinspection ResultOfMethodCallIgnored
-            Firebase.getInstance();
+            AccountStore.getInstance();
             server.createContext("/signup", new SignUpHandler());
+            server.createContext("/login", new LoginHandler());
             server.createContext("/getData", new GetDataHandler());
             server.createContext("/handshake", new HandshakeHandler());
             server.setExecutor(null);
             server.start();
             LoggerUtil.logInfo("Server started at http://localhost:" + ServerInfo.HTTP_PORT);
+            LoggerUtil.logInfo("Players on your network can connect to " + ServerInfo.IP
+                    + " (client: ./gradlew lwjgl3:run -Pserver=" + ServerInfo.IP + ")");
         } catch (IOException e) {
             LoggerUtil.logException("Cannot create a localhost server on port " + ServerInfo.HTTP_PORT, e);
         }

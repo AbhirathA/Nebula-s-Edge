@@ -58,9 +58,19 @@ public class Manager {
 
         public native void removeDead(int[] ids);
 
-        @Override
-        protected void finalize() throws Throwable {
-                destroyNativeObject(nativeHandle);
-                super.finalize();
+        /**
+         * Destroys an object (e.g. the ship of a player who left). It disappears on the next update.
+         */
+        public native void remove(int id);
+
+        /**
+         * Frees the native world. Call it from the thread that ran the simulation,
+         * because the engine keeps its timers per thread. Calls made after this are no-ops.
+         */
+        public synchronized void dispose() {
+                if (nativeHandle != 0) {
+                        destroyNativeObject(nativeHandle);
+                        nativeHandle = 0;
+                }
         }
 }

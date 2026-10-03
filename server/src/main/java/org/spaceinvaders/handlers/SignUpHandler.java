@@ -2,7 +2,7 @@ package org.spaceinvaders.handlers;
 
 import com.google.gson.JsonObject;
 import com.sun.net.httpserver.HttpExchange;
-import org.spaceinvaders.firebase.Firebase;
+import org.spaceinvaders.accounts.AccountStore;
 import org.spaceinvaders.util.HTTPCode;
 
 /**
@@ -22,7 +22,7 @@ import org.spaceinvaders.util.HTTPCode;
 public class SignUpHandler extends BaseHandler {
 
     /**
-     * Processes the incoming HTTP request to create a new user in Firebase.
+     * Processes the incoming HTTP request to create a new user account.
      *
      * @param exchange the {@link HttpExchange} object representing the HTTP request and response.
      * @param json     the {@link JsonObject} parsed from the request body, expected to contain "email" and "password".
@@ -34,8 +34,8 @@ public class SignUpHandler extends BaseHandler {
         String email = json.get("email").getAsString();
         String password = json.get("password").getAsString();
 
-        // Create a new user in Firebase using the provided email and password.
-        Firebase.getInstance().createUser(email, password);
+        // Create a new user using the provided email and password.
+        AccountStore.getInstance().createUser(email, password);
 
         // Send a success response indicating the user was created.
         sendHTTPResponse(exchange, HTTPCode.SUCCESS.getCode(), "User Created");

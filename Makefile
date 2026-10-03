@@ -1,81 +1,78 @@
-# Detect JAVA_HOME (commented default setting for macOS, replace if needed)
-# JAVA_HOME ?= $(shell /usr/libexec/java_home)
-
-CXX = g++
-CXXFLAGS = -g -std=c++17 -fPIC \
-           -I$(JAVA_HOME)/include \
-           -I$(JAVA_HOME)/include/darwin \
-           -I$(JAVA_HOME)/include/linux \
-           -Iinclude \
-           -Isrc/main/native \
-           -g
-LDFLAGS = -shared
-
-LIB_DIR = ./server/src/main/java/org/spaceinvaders/gameEngine/libs
-BUILD_DIR = build
-NATIVE_BUILD_DIR = $(BUILD_DIR)/native
-CLASS_BUILD_DIR = $(BUILD_DIR)/classes
-INCLUDE_DIR = include
-LOCAL_LIB_DIR = lib
+# Standalone build of the C++ physics engine (JNI shared library) and its integration test.
+# The server's Gradle build (`cd server && ./gradlew run`) compiles the engine on its own,
+# so this Makefile is only needed for `make test` or for building the library by hand.
+#
+#   make          builds build/lib/<PhysicsEngine library> and build/lib/PhysicsEngine.jar
+#   make test     builds, then runs test/TestPhysicsEngine.java against the library
+#   make clean
+#
+# Requires JAVA_HOME (a JDK 17+) and a 64-bit g++/clang++. On Windows use MSYS2/MinGW-w64
+# (`mingw32-make`), e.g. from Git Bash with C:\msys64\mingw64\bin on PATH.
 
 ifeq ($(OS),Windows_NT)
-    LIB_NAME = PhysicsEngine.dll
+    PLATFORM    = win32
+    LIB_NAME    = PhysicsEngine.dll
+    LDFLAGS     = -shared -static -static-libgcc -static-libstdc++
+    CP_SEP      = ;
 else
     UNAME_S := $(shell uname -s)
     ifeq ($(UNAME_S),Darwin)
+        PLATFORM = darwin
         LIB_NAME = libPhysicsEngine.dylib
+        JAVA_HOME ?= $(shell /usr/libexec/java_home)
     else
+        PLATFORM = linux
         LIB_NAME = libPhysicsEngine.so
     endif
+    LDFLAGS = -shared
+    CP_SEP  = :
 endif
+
+CXX      ?= g++
+CXXFLAGS  = -std=c++17 -O2 -fPIC -MMD -MP \
+            -I"$(JAVA_HOME)/include" -I"$(JAVA_HOME)/include/$(PLATFORM)" \
+            -I$(INCLUDE_DIR) -Isrc/main/native
+JAVAC     = "$(JAVA_HOME)/bin/javac"
+JAVA      = "$(JAVA_HOME)/bin/java"
+JAR       = "$(JAVA_HOME)/bin/jar"
+
+BUILD_DIR       = build
+NATIVE_BUILD_DIR = $(BUILD_DIR)/native
+CLASS_BUILD_DIR = $(BUILD_DIR)/classes
+INCLUDE_DIR     = $(BUILD_DIR)/include
+LIB_DIR         = $(BUILD_DIR)/lib
+JNI_HEADER      = $(INCLUDE_DIR)/com_physics_Manager.h
 
 NATIVE_SOURCES = $(wildcard src/main/native/*.cpp)
 NATIVE_OBJECTS = $(patsubst src/main/native/%.cpp,$(NATIVE_BUILD_DIR)/%.o,$(NATIVE_SOURCES))
 
-JAR_NAME = PhysicsEngine.jar
+all: $(LIB_DIR)/$(LIB_NAME) $(LIB_DIR)/PhysicsEngine.jar
 
-# Default target: compile native library and JAR
-all: clean $(LIB_DIR)/$(LIB_NAME) $(LOCAL_LIB_DIR)/$(LIB_NAME) $(LIB_DIR)/$(JAR_NAME) $(LOCAL_LIB_DIR)/$(JAR_NAME)
+# javac -h generates the JNI header from the Java side of the bridge
+$(JNI_HEADER): src/main/java/com/physics/Manager.java
+	mkdir -p $(CLASS_BUILD_DIR) $(INCLUDE_DIR)
+	$(JAVAC) --release 17 -h $(INCLUDE_DIR) -d $(CLASS_BUILD_DIR) $<
 
-# Generate JNI header files
-jni: src/main/java/com/physics/Manager.java
-	mkdir -p $(CLASS_BUILD_DIR)
-	mkdir -p $(INCLUDE_DIR)
-	javac -h $(INCLUDE_DIR) -d $(CLASS_BUILD_DIR) $^
-
-# Compile native code to object files
-$(NATIVE_BUILD_DIR)/%.o: src/main/native/%.cpp
+$(NATIVE_BUILD_DIR)/%.o: src/main/native/%.cpp $(JNI_HEADER)
 	mkdir -p $(NATIVE_BUILD_DIR)
 	$(CXX) $(CXXFLAGS) -c $< -o $@
 
-# Link object files into a shared library
-$(LIB_DIR)/$(LIB_NAME): jni $(NATIVE_OBJECTS)
+$(LIB_DIR)/$(LIB_NAME): $(NATIVE_OBJECTS)
 	mkdir -p $(LIB_DIR)
-	$(CXX) $(LDFLAGS) -o $(LIB_DIR)/$(LIB_NAME) $(NATIVE_OBJECTS)
+	$(CXX) -o $@ $^ $(LDFLAGS)
 
-# Copy shared library to the local lib directory
-$(LOCAL_LIB_DIR)/$(LIB_NAME): $(LIB_DIR)/$(LIB_NAME)
-	mkdir -p $(LOCAL_LIB_DIR)
-	cp $(LIB_DIR)/$(LIB_NAME) $(LOCAL_LIB_DIR)/$(LIB_NAME)
-
-# Create a JAR file from compiled Java classes
-$(LIB_DIR)/$(JAR_NAME): jni
+$(LIB_DIR)/PhysicsEngine.jar: $(JNI_HEADER)
 	mkdir -p $(LIB_DIR)
-	jar cf $(LIB_DIR)/$(JAR_NAME) -C $(CLASS_BUILD_DIR) .
+	$(JAR) cf $@ -C $(CLASS_BUILD_DIR) .
 
-# Copy JAR file to the local lib directory
-$(LOCAL_LIB_DIR)/$(JAR_NAME): $(LIB_DIR)/$(JAR_NAME)
-	mkdir -p $(LOCAL_LIB_DIR)
-	cp $(LIB_DIR)/$(JAR_NAME) $(LOCAL_LIB_DIR)/$(JAR_NAME)
-
-# Clean up all build artifacts
-clean:
-	rm -rf $(BUILD_DIR) $(LIB_DIR) $(INCLUDE_DIR) $(LOCAL_LIB_DIR)
-
-# Test the native library and JAR file
 test: all
-	cd test && javac -cp .:../build/classes TestPhysicsEngine.java
-	cd test && java -Djava.library.path=../$(LIB_DIR) -cp .:../build/classes:. TestPhysicsEngine
+	$(JAVAC) --release 17 -cp "$(CLASS_BUILD_DIR)" -d $(BUILD_DIR)/test test/TestPhysicsEngine.java
+	$(JAVA) --enable-native-access=ALL-UNNAMED -Djava.library.path=$(LIB_DIR) \
+		-cp "$(CLASS_BUILD_DIR)$(CP_SEP)$(BUILD_DIR)/test" TestPhysicsEngine
 
-.PHONY: all jni clean test
+clean:
+	rm -rf $(BUILD_DIR)
 
+-include $(NATIVE_OBJECTS:.o=.d)
+
+.PHONY: all test clean

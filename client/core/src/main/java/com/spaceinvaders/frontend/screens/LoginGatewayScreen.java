@@ -111,18 +111,26 @@ public class LoginGatewayScreen implements Screen {
         ImageTextButton loginButton = ButtonUtils.createScreenNavigationButton(game, "Login", "textures/button.png", "textures/button.png", 95, 15, (SpaceInvadersGame.STAGE_WIDTH - 95) / 2, 98, ScreenState.LOGIN);
         ImageTextButton signupButton = ButtonUtils.createScreenNavigationButton(game, "Signup", "textures/button.png", "textures/button.png", 95, 15, (SpaceInvadersGame.STAGE_WIDTH - 95) / 2, 81, ScreenState.SIGNUP);
 
-        ImageButton mainMenuButton = ButtonUtils.createImageButton(game, "textures/Planet7.png", "textures/Planet7.png",22, 22, 438, 8);
-        mainMenuButton.addListener(new InputListener() {
+        // Play without an account (the game server doesn't require one to join a world)
+        InputListener playAsGuest = new InputListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                game.token = "ijk2";
+                game.token = "guest";
+                game.email = "Guest";
+                game.killCount = "0";
                 game.screenManager.setScreen(ScreenState.MAIN_MENU);
                 return true;
             }
-        });
+        };
+        ImageTextButton guestButton = ButtonUtils.createScreenNavigationButton(game, "Guest", "textures/button.png", "textures/button.png", 95, 15, (SpaceInvadersGame.STAGE_WIDTH - 95) / 2, 64, null);
+        guestButton.addListener(playAsGuest);
+
+        ImageButton mainMenuButton = ButtonUtils.createImageButton(game, "textures/Planet7.png", "textures/Planet7.png",22, 22, 438, 8);
+        mainMenuButton.addListener(playAsGuest);
 
         stage.addActor(loginButton);
         stage.addActor(signupButton);
+        stage.addActor(guestButton);
         stage.addActor(mainMenuButton);
     }
 }

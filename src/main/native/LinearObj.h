@@ -32,7 +32,6 @@ class LinearObj : public Obj {
 			this->vY = vY;
 			this->accX = accX;
 			this->accY = accY;
-			std::cout << "Constructed LO" << x <<" " << y<< std::endl;
 		}
 
 		int getvX() {
@@ -60,7 +59,6 @@ class LinearObj : public Obj {
 		}
 
 		int getOri() override {
-			std::cout<<"in lo getORi"<<std::endl;
 			double v = sqrt(vX * vX + vY * vY);
 			double t = asin(vY / v);
 			if (v <= 0.0001 && v>= -0.0001) {

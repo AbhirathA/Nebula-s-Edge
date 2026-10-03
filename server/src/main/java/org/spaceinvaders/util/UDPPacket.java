@@ -6,6 +6,7 @@ import java.util.ArrayList;
 public class UDPPacket implements Serializable {
     public int id;
     public ArrayList<Coordinate> spaceShips;
+    public ArrayList<Coordinate> enemies;
     public ArrayList<Coordinate> asteroids;
     public ArrayList<Coordinate> bullets;
     public ArrayList<Coordinate> blackholes;
@@ -16,6 +17,7 @@ public class UDPPacket implements Serializable {
 
     public UDPPacket() {
         spaceShips = new ArrayList<>();
+        enemies = new ArrayList<>();
         asteroids = new ArrayList<>();
         bullets = new ArrayList<>();
         blackholes = new ArrayList<>();
@@ -28,6 +30,7 @@ public class UDPPacket implements Serializable {
         this.id = udpPacket.id;
         this.bullets = udpPacket.bullets;
         this.spaceShips = udpPacket.spaceShips;
+        this.enemies = udpPacket.enemies != null ? udpPacket.enemies : new ArrayList<>();
         this.asteroids = udpPacket.asteroids;
         this.blackholes = udpPacket.blackholes;
         this.powerUpB = udpPacket.powerUpB;
@@ -40,6 +43,7 @@ public class UDPPacket implements Serializable {
         UDPPacket other = new UDPPacket();
         other.id = this.id;
         other.spaceShips = (ArrayList<Coordinate>) this.spaceShips.clone();
+        other.enemies = (ArrayList<Coordinate>) this.enemies.clone();
         other.asteroids = (ArrayList<Coordinate>) this.asteroids.clone();
         other.bullets = (ArrayList<Coordinate>) this.bullets.clone();
         other.blackholes = (ArrayList<Coordinate>) this.blackholes.clone();

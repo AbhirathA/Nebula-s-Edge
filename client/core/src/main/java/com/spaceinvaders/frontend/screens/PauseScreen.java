@@ -113,6 +113,7 @@ public class PauseScreen implements Screen {
            @Override
            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
                game.screenManager.reinitializeScreen(screenState);
+               game.screenManager.setScreen(screenState);
                return true;
            }
         });

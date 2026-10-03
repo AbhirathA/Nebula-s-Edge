@@ -2,6 +2,7 @@
 #include "CtrledObj.h"
 #include "Obj.h"
 #include "Health.h"
+#include "Lifetime.h"
 #include <tuple>
 
 class UserObj : public CtrledObj
@@ -17,6 +18,10 @@ private:
 	// int flareSpeed;
 
 	Health *healthBar = nullptr;
+	// Brief invulnerability after a hit, so one long overlap with a meteor costs one point, not one per tick
+	static const int INVULNERABLE_TICKS = 45;
+	bool vulnerable = true;
+	Lifetime *invulnerability = nullptr;
 
 public:
 	UserObj(int id, int x, int y, int peakV, int driftV, int angle, int thrust, int thrustPersistance, int movePersistance, int coolDown, int accX, int accY, int innerRad, int outerRad, int mass, int health, int bulletSpeed, int bulletLife) : CtrledObj(id, x, y, peakV, driftV, angle, thrust, thrustPersistance, movePersistance, coolDown, accX, accY, innerRad, outerRad, mass)
@@ -25,11 +30,14 @@ public:
 									 { this->selfDestruct(); });
 		this->bulletSpeed = bulletSpeed;
 		this->bulletLife = bulletLife;
+		this->invulnerability = new Lifetime(INVULNERABLE_TICKS, [this]() -> void
+											 { this->vulnerable = true; });
 	}
 
 	virtual ~UserObj()
 	{
 		delete healthBar;
+		delete invulnerability;
 	}
 
 	void heal(int points);

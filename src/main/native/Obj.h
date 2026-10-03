@@ -135,9 +135,6 @@ public:
     // Method to self-destruct the object (e.g., on collision or damage)
     void selfDestruct()
     {
-        // Print debug information (position and radius)
-        std::cout << this->innerRad + this->posX << ", " << this->innerRad - this->posX << " "
-                  << this->innerRad + this->posY << ", " << this->innerRad - this->posY << std::endl;
         *dead = true;  // Mark the object as dead
     }
 
@@ -201,6 +198,10 @@ public:
 
     // Method for correcting the object's position if it goes out of bounds
     virtual bool boundCorrection(int lft, int rt, int tp, int bt, int t) = 0;
+
+    // Called by the Manager just before `dying` is deleted, so objects holding a
+    // raw pointer to it (enemies, bullets, power-ups) can drop that reference
+    virtual void forgetReference(Obj *dying) {}
 
     // Destructor to clean up dynamically allocated memory
     virtual ~Obj()

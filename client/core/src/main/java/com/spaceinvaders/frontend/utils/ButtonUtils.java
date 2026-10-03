@@ -72,7 +72,7 @@ public class ButtonUtils {
 
                 // Navigate to the next Screen
                 if(targetScreen == null){
-                    System.out.println("Move to new screen");
+                    // No target: the caller navigates with its own listener
                 }
                 else {
                     game.screenManager.setScreen(targetScreen);
@@ -141,7 +141,7 @@ public class ButtonUtils {
                 // Navigate to the next Screen
                 if(targetScreen == null){
                     System.out.println(targetScreen);
-                    System.out.println("Move to new screen");
+                    // No target: the caller navigates with its own listener
                 }
                 else {
                     game.screenManager.setScreen(targetScreen);

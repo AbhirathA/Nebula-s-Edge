@@ -1,90 +1,57 @@
 # Nebula's Edge Server
 
-![Java](https://img.shields.io/badge/Java-11%2B-007396?style=for-the-badge&logo=openjdk&logoColor=white)
-![Gradle](https://img.shields.io/badge/Gradle-wrapper-02303A?style=for-the-badge&logo=gradle&logoColor=white)
-![Firebase](https://img.shields.io/badge/Firebase-Admin%20SDK-FFCA28?style=for-the-badge&logo=firebase&logoColor=black)
-![JNI](https://img.shields.io/badge/JNI-native%20physics-4B5563?style=for-the-badge)
+The Java backend for Nebula's Edge. It serves the account and handshake HTTP API, runs the UDP game worlds, and drives the C++ physics engine over JNI. See the [root README](../README.md) for the big picture and screenshots.
 
-The server is the Java backend for Nebula's Edge. It exposes HTTP handlers for account/data flows, coordinates UDP game sessions, and loads the JNI physics engine used by the multiplayer game loop.
-
-## Responsibilities
-
-- Start the HTTP API on port `8080`.
-- Handle signup, handshake, and data retrieval endpoints.
-- Coordinate real-time UDP game state.
-- Load the native physics engine from `src/main/java/org/spaceinvaders/gameEngine/libs`.
-- Connect to Firebase through the Firebase Admin SDK.
-
-## Prerequisites
-
-- JDK 11 or newer.
-- Native physics artifacts built from the repository root with `make all`.
-- Firebase credentials/configuration required by the project.
-- UDP/HTTP ports available on the development machine.
-
-## Build Native Physics First
-
-From the repository root:
+## Run
 
 ```bash
-make all
+./gradlew run          # Windows: .\gradlew.bat run
 ```
 
-This generates the files expected by the server:
+The first run compiles the C++ engine (`src/main/native/*.cpp`) into `build/native/` with the `buildNative` task, so you need a 64-bit `g++` (or `clang++` on macOS) on `PATH`. To use a different compiler, pass `-Pcxx=/path/to/compiler` or set `CXX`. No `make` or external services are required.
 
-```text
-server/src/main/java/org/spaceinvaders/gameEngine/libs/PhysicsEngine.jar
-server/src/main/java/org/spaceinvaders/gameEngine/libs/PhysicsEngine.dll
-```
+## What runs where
 
-On macOS or Linux, the shared library extension will be `.dylib` or `.so`.
+| Port | Protocol | Purpose |
+| ---: | --- | --- |
+| `8080` | HTTP | `/signup`, `/login`, `/getData`, `/handshake` |
+| `9090` | UDP | the shared multiplayer world |
+| any free port | UDP | one private world per single-player game, created by `/handshake` and shut down when the game ends |
 
-## Run The Server
+Each world runs two threads:
 
-From the `server` directory:
+- **Game thread:** 90 ticks per second. It applies each client's latest input, steps the native physics (`GameEngine` → `com.physics.Manager` → C++), and builds a snapshot for every player. All native calls happen on this thread, because the engine keeps its timers per thread.
+- **Network thread:** receives input packets and sends the latest snapshots back. It only accepts packets from `(ip, udpPort)` pairs that completed `/handshake`.
 
-```bash
-./gradlew run
-```
+## HTTP API
 
-On Windows PowerShell:
+All endpoints take `POST` with a JSON body.
 
-```powershell
-.\gradlew.bat run
-```
+| Endpoint | Body | Success response |
+| --- | --- | --- |
+| `/signup` | `{"email": id, "password": pw}` | `User Created` (`402` if the id is taken, `403` if the password is under 6 characters) |
+| `/login` | `{"email": id, "password": pw}` | `{"idToken": "<session token>"}` (`401` on bad credentials) |
+| `/getData` | `{"idToken": token}` | `{"email", "level", "killCount"}` (`405` if the session is unknown) |
+| `/handshake` | `{"type": "SINGLEPLAYER" \| "MULTIPLAYER", "udpPort": n}` | the UDP port of the world to send input to |
 
-The Gradle `run` task automatically sets:
+UDP input is `{"token": ..., "state": "FORWARD|BACKWARD|LEFT|RIGHT|BULLET..."}`. Snapshots are a JSON `UDPPacket`: your ship id plus lists of ships, enemies, asteroids, bullets, black holes, and power-ups.
 
-```text
--Djava.library.path=src/main/java/org/spaceinvaders/gameEngine/libs
-```
+## Configuration
 
-## Network Defaults
-
-| Service | Port | Source |
-| --- | ---: | --- |
-| HTTP API | `8080` | `ServerInfo.HTTP_PORT` |
-| Multiplayer UDP | `9090` | `ServerInfo.UDP_MULTI_PLAYER_PORT` |
-| Single-player UDP | `9091` | `ServerInfo.UDP_SINGLE_PLAYER_PORT` |
-
-## HTTP Endpoints
-
-| Endpoint | Handler |
+| What | Where |
 | --- | --- |
-| `/signup` | `SignUpHandler` |
-| `/getData` | `GetDataHandler` |
-| `/handshake` | `HandshakeHandler` |
+| World size, radii, masses, speeds | `src/main/resources/gameConstants.json` |
+| Level layout (asteroids, black holes, meteors, power-ups) | `GameEngine.instantiateGameEngineObjects()` |
+| Account file | `data/accounts.json` (override with `-Dnebula.accounts=path`). Passwords are salted PBKDF2-SHA256 hashes. |
+| Logs | console and `logs/serverLog.log` |
 
-## Useful Gradle Tasks
+The game originally loaded its constants and accounts from Firebase. That project has since been retired, so the server is now fully self-contained.
+
+## Useful tasks
 
 | Task | Description |
 | --- | --- |
-| `run` | Starts the server. |
-| `build` | Compiles and packages the server. |
-| `test` | Runs server tests. |
-| `clean` | Removes build output. |
-
-## Related Docs
-
-- Root project setup: `../README.md`
-- Generated server Javadocs: `../docs/ServerJavadoc/index.html`
+| `run` | Build the native library and start the server |
+| `buildNative` | Only compile the C++ engine |
+| `build` | Compile and package |
+| `javadoc` | API docs in `build/docs/javadoc` (a copy is published in `../docs/ServerJavadoc`) |

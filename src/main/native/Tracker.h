@@ -13,6 +13,13 @@ class Tracker : public LinearObj
         virtual int getNextY(int t) override final;
 
         virtual bool boundCorrection(int lft, int rt, int tp, int bt, int t);
+        // An enemy exists to chase its target, so it disappears along with it
+        virtual void forgetReference(Obj* dying) override {
+            if (target == dying) {
+                target = nullptr;
+                selfDestruct();
+            }
+        }
 
         virtual ~Tracker() {}
 };

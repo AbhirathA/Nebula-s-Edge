@@ -1,5 +1,6 @@
 package com.spaceinvaders.frontend.screens;
 
+import com.spaceinvaders.util.LoggerUtil;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.*;
@@ -11,9 +12,9 @@ import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import com.spaceinvaders.backend.firebase.AuthenticationManager;
+import com.spaceinvaders.backend.auth.AuthenticationManager;
 import com.spaceinvaders.frontend.SpaceInvadersGame;
-import com.spaceinvaders.backend.firebase.utils.AuthenticationException;
+import com.spaceinvaders.backend.auth.utils.AuthenticationException;
 import com.spaceinvaders.frontend.background.PlanetsBackground;
 import com.spaceinvaders.frontend.background.StarsBackground;
 import com.spaceinvaders.frontend.ui.LoadingRing;
@@ -200,9 +201,7 @@ public class SignupScreen implements Screen {
                     }
 
                 } catch (Exception e) {
-                    // @TODO: Convert to logging
-                    System.err.println(e.getMessage());
-                    System.exit(1);
+                    LoggerUtil.logException("Sign up failed unexpectedly", e);
                 }
                 return true;
             }
