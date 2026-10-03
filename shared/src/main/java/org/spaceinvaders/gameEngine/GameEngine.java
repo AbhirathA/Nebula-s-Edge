@@ -1,6 +1,6 @@
 package org.spaceinvaders.gameEngine;
 
-import com.physics.Manager;
+import com.physics.PhysicsWorld;
 import org.spaceinvaders.util.GameConfig;
 import org.spaceinvaders.util.Coordinate;
 
@@ -141,13 +141,15 @@ public class GameEngine {
     private ArrayList<Integer> powerUpPIds;
     private ArrayList<Integer> deadIds;
 
-    private Manager gameEngineManager;
+    private PhysicsWorld gameEngineManager;
 
     /**
      * Constructor for the GameEngine class. Initializes the game objects' lists
      * and sets up the game engine manager with the game world dimensions.
+     *
+     * @param physics creates the physics world: JNI on the server, WebAssembly in the browser
      */
-    public GameEngine() {
+    public GameEngine(PhysicsWorld.Factory physics) {
         this.coords = new ArrayList<>();
 
         this.spaceShipIds = new ArrayList<>();
@@ -161,7 +163,7 @@ public class GameEngine {
         this.powerUpPIds = new ArrayList<>();
         this.deadIds = new ArrayList<>();
 
-        this.gameEngineManager = new Manager(0, 0, 0, GAME_WIDTH, 0, GAME_HEIGHT, 1);
+        this.gameEngineManager = physics.create(0, 0, 0, GAME_WIDTH, 0, GAME_HEIGHT, 1);
     }
 
     /**

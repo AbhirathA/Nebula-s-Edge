@@ -9,7 +9,7 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import com.spaceinvaders.backend.UDPClient;
+import com.spaceinvaders.backend.GameConnection;
 import com.spaceinvaders.backend.utils.Coordinate;
 import com.spaceinvaders.backend.utils.UDPPacket;
 import com.spaceinvaders.frontend.SpaceInvadersGame;
@@ -29,7 +29,7 @@ public class GameplayScreen implements Screen {
 
     private GameplayStage gameplayStage;
 
-    private UDPClient udpClient;
+    private GameConnection udpClient;
     private final UDPPacket udpPacket;
 
     private InputMultiplexer multiplexer;
@@ -57,9 +57,9 @@ public class GameplayScreen implements Screen {
         gameplayStage = new GameplayStage(game, viewport, SpaceInvadersGame.GAME_WIDTH, SpaceInvadersGame.GAME_HEIGHT, isMulti);
 
         this.udpPacket = new UDPPacket();
-        this.udpClient = new UDPClient(this.udpPacket, this.hasReceived, isMulti);
+        this.udpClient = game.backend.join(isMulti, this.udpPacket, this.hasReceived);
         if (this.udpClient.getError() != null) {
-            uiStage.showMessage(this.udpClient.getError() + "\nStart it with: cd server; ./gradlew run");
+            uiStage.showMessage(this.udpClient.getError());
         }
 
         multiplexer = new InputMultiplexer();

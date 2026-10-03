@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.PixmapIO;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.spaceinvaders.backend.GameBackend;
 import com.spaceinvaders.util.LoggerUtil;
 import com.spaceinvaders.frontend.managers.MusicManager;
 import com.spaceinvaders.frontend.managers.ScreenManager;
@@ -19,6 +20,9 @@ import com.spaceinvaders.frontend.screens.ScreenState;
 import com.spaceinvaders.frontend.utils.Command;
 
 public class SpaceInvadersGame extends Game {
+    // Accounts and game worlds: the game server on desktop, the page itself in the browser
+    public final GameBackend backend;
+
     public SpriteBatch batch;
     public ShapeRenderer shapeRenderer;
     public BitmapFont font;
@@ -62,6 +66,10 @@ public class SpaceInvadersGame extends Game {
         }
     }
 
+    public SpaceInvadersGame(GameBackend backend) {
+        this.backend = backend;
+    }
+
     @Override
     public void create() {
         token = "";
@@ -80,7 +88,7 @@ public class SpaceInvadersGame extends Game {
     @Override
     public void render() {
         super.render();
-        if (Gdx.input.isKeyJustPressed(Input.Keys.F12)) {
+        if (backend.supportsScreenshots() && Gdx.input.isKeyJustPressed(Input.Keys.F12)) {
             saveScreenshot();
         }
     }

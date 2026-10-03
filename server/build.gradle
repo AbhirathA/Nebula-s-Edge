@@ -24,6 +24,9 @@ sourceSets {
     main {
         // The Java half of the JNI bridge (com.physics.Manager) lives next to the C++ engine
         java.srcDir '../src/main/java'
+        // Simulation code shared with the browser build (GameEngine, PhysicsWorld, constants)
+        java.srcDir '../shared/src/main/java'
+        resources.srcDir '../shared/src/main/resources'
     }
 }
 
