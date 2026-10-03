@@ -1,6 +1,6 @@
 com.spaceinvaders.backend
-com.spaceinvaders.backend.firebase
-com.spaceinvaders.backend.firebase.utils
+com.spaceinvaders.backend.auth
+com.spaceinvaders.backend.auth.utils
 com.spaceinvaders.backend.utils
 com.spaceinvaders.frontend
 com.spaceinvaders.frontend.background

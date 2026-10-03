@@ -10,7 +10,6 @@ int FixedObj::getNextY(int t) {
 
 
 int FixedObj::getOri() {
-    std::cout<<"in fixed obj getOri"<<std::endl;
     return 0;
 }
 // No change as fixed obj

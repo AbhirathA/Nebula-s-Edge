@@ -43,7 +43,6 @@ class AngleObj: public Obj{
 			this->accX = accX;
 			this->accY = accY;
 
-			std::cout << "Created AO: " << "id" << id << "x:" << x << " y: " << y << " v: " << v << " angle: " << angle << std::endl;
 			this->initializeTrig();
 		}
 

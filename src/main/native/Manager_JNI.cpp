@@ -103,6 +103,15 @@ extern "C"
         }
     }
 
+    JNIEXPORT void JNICALL Java_com_physics_Manager_remove(JNIEnv *env, jobject obj, jint id)
+    {
+        Manager *nativeManager = reinterpret_cast<Manager *>(getNativeHandle(env, obj));
+        if (nativeManager != nullptr)
+        {
+            nativeManager->remove(id);
+        }
+    }
+
     JNIEXPORT jint JNICALL Java_com_physics_Manager_shoot(JNIEnv *env, jobject obj, jint id, jint innerRadius, jint outerRadius, jint mass)
     {
         Manager *nativeManager = reinterpret_cast<Manager *>(getNativeHandle(env, obj));
@@ -211,7 +220,9 @@ extern "C"
                     return NULL;
                 }
 
-                env->SetIntArrayRegion(innerArray, 0, innerSize, innerVector.data());
+                // jint is `long` on Windows but `int` on Linux/macOS, so copy explicitly
+                std::vector<jint> jintBuffer(innerVector.begin(), innerVector.end());
+                env->SetIntArrayRegion(innerArray, 0, innerSize, jintBuffer.data());
 
                 env->SetObjectArrayElement(outerArray, i, innerArray);
 

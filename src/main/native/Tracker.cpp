@@ -3,51 +3,38 @@
 
 
 void Tracker::updatePos(int t) {
-
-	// get distance from target.
-	int dx = target->getX() - posX;
-	int dy = target->getY() - posY;
-	float distance = std::sqrt(dx*dx + dy*dy);
-
-	// point the velocity in the right direction.
-	vX = (velocity * dx) / distance;
-	vY = (velocity * dy) / distance;
-
-	// move the object towards the target
+	if (target != nullptr) {
+		int dx = target->getX() - posX;
+		int dy = target->getY() - posY;
+		float distance = std::sqrt(dx*dx + dy*dy);
+		if (distance > 0) {
+			vX = (velocity * dx) / distance;
+			vY = (velocity * dy) / distance;
+		}
+	}
 	int temp = posX;
 	posX = temp + vX * t + accX*t*t/2;
-
 	temp = posY;
 	posY = temp + vY * t + accY*t*t/2;
-	std::cout<<"hi"<<std::endl;
-	std::cout<<"Angle: " << this->getOri()<<std::endl;
 	this->updateBox();
 }
 
 int Tracker::getNextX(int t) {
- 
-	// get distance from target.
+	if (target == nullptr) return posX + vX * t + accX * t * t / 2;
 	int dx = target->getX() - posX;
 	int dy = target->getY() - posY;
 	double distance = std::sqrt(dx * dx + dy * dy);
-
-	// point the velocity in the right direction.
+	if (distance <= 0) return posX;
 	double X = (velocity * dx) / distance;
-
-	// move the object towards the target
 	return posX + X * t + accX * t * t / 2;
 }
 int Tracker::getNextY(int t) {
-
-	// get distance from target.
+	if (target == nullptr) return posY + vY * t + accY * t * t / 2;
 	int dx = target->getX() - posX;
 	int dy = target->getY() - posY;
 	double distance = std::sqrt(dx * dx + dy * dy);
-
-	// point the velocity in the right direction.
+	if (distance <= 0) return posY;
 	double Y = (velocity * dy) / distance;
-
-	// move the object towards the target
 	return posY + Y * t + accY * t * t / 2;
 }
 

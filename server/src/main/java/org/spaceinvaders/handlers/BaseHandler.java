@@ -1,12 +1,11 @@
 package org.spaceinvaders.handlers;
 
-import com.google.firebase.auth.FirebaseAuthException;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.google.gson.JsonSyntaxException;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
-import org.spaceinvaders.firebase.util.DatabaseAccessException;
+import org.spaceinvaders.accounts.AccountException;
 import org.spaceinvaders.util.HTTPCode;
 import org.spaceinvaders.util.LoggerUtil;
 
@@ -74,11 +73,10 @@ public abstract class BaseHandler implements HttpHandler {
     void handleException(HttpExchange exchange, Exception e) throws IOException {
         if (e instanceof NullPointerException) {
             sendHTTPResponse(exchange, HTTPCode.INVALID_INPUT.getCode(), "Missing required data");
-        } else if (e instanceof FirebaseAuthException) {
-            sendHTTPResponse(exchange, HTTPCode.UNAUTHORIZED.getCode(), "Authentication error");
-        } else if (e instanceof DatabaseAccessException) {
-            sendHTTPResponse(exchange, HTTPCode.DATABASE_ERROR.getCode(), "Database error");
+        } else if (e instanceof AccountException) {
+            sendHTTPResponse(exchange, ((AccountException) e).getCode().getCode(), e.getMessage());
         } else {
+            LoggerUtil.logException("Unhandled error in " + exchange.getRequestURI(), e);
             sendHTTPResponse(exchange, HTTPCode.SERVER_ERROR.getCode(), "Internal server error");
         }
     }
@@ -92,10 +90,12 @@ public abstract class BaseHandler implements HttpHandler {
      * @throws IOException if an I/O error occurs while sending the response.
      */
     public void sendHTTPResponse(HttpExchange exchange, int statusCode, String message) throws IOException {
-        exchange.sendResponseHeaders(statusCode, message.length());
+        byte[] body = message.getBytes(StandardCharsets.UTF_8);
+        exchange.sendResponseHeaders(statusCode, body.length);
         try (OutputStream os = exchange.getResponseBody()) {
-            os.write(message.getBytes());
+            os.write(body);
         }
-        LoggerUtil.logInfo(message);
+        // Don't log bodies: they can carry session tokens
+        LoggerUtil.logInfo(exchange.getRequestURI() + " -> " + statusCode);
     }
 }

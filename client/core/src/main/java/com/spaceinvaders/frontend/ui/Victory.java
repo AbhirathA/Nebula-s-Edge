@@ -1,6 +1,8 @@
 package com.spaceinvaders.frontend.ui;
 
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
@@ -22,6 +24,14 @@ public class Victory extends Table {
             0, 0, ScreenState.MAIN_MENU);
         ImageButton restartButton = ButtonUtils.createImageButton(game, "textures/restart.png", "textures/restart.png",
             38, 38, 0, 0);
+        restartButton.addListener(new InputListener() {
+            @Override
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                game.soundManager.play("buttonClick");
+                game.screenManager.setScreen(game.screenManager.getLastGameplay());
+                return true;
+            }
+        });
 
         add(menuButton).size(20, 20).right().pad(2);
         add(restartButton).size(20, 20).left().pad(2);

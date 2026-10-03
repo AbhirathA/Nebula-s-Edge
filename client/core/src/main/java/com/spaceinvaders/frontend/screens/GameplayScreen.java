@@ -57,7 +57,10 @@ public class GameplayScreen implements Screen {
         gameplayStage = new GameplayStage(game, viewport, SpaceInvadersGame.GAME_WIDTH, SpaceInvadersGame.GAME_HEIGHT, isMulti);
 
         this.udpPacket = new UDPPacket();
-        this.udpClient = new UDPClient(this.udpPacket, this.hasReceived);
+        this.udpClient = new UDPClient(this.udpPacket, this.hasReceived, isMulti);
+        if (this.udpClient.getError() != null) {
+            uiStage.showMessage(this.udpClient.getError() + "\nStart it with: cd server; ./gradlew run");
+        }
 
         multiplexer = new InputMultiplexer();
         multiplexer.addProcessor(uiStage); // UI input comes first
@@ -72,7 +75,7 @@ public class GameplayScreen implements Screen {
                 return false;
             }
         });
-        Gdx.input.setInputProcessor(multiplexer);
+        // Input is claimed in show(); doing it here would steal it from the pause screen on "restart"
     }
 
     @Override
@@ -80,7 +83,7 @@ public class GameplayScreen implements Screen {
         Gdx.input.setInputProcessor(multiplexer);
         uiStage.setPaused(false);
 
-        this.udpClient.startReceiveThread(); // start thread to receive packets
+        this.udpClient.startReceiveThread(); // start thread to receive packets (no-op if already running)
     }
 
     @Override
@@ -117,13 +120,10 @@ public class GameplayScreen implements Screen {
             bulletTimer = 0; // Reset the timer
         }
 
-        try {
-            Thread.sleep(Math.max((int)(1000/144f) - ((int) delta * 1000L), 0));
-        } catch (Exception e)  {
-            e.printStackTrace();
+        // Once the round is decided the world is no longer ours to play in
+        if (!this.uiStage.isGameOver()) {
+            this.udpClient.send(state, this.game.token);
         }
-
-        this.udpClient.send(state, this.game.token);
 
         // use this object to render objects on screen
         UDPPacket tempUdpPacket = new UDPPacket();
@@ -131,13 +131,9 @@ public class GameplayScreen implements Screen {
             tempUdpPacket.update(this.udpPacket);
         }
 
-        // set positions based on this.udpPacket
-        // for now just implemented myShip,
-        // TODO: need to implement for other ships
-
+        // Our own ship drives the camera and the health bar; the stage draws everything else
         boolean found = false;
         for(Coordinate coordinate : tempUdpPacket.spaceShips) {
-            System.out.println(coordinate.id + " ");
             if(coordinate.getId() == tempUdpPacket.id) {
                 this.gameplayStage.getRocketSprite().setPosition(coordinate.getX() - this.gameplayStage.getRocketSprite().getWidth() / 2f, coordinate.getY() -  this.gameplayStage.getRocketSprite().getHeight() / 2f);
                 this.gameplayStage.getRocketSprite().setRotation(coordinate.getAngle());
@@ -146,9 +142,8 @@ public class GameplayScreen implements Screen {
                 break;
             }
         }
-        System.out.println();
 
-        if (!found && this.hasReceived.get()) {
+        if (!found && this.hasReceived.get() && !this.uiStage.isGameOver()) {
             this.game.screenManager.setScreen(ScreenState.GAME_OVER);
         }
 
@@ -193,11 +188,11 @@ public class GameplayScreen implements Screen {
     public void hide() {
         Gdx.input.setInputProcessor(null);
         uiStage.setPaused(true);
-        this.udpClient.receiveThread.interrupt();
     }
 
     @Override
     public void dispose() {
+        this.udpClient.close();
     }
 
     private void updateCamera() {

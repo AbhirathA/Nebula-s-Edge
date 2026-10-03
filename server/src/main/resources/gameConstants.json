@@ -1,0 +1,30 @@
+{
+  "_comment": "Physics units: 10 server units = 1 on-screen pixel, velocities are units per tick (90 ticks/s). The world spans x in [0, GAME_WIDTH] and y in [GAME_HEIGHT, 0].",
+
+  "GAME_WIDTH": 12000,
+  "GAME_HEIGHT": -6750,
+  "CAMERA_WIDTH": 2400,
+  "CAMERA_HEIGHT": 1350,
+
+  "SPACESHIP_RADIUS": 80,
+  "SPACESHIP_MASS": 10,
+  "SPACESHIP_HEALTH": 10,
+  "PEAK_USER_VEL": 15,
+  "DRIFT_USER_VEL": 5,
+
+  "ENEMY_RADIUS": 45,
+
+  "BULLET_RADIUS": 10,
+  "BULLET_MASS": 1,
+  "BULLET_LIFE": 90,
+  "BULLET_SPEED": 30,
+
+  "BIG_ASTEROID_RADIUS": 100,
+  "BIG_ASTEROID_MASS": 100,
+  "MEDIUM_ASTEROID_RADIUS": 60,
+  "SMALL_ASTEROID_RADIUS": 40,
+
+  "BLACKHOLE_INNER_RADIUS": 60,
+  "BLACKHOLE_OUTER_RADIUS": 50,
+  "BLACKHOLE_MASS": 100
+}

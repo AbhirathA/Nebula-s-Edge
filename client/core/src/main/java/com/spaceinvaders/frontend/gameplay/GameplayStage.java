@@ -3,12 +3,10 @@ package com.spaceinvaders.frontend.gameplay;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import com.spaceinvaders.backend.utils.Coordinate;
 import com.spaceinvaders.backend.utils.UDPPacket;
 import com.spaceinvaders.frontend.SpaceInvadersGame;
 import com.spaceinvaders.frontend.background.StarsBackground;
 
-import java.util.ArrayList;
 
 public class GameplayStage extends Stage {
     private final SpaceInvadersGame game;
@@ -20,12 +18,9 @@ public class GameplayStage extends Stage {
     private final Powerups powerups;
     private final Spaceships spaceships;
     private final Blackholes blackholes;
-    private final Player player;
 
     private final float WORLD_WIDTH;
     private final float WORLD_HEIGHT;
-
-    private ArrayList<Coordinate> coordinates = CoordinateTest.generateCoordinates(100);
 
     private UDPPacket udpPacket;
 
@@ -48,12 +43,6 @@ public class GameplayStage extends Stage {
         powerups = new Powerups(game.assetManager);
         spaceships = new Spaceships(game.assetManager);
         blackholes = new Blackholes(game.assetManager);
-
-        if(isMulti) {
-            player = spaceships;
-        } else {
-            player = enemies;
-        }
     }
 
     @Override
@@ -72,7 +61,8 @@ public class GameplayStage extends Stage {
             asteroids.render(getBatch(), udpPacket.asteroids);
             blackholes.render(getBatch(), udpPacket.blackholes);
             bullets.render(getBatch(), udpPacket.bullets);
-            player.render(getBatch(), udpPacket.spaceShips, udpPacket.id);
+            enemies.render(getBatch(), udpPacket.enemies, -1);
+            spaceships.render(getBatch(), udpPacket.spaceShips, udpPacket.id); // other players; ours is the rocket actor
             powerups.render(getBatch(), udpPacket.powerUpH);
             powerups.render(getBatch(), udpPacket.powerUpP);
             powerups.render(getBatch(), udpPacket.powerUpB);

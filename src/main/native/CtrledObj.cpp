@@ -31,7 +31,6 @@ void  CtrledObj::startThrust() {
 }
 
 void  CtrledObj::moveForward() {
-	printProp();
 	if (this->isMovable) {
 		// std::cout << "first";
 		this->v += this->peakV;
@@ -43,7 +42,6 @@ void  CtrledObj::moveForward() {
 		this->moveCtrl->resetAge();
 		this->moveCtrl->start();
 	}
-	printProp();
 }
 
 void  CtrledObj::stopForward() {

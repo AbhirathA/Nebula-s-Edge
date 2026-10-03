@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.spaceinvaders.frontend.SpaceInvadersGame;
@@ -148,8 +149,24 @@ public class UIStage extends Stage {
      *
      * @param paused True to pause the game, false to resume.
      */
+    /**
+     * Shows a centred message over the game (e.g. when the server can't be reached) and stops the timer.
+     * @param message the text to show; it wraps to the screen width
+     */
+    public void showMessage(String message) {
+        Label label = LabelUtils.createLabel(message, game.assetManager.get("fonts/minecraft.fnt", BitmapFont.class));
+        label.setWrap(true);
+        label.setAlignment(Align.center);
+        label.setWidth(getViewport().getWorldWidth() - 20);
+        label.setPosition(10, (getViewport().getWorldHeight() - label.getPrefHeight()) / 2f);
+        addActor(label);
+        isPaused = true;
+        isGameOver = true;
+    }
+
     public void setPaused(boolean paused) {
-        isPaused = paused;
+        // A finished game stays frozen even when the screen is shown again
+        isPaused = paused || isGameOver;
     }
 
     /**
@@ -157,6 +174,14 @@ public class UIStage extends Stage {
      *
      * @return True if the game is paused, false otherwise.
      */
+    /**
+     * Whether the round has been decided (victory, defeat, or an error message).
+     * @return true once the game has ended
+     */
+    public boolean isGameOver() {
+        return isGameOver;
+    }
+
     public boolean isPaused() {
         return isPaused;
     }

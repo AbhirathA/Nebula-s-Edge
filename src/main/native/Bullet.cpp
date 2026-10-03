@@ -207,7 +207,7 @@ bool Bullet::collisionCorrection(Flare *obj) {
 
 
 bool Bullet::collisionCorrection(UserObj *obj) {
-    if(obj->getID() == this->shooter->getID()) {
+    if(this->shooter != nullptr && obj->getID() == this->shooter->getID()) {
         return false;
     }
     // Factor because of integer computation instead of floating point
@@ -222,7 +222,7 @@ bool Bullet::collisionCorrection(UserObj *obj) {
 
     // If the distance is less than the sum of radii, there is a collision.
     if (overlap > temp) {
-        this->shooter->incrementKillCount();
+        if (this->shooter != nullptr) this->shooter->incrementKillCount();
         this->selfDestruct();
         obj->takeDamage();
         return true;
@@ -233,7 +233,7 @@ bool Bullet::collisionCorrection(UserObj *obj) {
 
 
 bool Bullet::collisionCorrection(Enemy *obj) {
-    if(obj->getID() == this->shooter->getID()) {
+    if(this->shooter != nullptr && obj->getID() == this->shooter->getID()) {
         return false;
     }
     // Factor because of integer computation instead of floating point
@@ -248,7 +248,7 @@ bool Bullet::collisionCorrection(Enemy *obj) {
 
     // If the distance is less than the sum of radii, there is a collision.
     if (overlap > temp) {
-        this->shooter->incrementKillCount();
+        if (this->shooter != nullptr) this->shooter->incrementKillCount();
         this->selfDestruct();
         obj->takeDamage();
         return true;
@@ -258,3 +258,10 @@ bool Bullet::collisionCorrection(Enemy *obj) {
 }
 
 
+
+
+void Bullet::forgetReference(Obj *dying) {
+    if (static_cast<Obj *>(this->shooter) == dying) {
+        this->shooter = nullptr;
+    }
+}

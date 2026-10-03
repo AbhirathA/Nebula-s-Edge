@@ -4,7 +4,7 @@
 
 #include "Lifetime.h"
 
-std::vector<Lifetime*> Lifetime::instances = {};
+thread_local std::vector<Lifetime*> Lifetime::instances = {};
 
 
 void Lifetime::incrementAge() {

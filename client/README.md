@@ -1,33 +1,44 @@
-# space-invaders
+# Nebula's Edge Client
 
-A [libGDX](https://libgdx.com/) project generated with [gdx-liftoff](https://github.com/libgdx/gdx-liftoff).
+The libGDX desktop game for Nebula's Edge: screens, HUD, rendering, audio, and the networking that talks to the game server. See the [root README](../README.md) for the big picture and screenshots.
 
-This project was generated with a template including simple application launchers and a main class extending `Game` that sets the first screen.
+## Run
 
-## Platforms
+Start the server first (`cd ../server && ./gradlew run`), then:
 
-- `core`: Main module with the application logic shared by all platforms.
-- `lwjgl3`: Primary desktop platform using LWJGL3; was called 'desktop' in older docs.
+```bash
+./gradlew lwjgl3:run                        # server on this machine
+./gradlew lwjgl3:run -Pserver=192.168.1.20  # server elsewhere on the network
+```
 
-## Gradle
+On Windows use `.\gradlew.bat`. Instead of `-Pserver`, you can set the `NEBULA_SERVER` environment variable. `-PhttpPort` / `NEBULA_HTTP_PORT` override the HTTP port (default `8080`). Press **F12** in game to save a screenshot to `screenshots/`.
 
-This project uses [Gradle](https://gradle.org/) to manage dependencies.
-The Gradle wrapper was included, so you can run Gradle tasks using `gradlew.bat` or `./gradlew` commands.
-Useful Gradle tasks and flags:
+## Modules
 
-- `--continue`: when using this flag, errors will not stop the tasks from running.
-- `--daemon`: thanks to this flag, Gradle daemon will be used to run chosen tasks.
-- `--offline`: when using this flag, cached dependency archives will be used.
-- `--refresh-dependencies`: this flag forces validation of all dependencies. Useful for snapshot versions.
-- `build`: builds sources and archives of every project.
-- `cleanEclipse`: removes Eclipse project data.
-- `cleanIdea`: removes IntelliJ project data.
-- `clean`: removes `build` folders, which store compiled classes and built archives.
-- `eclipse`: generates Eclipse project data.
-- `idea`: generates IntelliJ project data.
-- `lwjgl3:jar`: builds application's runnable jar, which can be found at `lwjgl3/build/libs`.
-- `lwjgl3:run`: starts the application.
-- `test`: runs unit tests (if any).
+| Module | Purpose |
+| --- | --- |
+| `core` | Screens, HUD, gameplay rendering, asset loading, audio, and networking |
+| `lwjgl3` | Desktop launcher (1440×810 window) and packaging config |
+| `assets` | Hand-drawn textures, fonts, music, sound effects |
 
-Note that most tasks that are not specific to a single project can be run with `name:` prefix, where the `name` should be replaced with the ID of a specific project.
-For example, `core:clean` removes `build` folder only from the `core` project.
+## Code map (`core/src/main/java/com/spaceinvaders`)
+
+| Package | What's in it |
+| --- | --- |
+| `backend` | `UDPClient`: binds a free UDP port, joins a world via the HTTP handshake, streams input every frame, and receives snapshots on a background thread |
+| `backend.auth` | `AuthenticationManager` (signup, login, profile, handshake over HTTP), `ServerInfo` (where the server is) |
+| `frontend.screens` | Login gateway, login, signup, main menu, options, pause, gameplay, game over, victory |
+| `frontend.gameplay` | Renderers for ships, enemies, asteroids, bullets, black holes, and power-ups |
+| `frontend.ui` / `background` | Health bar, timer, overlays, starfield, planets |
+| `frontend.managers` | Screen stack, assets, music, sounds |
+
+The client renders in pixel-art units: the camera shows 240×135 pixels of a 1200×675 world, and menus are laid out on a 480×270 stage. The server works in units 10× finer.
+
+## Useful tasks
+
+| Task | Description |
+| --- | --- |
+| `lwjgl3:run` | Run the game |
+| `lwjgl3:jar` | Runnable fat jar in `lwjgl3/build/libs/` |
+| `core:javadoc` | API docs (a copy is published in `../docs/ClientJavadoc`) |
+| `build` | Compile and package everything |

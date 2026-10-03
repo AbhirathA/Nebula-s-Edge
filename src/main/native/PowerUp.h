@@ -24,6 +24,13 @@ public:
 
     virtual ~PowerUp() { delete this->lifetime; }
 
+    // The player holding a timed effect may die before the effect is revoked
+    virtual void forgetReference(Obj *dying) override
+    {
+        if (static_cast<Obj *>(target) == dying)
+            target = nullptr;
+    }
+
     virtual bool checkCollision(Asteroid *obj) override {
         return false;
     }

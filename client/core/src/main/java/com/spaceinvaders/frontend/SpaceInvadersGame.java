@@ -1,10 +1,15 @@
 package com.spaceinvaders.frontend;
 
 import com.badlogic.gdx.Game;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
+import com.badlogic.gdx.files.FileHandle;
+import com.badlogic.gdx.graphics.Pixmap;
+import com.badlogic.gdx.graphics.PixmapIO;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.spaceinvaders.backend.firebase.utils.ServerInfo;
+import com.spaceinvaders.util.LoggerUtil;
 import com.spaceinvaders.frontend.managers.MusicManager;
 import com.spaceinvaders.frontend.managers.ScreenManager;
 import com.spaceinvaders.frontend.managers.MyAssetManager;
@@ -27,13 +32,14 @@ public class SpaceInvadersGame extends Game {
     public String email;
     public String killCount;
 
-    // Constants for the world and stage dimensions
-    public static final float WORLD_WIDTH = ServerInfo.getClientConstants().get("WORLD_WIDTH").getAsFloat();
-    public static final float WORLD_HEIGHT = ServerInfo.getClientConstants().get("WORLD_HEIGHT").getAsFloat();
-    public static final float STAGE_WIDTH = ServerInfo.getClientConstants().get("STAGE_WIDTH").getAsFloat();
-    public static final float STAGE_HEIGHT = ServerInfo.getClientConstants().get("STAGE_HEIGHT").getAsFloat();
-    public static final float GAME_WIDTH = ServerInfo.getClientConstants().get("GAME_WIDTH").getAsFloat();
-    public static final float GAME_HEIGHT = ServerInfo.getClientConstants().get("GAME_HEIGHT").getAsFloat();
+    // Constants for the world and stage dimensions, in pixel-art pixels.
+    // The server works in units 10x smaller (see server/src/main/resources/gameConstants.json).
+    public static final float WORLD_WIDTH = 240;   // visible area of the game camera
+    public static final float WORLD_HEIGHT = 135;
+    public static final float STAGE_WIDTH = 480;   // UI layout (menus, buttons)
+    public static final float STAGE_HEIGHT = 270;
+    public static final float GAME_WIDTH = 1200;   // whole playfield; the camera follows the player around it
+    public static final float GAME_HEIGHT = 675;
 
     private class CommandClass implements Command {
 
@@ -59,7 +65,8 @@ public class SpaceInvadersGame extends Game {
     @Override
     public void create() {
         token = "";
-        email = "";
+        email = "Guest";
+        killCount = "0";
         batch = new SpriteBatch();
         shapeRenderer = new ShapeRenderer();
         font = new BitmapFont();
@@ -68,6 +75,30 @@ public class SpaceInvadersGame extends Game {
         soundManager = new SoundManager();
 
         setScreen(new LoadingScreen(this, new CommandClass()));
+    }
+
+    @Override
+    public void render() {
+        super.render();
+        if (Gdx.input.isKeyJustPressed(Input.Keys.F12)) {
+            saveScreenshot();
+        }
+    }
+
+    // F12: saves the current frame to screenshots/ next to the assets folder
+    private void saveScreenshot() {
+        int width = Gdx.graphics.getBackBufferWidth();
+        int height = Gdx.graphics.getBackBufferHeight();
+        Pixmap pixmap = Pixmap.createFromFrameBuffer(0, 0, width, height);
+        try {
+            FileHandle file = Gdx.files.local("../screenshots/nebulas-edge-" + System.currentTimeMillis() + ".png");
+            PixmapIO.writePNG(file, pixmap, -1, true);
+            LoggerUtil.logInfo("Saved screenshot " + file.file().getCanonicalPath());
+        } catch (Exception e) {
+            LoggerUtil.logError("Could not save screenshot: " + e.getMessage());
+        } finally {
+            pixmap.dispose();
+        }
     }
 
     @Override

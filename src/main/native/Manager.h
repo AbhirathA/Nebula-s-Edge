@@ -34,6 +34,13 @@ class Manager
 	// ObjectLauncher launcher;
 	// std::map<PowerUp*, Obj*> activePowerUps;
 
+	// Returns nullptr for ids that never existed or have already died
+	UserObj *getPlayer(int id)
+	{
+		auto it = playerMap.find(id);
+		return it == playerMap.end() ? nullptr : it->second;
+	}
+
 public:
 	Manager(int accX = 0, int accY = 2, int lft = 0, int rt = 1000, int tp = 0, int bt = -1000, int t = 1)
 	{
@@ -55,23 +62,28 @@ public:
 
 	void forward(int id)
 	{
-		this->playerMap[id]->moveForward();
+		if (UserObj *player = getPlayer(id))
+			player->moveForward();
 	}
 	void stop(int id)
 	{
-		this->playerMap[id]->stopForward();
+		if (UserObj *player = getPlayer(id))
+			player->stopForward();
 	}
 	void thrust(int id)
 	{
-		this->playerMap[id]->startThrust();
+		if (UserObj *player = getPlayer(id))
+			player->startThrust();
 	}
 	void left(int id)
 	{
-		this->playerMap[id]->turnLeft(25);
+		if (UserObj *player = getPlayer(id))
+			player->turnLeft(25);
 	}
 	void right(int id)
 	{
-		this->playerMap[id]->turnRight(25);
+		if (UserObj *player = getPlayer(id))
+			player->turnRight(25);
 	}
 
 	~Manager()
@@ -82,16 +94,25 @@ public:
 		}
 	}
 	void removeDead(std::vector<int> ids);
+	// Marks an object as dead; it is cleaned up on the next update()
+	void remove(int id)
+	{
+		auto it = objMap.find(id);
+		if (it != objMap.end())
+			it->second->selfDestruct();
+	}
 
 	int shoot(int id, int innerRadius, int outerRadius, int mass);
 	int getHealth(int id)
 	{
-		return this->playerMap[id]->getHealth();
+		UserObj *player = getPlayer(id);
+		return player ? player->getHealth() : 0;
 	}
 
 	int getPoints(int id)
 	{
-		return this->playerMap[id]->getPoints();
+		UserObj *player = getPlayer(id);
+		return player ? player->getPoints() : 0;
 	}
 
 	int dropAsteroid(int x, int y, int innerRad, int outerRad, int mass);

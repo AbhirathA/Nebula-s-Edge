@@ -1,3 +1,5 @@
+import org.gradle.internal.os.OperatingSystem
+
 plugins {
     id 'application'
 }
@@ -9,27 +11,108 @@ application {
 group = 'org.spaceinvaders'
 version = '1.0-SNAPSHOT'
 
+java {
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
+}
+
 repositories {
     mavenCentral()
 }
 
-tasks.run {
-    doFirst {
-        jvmArgs = ["-Djava.library.path=src/main/java/org/spaceinvaders/gameEngine/libs"]
+sourceSets {
+    main {
+        // The Java half of the JNI bridge (com.physics.Manager) lives next to the C++ engine
+        java.srcDir '../src/main/java'
     }
 }
 
-
 dependencies {
-    implementation files('src/main/java/org/spaceinvaders/gameEngine/libs/PhysicsEngine.jar')
     testImplementation platform('org.junit:junit-bom:5.10.0')
     testImplementation 'org.junit.jupiter:junit-jupiter'
     implementation 'com.google.code.gson:gson:2.11.0'
-    implementation 'com.google.firebase:firebase-admin:9.4.1'
     implementation 'ch.qos.logback:logback-classic:1.5.12'
     implementation 'ch.qos.logback:logback-core:1.5.12'
+}
+
+def nativeSrcDir = file('../src/main/native')
+def jniHeaderDir = layout.buildDirectory.dir('generated/jni')
+def nativeOutDir = layout.buildDirectory.dir('native')
+def os = OperatingSystem.current()
+def nativeLibName = os.windows ? 'PhysicsEngine.dll' : (os.macOsX ? 'libPhysicsEngine.dylib' : 'libPhysicsEngine.so')
+def jniPlatformDir = os.windows ? 'win32' : (os.macOsX ? 'darwin' : 'linux')
+
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = 'UTF-8'
+    options.release = 17
+}
+
+compileJava {
+    // javac -h: generates com_physics_Manager.h for the C++ side
+    options.headerOutputDirectory = jniHeaderDir
+}
+
+// Builds the C++ physics engine into a JNI shared library.
+// Override the compiler with -Pcxx=/path/to/g++ (or clang++).
+tasks.register('buildNative', Exec) {
+    group = 'build'
+    description = 'Compiles the C++ physics engine into a JNI shared library.'
+    dependsOn compileJava
+
+    def cxx = project.findProperty('cxx') ?: System.getenv('CXX') ?: (os.macOsX ? 'clang++' : 'g++')
+    def javaHome = org.gradle.internal.jvm.Jvm.current().javaHome
+    def sources = fileTree(nativeSrcDir) { include '*.cpp' }
+
+    inputs.files(fileTree(nativeSrcDir) { include '*.cpp', '*.h' })
+    inputs.dir(jniHeaderDir)
+    outputs.file(nativeOutDir.map { it.file(nativeLibName) })
+
+    doFirst {
+        nativeOutDir.get().asFile.mkdirs()
+
+        // A 32-bit compiler produces a DLL that a 64-bit JVM refuses to load
+        def machine
+        try {
+            def probe = new ProcessBuilder(cxx.toString(), '-dumpmachine').redirectErrorStream(true).start()
+            machine = probe.inputStream.text.trim()
+            probe.waitFor()
+        } catch (IOException ignored) {
+            throw new GradleException("C++ compiler '${cxx}' was not found. Install g++ (or clang++) " +
+                    "and put it on PATH, or pass -Pcxx=/path/to/compiler")
+        }
+        def jvm64 = System.getProperty('os.arch').contains('64')
+        if (jvm64 && (machine.startsWith('i686') || machine.startsWith('i386') || machine == 'mingw32')) {
+            throw new GradleException("'${cxx}' targets ${machine} (32-bit) but the JVM is 64-bit. " +
+                    "Point the build at a 64-bit compiler, e.g. -Pcxx=C:/msys64/mingw64/bin/g++.exe")
+        }
+    }
+
+    def args = [cxx, '-std=c++17', '-O2', '-shared', '-fPIC',
+                "-I${javaHome}/include", "-I${javaHome}/include/${jniPlatformDir}",
+                "-I${jniHeaderDir.get().asFile}", "-I${nativeSrcDir}"]
+    args += sources.files.collect { it.absolutePath }.sort()
+    args += ['-o', nativeOutDir.get().file(nativeLibName).asFile.absolutePath]
+    if (os.windows) {
+        // Bundle libstdc++/libgcc/winpthread so the DLL loads without MinGW on PATH
+        args += ['-static', '-static-libgcc', '-static-libstdc++']
+    }
+    commandLine args
+}
+
+tasks.named('run') {
+    dependsOn 'buildNative'
+    standardInput = System.in
+    jvmArgs "-Djava.library.path=${nativeOutDir.get().asFile}", '--enable-native-access=ALL-UNNAMED'
+    // Persist accounts in server/data/ regardless of where Gradle is launched from
+    workingDir = projectDir
 }
 
 test {
     useJUnitPlatform()
 }
+
+javadoc {
+    options.addStringOption('Xdoclint:none', '-quiet')
+    title = "Nebula's Edge Server"
+}
+

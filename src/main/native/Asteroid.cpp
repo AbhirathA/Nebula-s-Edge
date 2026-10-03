@@ -1,7 +1,6 @@
 //
 // Created by ibrahim on 26/11/24.
 //
-#pragma once
 
 #include "Asteroid.h"
 

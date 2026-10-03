@@ -1,7 +1,7 @@
 package org.spaceinvaders.gameEngine;
 
 import com.physics.Manager;
-import org.spaceinvaders.firebase.Firebase;
+import org.spaceinvaders.util.GameConfig;
 import org.spaceinvaders.util.Coordinate;
 
 import java.util.ArrayList;
@@ -26,107 +26,107 @@ public class GameEngine {
     /**
      * The inner radius of the black hole's gravitational pull.
      */
-    public static final int BLACKHOLE_INNER_RADIUS = Firebase.serverConstants.get("BLACKHOLE_INNER_RADIUS").getAsInt();
+    public static final int BLACKHOLE_INNER_RADIUS = GameConfig.getInt("BLACKHOLE_INNER_RADIUS");
 
     /**
      * The outer radius of the black hole's gravitational influence.
      */
-    public static final int BLACKHOLE_OUTER_RADIUS = Firebase.serverConstants.get("BLACKHOLE_OUTER_RADIUS").getAsInt() * 30;
+    public static final int BLACKHOLE_OUTER_RADIUS = GameConfig.getInt("BLACKHOLE_OUTER_RADIUS") * 30;
 
     /**
      * The mass of the black hole.
      */
-    public static final int BLACKHOLE_MASS = Firebase.serverConstants.get("BLACKHOLE_MASS").getAsInt();
+    public static final int BLACKHOLE_MASS = GameConfig.getInt("BLACKHOLE_MASS");
 
     /**
      * The height of the camera's viewing area.
      */
-    public static final int CAMERA_HEIGHT = Firebase.serverConstants.get("CAMERA_HEIGHT").getAsInt();
+    public static final int CAMERA_HEIGHT = GameConfig.getInt("CAMERA_HEIGHT");
 
     /**
      * The width of the camera's viewing area.
      */
-    public static final int CAMERA_WIDTH = Firebase.serverConstants.get("CAMERA_WIDTH").getAsInt();
+    public static final int CAMERA_WIDTH = GameConfig.getInt("CAMERA_WIDTH");
 
     /**
      * The radius of the enemy objects.
      */
-    public static final int ENEMY_RADIUS = Firebase.serverConstants.get("ENEMY_RADIUS").getAsInt();
+    public static final int ENEMY_RADIUS = GameConfig.getInt("ENEMY_RADIUS");
 
     /**
      * The height of the game world.
      */
-    public static final int GAME_HEIGHT = Firebase.serverConstants.get("GAME_HEIGHT").getAsInt();
+    public static final int GAME_HEIGHT = GameConfig.getInt("GAME_HEIGHT");
 
     /**
      * The width of the game world.
      */
-    public static final int GAME_WIDTH = Firebase.serverConstants.get("GAME_WIDTH").getAsInt();
+    public static final int GAME_WIDTH = GameConfig.getInt("GAME_WIDTH");
 
     /**
      * The radius of a large asteroid.
      */
-    public static final int BIG_ASTEROID_RADIUS = Firebase.serverConstants.get("BIG_ASTEROID_RADIUS").getAsInt();
+    public static final int BIG_ASTEROID_RADIUS = GameConfig.getInt("BIG_ASTEROID_RADIUS");
 
     /**
      * The mass of a large asteroid.
      */
-    public static final int BIG_ASTEROID_MASS = Firebase.serverConstants.get("BIG_ASTEROID_MASS").getAsInt();
+    public static final int BIG_ASTEROID_MASS = GameConfig.getInt("BIG_ASTEROID_MASS");
 
     /**
      * The radius of a medium-sized asteroid.
      */
-    public static final int MEDIUM_ASTEROID_RADIUS = Firebase.serverConstants.get("MEDIUM_ASTEROID_RADIUS").getAsInt();
+    public static final int MEDIUM_ASTEROID_RADIUS = GameConfig.getInt("MEDIUM_ASTEROID_RADIUS");
 
     /**
      * The radius of a small asteroid.
      */
-    public static final int SMALL_ASTEROID_RADIUS = Firebase.serverConstants.get("SMALL_ASTEROID_RADIUS").getAsInt();
+    public static final int SMALL_ASTEROID_RADIUS = GameConfig.getInt("SMALL_ASTEROID_RADIUS");
 
     /**
      * The radius of a spaceship.
      */
-    public static final int SPACESHIP_RADIUS = Firebase.serverConstants.get("SPACESHIP_RADIUS").getAsInt();
+    public static final int SPACESHIP_RADIUS = GameConfig.getInt("SPACESHIP_RADIUS");
 
     /**
      * The mass of a spaceship.
      */
-    public static final int SPACESHIP_MASS = Firebase.serverConstants.get("SPACESHIP_MASS").getAsInt();
+    public static final int SPACESHIP_MASS = GameConfig.getInt("SPACESHIP_MASS");
 
     /**
      * The health points of the spaceship.
      */
-    public static final int SPACESHIP_HEALTH = Firebase.serverConstants.get("SPACESHIP_HEALTH").getAsInt();
+    public static final int SPACESHIP_HEALTH = GameConfig.getInt("SPACESHIP_HEALTH");
 
     /**
      * The peak velocity of the user-controlled spaceship.
      */
-    public static final int PEAK_USER_VEL = Firebase.serverConstants.get("PEAK_USER_VEL").getAsInt();
+    public static final int PEAK_USER_VEL = GameConfig.getInt("PEAK_USER_VEL");
 
     /**
      * The drifting velocity of the user-controlled spaceship.
      */
-    public static final int DRIFT_USER_VEL = Firebase.serverConstants.get("DRIFT_USER_VEL").getAsInt();
+    public static final int DRIFT_USER_VEL = GameConfig.getInt("DRIFT_USER_VEL");
 
     /**
      * The radius of bullets fired by the spaceship.
      */
-    public static final int BULLET_RADIUS = Firebase.serverConstants.get("BULLET_RADIUS").getAsInt();
+    public static final int BULLET_RADIUS = GameConfig.getInt("BULLET_RADIUS");
 
     /**
      * The lifetime of a bullet in the game (in seconds).
      */
-    public static final int BULLET_LIFE = Firebase.serverConstants.get("BULLET_LIFE").getAsInt();
+    public static final int BULLET_LIFE = GameConfig.getInt("BULLET_LIFE");
 
     /**
      * The speed of the bullet, adjusted by the spaceship's peak velocity.
      */
-    public static final int BULLET_SPEED = Firebase.serverConstants.get("BULLET_SPEED").getAsInt() + PEAK_USER_VEL;
+    public static final int BULLET_SPEED = GameConfig.getInt("BULLET_SPEED") + PEAK_USER_VEL;
 
     /**
      * The mass of a bullet.
      */
-    public static final int BULLET_MASS = Firebase.serverConstants.get("BULLET_MASS").getAsInt();
+    public static final int BULLET_MASS = GameConfig.getInt("BULLET_MASS");
 
     private ArrayList<Coordinate> coords;
 
@@ -168,10 +168,6 @@ public class GameEngine {
      * Instantiates the non-user objects (like asteroids, meteors, and blackholes) in the game world.
      */
     public void instantiateGameEngineObjects() {
-//        write code to spawn meteors and asteroids and blackholes
-
-        System.out.println(BLACKHOLE_INNER_RADIUS + " " + BLACKHOLE_OUTER_RADIUS+" " + "Gaaaaaathik");
-
 //        int asteroidId = this.addElement("ASTEROID", GAME_WIDTH/2 - 500, GAME_HEIGHT/2, 900);
         int meteorId1 = this.powerUpBullet(GAME_WIDTH/4, GAME_HEIGHT/2);
         int meteorId2 = this.powerUpBullet(3*GAME_WIDTH/4, GAME_HEIGHT/2);
@@ -370,7 +366,7 @@ public class GameEngine {
     public void getAllCoords() {
         this.coords.clear();
         int[][] tempCoords = this.gameEngineManager.display(0, GAME_HEIGHT, GAME_WIDTH, 0);
-        for(int i=0; i<tempCoords.length;i++) System.out.println(tempCoords[i][3]+" display");
+        if (tempCoords == null) return;
 
         ArrayList<Integer> totalIds = new ArrayList<>();
         for (int[] element : tempCoords) {
@@ -422,7 +418,6 @@ public class GameEngine {
                 for (Coordinate coord : this.coords) {
                     if (this.meteorIds.contains(coord.id)) {
                         coord.type = "M";
-                        System.out.println(coord.type);
                         retValue.add(coord);
                     }
                 }
@@ -467,6 +462,22 @@ public class GameEngine {
         }
 
         return retValue;
+    }
+
+    /**
+     * Removes a ship from the world, e.g. when its player stops responding.
+     *
+     * @param id the ID of the ship
+     */
+    public void removeShip(int id) {
+        this.gameEngineManager.remove(id);
+    }
+
+    /**
+     * Frees the native physics world. Must be called from the simulation thread.
+     */
+    public void dispose() {
+        this.gameEngineManager.dispose();
     }
 
     /**

@@ -25,6 +25,8 @@ public class ScreenManager implements Disposable {
 
     public final Stack<ScreenState> screenStateStack; // Stack to maintain the order of screens for implementation of back button
 
+    private ScreenState lastGameplay = ScreenState.SINGLEPLAYER_GAMEPLAY; // The game mode "restart" replays
+
     // Private constructor for the ScreenManager
     public ScreenManager(SpaceInvadersGame game) {
         this.game = game;
@@ -55,6 +57,14 @@ public class ScreenManager implements Disposable {
 
     // Set the screen based on the given screen state
     public void setScreen(ScreenState screenState) {
+        // Entering gameplay from anywhere except its own pause screen starts a fresh game
+        if (isGameplay(screenState)) {
+            this.lastGameplay = screenState;
+            if (!resumesFromPause(screenState)) {
+                reinitializeScreen(screenState);
+            }
+        }
+
         if (screenState != ScreenState.LOADING)
             screenStateStack.add(screenState); // Add screen to stack unless it's LOADING screen
 
@@ -65,6 +75,16 @@ public class ScreenManager implements Disposable {
 
         this.currentScreen = this.screens.get(screenState); // Get the screen from the map
         this.game.setScreen(this.currentScreen); // Set the screen for the game
+    }
+
+    private static boolean isGameplay(ScreenState screenState) {
+        return screenState == ScreenState.SINGLEPLAYER_GAMEPLAY || screenState == ScreenState.MULTIPLAYER_GAMEPLAY;
+    }
+
+    // True when the player is pressing "play" on the pause screen of this game mode
+    private boolean resumesFromPause(ScreenState screenState) {
+        ScreenState pause = screenState == ScreenState.SINGLEPLAYER_GAMEPLAY ? ScreenState.SINGLEPLAYER_PAUSE : ScreenState.MULTIPLAYER_PAUSE;
+        return !screenStateStack.empty() && screenStateStack.peek() == pause && this.screens.containsKey(screenState);
     }
 
     // Set the screen and execute a command if the screen state is LOADING
@@ -131,6 +151,11 @@ public class ScreenManager implements Disposable {
             default:
                 throw new IllegalArgumentException("Unknown screen state: " + screenState); // Throw an error if the screen state is unknown
         }
+    }
+
+    // The most recently played game mode, used by the restart buttons
+    public ScreenState getLastGameplay() {
+        return this.lastGameplay;
     }
 
     // Get the current screen being displayed

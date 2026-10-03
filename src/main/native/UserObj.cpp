@@ -22,6 +22,10 @@ void UserObj::heal(int points)
 
 void UserObj::takeDamage()
 {
+    if (!this->vulnerable)
+        return;
+    this->vulnerable = false;
+    this->invulnerability->start();
     this->healthBar->takeDamage(1);
 }
 
@@ -242,10 +246,8 @@ bool UserObj::collisionCorrection(Asteroid *obj)
         v1x = v1NewAlong * nx + v1PerpX;
         v1y = v1NewAlong * ny + v1PerpY;
 
-        std::cout << "v1x: " << v1x / temp2 << " v1y: " << v1y / temp2 << std::endl;
 
         this->updateV(v1x, v1y, temp2);
-        std::cout << "v1x: " << this->getvX() / VALUE_SCALE << " v1y: " << this->getvY() / VALUE_SCALE << std::endl;
         // std::cout << "In collision after: " << this->posX << " " << this->posY << " velocity:" << this->getvX() / VALUE_SCALE << " " << this->getvY() / VALUE_SCALE << std::endl;
         this->updateBox();
         this->takeDamage();

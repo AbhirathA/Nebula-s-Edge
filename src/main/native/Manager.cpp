@@ -1,4 +1,3 @@
-#pragma once
 #include "Manager.h"
 
 #include "BlackholeObject.h"
@@ -17,18 +16,12 @@ std::vector<std::vector<int>> Manager::display(int lowerX, int lowerY, int upper
 	AABB box = AABB({lowerX, lowerY, 0}, {upperX, upperY, 0});
 	// std::cout<<"Box colliders size:"<<v.size()<<std::endl;
 	std::vector<int> v = tree.boxColliders(&box);
-	std::cout<<"Box colliders size:"<<v.size()<<std::endl;
 	for (auto id : v)
 	{
 		int x = objMap[id]->getX();
 		int y = objMap[id]->getY();
-		std::cout << objMap[id]->getID() << " " << x << " " << y << std::endl;
 		int ori = objMap[id]->getOri();
-        std::cout<<ori<<"hi Ori"<<std::endl;
 		m.push_back({id, x, y, ori});
-	}
-	for(auto i: m) {
-		std::cout<<"m values: " << i[3] << std::endl;
 	}
 	return m;
 }
@@ -62,7 +55,6 @@ void Manager::update()
 	bool flag = true;
 	for (auto p : objMap)
 	{
-		std::cout << p.second->getID() << std::endl;
 		p.second->updatePos(t);
 		p.second->boundCorrection(lft, rt, tp, bt, t);
 		p.second->updateBox();
@@ -89,7 +81,9 @@ void Manager::update()
 
 int Manager::shoot(int id, int innerRadius, int outerRadius, int mass)
 {
-	UserObj *curUser = playerMap[id];
+	UserObj *curUser = getPlayer(id);
+	if (curUser == nullptr)
+		return -1;
 	std::tuple<int, int, int, int, int> data = curUser->launchBullet();
 	Bullet *temp = new Bullet(count, std::get<0>(data), std::get<1>(data), std::get<2>(data), std::get<3>(data), 0, 0, innerRadius, outerRadius, mass, std::get<4>(data), curUser);
 	tree.insert(temp->getObjBox(), count, temp->getStatus());
@@ -116,8 +110,17 @@ void Manager::removeDead(std::vector<int> ids)
 {
 	for (auto id : ids)
 	{
-		delete objMap[id];
-		objMap.erase(id);
+		auto dying = objMap.find(id);
+		if (dying == objMap.end())
+			continue;
+		for (auto &p : objMap)
+		{
+			if (p.first != id)
+				p.second->forgetReference(dying->second);
+		}
+		delete dying->second;
+		objMap.erase(dying);
+		playerMap.erase(id);
 	}
 }
 
@@ -143,7 +146,7 @@ int Manager::dropBlackHole(int x, int y, int innerRad, int outerRad, int mass)
 
 int Manager::dropEnemy(int x, int y, int v, int res, int innerRad, int outerRad, int mass, bool startX, int startSign, int aim)
 {
-	Obj *temp = new Enemy(count, x, y, v, res, innerRad, outerRad, mass, startX, startSign, objMap[aim]);
+	Obj *temp = new Enemy(count, x, y, v, res, innerRad, outerRad, mass, startX, startSign, objMap.count(aim) ? objMap[aim] : nullptr);
 	objMap[count] = temp;
 	tree.insert(temp->getObjBox(), count, temp->getStatus());
 	temp->updateAcc(gX, gY);

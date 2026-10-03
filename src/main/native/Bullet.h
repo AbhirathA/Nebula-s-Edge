@@ -20,6 +20,9 @@ public:
             this->life.start();
     }
 
+    // The shooter may die while the bullet is still in flight
+    virtual void forgetReference(Obj* dying) override;
+
     virtual bool checkCollision(Obj* obj) override {
         return obj->checkCollision(this);
     }

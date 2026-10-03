@@ -16,7 +16,9 @@ protected:
     int age;
     bool isUpdateable;
     std::function<void()> onExpire;
-    static std::vector<Lifetime*> instances;
+    // One list per thread: every game world runs its simulation on its own thread,
+    // so worlds don't age each other's timers or race on a shared vector
+    static thread_local std::vector<Lifetime*> instances;
 
 public:
     Lifetime(int life, std::function<void()> callback) {
@@ -32,6 +34,7 @@ public:
     void end();
     void resetAge();
     virtual ~Lifetime() {
-        instances.erase(std::find(instances.begin(), instances.end(), this));
+        auto it = std::find(instances.begin(), instances.end(), this);
+        if (it != instances.end()) instances.erase(it);
     }
 };
