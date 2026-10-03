@@ -2,6 +2,7 @@ package com.spaceinvaders.lwjgl3;
 
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3Application;
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3ApplicationConfiguration;
+import com.spaceinvaders.backend.NetworkBackend;
 import com.spaceinvaders.frontend.SpaceInvadersGame;
 
 /** Launches the desktop (LWJGL3) application. */
@@ -12,7 +13,7 @@ public class Lwjgl3Launcher {
     }
 
     private static Lwjgl3Application createApplication() {
-        return new Lwjgl3Application(new SpaceInvadersGame(), getDefaultConfiguration());
+        return new Lwjgl3Application(new SpaceInvadersGame(new NetworkBackend()), getDefaultConfiguration());
     }
 
     private static Lwjgl3ApplicationConfiguration getDefaultConfiguration() {

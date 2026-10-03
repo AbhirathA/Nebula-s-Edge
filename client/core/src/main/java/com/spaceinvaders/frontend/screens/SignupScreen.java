@@ -12,7 +12,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import com.spaceinvaders.backend.auth.AuthenticationManager;
 import com.spaceinvaders.frontend.SpaceInvadersGame;
 import com.spaceinvaders.backend.auth.utils.AuthenticationException;
 import com.spaceinvaders.frontend.background.PlanetsBackground;
@@ -173,7 +172,7 @@ public class SignupScreen implements Screen {
                 String password = passwordField.getText();
                 String confirm = confirmField.getText();
                 try {
-                    AuthenticationManager.signUp(id, password, confirm);
+                    game.backend.accounts().signUp(id, password, confirm);
 
                     if (SignupScreen.this.stage.getActors().contains(SignupScreen.this.errorMessage, true)) {
                         SignupScreen.this.stage.getActors().removeValue(SignupScreen.this.errorMessage, true);

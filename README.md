@@ -6,7 +6,7 @@
 ![JNI](https://img.shields.io/badge/JNI-native%20bridge-4B5563?style=for-the-badge)
 ![UDP](https://img.shields.io/badge/Netcode-UDP-2b2d42?style=for-the-badge)
 
-A multiplayer space shooter inspired by *Space Invaders*, built in 2024 by a team of six students. We wrote all of it ourselves, before AI coding tools: a **Java/libGDX** client, a **C++ physics engine** called from Java over **JNI**, a **UDP game server** that runs the simulation authoritatively, and **pixel art drawn by hand** for every sprite.
+A multiplayer space shooter inspired by _Space Invaders_, built in 2024 by a team of six students. We wrote all of it ourselves, before AI coding tools: a **Java/libGDX** client, a **C++ physics engine** called from Java over **JNI**, a **UDP game server** that runs the simulation authoritatively, and **pixel art drawn by hand** for every sprite.
 
 <p align="center">
   <img src="docs/screenshots/gameplay.gif" alt="Flying through an asteroid field into a cluster of black holes" width="720">
@@ -22,13 +22,13 @@ A multiplayer space shooter inspired by *Space Invaders*, built in 2024 by a tea
 
 ## What we built
 
-| Area | Highlights |
-| --- | --- |
-| **C++ physics engine** (`src/main/native`) | Written from scratch: integer fixed-point maths (velocities ×1000, angles in tenths of a degree, precomputed sin/cos tables), a dynamic **AABB tree** for broad-phase collision, double-dispatch narrow-phase collision with elastic responses, several integrators (velocity Verlet, standard Verlet, Beeman, leap-frog), black-hole gravity wells, homing enemies, timed power-ups, and a wrap-around world. |
-| **JNI bridge** (`src/main/java/com/physics/Manager.java`, `Manager_JNI.cpp`) | The Java server owns a pointer to a native `Manager`. It spawns objects, sends player input, and reads world snapshots back as `int[][]`. |
-| **Game server** (`server/`) | A Java HTTP API for accounts and the join handshake, plus UDP game worlds running a **90 Hz** simulation. There is one shared multiplayer world, and every single-player game gets its own private world on a free port. Clients send input; the server simulates and streams snapshots back, so it's the single source of truth. |
-| **Desktop client** (`client/`) | libGDX/LWJGL3 with 13 screens: login, signup, menus, options, pause, game over, victory. It also has a camera that follows your ship, a parallax starfield, a health bar, a countdown timer, music, and sound effects. |
-| **Art and audio** (`client/assets`) | Every sprite is hand-drawn pixel art: ships, 12 enemy designs, 21 asteroids, 14 planets, black holes, power-ups, hearts, buttons, and title cards. |
+| Area                                                                         | Highlights                                                                                                                                                                                                                                                                                                                                                                                                     |
+| ---------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **C++ physics engine** (`src/main/native`)                                   | Written from scratch: integer fixed-point maths (velocities ×1000, angles in tenths of a degree, precomputed sin/cos tables), a dynamic **AABB tree** for broad-phase collision, double-dispatch narrow-phase collision with elastic responses, several integrators (velocity Verlet, standard Verlet, Beeman, leap-frog), black-hole gravity wells, homing enemies, timed power-ups, and a wrap-around world. |
+| **JNI bridge** (`src/main/java/com/physics/Manager.java`, `Manager_JNI.cpp`) | The Java server owns a pointer to a native `Manager`. It spawns objects, sends player input, and reads world snapshots back as `int[][]`.                                                                                                                                                                                                                                                                      |
+| **Game server** (`server/`)                                                  | A Java HTTP API for accounts and the join handshake, plus UDP game worlds running a **90 Hz** simulation. There is one shared multiplayer world, and every single-player game gets its own private world on a free port. Clients send input; the server simulates and streams snapshots back, so it's the single source of truth.                                                                              |
+| **Desktop client** (`client/`)                                               | libGDX/LWJGL3 with 13 screens: login, signup, menus, options, pause, game over, victory. It also has a camera that follows your ship, a parallax starfield, a health bar, a countdown timer, music, and sound effects.                                                                                                                                                                                         |
+| **Art and audio** (`client/assets`)                                          | Every sprite is hand-drawn pixel art: ships, 12 enemy designs, 21 asteroids, 14 planets, black holes, power-ups, hearts, buttons, and title cards.                                                                                                                                                                                                                                                             |
 
 ## How it fits together
 
@@ -69,11 +69,11 @@ One frame of multiplayer:
 
 **You need:** JDK 17 or newer (21 recommended) and a 64-bit C++ compiler. Gradle is downloaded automatically.
 
-| OS | Compiler |
-| --- | --- |
+| OS      | Compiler                                                                                                           |
+| ------- | ------------------------------------------------------------------------------------------------------------------ |
 | Windows | [MSYS2](https://www.msys2.org/), then `pacman -S mingw-w64-x86_64-gcc`, then add `C:\msys64\mingw64\bin` to `PATH` |
-| macOS | `xcode-select --install` (clang++) |
-| Linux | `sudo apt install g++` (or your distro's equivalent) |
+| macOS   | `xcode-select --install` (clang++)                                                                                 |
+| Linux   | `sudo apt install g++` (or your distro's equivalent)                                                               |
 
 **1. Start the server.** It compiles the C++ engine on the first run, which takes about a minute.
 
@@ -91,18 +91,22 @@ cd client
 
 **3. Play.** Click **Guest** (or sign up, which takes a few seconds), then choose **SinglePlayer** or **MultiPlayer**.
 
-| Key | Action |
-| --- | --- |
-| `W` | Thrust forward |
-| `S` | Cut thrust |
-| `A` / `D` | Rotate left / right |
-| `Space` | Shoot |
-| `Esc` | Pause |
-| `F12` | Save a screenshot to `client/screenshots/` |
+| Key       | Action                                     |
+| --------- | ------------------------------------------ |
+| `W`       | Thrust forward                             |
+| `S`       | Cut thrust                                 |
+| `A` / `D` | Rotate left / right                        |
+| `Space`   | Shoot                                      |
+| `Esc`     | Pause                                      |
+| `F12`     | Save a screenshot to `client/screenshots/` |
 
 **Single player:** survive 60 seconds. Asteroids and meteors chip away at your health, a homing enemy hunts you down, and black holes pull you in and destroy you if you get too close. Green power-ups heal you, pink ones boost your bullets, and orange ones multiply your score.
 
 **Multiplayer:** everyone shares one persistent world, and each player brings their own homing enemy. Watch out for other players' bullets.
+
+### Browser preview
+
+Every push to `main` builds the TeaVM/WebAssembly client and deploys the playable single-player preview to the repository's GitHub Pages URL. The browser build runs its game world in the tab, so it does not need the Java game server. Multiplayer remains available in the desktop client.
 
 ### Multiplayer across computers
 
@@ -149,14 +153,14 @@ The `NEBULA_SERVER` environment variable works too. Allow TCP 8080 and UDP 9090 
 
 ## Development
 
-| Command | Where | What it does |
-| --- | --- | --- |
-| `./gradlew run` | `server/` | Builds the C++ library (`buildNative`) and starts the server |
-| `./gradlew buildNative` | `server/` | Only compiles the physics engine into `server/build/native/` |
-| `./gradlew javadoc` | `server/` | Server API docs |
-| `./gradlew lwjgl3:run` | `client/` | Starts the game (`-Pserver=<host>` to pick a server) |
-| `./gradlew lwjgl3:jar` | `client/` | Runnable fat jar in `client/lwjgl3/build/libs/` |
-| `make test` | repo root | Builds the engine with `make` and runs `test/TestPhysicsEngine.java` against it |
+| Command                 | Where     | What it does                                                                    |
+| ----------------------- | --------- | ------------------------------------------------------------------------------- |
+| `./gradlew run`         | `server/` | Builds the C++ library (`buildNative`) and starts the server                    |
+| `./gradlew buildNative` | `server/` | Only compiles the physics engine into `server/build/native/`                    |
+| `./gradlew javadoc`     | `server/` | Server API docs                                                                 |
+| `./gradlew lwjgl3:run`  | `client/` | Starts the game (`-Pserver=<host>` to pick a server)                            |
+| `./gradlew lwjgl3:jar`  | `client/` | Runnable fat jar in `client/lwjgl3/build/libs/`                                 |
+| `make test`             | repo root | Builds the engine with `make` and runs `test/TestPhysicsEngine.java` against it |
 
 Game balance lives in `server/src/main/resources/gameConstants.json` and the level layout in `GameEngine.instantiateGameEngineObjects()`. Accounts are stored in `server/data/accounts.json`, which is git-ignored.
 

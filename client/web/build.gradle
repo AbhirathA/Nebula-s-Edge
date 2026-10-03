@@ -1,0 +1,82 @@
+import org.teavm.gradle.api.OptimizationLevel
+
+// Browser build: compiles the libGDX client to JavaScript with TeaVM. Single player worlds run
+// inside the page using the server's GameEngine (from ../shared) and the C++ physics engine
+// compiled to WebAssembly (buildPhysicsWasm). `./gradlew web:webRelease` assembles everything.
+plugins {
+  id 'java'
+  id 'com.github.xpenatan.gdx-teavm' version '1.6.1'
+}
+
+eclipse.project.name = appName + '-web'
+
+java {
+  sourceCompatibility = JavaVersion.VERSION_17
+  targetCompatibility = JavaVersion.VERSION_17
+}
+
+sourceSets.main.java.srcDir rootProject.file('../shared/src/main/java')
+
+dependencies {
+  implementation project(':core')
+}
+
+def physicsDir = layout.buildDirectory.dir('physics')
+
+gdxTeaVM {
+  assets(rootProject.file('assets'), rootProject.file('../shared/src/main/resources/gameConstants.json'))
+  // libGDX's scene2d creates events and actions reflectively
+  reflectionDefaults = true
+
+  js {
+    mainClass = 'com.spaceinvaders.web.WebLauncher'
+    htmlTitle = "Nebula's Edge"
+    htmlWidth = 1440
+    htmlHeight = 810
+    optimization = OptimizationLevel.BALANCED
+    obfuscated = true
+    serverPort = 8090
+  }
+}
+
+// The C++ physics engine compiled to WebAssembly (physics.js + physics.wasm).
+// Needs Emscripten's em++ on PATH, or -Pemxx=/path/to/em++.
+tasks.register('buildPhysicsWasm', Exec) {
+  group = 'build'
+  description = 'Compiles the C++ physics engine to WebAssembly with Emscripten.'
+  def nativeDir = rootProject.file('../src/main/native')
+  def emxx = project.findProperty('emxx') ?: 'em++'
+  def sources = fileTree(nativeDir) { include '*.cpp'; exclude 'Manager_JNI.cpp' }.files.collect { it.absolutePath }.sort()
+  inputs.files(fileTree(nativeDir) { include '**/*.cpp', '**/*.h' })
+  outputs.dir(physicsDir)
+  doFirst { physicsDir.get().asFile.mkdirs() }
+  commandLine([emxx, '-std=c++17', '-O2', "-I${nativeDir}"] + sources + [
+      new File(nativeDir, 'web/physics_wasm.cpp').absolutePath,
+      '-o', physicsDir.get().file('physics.js').asFile.absolutePath,
+      '-sMODULARIZE=1', '-sEXPORT_NAME=createNebulaPhysics', '-sALLOW_MEMORY_GROWTH=1',
+      '-sEXPORTED_RUNTIME_METHODS=HEAP32', '-sENVIRONMENT=web'])
+}
+
+// Copies the physics module next to the TeaVM output and makes index.html load it first.
+tasks.register('webRelease') {
+  group = 'build'
+  description = 'Builds the complete browser version (TeaVM output + WebAssembly physics).'
+  dependsOn 'gdx_teavm_web_js_build', 'buildPhysicsWasm'
+  doLast {
+    // TeaVM writes the page wherever the plugin's output dir points; find it by its index.html
+    def webapp = fileTree(layout.buildDirectory.dir('dist')).matching { include '**/index.html' }.singleFile.parentFile
+    copy { from physicsDir; into webapp }
+    copy { from file('src/main/webapp'); into webapp; exclude 'footer.html' }
+    copy { from rootProject.file('lwjgl3/icons/logo.png'); into webapp; rename { 'favicon.png' } }
+    def index = new File(webapp, 'index.html')
+    def html = index.getText('UTF-8')
+    if (!html.contains('physics.js')) {
+      // Load the WebAssembly engine before the game's own scripts
+      html = html.replaceFirst('(?i)<script', '<script src="physics.js"></script>\n        <script src="physics-loader.js"></script>\n        <script')
+      html = html.replace('main()', 'await window.nebulaPhysicsReady;\n                main()')
+      html = html.replace('</title>', '</title>\n        <link rel="icon" href="favicon.png">')
+      html = html.replace('</body>', file('src/main/webapp/footer.html').getText('UTF-8') + '    </body>')
+      index.write(html, 'UTF-8')
+    }
+  }
+}

@@ -1,5 +1,6 @@
 package com.spaceinvaders.frontend.screens;
 
+import com.spaceinvaders.util.LoggerUtil;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
@@ -16,7 +17,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import com.spaceinvaders.backend.auth.AuthenticationManager;
 import com.spaceinvaders.backend.auth.utils.AuthenticationException;
 import com.spaceinvaders.frontend.SpaceInvadersGame;
 import com.spaceinvaders.frontend.background.PlanetsBackground;
@@ -152,7 +152,7 @@ public class ResetPasswordScreen implements Screen {
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
                 String email = emailField.getText();
                 try {
-                    AuthenticationManager.resetPassword(email);
+                    game.backend.accounts().resetPassword(email);
 
                     // Remove error message if present
                     if (ResetPasswordScreen.this.stage.getActors().contains(ResetPasswordScreen.this.errorMessage,
@@ -182,8 +182,7 @@ public class ResetPasswordScreen implements Screen {
                         ResetPasswordScreen.this.stage.addActor(ResetPasswordScreen.this.errorMessage);
                     }
                 } catch (Exception e) {
-                    System.err.println(e.getMessage());
-                    System.exit(1);
+                    LoggerUtil.logException("Password reset failed unexpectedly", e);
                 }
                 return true;
             }

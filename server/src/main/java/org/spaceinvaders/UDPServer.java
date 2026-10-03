@@ -2,6 +2,7 @@ package org.spaceinvaders;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
+import com.physics.Manager;
 import org.spaceinvaders.gameEngine.GameEngine;
 import org.spaceinvaders.util.Coordinate;
 import org.spaceinvaders.util.LoggerUtil;
@@ -137,7 +138,7 @@ public class UDPServer {
         @Override
         public void run() {
             // The engine keeps its timers per thread, so the world is created and used only here
-            GameEngine gameEngine = new GameEngine();
+            GameEngine gameEngine = new GameEngine(Manager::new);
             try {
                 gameEngine.instantiateGameEngineObjects();
                 long tickNanos = TimeUnit.SECONDS.toNanos(1) / TICKS_PER_SECOND;

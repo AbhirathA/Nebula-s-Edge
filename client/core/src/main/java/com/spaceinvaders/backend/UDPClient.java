@@ -27,7 +27,7 @@ import com.spaceinvaders.util.LoggerUtil;
  * @version 2.0
  * @since 11/24/2024
  */
-public class UDPClient {
+public class UDPClient implements GameConnection {
     private static final int BUFFER_SIZE = 65507; // largest possible UDP payload
     private static final int RECEIVE_TIMEOUT_MS = 500;
 
@@ -63,6 +63,7 @@ public class UDPClient {
         } catch (AuthenticationException e) {
             this.error = "Cannot reach the game server at " + ServerInfo.getIP();
             LoggerUtil.logError(this.error + ": " + e.getMessage());
+            this.error += "\nStart it with: cd server; ./gradlew run";
         }
     }
 
@@ -70,10 +71,12 @@ public class UDPClient {
      * Returns why the client could not join a game, or null if it joined.
      * @return an error message for the player, or null
      */
+    @Override
     public String getError() {
         return this.error;
     }
 
+    @Override
     public void send(String state, String token) {
         if (this.error != null || this.clientSocket.isClosed()) return;
         try {
@@ -88,6 +91,7 @@ public class UDPClient {
     /**
      * Starts the thread that receives world snapshots (no-op if it is already running).
      */
+    @Override
     public void startReceiveThread() {
         if (this.error != null || this.running) return;
         this.running = true;
@@ -99,6 +103,7 @@ public class UDPClient {
     /**
      * Stops receiving and releases the socket.
      */
+    @Override
     public void close() {
         this.running = false;
         if (this.clientSocket != null) this.clientSocket.close();

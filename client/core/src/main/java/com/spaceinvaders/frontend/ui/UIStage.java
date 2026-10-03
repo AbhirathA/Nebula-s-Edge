@@ -2,8 +2,11 @@ package com.spaceinvaders.frontend.ui;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.Pixmap;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.utils.Align;
@@ -159,6 +162,15 @@ public class UIStage extends Stage {
         label.setAlignment(Align.center);
         label.setWidth(getViewport().getWorldWidth() - 20);
         label.setPosition(10, (getViewport().getWorldHeight() - label.getPrefHeight()) / 2f);
+
+        // Dim the whole screen behind the text so it stays readable over the game
+        Pixmap shade = new Pixmap(1, 1, Pixmap.Format.RGBA8888);
+        shade.setColor(0, 0, 0, 0.8f);
+        shade.fill();
+        Image backdrop = new Image(new Texture(shade));
+        shade.dispose();
+        backdrop.setBounds(0, 0, getViewport().getWorldWidth(), getViewport().getWorldHeight());
+        getRoot().addActorAt(0, backdrop); // under the HUD, so the pause button stays usable
         addActor(label);
         isPaused = true;
         isGameOver = true;
